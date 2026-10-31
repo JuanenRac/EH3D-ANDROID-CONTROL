@@ -1,0 +1,395 @@
+{
+  "repo": "EH3D-ANDROID-CONTROL",
+  "ecosystem": "eh3d",
+  "svg": "en",
+  "exempt": [
+    "test.bat",
+    "test.sh",
+    "build-test.bat",
+    "build-test.sh"
+  ],
+  "tagline": {
+    "en": "Two levels: the folders, and the files that carry the logic.",
+    "es": "Dos niveles: las carpetas y los ficheros que llevan la lógica.",
+    "de": "Zwei Ebenen: die Ordner und die Dateien, die die Logik tragen.",
+    "fr": "Deux niveaux : les dossiers et les fichiers qui portent la logique.",
+    "it": "Due livelli: le cartelle e i file che portano la logica.",
+    "ja": "2階層：フォルダと、ロジックを担うファイル。",
+    "zh": "两个层级：文件夹，以及承载逻辑的文件。",
+    "pt": "Dois níveis: as pastas e os ficheiros que levam a lógica."
+  },
+  "cards": [
+    {
+      "name": "app/",
+      "span": 3,
+      "accent": "a",
+      "sub": {
+        "en": "the Android app: code, texts and resources",
+        "es": "la app de Android: código, textos y recursos",
+        "it": "l'app Android: codice, testi e risorse",
+        "de": "die Android-App: Code, Texte und Ressourcen",
+        "fr": "l'application Android : code, textes et ressources",
+        "pt": "a aplicação Android: código, textos e recursos",
+        "zh": "Android 应用：代码、文本和资源",
+        "ja": "Android アプリ：コード・文言・リソース"
+      },
+      "rows": [
+        {
+          "desc": {
+            "en": "the build and the shrinking rules",
+            "es": "la compilación y las reglas de reducción",
+            "it": "la compilazione e le regole di riduzione",
+            "de": "der Build und die Verkleinerungsregeln",
+            "fr": "la compilation et les règles de réduction",
+            "pt": "a compilação e as regras de redução",
+            "zh": "构建与压缩规则",
+            "ja": "ビルドと縮小ルール"
+          },
+          "name": "build.gradle.kts  proguard-rules.pro",
+          "tree_name": "build.gradle.kts proguard-rules.pro"
+        },
+        {
+          "desc": {
+            "en": "permissions and the one activity",
+            "es": "permisos y la única actividad",
+            "it": "permessi e l'unica attività",
+            "de": "Berechtigungen und die eine Activity",
+            "fr": "permissions et l'unique activité",
+            "pt": "permissões e a única atividade",
+            "zh": "权限和唯一的活动",
+            "ja": "権限と唯一のアクティビティ"
+          },
+          "name": "src/main/AndroidManifest.xml",
+          "tree_name": "src/main/AndroidManifest.xml"
+        },
+        {
+          "desc": {
+            "en": "the texts in eight languages",
+            "es": "los textos en ocho idiomas",
+            "it": "i testi in otto lingue",
+            "de": "die Texte in acht Sprachen",
+            "fr": "les textes en huit langues",
+            "pt": "os textos em oito idiomas",
+            "zh": "八种语言的文本",
+            "ja": "8言語の文言"
+          },
+          "name": "src/main/assets/i18n/",
+          "tree_name": "src/main/assets/i18n/"
+        },
+        {
+          "desc": {
+            "en": "the code of the app",
+            "es": "el código de la app",
+            "it": "il codice dell'app",
+            "de": "der Code der App",
+            "fr": "le code de l'application",
+            "pt": "o código da aplicação",
+            "zh": "应用代码",
+            "ja": "アプリのコード"
+          },
+          "name": "src/main/java/es/electrohobby3d/eh3d/",
+          "tree_name": "src/main/java/es/electrohobby3d/eh3d/"
+        },
+        {
+          "desc": {
+            "en": "the tests on the JVM",
+            "es": "las pruebas en la JVM",
+            "it": "i test sulla JVM",
+            "de": "die Tests auf der JVM",
+            "fr": "les tests sur la JVM",
+            "pt": "os testes na JVM",
+            "zh": "JVM 上的测试",
+            "ja": "JVM 上のテスト"
+          },
+          "name": "src/test/java/es/electrohobby3d/eh3d/",
+          "tree_name": "src/test/java/es/electrohobby3d/eh3d/"
+        }
+      ]
+    },
+    {
+      "name": "tools/",
+      "span": 3,
+      "accent": "b",
+      "sub": {
+        "en": "the checks of CI and the picture tools",
+        "es": "las comprobaciones de CI y las herramientas de imagen",
+        "it": "i controlli della CI e gli strumenti per le immagini",
+        "de": "die CI-Prüfungen und die Bildwerkzeuge",
+        "fr": "les contrôles de CI et les outils d'images",
+        "pt": "as verificações de CI e as ferramentas de imagem",
+        "zh": "CI 检查和图片工具",
+        "ja": "CI の検査と画像ツール"
+      },
+      "rows": [
+        {
+          "desc": {
+            "en": "manifest, versions, README parity",
+            "es": "manifiesto, versiones, paridad de README",
+            "it": "manifesto, versioni, parità dei README",
+            "de": "Manifest, Versionen, README-Parität",
+            "fr": "manifeste, versions, parité des README",
+            "pt": "manifesto, versões, paridade dos README",
+            "zh": "清单、版本、README 一致性",
+            "ja": "マニフェスト・バージョン・README の一致"
+          },
+          "name": "ci_validate.py",
+          "tree_name": "ci_validate.py"
+        },
+        {
+          "desc": {
+            "en": "draw the two pictures of the README",
+            "es": "dibujan las dos imágenes del README",
+            "it": "disegnano le due immagini del README",
+            "de": "zeichnen die zwei Bilder des README",
+            "fr": "dessinent les deux images du README",
+            "pt": "desenham as duas imagens do README",
+            "zh": "绘制 README 的两张图",
+            "ja": "README の2枚の図を描く"
+          },
+          "name": "make_architecture.py  make_structure.py",
+          "tree_name": "make_architecture.py make_structure.py"
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Other folders and the files at the root",
+        "es": "Otras carpetas y los archivos de la raíz",
+        "it": "Altre cartelle e i file nella radice",
+        "de": "Weitere Ordner und die Dateien im Wurzelverzeichnis",
+        "fr": "Autres dossiers et fichiers à la racine",
+        "pt": "Outras pastas e os ficheiros da raiz",
+        "zh": "其他文件夹和根目录文件",
+        "ja": "その他のフォルダーとルートのファイル"
+      },
+      "span": 3,
+      "accent": "a",
+      "rows": [
+        {
+          "desc": {
+            "en": "the sources of the two pictures",
+            "es": "las fuentes de las dos imágenes",
+            "it": "le sorgenti delle due immagini",
+            "de": "die Quellen der zwei Bilder",
+            "fr": "les sources des deux images",
+            "pt": "as fontes das duas imagens",
+            "zh": "两张图的源文件",
+            "ja": "2枚の図のソース"
+          },
+          "name": "docs/",
+          "tree_name": "docs/"
+        },
+        {
+          "desc": {
+            "en": "the files of the Gradle wrapper",
+            "es": "los archivos del wrapper de Gradle",
+            "it": "i file del wrapper Gradle",
+            "de": "die Dateien des Gradle-Wrappers",
+            "fr": "les fichiers du wrapper Gradle",
+            "pt": "os ficheiros do wrapper do Gradle",
+            "zh": "Gradle 包装器文件",
+            "ja": "Gradle ラッパーのファイル"
+          },
+          "name": "gradle/",
+          "tree_name": "gradle/"
+        },
+        {
+          "desc": {
+            "en": "the Gradle wrapper",
+            "es": "el wrapper de Gradle",
+            "it": "il wrapper Gradle",
+            "de": "der Gradle-Wrapper",
+            "fr": "le wrapper Gradle",
+            "pt": "o wrapper do Gradle",
+            "zh": "Gradle 包装器",
+            "ja": "Gradle ラッパー"
+          },
+          "name": "gradlew",
+          "tree_name": "gradlew"
+        },
+        {
+          "desc": {
+            "en": "the wrapper for Windows",
+            "es": "el wrapper para Windows",
+            "it": "il wrapper per Windows",
+            "de": "der Wrapper für Windows",
+            "fr": "le wrapper pour Windows",
+            "pt": "o wrapper para Windows",
+            "zh": "Windows 包装器",
+            "ja": "Windows 用ラッパー"
+          },
+          "name": "gradlew.bat",
+          "tree_name": "gradlew.bat"
+        },
+        {
+          "desc": {
+            "en": "the plugins of the build",
+            "es": "los complementos de la compilación",
+            "it": "i plugin della compilazione",
+            "de": "die Plugins des Builds",
+            "fr": "les plugins de la compilation",
+            "pt": "os plugins da compilação",
+            "zh": "构建插件",
+            "ja": "ビルドのプラグイン"
+          },
+          "name": "build.gradle.kts",
+          "tree_name": "build.gradle.kts"
+        },
+        {
+          "desc": {
+            "en": "the name of the project",
+            "es": "el nombre del proyecto",
+            "it": "il nome del progetto",
+            "de": "der Name des Projekts",
+            "fr": "le nom du projet",
+            "pt": "o nome do projeto",
+            "zh": "项目名称",
+            "ja": "プロジェクト名"
+          },
+          "name": "settings.gradle.kts",
+          "tree_name": "settings.gradle.kts"
+        },
+        {
+          "desc": {
+            "en": "the memory of the build",
+            "es": "la memoria de la compilación",
+            "it": "la memoria della compilazione",
+            "de": "der Speicher des Builds",
+            "fr": "la mémoire de la compilation",
+            "pt": "a memória da compilação",
+            "zh": "构建内存",
+            "ja": "ビルドのメモリ"
+          },
+          "name": "gradle.properties",
+          "tree_name": "gradle.properties"
+        },
+        {
+          "desc": {
+            "en": "banner and pictures",
+            "es": "banner e imágenes",
+            "it": "banner e immagini",
+            "de": "Banner und Bilder",
+            "fr": "bannière et images",
+            "pt": "banner e imagens",
+            "zh": "横幅和图片",
+            "ja": "バナーと画像"
+          },
+          "name": "images/",
+          "tree_name": "images/"
+        },
+        {
+          "desc": {
+            "en": "CI workflow",
+            "es": "flujo de CI",
+            "it": "workflow di CI",
+            "de": "CI-Workflow",
+            "fr": "workflow de CI",
+            "pt": "fluxo de CI",
+            "zh": "CI 工作流",
+            "ja": "CI ワークフロー"
+          },
+          "name": ".github/",
+          "tree_name": ".github/"
+        },
+        {
+          "desc": {
+            "en": "build and run the tests",
+            "es": "compilar y ejecutar las pruebas",
+            "it": "compilare ed eseguire i test",
+            "de": "bauen und Tests ausführen",
+            "fr": "compiler et lancer les tests",
+            "pt": "compilar e executar os testes",
+            "zh": "构建并运行测试",
+            "ja": "ビルドとテスト実行"
+          },
+          "name": "build.bat  build.sh",
+          "tree_name": "build.bat build.sh"
+        },
+        {
+          "desc": {
+            "en": "version, role, maturity",
+            "es": "versión, rol, madurez",
+            "it": "versione, ruolo, maturità",
+            "de": "Version, Rolle, Reife",
+            "fr": "version, rôle, maturité",
+            "pt": "versão, papel, maturidade",
+            "zh": "版本、角色、成熟度",
+            "ja": "バージョン・役割・成熟度"
+          },
+          "name": "eh3d.project.json",
+          "tree_name": "eh3d.project.json"
+        },
+        {
+          "desc": {
+            "en": "what changed in each version",
+            "es": "qué cambió en cada versión",
+            "it": "cosa è cambiato in ogni versione",
+            "de": "was sich in jeder Version geändert hat",
+            "fr": "ce qui a changé à chaque version",
+            "pt": "o que mudou em cada versão",
+            "zh": "每个版本的变化",
+            "ja": "各バージョンの変更点"
+          },
+          "name": "CHANGELOG.md",
+          "tree_name": "CHANGELOG.md"
+        },
+        {
+          "desc": {
+            "en": "report a vulnerability, ask",
+            "es": "informar de una vulnerabilidad, preguntar",
+            "it": "segnalare una vulnerabilità, chiedere",
+            "de": "Schwachstelle melden, fragen",
+            "fr": "signaler une vulnérabilité, demander",
+            "pt": "comunicar uma vulnerabilidade, perguntar",
+            "zh": "报告漏洞、提问",
+            "ja": "脆弱性の報告・質問"
+          },
+          "name": "SECURITY.md  SUPPORT.md",
+          "tree_name": "SECURITY.md SUPPORT.md"
+        },
+        {
+          "desc": {
+            "en": "how to contribute",
+            "es": "cómo contribuir",
+            "it": "come contribuire",
+            "de": "wie man beiträgt",
+            "fr": "comment contribuer",
+            "pt": "como contribuir",
+            "zh": "如何贡献",
+            "ja": "貢献方法"
+          },
+          "name": "CONTRIBUTING.md",
+          "tree_name": "CONTRIBUTING.md"
+        },
+        {
+          "desc": {
+            "en": "the code of conduct",
+            "es": "el código de conducta",
+            "it": "il codice di condotta",
+            "de": "der Verhaltenskodex",
+            "fr": "le code de conduite",
+            "pt": "o código de conduta",
+            "zh": "行为准则",
+            "ja": "行動規範"
+          },
+          "name": "CODE_OF_CONDUCT.md",
+          "tree_name": "CODE_OF_CONDUCT.md"
+        },
+        {
+          "desc": {
+            "en": "the licence",
+            "es": "la licencia",
+            "it": "la licenza",
+            "de": "die Lizenz",
+            "fr": "la licence",
+            "pt": "a licença",
+            "zh": "许可证",
+            "ja": "ライセンス"
+          },
+          "name": "LICENSE",
+          "tree_name": "LICENSE"
+        }
+      ]
+    }
+  ]
+}

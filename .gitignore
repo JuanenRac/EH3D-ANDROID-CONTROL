@@ -1,0 +1,18 @@
+build/
+.gradle/
+.kotlin/
+local.properties
+*.apk
+*.aab
+app/google-services.json
+.idea/
+*.jks
+*.keystore
+keystore.properties
+
+# private data and local files: never in the repository
+__pycache__/
+*.pyc
+
+# the signed APK is attached to the release, not kept in the repository
+/dist/

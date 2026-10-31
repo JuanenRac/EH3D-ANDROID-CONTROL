@@ -1,0 +1,180 @@
+{
+  "repo": "EH3D-ANDROID-CONTROL",
+  "ecosystem": "eh3d",
+  "tagline": "The Android app that follows the Bungard machines of a workshop through EH3D-SERVER.",
+  "description": "EH3D-ANDROID-CONTROL is an app in Kotlin and Jetpack Compose, in the Forge theme of the EH3D programs. It signs in to an EH3D-SERVER, reads the fleet, the jobs and the drill head every second and a half, draws the job in 2D and isometric views with the place of the head, stops a machine (asking twice) or confirms the step a job waits for, shows the camera of the drill head that the server relays, and updates itself from the releases of this project on GitHub. The rules are tested on a computer; the app has not been run on a phone against a real server.",
+  "columns": [
+    "WHO USES IT",
+    "THIS REPOSITORY",
+    "WHAT IT TALKS TO"
+  ],
+  "nodes": [
+    {
+      "id": "operator",
+      "column": 0,
+      "level": "external",
+      "title": "An operator",
+      "lines": [
+        "on a phone in the workshop:",
+        "operator, admin or viewer"
+      ]
+    },
+    {
+      "id": "studio",
+      "column": 0,
+      "level": "external",
+      "title": "STUDIO, BUNGARD-GUI",
+      "lines": [
+        "prepare the jobs that this",
+        "app follows and starts"
+      ]
+    },
+    {
+      "id": "screens",
+      "column": 1,
+      "level": "config",
+      "title": "Screens, Forge theme",
+      "lines": [
+        "machines, jobs, stop, help;",
+        "eight languages, Forge theme"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/HomeScreens.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/MachineScreens.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/Viewers.kt"
+      ]
+    },
+    {
+      "id": "client",
+      "column": 1,
+      "level": "tested",
+      "title": "Client of the server",
+      "lines": [
+        "fleet, jobs, start, confirm,",
+        "cancel, head, measure, camera"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/network/Eh3dApi.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/model/Models.kt"
+      ]
+    },
+    {
+      "id": "geometry",
+      "column": 1,
+      "level": "tested",
+      "title": "Position and geometry",
+      "lines": [
+        "head from the steps done,",
+        "2D plan, isometric, time left"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/model/Geometry.kt"
+      ]
+    },
+    {
+      "id": "session",
+      "column": 1,
+      "level": "tested",
+      "title": "Address and session",
+      "lines": [
+        "private LAN or https only;",
+        "token sealed in the Keystore"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/ServerEndpoint.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/SessionVault.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/CredentialVault.kt"
+      ]
+    },
+    {
+      "id": "update",
+      "column": 1,
+      "level": "tested",
+      "title": "Update from GitHub",
+      "lines": [
+        "latest release, package,",
+        "version and signature checked"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/update/GitHubReleaseUpdater.kt",
+        "app/src/main/java/es/electrohobby3d/eh3d/update/ReleaseMetadataParser.kt"
+      ]
+    },
+    {
+      "id": "server",
+      "column": 2,
+      "level": "untested",
+      "title": "EH3D-SERVER",
+      "lines": [
+        "the API under /api/v1: never",
+        "answered this app on a phone"
+      ],
+      "code": []
+    },
+    {
+      "id": "head",
+      "column": 2,
+      "level": "untested",
+      "title": "Camera of the drill head",
+      "lines": [
+        "MJPEG relayed by the server",
+        "from EH3D-NODE-BUNGARD-AUX"
+      ],
+      "code": [
+        "app/src/main/java/es/electrohobby3d/eh3d/MjpegFeed.kt"
+      ]
+    },
+    {
+      "id": "github",
+      "column": 2,
+      "level": "external",
+      "title": "GitHub releases",
+      "lines": [
+        "the APK of the newest",
+        "release of this project"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "operator",
+      "to": "screens",
+      "label": "touch",
+      "level": "config"
+    },
+    {
+      "from": "screens",
+      "to": "client",
+      "level": "tested"
+    },
+    {
+      "from": "session",
+      "to": "client",
+      "level": "tested"
+    },
+    {
+      "from": "client",
+      "to": "server",
+      "label": "HTTP(S)",
+      "level": "untested"
+    },
+    {
+      "from": "screens",
+      "to": "head",
+      "level": "untested"
+    },
+    {
+      "from": "update",
+      "to": "github",
+      "label": "HTTPS",
+      "level": "untested"
+    }
+  ],
+  "legend": {
+    "tested": "rules covered by tests on a computer",
+    "config": "written, builds, never run on a phone",
+    "untested": "has not run against a real server or machine",
+    "external": "a person, a program or another repository"
+  },
+  "footer": "Nothing has run on a phone against a real server yet."
+}

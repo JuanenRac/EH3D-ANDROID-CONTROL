@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.Eh3d" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#FFB000</item>
+        <item name="android:windowBackground">#0F0D0B</item>
+        <item name="android:statusBarColor">#0F0D0B</item>
+        <item name="android:navigationBarColor">#0F0D0B</item>
+        <item name="android:windowSplashScreenBackground">#0F0D0B</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+    </style>
+</resources>

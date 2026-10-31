@@ -1,0 +1,41 @@
+# Checks the repository on every push to main and on every pull request.
+name: EH3D CI baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate the repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Manifest, documentation and language parity
+        run: python -I tools/ci_validate.py
+      - name: Pictures of the README
+        run: |
+          python -I tools/make_architecture.py --check
+          python -I tools/make_structure.py --check --readmes
+
+  tests:
+    name: Unit tests on the JVM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Make the Gradle wrapper executable
+        run: chmod +x gradlew
+      - name: Test
+        run: ./gradlew test --no-daemon

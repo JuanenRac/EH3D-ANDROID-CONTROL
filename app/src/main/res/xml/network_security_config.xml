@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EH3D-ANDROID-CONTROL - what the app trusts on the network.
+     Plain HTTP stays allowed because an installation on the home network often has no certificate: the app itself (ServerEndpoint) only lets it go to a private IPv4 address
+     typed as a literal. HTTPS is checked against the system's authorities and against the ones the person installed on this phone: the local authority that the TLS of the server
+     (a reverse proxy) makes is installed that way, and without it that setup could not be used from the app. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

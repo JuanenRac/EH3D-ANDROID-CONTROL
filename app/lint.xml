@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EH3D-ANDROID-CONTROL - what lint is told to leave alone, and why. Everything else is an error (the build stops on any warning). -->
+<lint>
+    <!-- Plain HTTP stays allowed by the configuration because an installation on the home network often has no certificate; the address typed is accepted over http only if it is a private
+         IPv4 literal (ServerEndpoint), the app refuses http to a host it has reached over https, and an https address is checked against the pin of the installation's certificate. A network
+         security configuration cannot name a range of addresses, so it cannot say "only the house". -->
+    <issue id="InsecureBaseConfiguration" severity="ignore" />
+    <!-- The local authority that the TLS profile of the installation (Caddy) makes is installed on the phone as a user certificate; without trusting those the profile could not be used. The
+         key of that authority is pinned on first use or paired by hand (CertificatePins.kt). -->
+    <issue id="AcceptsUserCertificates" severity="ignore" />
+    <!-- The pin of the key of the installation's certificate is added on top of the system's own trust manager, which is called first; nothing is trusted that the system does not (unless the
+         person paired that exact key by hand). -->
+    <issue id="CustomX509TrustManager" severity="ignore" />
+    <!-- allowBackup is false: nothing of the app is backed up, on any version of Android; the rules of data extraction only add to that on Android 12+. -->
+    <issue id="DataExtractionRules" severity="ignore" />
+    <!-- The attribute that says the Bluetooth scan is never used to find the location only matters from Android 12, and is harmless before. -->
+    <issue id="UnusedAttribute" severity="ignore" />
+    <!-- Newer versions of libraries and of the build tools exist all the time; the maintainer moves them on purpose, together, and tests the result on a phone. -->
+    <issue id="GradleDependency" severity="ignore" />
+    <issue id="NewerVersionAvailable" severity="ignore" />
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
+    <!-- The adaptive icons live in the folder for Android 8 and later, which is every version this app runs on; the build tools do not take the same files from a folder without the version. -->
+    <issue id="ObsoleteSdkInt"><ignore path="src/main/res/mipmap-anydpi-v26" /></issue>
+    <!-- The Kotlin extension functions of AndroidX (edit {}, toUri, toColorInt) are a matter of taste, not of behaviour. -->
+    <issue id="UseKtx" severity="ignore" />
+</lint>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- a drill bit pointing down inside a ring: the amber of the Forge theme -->
+    <path android:fillColor="#FFFFB000" android:fillType="evenOdd"
+        android:pathData="M54,26 A28,28 0 1,0 54.01,26 Z M54,31 A23,23 0 1,1 53.99,31 Z" />
+    <path android:fillColor="#FFFFB000"
+        android:pathData="M50,38 L58,38 L58,58 L54,70 L50,58 Z" />
+    <path android:fillColor="#FFFF5A1F"
+        android:pathData="M51.5,44 L56.5,48 L51.5,52 L56.5,56 L56.5,58 L51.5,54 Z" />
+</vector>
