@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.0.2] - The ring of LEDs and the quality check, and the first screens of the other apps
+
 - **The ring of LEDs and the quality check:** the page of a machine has the ring of LEDs of the head (off and three levels) and a Quality check card that asks the server to look at the board with the camera of the head, judges the holes and the milled channels and shows the verdict as big as a sign (OK, NOT OK or cannot judge) with the findings, the profile (standard, fine pitch, prototype) and the calibration of the scale; the last check of the machine is shown when the page opens. 48 phrases in the seven tables of languages.
 - **The first screens in the manner of the other apps of the suite:** the splash with the mark and the name, the wait while the session of the last time is restored, and the sign-in with icons, the eye to show the password, the panel with a thin edge and the note about what is kept on the phone.
 
