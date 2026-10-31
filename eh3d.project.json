@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "ecosystem": "EH3D",
   "name": "EH3D-ANDROID-CONTROL",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "role": "ui",
   "stack": "Kotlin / Jetpack Compose",
   "technologies": [
@@ -18,7 +18,7 @@
   "family": "CNC Workflow Tools",
   "parent": "EH3D-SERVER",
   "build": "./gradlew.bat test assembleDebug",
-  "notes": "Scaffolding v0.0.2: the Android client of the EH3D programs, in the Forge theme. It signs in to EH3D-SERVER and follows the Bungard machines of the workshop in real time (state, job, progress, steps done and time left), stops them with an emergency stop that asks twice, confirms the steps a job waits for, shows the job in a 2D and a 3D view with the place of the head, and shows the camera and the sensors of the drill head through the server. It updates itself from the releases of this project on GitHub, checking the package and the signature before Android installs it. The parsers and the geometry are tested on the JVM; the app has not been run on a phone against a real server.",
+  "notes": "Scaffolding v0.0.3: the Android client of the EH3D programs, in the Forge theme. It signs in to EH3D-SERVER and follows the Bungard machines of the workshop in real time (state, job, progress, steps done and time left), stops them with an emergency stop that asks twice, confirms the steps a job waits for, shows the job in a 2D and a 3D view with the place of the head, and shows the camera and the sensors of the drill head through the server. It updates itself from the releases of this project on GitHub, checking the package and the signature before Android installs it. The parsers and the geometry are tested on the JVM; the app has not been run on a phone against a real server.",
   "native_version": {
     "file": "eh3d.project.json",
     "pattern": "\"version\"\\s*:\\s*\"(\\d+\\.\\d+\\.\\d+)\""

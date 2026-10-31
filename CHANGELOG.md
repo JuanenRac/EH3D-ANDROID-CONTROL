@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.0.3] - Spindle of the machine, tools switched off in a job and the sensors of the drill head
+
 - **What the sensors of the drill head say:** the card of the head shows how the last reading of the laser went (valid, weak signal, too much spread, out of range, sensor fault) with the distance, how long ago it was taken and the offset the laser was calibrated with; whether the pulses of the speed sensor are clean or noisy and how many were refused as noise; how many temperature sensors the node found on the wire, with a warning when it only guesses which one to read; and the version of the node. A node that does not say (an older one) shows nothing of this. 17 phrases in the seven tables of languages. The settings of the image of the camera, the calibration of the laser and the choice of the temperature sensor stay in the panel of the node: the server does not hand them on yet.
 - **The spindle of the machine:** the page of a machine shows which spindle it carries (the original one or the one with a variable-frequency drive, or none), its limits and the top speed the node should be set to; an administrator chooses the spindle and what the server does with a job that asks for more (refuse it, or let it through cut down to the top of the spindle). A job shows the excesses it was let through with, the tools that were switched off for it and the holes or paths already done that it leaves out. The messages for a job refused by the spindle or left with nothing to do are in the eight languages. Choosing a drilling job, a routing job or both, and switching tools off, is not here: the app does not prepare jobs.
 
