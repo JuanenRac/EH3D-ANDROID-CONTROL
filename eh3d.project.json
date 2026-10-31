@@ -3,7 +3,7 @@
   "ecosystem": "EH3D",
   "name": "EH3D-ANDROID-CONTROL",
   "version": "0.0.1",
-  "role": "client",
+  "role": "ui",
   "stack": "Kotlin / Jetpack Compose",
   "technologies": [
     "Kotlin",
