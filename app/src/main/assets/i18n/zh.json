@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "已完成并跳过：%d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "作业要求超出了机器主轴的能力。",
  "Husillo o límites no válidos.": "主轴或限值无效。",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "没有可做的了：所有刀具都已关闭，或作业已完成。"
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "没有可做的了：所有刀具都已关闭，或作业已完成。",
+ "Sensores del cabezal": "探头传感器",
+ "Láser: lectura válida": "激光：读数有效",
+ "Láser: señal débil": "激光：信号弱",
+ "Láser: demasiada dispersión": "激光：离散过大",
+ "Láser: fuera de rango": "激光：超出范围",
+ "Láser: fallo del sensor": "激光：传感器故障",
+ "Láser: lectura no válida": "激光：读数无效",
+ "Láser: sin lecturas todavía": "激光：尚无读数",
+ "Última lectura: %.1f mm (hace %d s)": "最后一次读数：%.1f mm（%d 秒前）",
+ "Desfase calibrado del láser: %.2f mm": "激光的校准偏移：%.2f mm",
+ "Señal de rpm buena": "转速信号良好",
+ "Señal de rpm con ruido": "转速信号有噪声",
+ "Sin señal de rpm": "无转速信号",
+ "Pulsos descartados por ruido: %d": "作为噪声丢弃的脉冲：%d",
+ "Sensores de temperatura en el hilo: %d": "总线上的温度传感器：%d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "有多个温度传感器，节点读取的是最先找到的一个：请在节点面板中选择一个。",
+ "Versión del nodo: %s": "节点版本：%s"
 }

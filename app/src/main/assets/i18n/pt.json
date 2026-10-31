@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "Já feitos e ignorados: %d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "O trabalho pede mais do que o fuso da máquina dá.",
  "Husillo o límites no válidos.": "Fuso ou limites inválidos.",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Não resta nada para fazer: todas as ferramentas estão desativadas ou o trabalho já está feito."
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Não resta nada para fazer: todas as ferramentas estão desativadas ou o trabalho já está feito.",
+ "Sensores del cabezal": "Sensores da cabeça",
+ "Láser: lectura válida": "Laser: leitura válida",
+ "Láser: señal débil": "Laser: sinal fraco",
+ "Láser: demasiada dispersión": "Laser: demasiada dispersão",
+ "Láser: fuera de rango": "Laser: fora do intervalo",
+ "Láser: fallo del sensor": "Laser: falha do sensor",
+ "Láser: lectura no válida": "Laser: leitura inválida",
+ "Láser: sin lecturas todavía": "Laser: ainda sem leituras",
+ "Última lectura: %.1f mm (hace %d s)": "Última leitura: %.1f mm (há %d s)",
+ "Desfase calibrado del láser: %.2f mm": "Desvio calibrado do laser: %.2f mm",
+ "Señal de rpm buena": "Sinal de rpm bom",
+ "Señal de rpm con ruido": "Sinal de rpm com ruído",
+ "Sin señal de rpm": "Sem sinal de rpm",
+ "Pulsos descartados por ruido: %d": "Impulsos rejeitados como ruído: %d",
+ "Sensores de temperatura en el hilo: %d": "Sensores de temperatura no fio: %d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "Há vários sensores de temperatura e o nó lê o primeiro que encontrou: escolha um no painel do nó.",
+ "Versión del nodo: %s": "Versão do nó: %s"
 }

@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "Déjà fait et ignoré : %d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "Le travail demande plus que ce que donne la broche de la machine.",
  "Husillo o límites no válidos.": "Broche ou limites non valides.",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Il ne reste rien à faire : tous les outils sont désactivés ou le travail est déjà fait."
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Il ne reste rien à faire : tous les outils sont désactivés ou le travail est déjà fait.",
+ "Sensores del cabezal": "Capteurs de la tête",
+ "Láser: lectura válida": "Laser : mesure valide",
+ "Láser: señal débil": "Laser : signal faible",
+ "Láser: demasiada dispersión": "Laser : trop de dispersion",
+ "Láser: fuera de rango": "Laser : hors plage",
+ "Láser: fallo del sensor": "Laser : défaut du capteur",
+ "Láser: lectura no válida": "Laser : mesure non valide",
+ "Láser: sin lecturas todavía": "Laser : pas encore de mesures",
+ "Última lectura: %.1f mm (hace %d s)": "Dernière mesure : %.1f mm (il y a %d s)",
+ "Desfase calibrado del láser: %.2f mm": "Décalage étalonné du laser : %.2f mm",
+ "Señal de rpm buena": "Signal de tr/min bon",
+ "Señal de rpm con ruido": "Signal de tr/min bruité",
+ "Sin señal de rpm": "Pas de signal de tr/min",
+ "Pulsos descartados por ruido: %d": "Impulsions rejetées comme bruit : %d",
+ "Sensores de temperatura en el hilo: %d": "Capteurs de température sur le fil : %d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "Il y a plusieurs capteurs de température et le nœud lit le premier trouvé : choisissez-en un dans le panneau du nœud.",
+ "Versión del nodo: %s": "Version du nœud : %s"
 }

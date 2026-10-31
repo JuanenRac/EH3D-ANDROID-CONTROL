@@ -39,6 +39,14 @@ class TrTest {
         assertEquals(emptyList<String>(), missing.take(20))
     }
 
+    @Test fun theSensorPhrasesTheModelPicksAreInEveryTable() {
+        val phrases = listOf("valid", "signal_low", "sigma_high", "out_of_range", "sensor_fault", "none", "other").map { es.electrohobby3d.eh3d.model.laserStatusPhrase(it) } +
+            listOf("good", "noisy", "none").map { es.electrohobby3d.eh3d.model.rpmQualityPhrase(it) }
+        val missing = mutableListOf<String>()
+        for (phrase in phrases) for ((code, table) in tables()) if (!table.has(phrase) || table.getString(phrase).isBlank()) missing += "$code: $phrase"
+        assertEquals(emptyList<String>(), missing)
+    }
+
     @Test fun aTranslationKeepsTheHolesOfTheSpanishPhrase() {
         val wrong = mutableListOf<String>()
         for ((code, table) in tables()) for (key in table.keys()) {

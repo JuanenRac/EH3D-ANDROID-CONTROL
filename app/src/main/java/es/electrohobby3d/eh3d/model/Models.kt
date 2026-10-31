@@ -152,7 +152,30 @@ data class HeadStatus(
     val tempC: Double?, val heat: String, val protectOpen: Boolean, val uptimeS: Long,
     /** The ring of LEDs around the camera: the node has one, it shines, and at what level (older nodes do not say). */
     val light: Boolean = false, val lightOn: Boolean = false, val lightLevel: Int = 0,
+    /** The sensors of the head (older nodes do not say, and the members stay empty): the version of the node, the last reading of the laser with how it went (`valid`, `sigma_high`, `signal_low`, `out_of_range`, `sensor_fault`, `other` or `none`) and how long ago, the offset the laser was calibrated with, the temperature sensors found on the wire and whether one was only guessed, and how clean the pulses of the speed sensor are (`good`, `noisy` or `none`) and how many were refused as noise. */
+    val version: String = "", val laserLastMm: Double = 0.0, val laserStatus: String = "", val laserAgeMs: Long = -1, val laserOffsetMm: Double = 0.0,
+    val tempSensors: Int = 0, val tempGuess: Boolean = false, val rpmQuality: String = "", val rpmRejected: Long = 0,
 )
+
+/** The Spanish phrase (the key of the tables of languages) that says how the last reading of the laser went; empty when the node does not say. */
+fun laserStatusPhrase(status: String): String = when (status) {
+    "" -> ""
+    "valid" -> "Láser: lectura válida"
+    "signal_low" -> "Láser: señal débil"
+    "sigma_high" -> "Láser: demasiada dispersión"
+    "out_of_range" -> "Láser: fuera de rango"
+    "sensor_fault" -> "Láser: fallo del sensor"
+    "none" -> "Láser: sin lecturas todavía"
+    else -> "Láser: lectura no válida"
+}
+
+/** The Spanish phrase that says how clean the pulses of the speed sensor are; empty when the node does not say. */
+fun rpmQualityPhrase(quality: String): String = when (quality) {
+    "good" -> "Señal de rpm buena"
+    "noisy" -> "Señal de rpm con ruido"
+    "none" -> "Sin señal de rpm"
+    else -> ""
+}
 
 fun parseHead(text: String): HeadStatus {
     val j = JSONObject(text)
@@ -160,6 +183,8 @@ fun parseHead(text: String): HeadStatus {
         j.str("node"), j.optBoolean("camera"), j.str("camera_model"), j.optBoolean("laser"), j.optBoolean("rpm_sensor"), j.optDouble("rpm", 0.0),
         j.dbl("temp_c"), j.str("heat", "ok"), j.optBoolean("protect_open"), j.optLong("uptime_s"),
         j.optBoolean("light"), j.optBoolean("light_on"), j.optInt("light_level"),
+        j.str("version"), j.optDouble("laser_last_mm", 0.0), j.str("laser_last_status"), j.optLong("laser_age_ms", -1), j.optDouble("laser_cal_offset_mm", 0.0),
+        j.str("temp_roms").split(',').count { it.isNotBlank() }, j.optBoolean("temp_guess"), j.str("rpm_quality"), j.optLong("rpm_rejected"),
     )
 }
 

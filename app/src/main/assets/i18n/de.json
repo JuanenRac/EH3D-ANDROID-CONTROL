@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "Schon erledigt und übersprungen: %d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "Der Auftrag verlangt mehr, als die Spindel der Maschine leistet.",
  "Husillo o límites no válidos.": "Spindel oder Grenzen ungültig.",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Nichts mehr zu tun: alle Werkzeuge sind abgeschaltet oder der Auftrag ist schon erledigt."
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Nichts mehr zu tun: alle Werkzeuge sind abgeschaltet oder der Auftrag ist schon erledigt.",
+ "Sensores del cabezal": "Sensoren des Kopfes",
+ "Láser: lectura válida": "Laser: gültige Messung",
+ "Láser: señal débil": "Laser: schwaches Signal",
+ "Láser: demasiada dispersión": "Laser: zu große Streuung",
+ "Láser: fuera de rango": "Laser: außerhalb des Bereichs",
+ "Láser: fallo del sensor": "Laser: Sensorfehler",
+ "Láser: lectura no válida": "Laser: Messung ungültig",
+ "Láser: sin lecturas todavía": "Laser: noch keine Messungen",
+ "Última lectura: %.1f mm (hace %d s)": "Letzte Messung: %.1f mm (vor %d s)",
+ "Desfase calibrado del láser: %.2f mm": "Kalibrierter Versatz des Lasers: %.2f mm",
+ "Señal de rpm buena": "Drehzahlsignal gut",
+ "Señal de rpm con ruido": "Drehzahlsignal verrauscht",
+ "Sin señal de rpm": "Kein Drehzahlsignal",
+ "Pulsos descartados por ruido: %d": "Als Rauschen verworfene Impulse: %d",
+ "Sensores de temperatura en el hilo: %d": "Temperatursensoren am Draht: %d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "Es gibt mehrere Temperatursensoren und der Knoten liest den ersten, den er gefunden hat: Wählen Sie im Panel des Knotens einen aus.",
+ "Versión del nodo: %s": "Version des Knotens: %s"
 }

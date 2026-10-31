@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "完了済みでスキップ: %d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "ジョブがマシンのスピンドルの能力を超えています。",
  "Husillo o límites no válidos.": "スピンドルまたは上限が無効です。",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "実行する作業が残っていません。すべての工具が無効か、ジョブはすでに完了しています。"
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "実行する作業が残っていません。すべての工具が無効か、ジョブはすでに完了しています。",
+ "Sensores del cabezal": "ヘッドのセンサー",
+ "Láser: lectura válida": "レーザー：有効な測定",
+ "Láser: señal débil": "レーザー：信号が弱い",
+ "Láser: demasiada dispersión": "レーザー：ばらつきが大きい",
+ "Láser: fuera de rango": "レーザー：範囲外",
+ "Láser: fallo del sensor": "レーザー：センサー故障",
+ "Láser: lectura no válida": "レーザー：測定が無効",
+ "Láser: sin lecturas todavía": "レーザー：まだ測定なし",
+ "Última lectura: %.1f mm (hace %d s)": "最後の測定：%.1f mm（%d 秒前）",
+ "Desfase calibrado del láser: %.2f mm": "レーザーの校正オフセット：%.2f mm",
+ "Señal de rpm buena": "回転数の信号は良好",
+ "Señal de rpm con ruido": "回転数の信号にノイズあり",
+ "Sin señal de rpm": "回転数の信号なし",
+ "Pulsos descartados por ruido: %d": "ノイズとして除外したパルス：%d",
+ "Sensores de temperatura en el hilo: %d": "ワイヤー上の温度センサー：%d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "温度センサーが複数あり、ノードは最初に見つかったものを読み取っています。ノードのパネルで1つ選んでください。",
+ "Versión del nodo: %s": "ノードのバージョン：%s"
 }

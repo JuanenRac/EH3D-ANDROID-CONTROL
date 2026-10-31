@@ -35,11 +35,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
+import es.electrohobby3d.eh3d.model.HeadStatus
 import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.JobSummary
 import es.electrohobby3d.eh3d.model.Pause
 import es.electrohobby3d.eh3d.model.formatDuration
+import es.electrohobby3d.eh3d.model.laserStatusPhrase
+import es.electrohobby3d.eh3d.model.rpmQualityPhrase
 
 /** The words of a state of a job. */
 fun jobStateText(state: String): String = when (state) {
@@ -175,6 +178,30 @@ fun HeadCard(model: Eh3dViewModel, machineId: String) {
             OutlinedButton({ model.measureTable(machineId) }, enabled = model.canOperate) { Text(tr("Medir la mesa")) }
             model.measure?.let { m -> Text(if (m.ok) trf("%.3f mm (±%.3f)", m.distanceMm, m.sigmaMm) else trf("Sin medida: %s", m.why), color = if (m.ok) Forge.Green else Forge.Orange) }
         }
+        HeadSensors(head)
+    }
+}
+
+/** What the sensors of the head say besides the tiles: the laser (how its last reading went and the offset it was calibrated with), the temperature sensors on the wire, how clean the pulses of the speed sensor are and the version of the node. Nothing for a node that does not say. */
+@Composable
+fun HeadSensors(head: HeadStatus) {
+    val laser = if (head.laser) laserStatusPhrase(head.laserStatus) else ""
+    val rpm = if (head.rpmSensor) rpmQualityPhrase(head.rpmQuality) else ""
+    if (laser.isEmpty() && rpm.isEmpty() && head.tempSensors == 0 && head.version.isEmpty()) return
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(tr("Sensores del cabezal"), color = Forge.Text, style = MaterialTheme.typography.titleSmall)
+        if (laser.isNotEmpty()) {
+            Text(tr(laser), color = if (head.laserStatus == "valid") Forge.Green else if (head.laserStatus == "none") Forge.Dim else Forge.Orange, style = MaterialTheme.typography.bodySmall)
+            if (head.laserAgeMs >= 0) Text(trf("Última lectura: %.1f mm (hace %d s)", head.laserLastMm, head.laserAgeMs / 1000), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+            if (head.laserOffsetMm != 0.0) Text(trf("Desfase calibrado del láser: %.2f mm", head.laserOffsetMm), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        }
+        if (rpm.isNotEmpty()) {
+            Text(tr(rpm), color = if (head.rpmQuality == "good") Forge.Green else if (head.rpmQuality == "none") Forge.Dim else Forge.Orange, style = MaterialTheme.typography.bodySmall)
+            if (head.rpmRejected > 0) Text(trf("Pulsos descartados por ruido: %d", head.rpmRejected), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        }
+        if (head.tempSensors > 0) Text(trf("Sensores de temperatura en el hilo: %d", head.tempSensors), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        if (head.tempGuess) Text(tr("Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo."), color = Forge.Orange, style = MaterialTheme.typography.bodySmall)
+        if (head.version.isNotEmpty()) Text(trf("Versión del nodo: %s", head.version), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
     }
 }
 

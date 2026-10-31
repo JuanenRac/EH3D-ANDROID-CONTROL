@@ -67,6 +67,8 @@ A página de uma máquina também tem o anel de LEDs da cabeça (desligado e tr�
 
 A página de uma máquina também mostra o fuso da máquina (o original ou o que leva variador de frequência), com os seus limites e a velocidade máxima a que o nó deve ser regulado; um administrador escolhe-o e escolhe o que o servidor faz a um trabalho que pede mais (recusá-lo, ou deixá-lo passar reduzido ao máximo do fuso). Um trabalho lista os excessos com que foi deixado passar, as ferramentas desativadas para ele e os furos ou percursos já feitos que deixa de fora. A aplicação não prepara trabalhos, por isso escolher furação, fresagem ou ambas e desativar ferramentas continua a ser coisa do EH3D-STUDIO e do BUNGARD-GUI.
 
+O cartão da cabeça de furação mostra também o que dizem os seus sensores: como correu a última leitura do laser (válida, sinal fraco, demasiada dispersão, fora do intervalo, falha do sensor) com a distância, há quanto tempo foi feita e o desvio com que o laser foi calibrado; se os impulsos do sensor de rotação estão limpos ou com ruído e quantos foram rejeitados como ruído; quantos sensores de temperatura o nó encontrou no fio (e um aviso quando apenas adivinha qual ler); e a versão do nó. Um nó que não o diz não mostra nada disto. As definições da imagem da câmara, a calibração do laser e a escolha do sensor de temperatura fazem-se no painel do nó: o servidor ainda não as transmite.
+
 ## 🧩 Papel no EH3D
 
 EH3D-ANDROID-CONTROL é o ecrã de bolso da oficina EH3D: só fala com o EH3D-SERVER, que executa os trabalhos nas máquinas (através do EH3D-NODE-BUNGARD) e retransmite a câmara do cabeçote de furação (EH3D-NODE-BUNGARD-AUX). Os trabalhos preparam-se no EH3D-STUDIO ou no BUNGARD-GUI; esta aplicação segue-os, confirma os passos que esperam e para-os.

@@ -232,5 +232,22 @@
  "Ya hechos y omitidos: %d": "Already done and skipped: %d",
  "El trabajo pide más de lo que da el husillo de la máquina.": "The job asks for more than the spindle of the machine gives.",
  "Husillo o límites no válidos.": "Spindle or limits not valid.",
- "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Nothing is left to do: all the tools are switched off or the job is already done."
+ "No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.": "Nothing is left to do: all the tools are switched off or the job is already done.",
+ "Sensores del cabezal": "Head sensors",
+ "Láser: lectura válida": "Laser: valid reading",
+ "Láser: señal débil": "Laser: weak signal",
+ "Láser: demasiada dispersión": "Laser: too much spread",
+ "Láser: fuera de rango": "Laser: out of range",
+ "Láser: fallo del sensor": "Laser: sensor fault",
+ "Láser: lectura no válida": "Laser: reading not valid",
+ "Láser: sin lecturas todavía": "Laser: no readings yet",
+ "Última lectura: %.1f mm (hace %d s)": "Last reading: %.1f mm (%d s ago)",
+ "Desfase calibrado del láser: %.2f mm": "Calibrated offset of the laser: %.2f mm",
+ "Señal de rpm buena": "Rpm signal good",
+ "Señal de rpm con ruido": "Rpm signal noisy",
+ "Sin señal de rpm": "No rpm signal",
+ "Pulsos descartados por ruido: %d": "Pulses refused as noise: %d",
+ "Sensores de temperatura en el hilo: %d": "Temperature sensors on the wire: %d",
+ "Hay varios sensores de temperatura y el nodo lee el primero que encontró: elija uno en el panel del nodo.": "There are several temperature sensors and the node reads the first one it found: choose one in the panel of the node.",
+ "Versión del nodo: %s": "Node version: %s"
 }

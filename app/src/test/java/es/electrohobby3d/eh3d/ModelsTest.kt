@@ -3,7 +3,9 @@ package es.electrohobby3d.eh3d
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.parseFleet
+import es.electrohobby3d.eh3d.model.laserStatusPhrase
 import es.electrohobby3d.eh3d.model.parseHead
+import es.electrohobby3d.eh3d.model.rpmQualityPhrase
 import es.electrohobby3d.eh3d.model.parseJob
 import es.electrohobby3d.eh3d.model.parseJobs
 import es.electrohobby3d.eh3d.model.parseMeasure
@@ -84,6 +86,30 @@ class ModelsTest {
         assertEquals(100, list.single().percent)
         assertEquals(5L, list.single().finished)
         assertTrue(JobStates.finished(list.single().state))
+    }
+
+    @Test fun theSensorsOfTheHeadAreReadAndAnOlderNodeLeavesThemEmpty() {
+        val head = parseHead("""{"node":"aux","version":"0.0.5","camera":true,"laser":true,"rpm_sensor":true,"rpm":23890,"temp_c":41.5,"heat":"ok","protect_open":false,"uptime_s":99,"laser_last_mm":12.345,"laser_last_status":"signal_low","laser_age_ms":2500,"laser_cal_offset_mm":-1.5,"temp_roms":"28aa000000000001,28aa000000000002","temp_guess":true,"rpm_quality":"noisy","rpm_rejected":7}""")
+        assertEquals("0.0.5", head.version)
+        assertEquals(12.345, head.laserLastMm, 0.0)
+        assertEquals("signal_low", head.laserStatus)
+        assertEquals(2500L, head.laserAgeMs)
+        assertEquals(-1.5, head.laserOffsetMm, 0.0)
+        assertEquals(2, head.tempSensors)
+        assertTrue(head.tempGuess)
+        assertEquals("noisy", head.rpmQuality)
+        assertEquals(7L, head.rpmRejected)
+        assertEquals("Láser: señal débil", laserStatusPhrase(head.laserStatus))
+        assertEquals("Señal de rpm con ruido", rpmQualityPhrase(head.rpmQuality))
+        val old = parseHead("""{"node":"aux","camera":true,"laser":true,"rpm_sensor":true,"rpm":0,"temp_c":null,"heat":"ok","protect_open":false,"uptime_s":5}""")
+        assertEquals("", old.version)
+        assertEquals("", old.laserStatus)
+        assertEquals(-1L, old.laserAgeMs)
+        assertEquals(0, old.tempSensors)
+        assertEquals("", laserStatusPhrase(old.laserStatus))
+        assertEquals("", rpmQualityPhrase(old.rpmQuality))
+        assertEquals("Láser: lectura no válida", laserStatusPhrase("other"))
+        assertEquals(0, parseHead("""{"temp_roms":""}""").tempSensors)
     }
 
     @Test fun theHeadAndAMeasureAreRead() {
