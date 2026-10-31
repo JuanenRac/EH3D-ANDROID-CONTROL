@@ -64,8 +64,17 @@ fun jobStateColor(state: String): Color = when (state) {
     else -> Forge.Dim
 }
 
+/** The words of a kind of job. */
+fun jobKindText(kind: String): String = when (kind) {
+    "drill" -> tr("Taladrado")
+    "gcode" -> tr("G-code")
+    else -> tr("Fresado")
+}
+
 /** What the machine waits for, in a sentence. */
 fun pauseText(p: Pause): String = when (p.kind) {
+    "hold" -> tr("Trabajo en pausa: pulse Reanudar para que siga.")
+    "resume" -> tr("El trabajo sigue tras una parada: compruebe la máquina y pulse Reanudar antes del primer movimiento.")
     "tool_change" -> trf("Ponga la herramienta %d y confirme.", p.tool ?: 0)
     "spindle_start" -> tr("Compruebe que el husillo gira y confirme.")
     else -> tr("La máquina espera una confirmación.")
@@ -121,9 +130,13 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
                     Card(accent = Forge.Orange) {
                         Title(tr("La máquina espera"))
                         Text(pauseText(p), color = Forge.Text)
-                        Button({ model.confirm(active.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
+                        if (active.kind == "gcode") Button({ model.resume(active.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
+                        else Button({ model.confirm(active.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
                     }
                 }
+            }
+            if (active.kind == "gcode" && active.state == "running") item {
+                OutlinedButton({ model.pause(active.id) }, enabled = model.canOperate, modifier = Modifier.fillMaxWidth()) { Text(tr("Pausar")) }
             }
             item {
                 Card(accent = color) {
@@ -138,14 +151,20 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
                     Text(trf("Lanzado por %s", active.by), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 }
             }
-            if (job != null) item {
+            if (job != null && active.kind != "gcode") item {
                 Card {
                     Title(tr("Visor en directo"))
                     JobViewer(job, active.itemsDone, active.itemsTotal, live = active.state == "running")
                 }
             }
         } else {
-            item { Card { Text(tr("La máquina está libre."), color = Forge.Text); Text(tr("Los trabajos que están listos se arrancan desde la pestaña Trabajos."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall) } }
+            item {
+                Card {
+                    Text(tr("La máquina está libre."), color = Forge.Text)
+                    Text(tr("Los trabajos que están listos se arrancan desde la pestaña Trabajos."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                    Button({ model.openPrepare(id) }, enabled = model.canOperate) { Text(tr("Preparar trabajo")) }
+                }
+            }
         }
         // the drill head: the camera and what the node reads
         if (model.spindle != null) item { SpindleCard(model, id) }
@@ -212,7 +231,7 @@ fun JobRow(j: JobSummary, onOpen: () -> Unit) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Column(Modifier.weight(1f)) {
                 Text(j.name.ifBlank { j.kind }, color = Forge.Text, style = MaterialTheme.typography.titleMedium)
-                Text(listOf(if (j.kind == "drill") tr("Taladrado") else tr("Fresado"), j.by).joinToString(" · "), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                Text(listOf(jobKindText(j.kind), j.by).joinToString(" · "), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }
             Pill(jobStateText(j.state), color)
         }
@@ -247,15 +266,15 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(s.name.ifBlank { s.kind }, style = MaterialTheme.typography.headlineSmall, color = Forge.Text)
-                        Text(if (s.kind == "drill") tr("Taladrado") else tr("Fresado"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                        Text(jobKindText(s.kind), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                     }
                     Pill(jobStateText(s.state), color)
                 }
             }
-            item { Card(accent = color) { Progress(s.percent, color); Text(trf("%d de %d pasos · estimado %s", s.itemsDone, s.itemsTotal, formatDuration(s.estimateS)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall); if (s.message.isNotBlank()) Text(s.message, color = Forge.Orange) } }
+            item { Card(accent = color) { Progress(s.percent, color); Text(trf("%d de %d pasos · estimado %s", s.itemsDone, s.itemsTotal, formatDuration(s.estimateS)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall); if (s.kind == "gcode") Text(trf("Línea del programa: %d", s.line), color = Forge.Dim, style = MaterialTheme.typography.bodySmall); if (s.message.isNotBlank()) Text(s.message, color = Forge.Orange) } }
             if (job.view.skippedTools.isNotEmpty() || job.view.skipped > 0 || job.view.spindleWarnings.isNotEmpty()) item { JobNotes(job.view.skippedTools, job.view.skipped, job.view.spindleWarnings) }
-            item { Card { Title(tr("Visor")); JobViewer(job, s.itemsDone, s.itemsTotal, live = s.state == "running") } }
-            item {
+            if (s.kind != "gcode") item { Card { Title(tr("Visor")); JobViewer(job, s.itemsDone, s.itemsTotal, live = s.state == "running") } }
+            if (job.view.tools.isNotEmpty()) item {
                 Card {
                     Title(tr("Herramientas"))
                     job.view.tools.forEach { t ->
@@ -270,10 +289,14 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (s.state == "ready") Button({ model.start(s.id) }, enabled = model.canOperate) { Text(tr("Empezar")) }
                     if (JobStates.active(s.state)) Button({ askStop = true }, enabled = model.canOperate, colors = ButtonDefaults.buttonColors(containerColor = Forge.Danger, contentColor = Color.White)) { Text(tr("PARAR")) }
-                    if (s.state == "waiting_operator") Button({ model.confirm(s.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
+                    if (s.kind == "gcode" && s.state == "running") OutlinedButton({ model.pause(s.id) }, enabled = model.canOperate) { Text(tr("Pausar")) }
+                    if (s.state == "waiting_operator" && s.kind == "gcode") Button({ model.resume(s.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
+                    else if (s.state == "waiting_operator") Button({ model.confirm(s.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
+                    if (s.kind == "gcode" && (s.state == "failed" || s.state == "cancelled")) OutlinedButton({ model.openResume(s) }, enabled = model.canOperate) { Text(trf("Continuar desde la línea %d", s.line)) }
                     if (!JobStates.active(s.state)) OutlinedButton({ askDelete = true }, enabled = model.canOperate) { Text(tr("Borrar")) }
                 }
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }
+                if (s.kind == "gcode" && (s.state == "failed" || s.state == "cancelled")) Text(if (model.knowsProgram(s.id)) tr("Se vuelve a preparar el mismo programa desde esa línea; la máquina espera su confirmación antes de moverse.") else tr("Se pedirá el mismo archivo de G-code otra vez; el trabajo seguirá desde esa línea y la máquina esperará su confirmación antes de moverse."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.state == "ready") Text(tr("Un trabajo nunca arranca solo: pulse Empezar con la máquina preparada."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }
         }

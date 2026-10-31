@@ -63,11 +63,12 @@ fun AppFrame(model: Eh3dViewModel) {
                 Page.Languages -> LanguagePage(model)
                 is Page.Machine -> MachinePage(model, page.id)
                 is Page.JobPage -> JobPage(model, page.id)
+                is Page.Prepare -> PreparePage(model, page.machine)
             }
         }
         NavigationBar(containerColor = Forge.Panel) {
             val colors = NavigationBarItemDefaults.colors(selectedIconColor = Forge.Amber, selectedTextColor = Forge.Amber, indicatorColor = Forge.PanelRaised, unselectedIconColor = Forge.Dim, unselectedTextColor = Forge.Dim)
-            NavigationBarItem(page == Page.Home || page is Page.Machine, { model.tab(Page.Home) }, { Icon(Icons.Filled.Home, null) }, label = { Text(tr("Máquinas")) }, colors = colors)
+            NavigationBarItem(page == Page.Home || page is Page.Machine || page is Page.Prepare, { model.tab(Page.Home) }, { Icon(Icons.Filled.Home, null) }, label = { Text(tr("Máquinas")) }, colors = colors)
             NavigationBarItem(page == Page.Jobs || page is Page.JobPage, { model.tab(Page.Jobs) }, { Icon(Icons.Filled.Work, null) }, label = { Text(tr("Trabajos")) }, colors = colors)
             NavigationBarItem(page == Page.More || page == Page.Help || page == Page.About || page == Page.Languages, { model.tab(Page.More) }, { Icon(Icons.Filled.MoreHoriz, null) }, label = { Text(tr("Más")) }, colors = colors)
         }

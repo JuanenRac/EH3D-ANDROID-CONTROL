@@ -13,7 +13,7 @@ fun JSONObject.dbl(name: String): Double? = if (has(name) && !isNull(name)) optD
 
 private fun JSONObject.int(name: String, default: Int = 0): Int = if (has(name) && !isNull(name)) optInt(name, default) else default
 
-/** What a job waits for: put the tool of this number in (`tool_change`) or confirm that the spindle runs (`spindle_start`). */
+/** What a job waits for: put the tool of this number in (`tool_change`), confirm that the spindle runs (`spindle_start`), or, for a G-code job, `hold` (the operator paused it) and `resume` (it goes on after a stop and waits before its first move). */
 data class Pause(val kind: String, val tool: Int?)
 
 private fun pauseOf(json: JSONObject?): Pause? = json?.let { Pause(it.str("kind"), if (it.has("tool") && !it.isNull("tool")) it.optInt("tool") else null) }
@@ -63,6 +63,8 @@ fun parseFleet(text: String): Fleet {
 data class JobSummary(
     val id: String, val machine: String, val name: String, val kind: String, val state: String, val by: String,
     val itemsTotal: Int, val itemsDone: Int, val holesTotal: Int, val holesDone: Int, val message: String, val pause: Pause?, val estimateS: Double, val created: Long, val finished: Long?,
+    /** For a G-code job, the line of the program it has got to (where a job that goes on starts from); 0 for the others and for an older server. */
+    val line: Int = 0,
 ) {
     val percent: Int get() = if (itemsTotal <= 0) 0 else (itemsDone * 100 / itemsTotal).coerceIn(0, 100)
 }
@@ -70,7 +72,7 @@ data class JobSummary(
 private fun summaryOf(j: JSONObject) = JobSummary(
     j.str("id"), j.str("machine"), j.str("name"), j.str("kind"), j.str("state"), j.str("by"),
     j.int("items_total"), j.int("items_done"), j.int("holes_total"), j.int("holes_done"), j.str("message"), pauseOf(j.optJSONObject("pause")), j.dbl("estimate_s") ?: 0.0,
-    j.optLong("created"), if (j.has("finished") && !j.isNull("finished")) j.optLong("finished") else null,
+    j.optLong("created"), if (j.has("finished") && !j.isNull("finished")) j.optLong("finished") else null, j.int("line"),
 )
 
 fun parseJobs(text: String): List<JobSummary> {
@@ -118,32 +120,40 @@ fun parseSpindle(text: String): SpindleInfo {
 
 data class Job(val summary: JobSummary, val view: JobView)
 
+/** The view of a job as the server writes it (`tools`, `holes`, `paths`, `bounds_mm`, `items`...). */
+fun parseView(v: JSONObject): JobView {
+    val tools = v.optJSONArray("tools") ?: JSONArray()
+    val holes = v.optJSONArray("holes") ?: JSONArray()
+    val paths = v.optJSONArray("paths") ?: JSONArray()
+    val ends = v.optJSONArray("hole_ends") ?: JSONArray()
+    val b = v.optJSONArray("bounds_mm")
+    val skippedTools = v.optJSONArray("skipped_tools")
+    val warnings = v.optJSONArray("spindle_warnings")
+    return JobView(
+        v.str("kind"), v.str("name"),
+        (0 until tools.length()).mapNotNull { tools.optJSONObject(it) }.map { ToolView(it.int("number"), it.int("spindle_rpm"), it.int("count"), it.int("feed_mm_min"), it.dbl("depth_mm"), if (it.has("iterations") && !it.isNull("iterations")) it.optInt("iterations") else null) },
+        (0 until holes.length()).mapNotNull { holes.optJSONObject(it) }.map { Hole(it.int("tool"), it.optDouble("x_mm"), it.optDouble("y_mm")) },
+        (0 until paths.length()).mapNotNull { paths.optJSONObject(it) }.map { p ->
+            val pts = p.optJSONArray("points_mm") ?: JSONArray()
+            PathView(p.int("pen"), (0 until pts.length()).mapNotNull { pts.optJSONArray(it) }.filter { it.length() >= 2 }.map { Pair(it.optDouble(0), it.optDouble(1)) })
+        },
+        if (b != null && b.length() >= 4) doubleArrayOf(b.optDouble(0), b.optDouble(1), b.optDouble(2), b.optDouble(3)) else null,
+        v.int("items"), (0 until ends.length()).map { ends.optInt(it) }, v.dbl("estimate_s") ?: 0.0, v.dbl("travel_mm") ?: 0.0,
+        (0 until (skippedTools?.length() ?: 0)).map { skippedTools!!.optInt(it) }, v.int("skipped"),
+        (0 until (warnings?.length() ?: 0)).mapNotNull { warnings!!.optJSONObject(it) }.map { SpindleWarning(it.str("code"), it.int("tool"), it.int("value"), it.int("limit")) },
+    )
+}
+
 fun parseJob(text: String): Job {
     val j = JSONObject(text)
     val v = j.optJSONObject("view")
-    val view = if (v == null) JobView.EMPTY else {
-        val tools = v.optJSONArray("tools") ?: JSONArray()
-        val holes = v.optJSONArray("holes") ?: JSONArray()
-        val paths = v.optJSONArray("paths") ?: JSONArray()
-        val ends = v.optJSONArray("hole_ends") ?: JSONArray()
-        val b = v.optJSONArray("bounds_mm")
-        val skippedTools = v.optJSONArray("skipped_tools")
-        val warnings = v.optJSONArray("spindle_warnings")
-        JobView(
-            v.str("kind"), v.str("name"),
-            (0 until tools.length()).mapNotNull { tools.optJSONObject(it) }.map { ToolView(it.int("number"), it.int("spindle_rpm"), it.int("count"), it.int("feed_mm_min"), it.dbl("depth_mm"), if (it.has("iterations") && !it.isNull("iterations")) it.optInt("iterations") else null) },
-            (0 until holes.length()).mapNotNull { holes.optJSONObject(it) }.map { Hole(it.int("tool"), it.optDouble("x_mm"), it.optDouble("y_mm")) },
-            (0 until paths.length()).mapNotNull { paths.optJSONObject(it) }.map { p ->
-                val pts = p.optJSONArray("points_mm") ?: JSONArray()
-                PathView(p.int("pen"), (0 until pts.length()).mapNotNull { pts.optJSONArray(it) }.filter { it.length() >= 2 }.map { Pair(it.optDouble(0), it.optDouble(1)) })
-            },
-            if (b != null && b.length() >= 4) doubleArrayOf(b.optDouble(0), b.optDouble(1), b.optDouble(2), b.optDouble(3)) else null,
-            v.int("items"), (0 until ends.length()).map { ends.optInt(it) }, v.dbl("estimate_s") ?: 0.0, v.dbl("travel_mm") ?: 0.0,
-            (0 until (skippedTools?.length() ?: 0)).map { skippedTools!!.optInt(it) }, v.int("skipped"),
-            (0 until (warnings?.length() ?: 0)).mapNotNull { warnings!!.optJSONObject(it) }.map { SpindleWarning(it.str("code"), it.int("tool"), it.int("value"), it.int("limit")) },
-        )
-    }
-    return Job(summaryOf(j), view)
+    return Job(summaryOf(j), if (v == null) JobView.EMPTY else parseView(v))
+}
+
+/** The answer of a preview: the view itself, or a job that carries it in `view`. */
+fun parsePreview(text: String): JobView {
+    val j = JSONObject(text)
+    return j.optJSONObject("view")?.let(::parseView) ?: parseView(j)
 }
 
 /** What the node of the drill head says (the server hands it on): the camera, the laser, the spindle and the protect output. */

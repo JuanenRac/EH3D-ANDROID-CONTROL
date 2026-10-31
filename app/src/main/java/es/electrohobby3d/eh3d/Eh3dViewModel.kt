@@ -16,7 +16,12 @@ import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.JobSummary
+import es.electrohobby3d.eh3d.model.JobView
 import es.electrohobby3d.eh3d.model.Measure
+import es.electrohobby3d.eh3d.model.Prepare
+import es.electrohobby3d.eh3d.model.Side
+import es.electrohobby3d.eh3d.model.SideState
+import es.electrohobby3d.eh3d.model.Work
 import es.electrohobby3d.eh3d.model.SpindleInfo
 import es.electrohobby3d.eh3d.network.ApiException
 import es.electrohobby3d.eh3d.network.Eh3dApi
@@ -25,6 +30,8 @@ import es.electrohobby3d.eh3d.network.Roles
 import kotlinx.coroutines.Job as Task
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 
 /** The pages of the app; the back button walks back through the ones that were opened. */
 sealed interface Page {
@@ -36,6 +43,22 @@ sealed interface Page {
     data object Languages : Page
     data class Machine(val id: String) : Page
     data class JobPage(val id: String) : Page
+    /** The page that prepares a job on a machine: what to do, the file, its tools and where to start. */
+    data class Prepare(val machine: String) : Page
+}
+
+/** What the page that prepares a job holds: the work chosen, the file of each side with what the server planned from it, and the free G-code program. */
+data class PrepareUi(
+    val work: Work = Work.Drill,
+    val drill: SideState = SideState(), val route: SideState = SideState(),
+    val gcodeName: String = "", val gcode: String = "", val skip: Int = 0,
+    /** Start the spindle and the coolant again when a program goes on after a stop: off unless the person turns it on. */
+    val restoreOutputs: Boolean = false,
+    val gcodeView: JobView? = null, val gcodeError: String = "",
+    val loading: Boolean = false, val busy: Boolean = false,
+) {
+    fun side(side: Side) = if (side == Side.Drill) drill else route
+    fun with(side: Side, state: SideState) = if (side == Side.Drill) copy(drill = state) else copy(route = state)
 }
 
 enum class Phase { Booting, SignedOut, FirstSetup, SignedIn }
@@ -72,6 +95,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The spindle of the machine on screen (null until the server has answered). */
     var spindle: SpindleInfo? by mutableStateOf(null); private set
     private var spindleLooked = false
+    /** The job being prepared, and the text of the G-code programs started from here (to go on from the line where one stopped without choosing the file again). */
+    var prepare by mutableStateOf(PrepareUi()); private set
+    private val gcodeSources = HashMap<String, Pair<String, String>>()
+    private var previewing: Task? = null
     val stack = mutableStateListOf<Page>(Page.Home)
     private var visible = true
     private var poller: Task? = null
@@ -260,6 +287,175 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The emergency stop of every machine that is working. */
     fun emergencyStopAll() { fleet.machines.mapNotNull { it.job?.id }.forEach { cancel(it) } }
 
+    fun pause(id: String) = act { api.pause(id) }
+    fun resume(id: String) = act { api.resume(id) }
+
+    // ---- preparing a job
+    /** True when the text of the program that [id] ran is still known, so it can go on from its line without choosing the file again. */
+    fun knowsProgram(id: String) = gcodeSources.containsKey(id)
+
+    /** Opens the page that prepares a job on a machine, with the first work its connection takes. */
+    fun openPrepare(machineId: String) {
+        val connection = fleet.machine(machineId)?.connection.orEmpty()
+        open(Page.Prepare(machineId))
+        prepare = PrepareUi(work = Prepare.works(connection).firstOrNull() ?: Work.Drill)
+    }
+
+    /** Goes on with a G-code job that failed or was stopped: the same program from the line it says (the text is asked for again when this session does not have it). */
+    fun openResume(summary: JobSummary) {
+        val source = gcodeSources[summary.id]
+        val text = source?.second.orEmpty()
+        open(Page.Prepare(summary.machine))
+        prepare = PrepareUi(work = Work.Gcode, gcodeName = source?.first.orEmpty(), gcode = text, skip = Prepare.resumeSkip(summary.line, if (text.isEmpty()) summary.line else Prepare.lineCount(text)))
+        if (text.isNotEmpty()) previewGcode(summary.machine)
+    }
+
+    fun setWork(work: Work) { prepare = prepare.copy(work = work) }
+    fun setSkip(machineId: String, skip: Int) { prepare = prepare.copy(skip = skip.coerceAtLeast(0)); if (prepare.gcode.isNotEmpty()) previewGcode(machineId) }
+    fun setRestoreOutputs(value: Boolean) { prepare = prepare.copy(restoreOutputs = value) }
+
+    fun toggleToolOff(side: Side, tool: Int) {
+        val st = prepare.side(side)
+        val off = Prepare.toggleOff(st.off, tool)
+        prepare = prepare.with(side, st.copy(off = off, startAt = if (tool in off && st.startAt == tool) null else st.startAt))
+    }
+
+    fun toggleStartAt(side: Side, tool: Int) {
+        val st = prepare.side(side)
+        prepare = prepare.with(side, st.copy(startAt = Prepare.toggleStartAt(st.startAt, tool, st.off)))
+    }
+
+    private data class Picked(val name: String, val text: String)
+
+    private suspend fun read(uri: android.net.Uri): Picked = withContext(Dispatchers.IO) {
+        val resolver = getApplication<Application>().contentResolver
+        var name = ""
+        resolver.query(uri, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) name = it.getString(0).orEmpty() }
+        val out = java.io.ByteArrayOutputStream()
+        resolver.openInputStream(uri)?.use { input ->
+            val buffer = ByteArray(16 * 1024)
+            while (true) {
+                val n = input.read(buffer)
+                if (n < 0) break
+                out.write(buffer, 0, n)
+                if (out.size() > Prepare.MAX_FILE_BYTES) throw ApiException(0, "too_big", "too_big")
+            }
+        }
+        Picked(name, String(out.toByteArray(), Charsets.UTF_8).replace("\r\n", "\n"))
+    }
+
+    /** The file of drilling (`.NCD`) or routing (`.PLT`): it is read, sent to the server to plan (nothing is created) and the tools it uses come back with their count. */
+    fun pickFile(machineId: String, side: Side, uri: android.net.Uri) {
+        viewModelScope.launch {
+            prepare = prepare.copy(loading = true)
+            try {
+                val picked = read(uri)
+                val old = prepare.side(side)
+                prepare = prepare.with(side, SideState(fileName = picked.name, text = picked.text, tableName = old.tableName, tableText = old.tableText))
+                planSide(machineId, side)
+            } catch (error: ApiException) { prepare = prepare.with(side, prepare.side(side).copy(error = prepareError(error))) }
+            catch (_: Exception) { prepare = prepare.with(side, prepare.side(side).copy(error = tr("No se pudo leer el archivo."))) }
+            finally { prepare = prepare.copy(loading = false) }
+        }
+    }
+
+    /** The tool table of a side (`.DTD` or `.RTD`), optional. */
+    fun pickTable(machineId: String, side: Side, uri: android.net.Uri) {
+        viewModelScope.launch {
+            prepare = prepare.copy(loading = true)
+            try {
+                val picked = read(uri)
+                prepare = prepare.with(side, prepare.side(side).copy(tableName = picked.name, tableText = picked.text))
+                if (prepare.side(side).hasFile) planSide(machineId, side)
+            } catch (error: ApiException) { prepare = prepare.with(side, prepare.side(side).copy(error = prepareError(error))) }
+            catch (_: Exception) { prepare = prepare.with(side, prepare.side(side).copy(error = tr("No se pudo leer el archivo."))) }
+            finally { prepare = prepare.copy(loading = false) }
+        }
+    }
+
+    private suspend fun planSide(machineId: String, side: Side) {
+        val st = prepare.side(side)
+        try {
+            val view = api.preview(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, emptyList()))
+            prepare = prepare.with(side, prepare.side(side).copy(view = view, error = ""))
+        } catch (error: ApiException) {
+            if (error.unauthorized) signOutQuietly()
+            prepare = prepare.with(side, prepare.side(side).copy(view = null, error = prepareError(error)))
+        }
+    }
+
+    /** The G-code program: its text is read and planned from the line [PrepareUi.skip]. */
+    fun pickProgram(machineId: String, uri: android.net.Uri) {
+        viewModelScope.launch {
+            prepare = prepare.copy(loading = true)
+            try {
+                val picked = read(uri)
+                prepare = prepare.copy(gcodeName = picked.name, gcode = picked.text, gcodeView = null, gcodeError = "")
+                previewGcode(machineId)
+            } catch (error: ApiException) { prepare = prepare.copy(gcodeError = prepareError(error)) }
+            catch (_: Exception) { prepare = prepare.copy(gcodeError = tr("No se pudo leer el archivo.")) }
+            finally { prepare = prepare.copy(loading = false) }
+        }
+    }
+
+    private fun previewGcode(machineId: String) {
+        previewing?.cancel()
+        previewing = viewModelScope.launch {
+            val p = prepare
+            try {
+                val view = api.preview(machineId, Prepare.gcodeBody(Prepare.jobName(p.gcodeName), p.gcode, p.skip, p.restoreOutputs))
+                prepare = prepare.copy(gcodeView = view, gcodeError = "")
+            } catch (error: ApiException) {
+                if (error.unauthorized) signOutQuietly()
+                prepare = prepare.copy(gcodeView = null, gcodeError = prepareError(error))
+            }
+        }
+    }
+
+    /** Creates the job (or the two of a drilling and routing pair) with the tools switched off and the tool to start at, and starts the first one. The second stays ready: a job never starts by itself. */
+    fun startPrepared(machineId: String) {
+        val p = prepare
+        if (p.busy) return
+        viewModelScope.launch {
+            prepare = prepare.copy(busy = true)
+            var made = 0
+            try {
+                val jobs = mutableListOf<Job>()
+                if (p.work == Work.Gcode) {
+                    val job = api.createJob(machineId, Prepare.gcodeBody(Prepare.jobName(p.gcodeName), p.gcode, p.skip, p.restoreOutputs))
+                    gcodeSources[job.summary.id] = p.gcodeName to p.gcode
+                    jobs += job
+                    made++
+                } else {
+                    val sides = when (p.work) { Work.Drill -> listOf(Side.Drill); Work.Route -> listOf(Side.Route); else -> listOf(Side.Drill, Side.Route) }
+                    for (side in sides) {
+                        val st = p.side(side)
+                        val skipTools = Prepare.skipTools(st.view?.let { Prepare.toolOrder(it) }.orEmpty(), st.off, st.startAt)
+                        jobs += api.createJob(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, skipTools))
+                        made++
+                    }
+                }
+                api.start(jobs.first().summary.id)
+                message = if (jobs.size > 1) tr("El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.") else null
+                if (page is Page.Prepare) back()
+                refresh()
+            } catch (error: ApiException) {
+                if (error.unauthorized) signOutQuietly() else message = prepareError(error) + if (made > 0) " " + tr("Lo que ya se creó queda listo en la pestaña Trabajos.") else ""
+            } finally { prepare = prepare.copy(busy = false) }
+        }
+    }
+
+    private fun prepareError(error: ApiException): String = when (error.code) {
+        "too_big" -> tr("El archivo es demasiado grande.")
+        "bad_gcode" -> trf("Hay una línea que no es G-code válido: %s", error.message ?: "")
+        "bad_ncd" -> tr("El archivo de taladrado no se entiende.")
+        "unknown_tool" -> trf("Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s", error.message ?: "")
+        "bad_tool" -> trf("Herramienta no válida: %s", error.message ?: "")
+        "out_of_table" -> tr("Un agujero o un punto queda fuera del recorrido de la máquina.")
+        "wrong_machine" -> tr("Esta máquina no admite esa clase de trabajo.")
+        else -> errorText(error)
+    }
+
     fun measureTable(machineId: String) = act { measure = api.measure(machineId) }
 
     /** The ring of LEDs around the camera of the drill head: off (0) or on at a level. */
@@ -296,6 +492,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "no_hole" -> tr("La última verificación no encontró ningún agujero con el que medir la escala.")
         error.code == "spindle_limit" -> tr("El trabajo pide más de lo que da el husillo de la máquina.")
         error.code == "bad_spindle" -> tr("Husillo o límites no válidos.")
+        error.code == "not_pausable" -> tr("Solo se puede pausar un trabajo de G-code.")
+        error.code == "not_in_state" -> tr("El trabajo ya no está en un estado que permita eso.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")

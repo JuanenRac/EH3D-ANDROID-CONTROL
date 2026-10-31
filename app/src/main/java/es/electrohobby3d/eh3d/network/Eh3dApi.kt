@@ -19,6 +19,8 @@ import es.electrohobby3d.eh3d.model.parseHead
 import es.electrohobby3d.eh3d.model.parseJob
 import es.electrohobby3d.eh3d.model.parseJobs
 import es.electrohobby3d.eh3d.model.parseMeasure
+import es.electrohobby3d.eh3d.model.JobView
+import es.electrohobby3d.eh3d.model.parsePreview
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -109,6 +111,15 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     suspend fun confirm(id: String) { call("/jobs/${q(id)}/confirm", "POST", "{}") }
     suspend fun cancel(id: String) { call("/jobs/${q(id)}/cancel", "POST", "{}") }
     suspend fun delete(id: String) { call("/jobs/${q(id)}", "DELETE") }
+    /** Holds a running G-code job, and lets a held one (or one that goes on after a stop) go on. */
+    suspend fun pause(id: String) { call("/jobs/${q(id)}/pause", "POST", "{}") }
+    suspend fun resume(id: String) { call("/jobs/${q(id)}/resume", "POST", "{}") }
+
+    /** Plans a job and answers its view, creating nothing: the tools of the file, the holes, the lines of a G-code program. */
+    suspend fun preview(machine: String, body: String): JobView = parsePreview(call("/machines/${q(machine)}/preview", "POST", body))
+
+    /** Plans a job and keeps it ready (it never starts by itself); the answer is the job. */
+    suspend fun createJob(machine: String, body: String): Job = parseJob(call("/machines/${q(machine)}/jobs", "POST", body))
 
     /** The spindle of the machine, its limits and the switch that says what happens to a job that asks for more. */
     suspend fun spindle(machine: String): SpindleInfo = parseSpindle(call("/machines/${q(machine)}/spindle"))
