@@ -65,6 +65,8 @@ Ogni riga è una parte di questo repository e il semaforo dice a che punto è og
 
 La pagina di una macchina ha anche l'anello di LED della testa (spento e tre livelli) e una scheda Controllo qualità: chiede al server di guardare la scheda con la telecamera della testa di foratura, giudica i fori e i canali fresati e mostra il verdetto grande come un cartello (CONFORME, NON CONFORME o non valutabile) con ciò che è stato trovato, il profilo (standard, passo fine, prototipo) e la calibrazione della scala. Le prime schermate (quella iniziale con il marchio, l'attesa mentre si ripristina la sessione e quella di accesso con le sue icone, l'occhio per la password e la nota su ciò che resta sul telefono) seguono l'aspetto delle altre app della suite.
 
+La pagina di una macchina mostra anche il mandrino della macchina (l’originale o quello con inverter), con i suoi limiti e il numero di giri massimo a cui impostare il nodo; un amministratore lo sceglie e sceglie cosa fa il server con un lavoro che chiede di più (rifiutarlo, oppure lasciarlo passare ridotto al massimo del mandrino). Un lavoro elenca gli eccessi con cui è stato lasciato passare, gli utensili disattivati per lui e i fori o i percorsi già fatti che lascia fuori. L’app non prepara lavori: scegliere foratura, fresatura o entrambe e disattivare utensili resta compito di EH3D-STUDIO e BUNGARD-GUI.
+
 ## 🧩 Ruolo in EH3D
 
 EH3D-ANDROID-CONTROL è lo schermo tascabile dell'officina EH3D: parla solo con EH3D-SERVER, che esegue i lavori sulle macchine (tramite EH3D-NODE-BUNGARD) e inoltra la telecamera della testa di foratura (EH3D-NODE-BUNGARD-AUX). I lavori si preparano in EH3D-STUDIO o BUNGARD-GUI; questa app li segue, conferma i passi che attendono e li ferma.

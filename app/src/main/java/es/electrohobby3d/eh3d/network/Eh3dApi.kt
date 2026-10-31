@@ -7,6 +7,8 @@ import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.HeadStatus
 import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.RingLight
+import es.electrohobby3d.eh3d.model.SpindleInfo
+import es.electrohobby3d.eh3d.model.parseSpindle
 import es.electrohobby3d.eh3d.model.parseQuality
 import es.electrohobby3d.eh3d.model.parseRingLight
 import es.electrohobby3d.eh3d.model.Job
@@ -36,6 +38,8 @@ data class Login(val token: String, val name: String, val role: String)
 /** What a role may do: an operator also plans, starts, confirms and cancels jobs; a viewer only watches. */
 object Roles {
     fun canOperate(role: String) = role == "operator" || role == "admin"
+    /** Only an administrator sets the spindle of a machine. */
+    fun canAdmin(role: String) = role == "admin"
 }
 
 /** The pure part of the error of the server: its code and its detail, or what the status says. */
@@ -105,6 +109,17 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     suspend fun confirm(id: String) { call("/jobs/${q(id)}/confirm", "POST", "{}") }
     suspend fun cancel(id: String) { call("/jobs/${q(id)}/cancel", "POST", "{}") }
     suspend fun delete(id: String) { call("/jobs/${q(id)}", "DELETE") }
+
+    /** The spindle of the machine, its limits and the switch that says what happens to a job that asks for more. */
+    suspend fun spindle(machine: String): SpindleInfo = parseSpindle(call("/machines/${q(machine)}/spindle"))
+
+    /** Sets the spindle (`original`, `vfd` or empty for none) and/or the switch (`reject` or `warn`); what is null stays as it was. Administrator only. */
+    suspend fun setSpindle(machine: String, spindle: String?, guard: String?): SpindleInfo {
+        val body = JSONObject()
+        if (spindle != null) body.put("spindle", spindle)
+        if (guard != null) body.put("guard", guard)
+        return parseSpindle(call("/machines/${q(machine)}/spindle", "PUT", body.toString()))
+    }
 
     suspend fun head(machine: String): HeadStatus = parseHead(call("/machines/${q(machine)}/head/status"))
     suspend fun measure(machine: String, samples: Int = 7): Measure = parseMeasure(call("/machines/${q(machine)}/head/measure?samples=$samples", "POST", "{}"))

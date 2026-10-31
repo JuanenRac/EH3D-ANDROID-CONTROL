@@ -42,7 +42,7 @@ val HoleWidths = listOf(0.0, 0.6, 0.8, 1.0, 1.2)
 
 /** A choice among a few: filled when it is the one in use. */
 @Composable
-private fun Choice(selected: Boolean, label: String, enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+internal fun Choice(selected: Boolean, label: String, enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     if (selected) Button(onClick, modifier, enabled = enabled, contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp)) { Text(label, maxLines = 1) }
     else OutlinedButton(onClick, modifier, enabled = enabled, contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp)) { Text(label, maxLines = 1) }
 }

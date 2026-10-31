@@ -68,3 +68,47 @@ class QualityModelTest {
         assertEquals(55, withRing.lightLevel)
     }
 }
+
+/** The spindle of a machine and what a job says about it and about the tools switched off, as the server hands them on (docs/API.md of EH3D-SERVER). */
+class SpindleModelTest {
+    @Test fun theSpindleIsReadWithItsLimitsTheSwitchAndTheTopSpeedOfTheNode() {
+        val info = es.electrohobby3d.eh3d.model.parseSpindle(
+            """{"spindle":"vfd","guard":"warn","limits":{"original":{"min_rpm":10000,"max_rpm":60000,"power_w":300,"max_xy_mm_min":3000,"max_z_mm_min":4000,"max_bit_mm":3.2},
+               "vfd":{"min_rpm":6000,"max_rpm":24000,"power_w":800,"max_xy_mm_min":1500,"max_z_mm_min":1200,"max_bit_mm":6.0}},
+               "active":{"min_rpm":6000,"max_rpm":24000,"power_w":800,"max_xy_mm_min":1500,"max_z_mm_min":1200,"max_bit_mm":6.0},"node_max_rpm":24000}"""
+        )
+        assertEquals("vfd", info.spindle)
+        assertEquals("warn", info.guard)
+        assertEquals(60000, info.original!!.maxRpm)
+        assertEquals(24000, info.active!!.maxRpm)
+        assertEquals(6.0, info.vfd!!.maxBitMm, 1e-9)
+        assertEquals(24000, info.nodeMaxRpm)
+    }
+
+    @Test fun aMachineWithNoSpindleHasNoActiveLimitsAndNoTopSpeed() {
+        val info = es.electrohobby3d.eh3d.model.parseSpindle("""{"spindle":"","guard":"reject","limits":{},"active":null,"node_max_rpm":null}""")
+        assertEquals("", info.spindle)
+        assertNull(info.active)
+        assertNull(info.nodeMaxRpm)
+        assertEquals("reject", info.guard)
+    }
+
+    @Test fun aJobViewCarriesTheToolsSwitchedOffTheSkippedWorkAndTheWarnings() {
+        val job = es.electrohobby3d.eh3d.model.parseJob(
+            """{"id":"j1","machine":"m1","name":"board","kind":"drill","state":"ready","view":{"kind":"drill","name":"board","tools":[],"holes":[],"paths":[],"bounds_mm":null,"items":0,"hole_ends":[],
+               "skipped_tools":[2,3],"skipped":5,"spindle_warnings":[{"code":"rpm_above_max","tool":1,"value":30000,"limit":24000}]}}"""
+        )
+        assertEquals(listOf(2, 3), job.view.skippedTools)
+        assertEquals(5, job.view.skipped)
+        assertEquals(1, job.view.spindleWarnings.size)
+        assertEquals("rpm_above_max", job.view.spindleWarnings[0].code)
+        assertEquals(24000, job.view.spindleWarnings[0].limit)
+    }
+
+    @Test fun aServerThatSaysNothingOfThemLeavesThemEmpty() {
+        val job = es.electrohobby3d.eh3d.model.parseJob("""{"id":"j1","machine":"m1","state":"ready","view":{"kind":"route","tools":[],"holes":[],"paths":[],"items":0,"hole_ends":[]}}""")
+        assertTrue(job.view.skippedTools.isEmpty())
+        assertEquals(0, job.view.skipped)
+        assertTrue(job.view.spindleWarnings.isEmpty())
+    }
+}

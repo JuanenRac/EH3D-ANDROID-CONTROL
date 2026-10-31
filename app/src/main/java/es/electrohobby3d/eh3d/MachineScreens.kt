@@ -145,6 +145,7 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
             item { Card { Text(tr("La máquina está libre."), color = Forge.Text); Text(tr("Los trabajos que están listos se arrancan desde la pestaña Trabajos."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall) } }
         }
         // the drill head: the camera and what the node reads
+        if (model.spindle != null) item { SpindleCard(model, id) }
         if (!model.noHead) item { HeadCard(model, id) }
         if (!model.noHead && model.head?.camera == true) item { QualityCard(model, id) }
         item {
@@ -225,6 +226,7 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                 }
             }
             item { Card(accent = color) { Progress(s.percent, color); Text(trf("%d de %d pasos · estimado %s", s.itemsDone, s.itemsTotal, formatDuration(s.estimateS)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall); if (s.message.isNotBlank()) Text(s.message, color = Forge.Orange) } }
+            if (job.view.skippedTools.isNotEmpty() || job.view.skipped > 0 || job.view.spindleWarnings.isNotEmpty()) item { JobNotes(job.view.skippedTools, job.view.skipped, job.view.spindleWarnings) }
             item { Card { Title(tr("Visor")); JobViewer(job, s.itemsDone, s.itemsTotal, live = s.state == "running") } }
             item {
                 Card {

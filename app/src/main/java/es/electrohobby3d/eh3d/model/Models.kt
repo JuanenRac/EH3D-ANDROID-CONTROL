@@ -86,8 +86,34 @@ data class ToolView(val number: Int, val spindleRpm: Int, val count: Int, val fe
 data class JobView(
     val kind: String, val name: String, val tools: List<ToolView>, val holes: List<Hole>, val paths: List<PathView>,
     val bounds: DoubleArray?, val items: Int, val holeEnds: List<Int>, val estimateS: Double, val travelMm: Double,
+    /** The tools that were switched off for this job and how many holes or paths were already done and left out (an older server says neither). */
+    val skippedTools: List<Int> = emptyList(), val skipped: Int = 0,
+    /** What the spindle of the machine cannot give, when the switch of the machine lets the job through (`warn`). */
+    val spindleWarnings: List<SpindleWarning> = emptyList(),
 ) {
     companion object { val EMPTY = JobView("", "", emptyList(), emptyList(), emptyList(), null, 0, emptyList(), 0.0, 0.0) }
+}
+
+/** One excess of a tool over the spindle: `rpm_above_max`, `rpm_below_min`, `feed_xy_above_max` or `feed_z_above_max`, the tool, the value asked for and the limit. */
+data class SpindleWarning(val code: String, val tool: Int, val value: Int, val limit: Int)
+
+/** The limits of one spindle. */
+data class SpindleLimits(val minRpm: Int, val maxRpm: Int, val powerW: Int, val maxXyMmMin: Int, val maxZMmMin: Int, val maxBitMm: Double)
+
+/** The spindle of a machine: `original`, `vfd` or empty (none), the switch (`reject` or `warn`), the limits of both, those in use (null with none) and the top speed the node should be set to. */
+data class SpindleInfo(val spindle: String, val guard: String, val original: SpindleLimits?, val vfd: SpindleLimits?, val active: SpindleLimits?, val nodeMaxRpm: Int?)
+
+private fun limitsOf(j: JSONObject?): SpindleLimits? = j?.let {
+    SpindleLimits(it.int("min_rpm"), it.int("max_rpm"), it.int("power_w"), it.int("max_xy_mm_min"), it.int("max_z_mm_min"), it.dbl("max_bit_mm") ?: 0.0)
+}
+
+fun parseSpindle(text: String): SpindleInfo {
+    val j = JSONObject(text)
+    val limits = j.optJSONObject("limits")
+    return SpindleInfo(
+        j.str("spindle"), j.str("guard", "reject"), limitsOf(limits?.optJSONObject("original")), limitsOf(limits?.optJSONObject("vfd")), limitsOf(j.optJSONObject("active")),
+        if (j.has("node_max_rpm") && !j.isNull("node_max_rpm")) j.optInt("node_max_rpm") else null,
+    )
 }
 
 data class Job(val summary: JobSummary, val view: JobView)
@@ -101,6 +127,8 @@ fun parseJob(text: String): Job {
         val paths = v.optJSONArray("paths") ?: JSONArray()
         val ends = v.optJSONArray("hole_ends") ?: JSONArray()
         val b = v.optJSONArray("bounds_mm")
+        val skippedTools = v.optJSONArray("skipped_tools")
+        val warnings = v.optJSONArray("spindle_warnings")
         JobView(
             v.str("kind"), v.str("name"),
             (0 until tools.length()).mapNotNull { tools.optJSONObject(it) }.map { ToolView(it.int("number"), it.int("spindle_rpm"), it.int("count"), it.int("feed_mm_min"), it.dbl("depth_mm"), if (it.has("iterations") && !it.isNull("iterations")) it.optInt("iterations") else null) },
@@ -111,6 +139,8 @@ fun parseJob(text: String): Job {
             },
             if (b != null && b.length() >= 4) doubleArrayOf(b.optDouble(0), b.optDouble(1), b.optDouble(2), b.optDouble(3)) else null,
             v.int("items"), (0 until ends.length()).map { ends.optInt(it) }, v.dbl("estimate_s") ?: 0.0, v.dbl("travel_mm") ?: 0.0,
+            (0 until (skippedTools?.length() ?: 0)).map { skippedTools!!.optInt(it) }, v.int("skipped"),
+            (0 until (warnings?.length() ?: 0)).mapNotNull { warnings!!.optJSONObject(it) }.map { SpindleWarning(it.str("code"), it.int("tool"), it.int("value"), it.int("limit")) },
         )
     }
     return Job(summaryOf(j), view)

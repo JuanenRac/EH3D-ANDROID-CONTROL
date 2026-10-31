@@ -17,6 +17,7 @@ import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.JobSummary
 import es.electrohobby3d.eh3d.model.Measure
+import es.electrohobby3d.eh3d.model.SpindleInfo
 import es.electrohobby3d.eh3d.network.ApiException
 import es.electrohobby3d.eh3d.network.Eh3dApi
 import es.electrohobby3d.eh3d.network.Login
@@ -68,6 +69,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var quality: Quality? by mutableStateOf(null); private set
     var qualityBusy by mutableStateOf(false); private set
     private var qualityLooked = false
+    /** The spindle of the machine on screen (null until the server has answered). */
+    var spindle: SpindleInfo? by mutableStateOf(null); private set
+    private var spindleLooked = false
     val stack = mutableStateListOf<Page>(Page.Home)
     private var visible = true
     private var poller: Task? = null
@@ -75,6 +79,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     val page: Page get() = stack.last()
     val canOperate: Boolean get() = Roles.canOperate(login?.role.orEmpty())
+    val canAdmin: Boolean get() = Roles.canAdmin(login?.role.orEmpty())
     val streamUrl: (String) -> String get() = { api.streamUrl(it) }
 
     init { start() }
@@ -168,7 +173,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun open(page: Page) {
         if (page == this.page) return
         stack.add(page)
-        job = null; head = null; measure = null; quality = null; qualityLooked = false; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; noHead = false
         refreshNow()
     }
 
@@ -178,7 +183,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun back(): Boolean {
         if (stack.size <= 1) return false
         stack.removeAt(stack.size - 1)
-        job = null; head = null; measure = null; quality = null; qualityLooked = false; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; noHead = false
         refreshNow()
         return true
     }
@@ -207,6 +212,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                     val active = now.machine(p.id)?.job
                     if (active != null) job = api.job(active.id) else if (job?.summary?.machine != p.id) job = null
                     if (!noHead && !qualityLooked && !qualityBusy) { qualityLooked = true; quality = try { api.lastInspection(p.id) } catch (error: ApiException) { null } }
+                    if (!spindleLooked) { spindleLooked = true; spindle = try { api.spindle(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null } }
                     if (!noHead) try { head = api.head(p.id) } catch (error: ApiException) { if (error.code == "no_head") { noHead = true; head = null } }
                     jobs = api.jobs(p.id)
                 }
@@ -274,6 +280,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun inspectCalibrate(machineId: String) = act { api.inspectCalibrate(machineId); quality = null; qualityLooked = true }
 
+    /** Chooses the spindle of the machine (`original`, `vfd` or empty for none) and/or what the server does with a job that asks for more (`reject` or `warn`). */
+    fun setSpindle(machineId: String, spindle: String?, guard: String?) = act { this.spindle = api.setSpindle(machineId, spindle, guard) }
+
     fun chooseLanguage(code: String) { Tr.choose(getApplication(), code) }
 
     private fun errorText(error: ApiException): String = when {
@@ -285,6 +294,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "no_light" -> tr("Este nodo no tiene aro de luz.")
         error.code == "no_inspection" -> tr("Verifica primero un agujero: la escala sale de su ancho.")
         error.code == "no_hole" -> tr("La última verificación no encontró ningún agujero con el que medir la escala.")
+        error.code == "spindle_limit" -> tr("El trabajo pide más de lo que da el husillo de la máquina.")
+        error.code == "bad_spindle" -> tr("Husillo o límites no válidos.")
+        error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")
         else -> trf("El servidor respondió: %s", error.message ?: error.code)
