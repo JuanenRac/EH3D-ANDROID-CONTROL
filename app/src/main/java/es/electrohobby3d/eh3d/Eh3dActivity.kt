@@ -13,7 +13,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +41,15 @@ class Eh3dActivity : ComponentActivity() {
 private fun Root(model: Eh3dViewModel) {
     val updates: AppUpdateViewModel = viewModel()
     BackHandler(enabled = model.phase == Phase.SignedIn && model.stack.size > 1) { model.back() }
+    // the mark first, as in the apps of the other programs, and then what the phase of the app asks for
+    var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(true) }
+    if (splash) {
+        Eh3dSplash { splash = false }
+        return
+    }
     Box(Modifier.fillMaxSize().statusBarsPadding()) {
         when (model.phase) {
-            Phase.Booting -> Box(Modifier.fillMaxSize(), Alignment.Center) { CircularProgressIndicator(color = Forge.Amber) }
+            Phase.Booting -> RestoringScreen()
             Phase.SignedOut, Phase.FirstSetup -> EntryScreen(model)
             Phase.SignedIn -> AppFrame(model)
         }

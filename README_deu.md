@@ -63,6 +63,8 @@ Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heut
 * Die Kamera des Bohrkopfes (EH3D-NODE-BUNGARD-AUX) als MJPEG über den Server, ihre Drehzahl, Temperatur und der Schutzausgang sowie eine Tischmessung mit dem Laser. Geschrieben, nie mit einem echten Knoten ausgeführt.
 * Sie sucht die neueste Release dieses Projekts auf GitHub, lädt die APK, prüft Paket, Version und Signatur und übergibt sie dem Android-Installer; sie installiert nie von selbst. Geschrieben und getestet; nie von einem Telefon gegen GitHub ausgeführt.
 
+Die Seite einer Maschine hat außerdem den LED-Ring des Kopfes (aus und drei Stufen) und eine Karte Qualitätsprüfung: Sie lässt den Server die Platine mit der Kamera des Bohrkopfes ansehen, beurteilt die Bohrungen und die gefrästen Kanäle und zeigt das Urteil so groß wie ein Schild (IN ORDNUNG, NICHT IN ORDNUNG oder nicht beurteilbar) mit den Befunden, dem Profil (Standard, Feinraster, Prototyp) und der Kalibrierung des Maßstabs. Die ersten Bildschirme (der Startbildschirm mit dem Zeichen, das Warten beim Wiederherstellen der Sitzung und die Anmeldung mit ihren Symbolen, dem Auge für das Passwort und dem Hinweis, was auf dem Telefon bleibt) folgen dem Aussehen der anderen Apps der Suite.
+
 ## 🧩 Rolle in EH3D
 
 EH3D-ANDROID-CONTROL ist der Taschenbildschirm der EH3D-Werkstatt: Sie spricht nur mit EH3D-SERVER, der die Aufträge auf den Maschinen ausführt (über EH3D-NODE-BUNGARD) und die Kamera des Bohrkopfes (EH3D-NODE-BUNGARD-AUX) weiterreicht. Aufträge werden in EH3D-STUDIO oder BUNGARD-GUI vorbereitet; diese App verfolgt sie, bestätigt die Schritte, auf die sie warten, und hält sie an.

@@ -120,6 +120,8 @@ fun parseJob(text: String): Job {
 data class HeadStatus(
     val node: String, val camera: Boolean, val cameraModel: String, val laser: Boolean, val rpmSensor: Boolean, val rpm: Double,
     val tempC: Double?, val heat: String, val protectOpen: Boolean, val uptimeS: Long,
+    /** The ring of LEDs around the camera: the node has one, it shines, and at what level (older nodes do not say). */
+    val light: Boolean = false, val lightOn: Boolean = false, val lightLevel: Int = 0,
 )
 
 fun parseHead(text: String): HeadStatus {
@@ -127,7 +129,37 @@ fun parseHead(text: String): HeadStatus {
     return HeadStatus(
         j.str("node"), j.optBoolean("camera"), j.str("camera_model"), j.optBoolean("laser"), j.optBoolean("rpm_sensor"), j.optDouble("rpm", 0.0),
         j.dbl("temp_c"), j.str("heat", "ok"), j.optBoolean("protect_open"), j.optLong("uptime_s"),
+        j.optBoolean("light"), j.optBoolean("light_on"), j.optInt("light_level"),
     )
+}
+
+/** One thing the analyser of the quality check found: a code (`hole_missing`, `mill_pinched`...), the hole it is about (from 0) and whether it makes the verdict not ok. */
+data class Finding(val code: String, val hole: Int?, val fails: Boolean)
+
+/** The answer of a quality check: `ok`, `not_ok` or `unknown` (the picture was too poor to judge), how many holes were right, how wide the milled channels are and what was found. */
+data class Quality(val verdict: String, val holesTotal: Int, val holesOk: Int, val channelMm: Double?, val findings: List<Finding>)
+
+fun parseQuality(text: String): Quality {
+    val j = JSONObject(text)
+    val holes = j.optJSONArray("holes")
+    var ok = 0
+    for (i in 0 until (holes?.length() ?: 0)) if (holes!!.getJSONObject(i).optBoolean("ok")) ok++
+    val milling = j.optJSONObject("milling")
+    val width = if (milling != null && milling.optInt("samples") > 0) milling.optDouble("width_mm") else null
+    val list = j.optJSONArray("findings")
+    val findings = (0 until (list?.length() ?: 0)).map { i ->
+        val f = list!!.getJSONObject(i)
+        Finding(f.str("code"), if (f.has("hole") && !f.isNull("hole")) f.optInt("hole") else null, f.optBoolean("fails", true))
+    }
+    return Quality(j.str("verdict", "unknown"), holes?.length() ?: 0, ok, width, findings)
+}
+
+/** The ring of LEDs as the node says it. */
+data class RingLight(val on: Boolean, val level: Int, val maxLevel: Int)
+
+fun parseRingLight(text: String): RingLight {
+    val j = JSONObject(text)
+    return RingLight(j.optBoolean("on"), j.optInt("level"), j.optInt("max_level", 80))
 }
 
 /** One measure of the table, as the node answers it. */

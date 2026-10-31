@@ -5,6 +5,10 @@ package es.electrohobby3d.eh3d.network
 import es.electrohobby3d.eh3d.BuildConfig
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.HeadStatus
+import es.electrohobby3d.eh3d.model.Quality
+import es.electrohobby3d.eh3d.model.RingLight
+import es.electrohobby3d.eh3d.model.parseQuality
+import es.electrohobby3d.eh3d.model.parseRingLight
 import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobSummary
 import es.electrohobby3d.eh3d.model.Measure
@@ -104,6 +108,32 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
 
     suspend fun head(machine: String): HeadStatus = parseHead(call("/machines/${q(machine)}/head/status"))
     suspend fun measure(machine: String, samples: Int = 7): Measure = parseMeasure(call("/machines/${q(machine)}/head/measure?samples=$samples", "POST", "{}"))
+
+    /** The ring of LEDs around the camera: off (level 0) or on in the white of the camera at a level; the node keeps its own ceiling. */
+    suspend fun setLight(machine: String, level: Int): RingLight {
+        val path = "/machines/${q(machine)}/head/light"
+        return parseRingLight(call(if (level <= 0) "$path?on=0" else "$path?on=1&level=${level.coerceAtMost(100)}&tone=white&sectors=all", "POST", "{}"))
+    }
+
+    /** A quality check: the ring is lit at [light] (0: left as it is), the picture is taken, the analyser of the shop judges it and the ring shows how it went. [holeMm] is the width of the hole of the job in the centre (0: none). */
+    suspend fun inspect(machine: String, light: Int, holeMm: Double): Quality {
+        val holes = if (holeMm > 0.0) """[{"x_mm":0,"y_mm":0,"dia_mm":${"%.3f".format(java.util.Locale.ROOT, holeMm)}}]""" else "[]"
+        val lit = if (light > 0) ""","light":${light.coerceAtMost(100)},"restore_light":true""" else ""
+        return parseQuality(call("/machines/${q(machine)}/head/inspect", "POST", """{"holes":$holes$lit}"""))
+    }
+
+    /** The last check of the machine (made from here or from another program), or null when there has been none since the server started. */
+    suspend fun lastInspection(machine: String): Quality? =
+        try { parseQuality(call("/machines/${q(machine)}/head/inspect")) } catch (error: ApiException) { if (error.code == "no_inspection") null else throw error }
+
+    /** Makes the profile of the analyser one of the presets: 0 standard, 1 fine pitch, 2 prototype. */
+    suspend fun inspectPreset(machine: String, index: Int) {
+        val name = listOf("standard", "fine_pitch", "prototype")[index.coerceIn(0, 2)]
+        call("/machines/${q(machine)}/head/inspect/profile", "PUT", """{"preset":"$name"}""")
+    }
+
+    /** Sets the scale of the picture from the hole that was just measured. */
+    suspend fun inspectCalibrate(machine: String) { call("/machines/${q(machine)}/head/inspect/calibrate", "POST", "{}") }
 
     /** The address of the camera of the head, as the server hands it on; the token is in the address because a picture cannot carry a header. */
     fun streamUrl(machine: String): String = origin.trimEnd('/') + "/api/v1/machines/${q(machine)}/head/stream?token=${q(token)}"

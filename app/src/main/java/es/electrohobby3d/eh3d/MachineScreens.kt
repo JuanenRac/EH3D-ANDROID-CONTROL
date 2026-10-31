@@ -146,6 +146,7 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
         }
         // the drill head: the camera and what the node reads
         if (!model.noHead) item { HeadCard(model, id) }
+        if (!model.noHead && model.head?.camera == true) item { QualityCard(model, id) }
         item {
             Title(tr("Trabajos de esta máquina"))
         }
@@ -162,6 +163,7 @@ fun HeadCard(model: Eh3dViewModel, machineId: String) {
         if (head == null) { Text(tr("Sin datos del nodo del cabezal."), color = Forge.Dim); return@Card }
         if (head.camera) Box(Modifier.fillMaxWidth().aspectRatio(4f / 3f).clip(RoundedCornerShape(6.dp))) { MjpegFeed(model.streamUrl(machineId), Modifier.fillMaxSize(), sampleSize = 1) }
         else Text(tr("La cámara del cabezal está apagada."), color = Forge.Dim)
+        LightRow(model, machineId, head)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Tile(if (head.rpmSensor) "%.0f".format(head.rpm) else "-", tr("rpm"), modifier = Modifier.weight(1f))
             val hot = head.heat != "ok"

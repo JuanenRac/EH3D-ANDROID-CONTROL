@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
@@ -31,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -129,3 +131,24 @@ fun Tile(value: String, name: String, modifier: Modifier = Modifier, color: Colo
 
 @Composable
 fun FullWidth(content: @Composable () -> Unit) = Box(Modifier.fillMaxWidth()) { content() }
+
+/** The mark of the program: an amber tile with the first letter, as the apps of the other programs have theirs. */
+@Composable
+fun Eh3dLogo(modifier: Modifier = Modifier, size: Dp = 40.dp) {
+    val shape = RoundedCornerShape(size * 0.28f)
+    Box(
+        modifier.size(size).clip(shape)
+            .background(androidx.compose.ui.graphics.Brush.linearGradient(listOf(Color(0xFFFFD25A), Color(0xFFD98A00))))
+            .border(BorderStroke(size * 0.03f, Color(0x66FFB000)), shape),
+        contentAlignment = Alignment.Center,
+    ) { Text("E", color = Color(0xFF1A1100), fontWeight = FontWeight.Black, fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace, fontSize = (size.value * 0.55f).sp) }
+}
+
+/** A raised panel with a thin edge and a faint amber wash on its top: the container of the sign-in and of the groups of a screen. */
+@Composable
+fun Panel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+    val shape = RoundedCornerShape(18.dp)
+    Surface(modifier.clip(shape), shape = shape, color = Forge.PanelRaised, border = BorderStroke(1.dp, Forge.Amber.copy(alpha = 0.35f))) {
+        Column(Modifier.background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Forge.Amber.copy(alpha = 0.05f), Color.Transparent))), content = content)
+    }
+}

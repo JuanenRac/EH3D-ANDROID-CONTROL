@@ -12,6 +12,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.HeadStatus
+import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.JobSummary
@@ -63,6 +64,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var head: HeadStatus? by mutableStateOf(null); private set
     var noHead by mutableStateOf(false); private set
     var measure: Measure? by mutableStateOf(null); private set
+    /** The last quality check of the machine on screen, and whether one is running now. */
+    var quality: Quality? by mutableStateOf(null); private set
+    var qualityBusy by mutableStateOf(false); private set
+    private var qualityLooked = false
     val stack = mutableStateListOf<Page>(Page.Home)
     private var visible = true
     private var poller: Task? = null
@@ -163,7 +168,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun open(page: Page) {
         if (page == this.page) return
         stack.add(page)
-        job = null; head = null; measure = null; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; noHead = false
         refreshNow()
     }
 
@@ -173,7 +178,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun back(): Boolean {
         if (stack.size <= 1) return false
         stack.removeAt(stack.size - 1)
-        job = null; head = null; measure = null; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; noHead = false
         refreshNow()
         return true
     }
@@ -201,6 +206,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 is Page.Machine -> {
                     val active = now.machine(p.id)?.job
                     if (active != null) job = api.job(active.id) else if (job?.summary?.machine != p.id) job = null
+                    if (!noHead && !qualityLooked && !qualityBusy) { qualityLooked = true; quality = try { api.lastInspection(p.id) } catch (error: ApiException) { null } }
                     if (!noHead) try { head = api.head(p.id) } catch (error: ApiException) { if (error.code == "no_head") { noHead = true; head = null } }
                     jobs = api.jobs(p.id)
                 }
@@ -250,6 +256,24 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun measureTable(machineId: String) = act { measure = api.measure(machineId) }
 
+    /** The ring of LEDs around the camera of the drill head: off (0) or on at a level. */
+    fun setLight(machineId: String, level: Int) = act { api.setLight(machineId, level) }
+
+    /** The quality check of the work through the camera: the verdict comes back and stays on screen until the next one. */
+    fun inspect(machineId: String, light: Int, holeMm: Double) {
+        if (qualityBusy) return
+        qualityBusy = true
+        viewModelScope.launch {
+            try { quality = api.inspect(machineId, light, holeMm); refresh() }
+            catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else message = errorText(error) }
+            finally { qualityBusy = false }
+        }
+    }
+
+    fun inspectPreset(machineId: String, index: Int) = act { api.inspectPreset(machineId, index) }
+
+    fun inspectCalibrate(machineId: String) = act { api.inspectCalibrate(machineId); quality = null; qualityLooked = true }
+
     fun chooseLanguage(code: String) { Tr.choose(getApplication(), code) }
 
     private fun errorText(error: ApiException): String = when {
@@ -258,6 +282,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "throttled" -> tr("Demasiados intentos: espere un momento.")
         error.code == "machine_busy" -> tr("La máquina ya está trabajando.")
         error.code == "no_head" -> tr("Esta máquina no tiene nodo de cabezal.")
+        error.code == "no_light" -> tr("Este nodo no tiene aro de luz.")
+        error.code == "no_inspection" -> tr("Verifica primero un agujero: la escala sale de su ancho.")
+        error.code == "no_hole" -> tr("La última verificación no encontró ningún agujero con el que medir la escala.")
+        error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")
         else -> trf("El servidor respondió: %s", error.message ?: error.code)
     }

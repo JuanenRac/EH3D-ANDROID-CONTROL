@@ -4,6 +4,9 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The ring of LEDs and the quality check:** the page of a machine has the ring of LEDs of the head (off and three levels) and a Quality check card that asks the server to look at the board with the camera of the head, judges the holes and the milled channels and shows the verdict as big as a sign (OK, NOT OK or cannot judge) with the findings, the profile (standard, fine pitch, prototype) and the calibration of the scale; the last check of the machine is shown when the page opens. 48 phrases in the seven tables of languages.
+- **The first screens in the manner of the other apps of the suite:** the splash with the mark and the name, the wait while the session of the last time is restored, and the sign-in with icons, the eye to show the password, the panel with a thin edge and the note about what is kept on the phone.
+
 ## [0.0.1] - The first version: the machines, the stop, the job in 2D and 3D and the drill head
 
 - **The machines of the workshop in real time:** the fleet as EH3D-SERVER reports it (free, working, waiting for the operator), with the job of each machine, its progress, the steps and holes done and the time left, read every second and a half while the app is in sight; a notice when a machine waits for the operator or stops.
