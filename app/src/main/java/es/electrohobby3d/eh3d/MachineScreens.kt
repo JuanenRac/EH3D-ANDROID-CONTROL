@@ -185,7 +185,7 @@ fun HeadCard(model: Eh3dViewModel, machineId: String) {
     Card(accent = Forge.Blue) {
         Title(tr("Cabezal de taladrado"))
         if (head == null) { Text(tr("Sin datos del nodo del cabezal."), color = Forge.Dim); return@Card }
-        if (head.camera) Box(Modifier.fillMaxWidth().aspectRatio(4f / 3f).clip(RoundedCornerShape(6.dp))) { MjpegFeed(model.streamUrl(machineId), Modifier.fillMaxSize(), sampleSize = 1) }
+        if (head.camera) Box(Modifier.fillMaxWidth().aspectRatio(4f / 3f).clip(RoundedCornerShape(6.dp))) { MjpegFeed(model.streamUrl(machineId), Modifier.fillMaxSize(), sampleSize = 1, resolve = model.resolveStream) }
         else Text(tr("La cámara del cabezal está apagada."), color = Forge.Dim)
         LightRow(model, machineId, head)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

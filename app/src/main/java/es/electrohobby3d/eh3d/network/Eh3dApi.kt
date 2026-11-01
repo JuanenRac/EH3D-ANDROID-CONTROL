@@ -48,6 +48,9 @@ object Roles {
 /** True when `text` is one JSON value (an object or an array): what the API always answers with. */
 fun isJson(text: String): Boolean = runCatching { val v = org.json.JSONTokener(text).nextValue(); v is JSONObject || v is org.json.JSONArray }.getOrDefault(false)
 
+/** [url] with [ticket] as its query. */
+fun ticketUrl(url: String, ticket: String): String = url + (if (url.contains('?')) "&" else "?") + "ticket=" + URLEncoder.encode(ticket, "UTF-8")
+
 /** The pure part of the error of the server: its code and its detail, or what the status says. */
 fun describeError(status: Int, body: String): Pair<String, String> {
     val json = runCatching { JSONObject(body) }.getOrNull()
@@ -174,5 +177,12 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     suspend fun inspectCalibrate(machine: String) { call("/machines/${q(machine)}/head/inspect/calibrate", "POST", "{}") }
 
     /** The address of the camera of the head, as the server hands it on; the token is in the address because a picture cannot carry a header. */
-    fun streamUrl(machine: String): String = origin.trimEnd('/') + "/api/v1/machines/${q(machine)}/head/stream?token=${q(token)}"
+    /** The address of the camera without any credential: [withTicket] adds a one-use ticket just before it is opened. */
+    fun streamUrl(machine: String): String = origin.trimEnd('/') + "/api/v1/machines/${q(machine)}/head/stream"
+
+    /** [url] with a new ticket in it (good for one use within half a minute): the token of the session never goes in an address. */
+    suspend fun withTicket(url: String): String = ticketUrl(url, JSONObject(call("/tickets", "POST", "{}")).optString("ticket"))
+
+    /** The stop button of a machine: whatever job is active on it is ended at once (the server reaches the machine without waiting for the line it is sending). */
+    suspend fun stopMachine(machine: String) { call("/machines/${q(machine)}/stop", "POST", "{}") }
 }

@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The emergency stop asks the server to stop the machine** (`POST /machines/:id/stop`), whether or not the app knows which job runs on it, and shows the error if it did not get there; the camera asks for a one-use ticket instead of putting the token of the session in the address.
+
 - **Notices with the app closed:** a periodic job (WorkManager, every 15 minutes at best) asks the server with the session kept in the vault and tells a machine that waits for the operator or a job that ended; signing out stops it. The rule that decides what is told is one function used by the screen and by the job.
 
 - **An answer that is not JSON** (another web service at the address) is an error on the screen, not a crash.

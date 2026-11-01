@@ -16,6 +16,7 @@ import es.electrohobby3d.eh3d.model.parseMeasure
 import es.electrohobby3d.eh3d.network.Roles
 import es.electrohobby3d.eh3d.network.describeError
 import es.electrohobby3d.eh3d.network.isJson
+import es.electrohobby3d.eh3d.network.ticketUrl
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -148,6 +149,11 @@ class ModelsTest {
         assertEquals(NoticeKind.Waiting, fleetNotices(running, fleet("waiting", "waiting_operator")).single().kind)
         assertEquals(NoticeKind.Ended, fleetNotices(running, fleet("idle", null)).single().kind)
         assertTrue(fleetNotices(running, fleet("busy", "running")).isEmpty())
+    }
+
+    @Test fun theAddressOfTheCameraCarriesATicketAndNeverTheToken() {
+        assertEquals("http://h:18200/api/v1/machines/m/head/stream?ticket=t_ab", ticketUrl("http://h:18200/api/v1/machines/m/head/stream", "t_ab"))
+        assertEquals("http://h/x?a=1&ticket=t%2B1", ticketUrl("http://h/x?a=1", "t+1"))
     }
 
     @Test fun anAnswerThatIsNotJsonIsToldFromOneThatIs() {

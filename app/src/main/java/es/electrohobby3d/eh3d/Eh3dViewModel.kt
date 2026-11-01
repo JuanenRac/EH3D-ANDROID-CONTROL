@@ -112,6 +112,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     val canOperate: Boolean get() = Roles.canOperate(login?.role.orEmpty())
     val canAdmin: Boolean get() = Roles.canAdmin(login?.role.orEmpty())
     val streamUrl: (String) -> String get() = { api.streamUrl(it) }
+    /** Gives the camera address a ticket just before it is opened. */
+    val resolveStream: suspend (String) -> String get() = { api.withTicket(it) }
 
     init { start() }
 
@@ -286,14 +288,11 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun cancel(id: String) = act { api.cancel(id) }
     fun delete(id: String) = act { api.delete(id); if (page is Page.JobPage) back() }
 
-    /** The emergency stop of one machine: its running job is cancelled, which stops the machine and switches the drivers off. */
-    fun emergencyStop(machineId: String) {
-        val id = fleet.machine(machineId)?.job?.id ?: return
-        cancel(id)
-    }
+    /** The emergency stop of one machine: the server ends whatever is active on it at once, without waiting for the line it is sending; a stop that did not get there shows its error. */
+    fun emergencyStop(machineId: String) = act { api.stopMachine(machineId) }
 
     /** The emergency stop of every machine that is working. */
-    fun emergencyStopAll() { fleet.machines.mapNotNull { it.job?.id }.forEach { cancel(it) } }
+    fun emergencyStopAll() { fleet.machines.filter { it.job != null }.forEach { m -> act { api.stopMachine(m.id) } } }
 
     fun pause(id: String) = act { api.pause(id) }
     fun resume(id: String) = act { api.resume(id) }
