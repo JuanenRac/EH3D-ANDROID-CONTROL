@@ -309,5 +309,9 @@
  "Continúa el trabajo %s": "ジョブ %s の続き",
  "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "G コードジョブでの GRBL の $ 行：このマシンでは許可されています。",
  "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "G コードジョブでの GRBL の $ 行：このマシンでは許可されていません（管理者が Studio から許可します）。",
- "Solo se puede seguir desde un trabajo cancelado o fallido.": "キャンセルまたは失敗したジョブからのみ続行できます。"
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "キャンセルまたは失敗したジョブからのみ続行できます。",
+ "El código de alta no es correcto.": "セットアップコードが違います。",
+ "La contraseña debe tener de 8 a 128 caracteres.": "パスワードは 8〜128 文字にしてください。",
+ "El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.": "名前が無効です。英数字、ピリオド、アンダースコア、ハイフンで 32 文字までです。",
+ "El servidor no respondió con JSON: compruebe que la dirección es la de EH3D-SERVER.": "サーバーが JSON で応答しませんでした。アドレスが EH3D-SERVER のものか確認してください。"
 }

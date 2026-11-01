@@ -45,6 +45,9 @@ object Roles {
     fun canAdmin(role: String) = role == "admin"
 }
 
+/** True when `text` is one JSON value (an object or an array): what the API always answers with. */
+fun isJson(text: String): Boolean = runCatching { val v = org.json.JSONTokener(text).nextValue(); v is JSONObject || v is org.json.JSONArray }.getOrDefault(false)
+
 /** The pure part of the error of the server: its code and its detail, or what the status says. */
 fun describeError(status: Int, body: String): Pair<String, String> {
     val json = runCatching { JSONObject(body) }.getOrNull()
@@ -80,6 +83,8 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
                 val (code, detail) = describeError(status, text)
                 throw ApiException(status, code, detail.ifBlank { code })
             }
+            // another web service (a router, a proxy page) answers 200 with something that is not JSON: that is an error to show, not a crash
+            if (!isJson(text)) throw ApiException(status, "bad_json", "the answer is not JSON")
             text
         } finally { connection.disconnect() }
     }

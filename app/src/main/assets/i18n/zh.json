@@ -309,5 +309,9 @@
  "Continúa el trabajo %s": "接续作业 %s",
  "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "G 代码作业中的 GRBL $ 行：此机床允许。",
  "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "G 代码作业中的 GRBL $ 行：此机床不允许（由管理员在 Studio 中允许）。",
- "Solo se puede seguir desde un trabajo cancelado o fallido.": "只能从已取消或已失败的作业继续。"
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "只能从已取消或已失败的作业继续。",
+ "El código de alta no es correcto.": "设置代码不正确。",
+ "La contraseña debe tener de 8 a 128 caracteres.": "密码必须为 8 到 128 个字符。",
+ "El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.": "名称无效：字母、数字、点、下划线和连字符，最多 32 个字符。",
+ "El servidor no respondió con JSON: compruebe que la dirección es la de EH3D-SERVER.": "服务器没有以 JSON 响应：请检查地址是否为 EH3D-SERVER 的地址。"
 }

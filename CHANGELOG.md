@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **An answer that is not JSON** (another web service at the address) is an error on the screen, not a crash.
+- **Signing out closes the session on the server** (the call goes with the token that is being closed), and a slow refresh of another machine no longer paints its spindle or sensors on the page of this one.
+- Clearer messages for a wrong setup code, a weak password and a bad name, in the eight languages.
+
 ## [0.0.5] - Resume a stopped job and the GRBL switch in read only
 
 - **Go on from where a job stopped, with the file the server kept:** a job that failed or was cancelled (drilling, routing or G-code) has a button that asks the server (`resume-from`) for a new job made from the saved request, with the holes, paths or lines already done left out; the file is not picked again. The new job opens on its page, ready and never started, and says which job it goes on from. Messages for the new refusal `not_stopped` and for the new texts in the seven tables of languages. Written; Gradle was not run.

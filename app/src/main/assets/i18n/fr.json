@@ -309,5 +309,9 @@
  "Continúa el trabajo %s": "Poursuit le travail %s",
  "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "Lignes $ de GRBL dans les travaux G-code : autorisées sur cette machine.",
  "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "Lignes $ de GRBL dans les travaux G-code : non autorisées sur cette machine (un administrateur les autorise depuis Studio).",
- "Solo se puede seguir desde un trabajo cancelado o fallido.": "On ne peut reprendre qu'à partir d'un travail annulé ou échoué."
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "On ne peut reprendre qu'à partir d'un travail annulé ou échoué.",
+ "El código de alta no es correcto.": "Le code d'installation est incorrect.",
+ "La contraseña debe tener de 8 a 128 caracteres.": "Le mot de passe doit avoir de 8 à 128 caractères.",
+ "El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.": "Le nom n'est pas valide : lettres, chiffres, point, tiret bas et tiret, jusqu'à 32 caractères.",
+ "El servidor no respondió con JSON: compruebe que la dirección es la de EH3D-SERVER.": "Le serveur n'a pas répondu en JSON : vérifiez que l'adresse est celle d'EH3D-SERVER."
 }

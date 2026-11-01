@@ -183,7 +183,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signOut() {
         poller?.cancel()
-        viewModelScope.launch { api.logout() }
+        // the call that ends the session goes with the token that is being closed, not with the empty one set just below
+        val closing = Eh3dApi(origin, api.token)
+        viewModelScope.launch { closing.logout() }
         sessions.clear()
         credentials.clear()
         rememberMe = false
@@ -239,11 +241,17 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
             when (val p = page) {
                 is Page.Machine -> {
                     val active = now.machine(p.id)?.job
-                    if (active != null) job = api.job(active.id) else if (job?.summary?.machine != p.id) job = null
-                    if (!noHead && !qualityLooked && !qualityBusy) { qualityLooked = true; quality = try { api.lastInspection(p.id) } catch (error: ApiException) { null } }
-                    if (!spindleLooked) { spindleLooked = true; spindle = try { api.spindle(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null }; dollarAllowed = try { api.allowDollar(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null } }
-                    if (!noHead) try { head = api.head(p.id) } catch (error: ApiException) { if (error.code == "no_head") { noHead = true; head = null } }
-                    jobs = api.jobs(p.id)
+                    if (active != null) { val j = api.job(active.id); if (page == p) job = j } else if (job?.summary?.machine != p.id) job = null
+                    // every answer is kept only if the page is still this machine: a slow refresh of another one must not paint its data here
+                    if (!noHead && !qualityLooked && !qualityBusy) { val q = try { api.lastInspection(p.id) } catch (error: ApiException) { null }; if (page == p) { qualityLooked = true; quality = q } }
+                    if (!spindleLooked) {
+                        val s = try { api.spindle(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null }
+                        val d = try { api.allowDollar(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null }
+                        if (page == p) { spindleLooked = true; spindle = s; dollarAllowed = d }
+                    }
+                    if (!noHead) try { val h = api.head(p.id); if (page == p) head = h } catch (error: ApiException) { if (error.code == "no_head" && page == p) { noHead = true; head = null } }
+                    val list = api.jobs(p.id)
+                    if (page == p) jobs = list
                 }
                 is Page.JobPage -> job = api.job(p.id)
                 Page.Jobs -> jobs = api.jobs()
@@ -497,7 +505,11 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun errorText(error: ApiException): String = when {
         error.status == 0 -> tr("No se alcanza el servidor. Compruebe la dirección y que el teléfono está en la misma red.")
-        error.code == "invalid_credentials" || error.status == 401 -> tr("Usuario o contraseña incorrectos.")
+        error.code == "bad_credentials" || error.code == "invalid_credentials" || error.status == 401 -> tr("Usuario o contraseña incorrectos.")
+        error.code == "bad_setup" -> tr("El código de alta no es correcto.")
+        error.code == "weak_password" -> tr("La contraseña debe tener de 8 a 128 caracteres.")
+        error.code == "bad_name" -> tr("El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.")
+        error.code == "bad_json" -> tr("El servidor no respondió con JSON: compruebe que la dirección es la de EH3D-SERVER.")
         error.code == "throttled" -> tr("Demasiados intentos: espere un momento.")
         error.code == "machine_busy" -> tr("La máquina ya está trabajando.")
         error.code == "no_head" -> tr("Esta máquina no tiene nodo de cabezal.")

@@ -309,5 +309,9 @@
  "Continúa el trabajo %s": "Setzt den Auftrag %s fort",
  "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "$-Zeilen von GRBL in G-Code-Aufträgen: auf dieser Maschine erlaubt.",
  "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "$-Zeilen von GRBL in G-Code-Aufträgen: auf dieser Maschine nicht erlaubt (ein Administrator erlaubt sie in Studio).",
- "Solo se puede seguir desde un trabajo cancelado o fallido.": "Nur von einem abgebrochenen oder fehlgeschlagenen Auftrag aus kann fortgesetzt werden."
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "Nur von einem abgebrochenen oder fehlgeschlagenen Auftrag aus kann fortgesetzt werden.",
+ "El código de alta no es correcto.": "Der Einrichtungscode stimmt nicht.",
+ "La contraseña debe tener de 8 a 128 caracteres.": "Das Passwort muss 8 bis 128 Zeichen haben.",
+ "El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.": "Der Name ist ungültig: Buchstaben, Ziffern, Punkt, Unterstrich und Bindestrich, bis zu 32 Zeichen.",
+ "El servidor no respondió con JSON: compruebe que la dirección es la de EH3D-SERVER.": "Der Server hat nicht mit JSON geantwortet: prüfen, ob die Adresse die von EH3D-SERVER ist."
 }

@@ -12,6 +12,7 @@ import es.electrohobby3d.eh3d.model.parseAllowDollar
 import es.electrohobby3d.eh3d.model.parseMeasure
 import es.electrohobby3d.eh3d.network.Roles
 import es.electrohobby3d.eh3d.network.describeError
+import es.electrohobby3d.eh3d.network.isJson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -135,6 +136,14 @@ class ModelsTest {
     @Test fun theErrorOfTheServerIsItsCodeAndItsDetail() {
         assertEquals("machine_busy" to "one job at a time", describeError(409, """{"error":"machine_busy","detail":"one job at a time"}"""))
         assertEquals("http_502" to "", describeError(502, "<html>bad gateway</html>"))
+    }
+
+    @Test fun anAnswerThatIsNotJsonIsToldFromOneThatIs() {
+        assertTrue(isJson("""{"ok":true}"""))
+        assertTrue(isJson("""[]"""))
+        assertFalse(isJson("<html>router</html>"))
+        assertFalse(isJson(""))
+        assertFalse(isJson("200 OK"))
     }
 
     @Test fun aJobThatStoppedCanBeGoneOnFromAndSaysWhichJobItGoesOnFrom() {
