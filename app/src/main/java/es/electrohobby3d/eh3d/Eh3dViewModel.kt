@@ -95,6 +95,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The spindle of the machine on screen (null until the server has answered). */
     var spindle: SpindleInfo? by mutableStateOf(null); private set
     private var spindleLooked = false
+    /** Whether the machine on screen lets its G-code jobs carry the `$` lines of GRBL (null until the server has answered). */
+    var dollarAllowed: Boolean? by mutableStateOf(null); private set
     /** The job being prepared, and the text of the G-code programs started from here (to go on from the line where one stopped without choosing the file again). */
     var prepare by mutableStateOf(PrepareUi()); private set
     private val gcodeSources = HashMap<String, Pair<String, String>>()
@@ -200,7 +202,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun open(page: Page) {
         if (page == this.page) return
         stack.add(page)
-        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; dollarAllowed = null; noHead = false
         refreshNow()
     }
 
@@ -210,7 +212,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun back(): Boolean {
         if (stack.size <= 1) return false
         stack.removeAt(stack.size - 1)
-        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; noHead = false
+        job = null; head = null; measure = null; quality = null; qualityLooked = false; spindle = null; spindleLooked = false; dollarAllowed = null; noHead = false
         refreshNow()
         return true
     }
@@ -239,7 +241,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                     val active = now.machine(p.id)?.job
                     if (active != null) job = api.job(active.id) else if (job?.summary?.machine != p.id) job = null
                     if (!noHead && !qualityLooked && !qualityBusy) { qualityLooked = true; quality = try { api.lastInspection(p.id) } catch (error: ApiException) { null } }
-                    if (!spindleLooked) { spindleLooked = true; spindle = try { api.spindle(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null } }
+                    if (!spindleLooked) { spindleLooked = true; spindle = try { api.spindle(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null }; dollarAllowed = try { api.allowDollar(p.id) } catch (error: ApiException) { if (error.unauthorized) throw error else null } }
                     if (!noHead) try { head = api.head(p.id) } catch (error: ApiException) { if (error.code == "no_head") { noHead = true; head = null } }
                     jobs = api.jobs(p.id)
                 }
@@ -289,6 +291,18 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun pause(id: String) = act { api.pause(id) }
     fun resume(id: String) = act { api.resume(id) }
+
+    /** Goes on from a job that failed or was cancelled: the server made a new job from the request it kept (no file is asked for again), and it waits ready for a person to start it. */
+    fun goOn(summary: JobSummary) {
+        viewModelScope.launch {
+            try {
+                val next = api.resumeFrom(summary.id)
+                message = tr("Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.")
+                refresh()
+                open(Page.JobPage(next.summary.id))
+            } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else message = errorText(error) }
+        }
+    }
 
     // ---- preparing a job
     /** True when the text of the program that [id] ran is still known, so it can go on from its line without choosing the file again. */
@@ -494,6 +508,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "bad_spindle" -> tr("Husillo o límites no válidos.")
         error.code == "not_pausable" -> tr("Solo se puede pausar un trabajo de G-code.")
         error.code == "not_in_state" -> tr("El trabajo ya no está en un estado que permita eso.")
+        error.code == "not_stopped" -> tr("Solo se puede seguir desde un trabajo cancelado o fallido.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")

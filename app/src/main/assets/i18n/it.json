@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "Riavviare il mandrino e il refrigerante",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "Disattivato per sicurezza: mandrino e refrigerante non vengono accesi quando si prosegue.",
  "%d líneas se enviarán · estimado %s": "Verranno inviate %d righe · stimato %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Area: X da %.1f a %.1f · Y da %.1f a %.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Area: X da %.1f a %.1f · Y da %.1f a %.1f mm",
+ "Seguir desde donde se detuvo": "Riprendi da dove si è fermato",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "Il server ha conservato la richiesta: si crea un nuovo lavoro che esclude quanto già fatto, senza scegliere di nuovo il file. Attende che lo avvii e nulla si muove da solo.",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "È stato creato un nuovo lavoro da questo. Avvialo quando la macchina è pronta.",
+ "Continúa el trabajo %s": "Prosegue il lavoro %s",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "Righe $ di GRBL nei lavori G-code: consentite su questa macchina.",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "Righe $ di GRBL nei lavori G-code: non consentite su questa macchina (le consente un amministratore da Studio).",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "Si può riprendere solo da un lavoro annullato o fallito."
 }

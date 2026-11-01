@@ -8,6 +8,7 @@ import es.electrohobby3d.eh3d.model.parseHead
 import es.electrohobby3d.eh3d.model.rpmQualityPhrase
 import es.electrohobby3d.eh3d.model.parseJob
 import es.electrohobby3d.eh3d.model.parseJobs
+import es.electrohobby3d.eh3d.model.parseAllowDollar
 import es.electrohobby3d.eh3d.model.parseMeasure
 import es.electrohobby3d.eh3d.network.Roles
 import es.electrohobby3d.eh3d.network.describeError
@@ -134,5 +135,21 @@ class ModelsTest {
     @Test fun theErrorOfTheServerIsItsCodeAndItsDetail() {
         assertEquals("machine_busy" to "one job at a time", describeError(409, """{"error":"machine_busy","detail":"one job at a time"}"""))
         assertEquals("http_502" to "", describeError(502, "<html>bad gateway</html>"))
+    }
+
+    @Test fun aJobThatStoppedCanBeGoneOnFromAndSaysWhichJobItGoesOnFrom() {
+        assertTrue(JobStates.canGoOn("failed"))
+        assertTrue(JobStates.canGoOn("cancelled"))
+        for (state in listOf("ready", "connecting", "running", "waiting_operator", "done")) assertFalse(state, JobStates.canGoOn(state))
+        val made = parseJob("""{"id":"j2","machine":"m1","name":"board","kind":"drill","state":"ready","by":"ana","items_total":10,"items_done":0,"holes_total":2,"holes_done":0,
+            "line":0,"resumed_from":"j1","message":"","pause":null,"estimate_s":5.0,"created":1,"finished":null,"view":{"kind":"drill","items":10,"skipped":1}}""")
+        assertEquals("j1", made.summary.resumedFrom)
+        assertEquals("", parseJobs("""[{"id":"j3","machine":"m1","name":"a","kind":"gcode","state":"failed","by":"x"}]""").first().resumedFrom)
+    }
+
+    @Test fun theSwitchOfTheDollarLinesIsReadAndIsOffWhenTheServerDoesNotSay() {
+        assertTrue(parseAllowDollar("""{"id":"m1","allow_dollar":true}"""))
+        assertFalse(parseAllowDollar("""{"id":"m1","allow_dollar":false}"""))
+        assertFalse(parseAllowDollar("""{"id":"m1"}"""))
     }
 }

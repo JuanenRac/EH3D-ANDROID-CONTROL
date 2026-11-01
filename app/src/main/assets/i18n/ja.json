@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "スピンドルとクーラントを再び入れる",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "安全のためオフ：続行時にスピンドルとクーラントは入りません。",
  "%d líneas se enviarán · estimado %s": "%d行を送信 · 推定 %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "範囲：X %.1f〜%.1f · Y %.1f〜%.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "範囲：X %.1f〜%.1f · Y %.1f〜%.1f mm",
+ "Seguir desde donde se detuvo": "止まったところから続ける",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "サーバーが依頼内容を保存しています。完了済みの作業を除いた新しいジョブが作られ、ファイルを選び直す必要はありません。開始を待ち、勝手に動くことはありません。",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "このジョブから新しいジョブを作成しました。マシンの準備ができたら開始してください。",
+ "Continúa el trabajo %s": "ジョブ %s の続き",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "G コードジョブでの GRBL の $ 行：このマシンでは許可されています。",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "G コードジョブでの GRBL の $ 行：このマシンでは許可されていません（管理者が Studio から許可します）。",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "キャンセルまたは失敗したジョブからのみ続行できます。"
 }

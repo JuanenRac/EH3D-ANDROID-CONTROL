@@ -115,6 +115,12 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     suspend fun pause(id: String) { call("/jobs/${q(id)}/pause", "POST", "{}") }
     suspend fun resume(id: String) { call("/jobs/${q(id)}/resume", "POST", "{}") }
 
+    /** Makes a new job, ready and not started, from the request the server kept for a cancelled or failed one, with the work already done left out: the file is not asked for again. */
+    suspend fun resumeFrom(id: String): Job = parseJob(call("/jobs/${q(id)}/resume-from", "POST", "{}"))
+
+    /** The switch of the machine for the `$` lines of GRBL (read only here: an administrator changes it in Studio). */
+    suspend fun allowDollar(machine: String): Boolean = parseAllowDollar(call("/machines/${q(machine)}"))
+
     /** Plans a job and answers its view, creating nothing: the tools of the file, the holes, the lines of a G-code program. */
     suspend fun preview(machine: String, body: String): JobView = parsePreview(call("/machines/${q(machine)}/preview", "POST", body))
 

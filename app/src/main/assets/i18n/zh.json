@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "重新启动主轴和冷却液",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "出于安全默认关闭：继续时不会开启主轴和冷却液。",
  "%d líneas se enviarán · estimado %s": "将发送 %d 行 · 预计 %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "范围：X %.1f 至 %.1f · Y %.1f 至 %.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "范围：X %.1f 至 %.1f · Y %.1f 至 %.1f mm",
+ "Seguir desde donde se detuvo": "从停止处继续",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "服务器保存了请求内容：会新建一个跳过已完成部分的作业，无需再次选择文件。它会等待你启动，不会自行移动。",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "已根据此作业新建了一个作业。机床准备好后再启动它。",
+ "Continúa el trabajo %s": "接续作业 %s",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "G 代码作业中的 GRBL $ 行：此机床允许。",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "G 代码作业中的 GRBL $ 行：此机床不允许（由管理员在 Studio 中允许）。",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "只能从已取消或已失败的作业继续。"
 }

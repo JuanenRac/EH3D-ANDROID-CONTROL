@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "Remettre en marche la broche et le liquide de refroidissement",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "Désactivé par sécurité : la broche et le liquide de refroidissement ne sont pas rallumés en continuant.",
  "%d líneas se enviarán · estimado %s": "%d lignes seront envoyées · estimé %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Zone : X %.1f à %.1f · Y %.1f à %.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Zone : X %.1f à %.1f · Y %.1f à %.1f mm",
+ "Seguir desde donde se detuvo": "Reprendre là où il s'est arrêté",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "Le serveur a gardé la demande : un nouveau travail est créé sans ce qui est déjà fait, sans rechoisir le fichier. Il attend que vous le démarriez et rien ne bouge tout seul.",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "Un nouveau travail a été créé à partir de celui-ci. Démarrez-le quand la machine est prête.",
+ "Continúa el trabajo %s": "Poursuit le travail %s",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "Lignes $ de GRBL dans les travaux G-code : autorisées sur cette machine.",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "Lignes $ de GRBL dans les travaux G-code : non autorisées sur cette machine (un administrateur les autorise depuis Studio).",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "On ne peut reprendre qu'à partir d'un travail annulé ou échoué."
 }

@@ -20,6 +20,8 @@ private fun pauseOf(json: JSONObject?): Pause? = json?.let { Pause(it.str("kind"
 
 /** The states a job passes through: ready, connecting, running, waiting_operator, done, cancelled, failed. */
 object JobStates {
+    /** A job that stopped before the end (cancelled or failed): a new one can go on from it, with the work done left out. */
+    fun canGoOn(state: String) = state == "cancelled" || state == "failed"
     fun active(state: String) = state == "connecting" || state == "running" || state == "waiting_operator"
     fun finished(state: String) = state == "done" || state == "cancelled" || state == "failed"
 }
@@ -65,6 +67,8 @@ data class JobSummary(
     val itemsTotal: Int, val itemsDone: Int, val holesTotal: Int, val holesDone: Int, val message: String, val pause: Pause?, val estimateS: Double, val created: Long, val finished: Long?,
     /** For a G-code job, the line of the program it has got to (where a job that goes on starts from); 0 for the others and for an older server. */
     val line: Int = 0,
+    /** The job this one goes on from (made by `resume-from`); empty for the others and for an older server. */
+    val resumedFrom: String = "",
 ) {
     val percent: Int get() = if (itemsTotal <= 0) 0 else (itemsDone * 100 / itemsTotal).coerceIn(0, 100)
 }
@@ -72,7 +76,7 @@ data class JobSummary(
 private fun summaryOf(j: JSONObject) = JobSummary(
     j.str("id"), j.str("machine"), j.str("name"), j.str("kind"), j.str("state"), j.str("by"),
     j.int("items_total"), j.int("items_done"), j.int("holes_total"), j.int("holes_done"), j.str("message"), pauseOf(j.optJSONObject("pause")), j.dbl("estimate_s") ?: 0.0,
-    j.optLong("created"), if (j.has("finished") && !j.isNull("finished")) j.optLong("finished") else null, j.int("line"),
+    j.optLong("created"), if (j.has("finished") && !j.isNull("finished")) j.optLong("finished") else null, j.int("line"), j.str("resumed_from"),
 )
 
 fun parseJobs(text: String): List<JobSummary> {
@@ -149,6 +153,9 @@ fun parseJob(text: String): Job {
     val v = j.optJSONObject("view")
     return Job(summaryOf(j), if (v == null) JobView.EMPTY else parseView(v))
 }
+
+/** Whether the server lets the G-code jobs of a machine carry the `$` lines of GRBL (`allow_dollar` of the machine; an older server does not say, which is the same as no). */
+fun parseAllowDollar(text: String): Boolean = JSONObject(text).optBoolean("allow_dollar", false)
 
 /** The answer of a preview: the view itself, or a job that carries it in `view`. */
 fun parsePreview(text: String): JobView {

@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "Start the spindle and the coolant again",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "Off for safety: the spindle and the coolant are not switched on when it goes on.",
  "%d líneas se enviarán · estimado %s": "%d lines will be sent · estimated %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Area: X %.1f to %.1f · Y %.1f to %.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Area: X %.1f to %.1f · Y %.1f to %.1f mm",
+ "Seguir desde donde se detuvo": "Go on from where it stopped",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "The server kept what was asked: a new job is made that leaves out the work already done, without picking the file again. It waits for you to start it and nothing moves on its own.",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "A new job was made from this one. Start it when the machine is ready.",
+ "Continúa el trabajo %s": "Goes on from job %s",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "GRBL $ lines in G-code jobs: allowed on this machine.",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "GRBL $ lines in G-code jobs: not allowed on this machine (an administrator allows them from Studio).",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "Only a job that was cancelled or failed can be gone on from."
 }

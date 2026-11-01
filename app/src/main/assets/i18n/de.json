@@ -302,5 +302,12 @@
  "Volver a poner en marcha el husillo y el refrigerante": "Spindel und Kühlmittel wieder einschalten",
  "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "Aus Sicherheitsgründen aus: Spindel und Kühlmittel werden beim Fortsetzen nicht eingeschaltet.",
  "%d líneas se enviarán · estimado %s": "%d Zeilen werden gesendet · geschätzt %s",
- "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Bereich: X %.1f bis %.1f · Y %.1f bis %.1f mm"
+ "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "Bereich: X %.1f bis %.1f · Y %.1f bis %.1f mm",
+ "Seguir desde donde se detuvo": "Vom Stopp aus fortfahren",
+ "El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo.": "Der Server hat die Anfrage gespeichert: Es entsteht ein neuer Auftrag ohne die bereits erledigte Arbeit, ohne die Datei erneut zu wählen. Er wartet auf Ihren Start, nichts bewegt sich von selbst.",
+ "Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.": "Aus diesem Auftrag wurde ein neuer erstellt. Starten Sie ihn, wenn die Maschine bereit ist.",
+ "Continúa el trabajo %s": "Setzt den Auftrag %s fort",
+ "Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.": "$-Zeilen von GRBL in G-Code-Aufträgen: auf dieser Maschine erlaubt.",
+ "Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio).": "$-Zeilen von GRBL in G-Code-Aufträgen: auf dieser Maschine nicht erlaubt (ein Administrator erlaubt sie in Studio).",
+ "Solo se puede seguir desde un trabajo cancelado o fallido.": "Nur von einem abgebrochenen oder fehlgeschlagenen Auftrag aus kann fortgesetzt werden."
 }

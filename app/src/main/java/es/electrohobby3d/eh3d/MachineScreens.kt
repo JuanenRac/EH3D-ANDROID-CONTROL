@@ -168,6 +168,7 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
         }
         // the drill head: the camera and what the node reads
         if (model.spindle != null) item { SpindleCard(model, id) }
+        model.dollarAllowed?.let { allowed -> if (model.fleet.machine(id)?.connection != "node") item { Text(if (allowed) tr("Líneas $ de GRBL en los trabajos de G-code: permitidas en esta máquina.") else tr("Líneas $ de GRBL en los trabajos de G-code: no permitidas en esta máquina (las permite un administrador desde Studio)."), color = if (allowed) Forge.Orange else Forge.Dim, style = MaterialTheme.typography.bodySmall) } }
         if (!model.noHead) item { HeadCard(model, id) }
         if (!model.noHead && model.head?.camera == true) item { QualityCard(model, id) }
         item {
@@ -292,11 +293,12 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                     if (s.kind == "gcode" && s.state == "running") OutlinedButton({ model.pause(s.id) }, enabled = model.canOperate) { Text(tr("Pausar")) }
                     if (s.state == "waiting_operator" && s.kind == "gcode") Button({ model.resume(s.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
                     else if (s.state == "waiting_operator") Button({ model.confirm(s.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
-                    if (s.kind == "gcode" && (s.state == "failed" || s.state == "cancelled")) OutlinedButton({ model.openResume(s) }, enabled = model.canOperate) { Text(trf("Continuar desde la línea %d", s.line)) }
+                    if (JobStates.canGoOn(s.state)) OutlinedButton({ model.goOn(s) }, enabled = model.canOperate) { Text(tr("Seguir desde donde se detuvo")) }
                     if (!JobStates.active(s.state)) OutlinedButton({ askDelete = true }, enabled = model.canOperate) { Text(tr("Borrar")) }
                 }
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }
-                if (s.kind == "gcode" && (s.state == "failed" || s.state == "cancelled")) Text(if (model.knowsProgram(s.id)) tr("Se vuelve a preparar el mismo programa desde esa línea; la máquina espera su confirmación antes de moverse.") else tr("Se pedirá el mismo archivo de G-code otra vez; el trabajo seguirá desde esa línea y la máquina esperará su confirmación antes de moverse."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                if (JobStates.canGoOn(s.state)) Text(tr("El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                if (s.resumedFrom.isNotBlank()) Text(trf("Continúa el trabajo %s", s.resumedFrom), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.state == "ready") Text(tr("Un trabajo nunca arranca solo: pulse Empezar con la máquina preparada."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }
         }

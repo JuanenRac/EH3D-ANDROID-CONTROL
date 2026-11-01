@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Go on from where a job stopped, with the file the server kept:** a job that failed or was cancelled (drilling, routing or G-code) has a button that asks the server (`resume-from`) for a new job made from the saved request, with the holes, paths or lines already done left out; the file is not picked again. The new job opens on its page, ready and never started, and says which job it goes on from. Messages for the new refusal `not_stopped` and for the new texts in the seven tables of languages. Written; Gradle was not run.
+- **The switch of the `$` lines of GRBL, read only:** the page of a machine that takes G-code says whether the administrator allowed the `$` lines of GRBL (`$H` and the like) for that machine; it is changed in Studio. An older server that does not say is read as not allowed.
+- 2 tests more (the job that can be gone on from and the switch), written and not run.
+
 ## [0.0.4] - Prepare a job, G-code jobs and the sensors of the drill head
 
 - **Prepare job:** the page of a free machine has a Prepare job page. Choose what is done (drilling, routing, both or a free G-code program; a machine takes only what its connection allows), pick the file with the system file picker (the server has no list of files, so the text of the file is sent in the request that plans the job; an optional tool table can be picked too), and the server plans it without creating anything. The page lists the tools of the file in the order the job does them, with the count of holes or paths, the diameter when an Excellon file declares it and the spindle speed; switch tools off (`skip_tools`) or start at one tool (the ones before it in the order of the job are left out, as in BUNGARD-GUI); the spindle warnings of the plan are shown. Start asks for a confirmation, creates the job and starts it. With both, a drilling job and a routing job are created and the first starts; the second stays ready in the Jobs tab, because a job never starts by itself.
