@@ -12,9 +12,17 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import es.electrohobby3d.eh3d.model.Notice
+import es.electrohobby3d.eh3d.model.NoticeKind
 
 object Notifier {
     private const val CHANNEL = "machines"
+
+    /** The notice for a change of the fleet (the same text whether the app watches or the periodic job does). */
+    fun showNotice(context: Context, n: Notice) = show(
+        context, n.machineId.hashCode(), n.machineName,
+        if (n.kind == NoticeKind.Waiting) tr("Espera al operario: confirme el paso en la máquina.") else tr("El trabajo ha terminado o se ha detenido."),
+    )
 
     fun show(context: Context, id: Int, title: String, text: String) {
         if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return

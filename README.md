@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Sign in to the EH3D-SERVER of the workshop and follow a real job.
 * Show the true position of the head when the server reports it.
-* Notices when the app is closed (a push channel of the server).
+* Notices when the app is closed come from a periodic job (every 15 minutes at best, the least Android allows), not in real time; a push channel of the server would make them immediate and does not exist yet.
 * Choose the file from the files kept on the server instead of the phone (the server has no list of files yet).
 
 ## 🌍 Languages

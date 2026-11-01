@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Se connecter au EH3D-SERVER de l'atelier et suivre un vrai travail.
 * Montrer la vraie position de la tête quand le serveur la signalera.
-* Des avis avec l'application fermée (un canal push du serveur).
+* Les avis quand l'appli est fermée viennent d'une tâche périodique (toutes les 15 minutes au mieux, le minimum qu'Android permet), pas en temps réel ; un canal push du serveur les rendrait immédiats et n'existe pas encore.
 * Choisir le fichier parmi ceux gardés sur le serveur plutôt que sur le téléphone (le serveur n'a pas encore de liste de fichiers).
 
 ## 🌍 Langues

@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Entrar en el EH3D-SERVER del taller y seguir un trabajo real.
 * Mostrar la posición real del cabezal cuando el servidor la informe.
-* Avisos con la app cerrada (un canal push del servidor).
+* Los avisos con la app cerrada vienen de una tarea periódica (cada 15 minutos como mucho, lo mínimo que permite Android), no en tiempo real; un canal push del servidor los haría inmediatos y aún no existe.
 * Elegir el archivo entre los guardados en el servidor en vez de en el teléfono (el servidor aún no tiene lista de archivos).
 
 ## 🌍 Idiomas

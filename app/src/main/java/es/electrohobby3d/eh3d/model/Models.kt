@@ -46,6 +46,29 @@ data class Fleet(val machines: List<FleetMachine>, val idle: Int, val busy: Int,
     fun machine(id: String): FleetMachine? = machines.firstOrNull { it.id == id }
 }
 
+/** What a change in the fleet tells the operator: a machine that now waits for the operator, or one whose job ended or stopped. */
+enum class NoticeKind { Waiting, Ended }
+
+data class Notice(val machineId: String, val machineName: String, val kind: NoticeKind)
+
+/** The state of every machine as the notices compare it: the state of its job, else its own. */
+fun fleetStates(fleet: Fleet): Map<String, String> = fleet.machines.associate { it.id to (it.job?.state ?: it.state) }
+
+/** The notices between the states that were seen before and the fleet now; nothing when there was nothing to compare with. */
+fun fleetNotices(before: Map<String, String>, now: Fleet): List<Notice> {
+    if (before.isEmpty()) return emptyList()
+    val current = fleetStates(now)
+    return now.machines.mapNotNull { m ->
+        val was = before[m.id] ?: return@mapNotNull null
+        val after = current.getValue(m.id)
+        when {
+            was != after && after == "waiting_operator" -> Notice(m.id, m.name, NoticeKind.Waiting)
+            was != after && m.job == null && JobStates.active(was) -> Notice(m.id, m.name, NoticeKind.Ended)
+            else -> null
+        }
+    }
+}
+
 fun parseFleet(text: String): Fleet {
     val root = JSONObject(text)
     val list = root.optJSONArray("machines") ?: JSONArray()

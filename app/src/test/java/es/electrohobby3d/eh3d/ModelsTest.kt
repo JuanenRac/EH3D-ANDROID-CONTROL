@@ -1,6 +1,9 @@
 package es.electrohobby3d.eh3d
 
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.NoticeKind
+import es.electrohobby3d.eh3d.model.fleetNotices
+import es.electrohobby3d.eh3d.model.fleetStates
 import es.electrohobby3d.eh3d.model.JobStates
 import es.electrohobby3d.eh3d.model.parseFleet
 import es.electrohobby3d.eh3d.model.laserStatusPhrase
@@ -136,6 +139,15 @@ class ModelsTest {
     @Test fun theErrorOfTheServerIsItsCodeAndItsDetail() {
         assertEquals("machine_busy" to "one job at a time", describeError(409, """{"error":"machine_busy","detail":"one job at a time"}"""))
         assertEquals("http_502" to "", describeError(502, "<html>bad gateway</html>"))
+    }
+
+    @Test fun aMachineThatWaitsOrWhoseJobEndedIsTold() {
+        fun fleet(state: String, jobState: String?) = parseFleet("""{"machines":[{"id":"m1","name":"Bungard","state":"$state","job":${if (jobState == null) "null" else """{"id":"j","state":"$jobState"}"""}}]}""")
+        val running = fleetStates(fleet("busy", "running"))
+        assertTrue(fleetNotices(emptyMap(), fleet("waiting", "waiting_operator")).isEmpty())
+        assertEquals(NoticeKind.Waiting, fleetNotices(running, fleet("waiting", "waiting_operator")).single().kind)
+        assertEquals(NoticeKind.Ended, fleetNotices(running, fleet("idle", null)).single().kind)
+        assertTrue(fleetNotices(running, fleet("busy", "running")).isEmpty())
     }
 
     @Test fun anAnswerThatIsNotJsonIsToldFromOneThatIs() {

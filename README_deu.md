@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Sich am EH3D-SERVER der Werkstatt anmelden und einen echten Auftrag verfolgen.
 * Die wahre Position des Kopfes zeigen, sobald der Server sie meldet.
-* Meldungen bei geschlossener App (ein Push-Kanal des Servers).
+* Hinweise bei geschlossener App kommen von einer periodischen Aufgabe (höchstens alle 15 Minuten, das Minimum, das Android erlaubt), nicht in Echtzeit; ein Push-Kanal des Servers würde sie sofort machen und existiert noch nicht.
 * Die Datei aus den auf dem Server gespeicherten wählen statt vom Telefon (der Server hat noch keine Dateiliste).
 
 ## 🌍 Sprachen

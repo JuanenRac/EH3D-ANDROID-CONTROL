@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Accedere all'EH3D-SERVER dell'officina e seguire un lavoro reale.
 * Mostrare la posizione vera della testa quando il server la riporterà.
-* Avvisi con l'app chiusa (un canale push del server).
+* Gli avvisi con l'app chiusa arrivano da un'attività periodica (ogni 15 minuti al meglio, il minimo che Android consente), non in tempo reale; un canale push del server li renderebbe immediati e non esiste ancora.
 * Scegliere il file tra quelli conservati sul server invece che dal telefono (il server non ha ancora un elenco di file).
 
 ## 🌍 Lingue

@@ -196,7 +196,7 @@ EH3D-ANDROID-CONTROL/
 
 * Entrar no EH3D-SERVER da oficina e seguir um trabalho real.
 * Mostrar a posição verdadeira do cabeçote quando o servidor a informar.
-* Avisos com a aplicação fechada (um canal push do servidor).
+* Os avisos com a app fechada vêm de uma tarefa periódica (de 15 em 15 minutos no melhor caso, o mínimo que o Android permite), não em tempo real; um canal push do servidor tornava-os imediatos e ainda não existe.
 * Escolher o ficheiro entre os guardados no servidor em vez do telemóvel (o servidor ainda não tem lista de ficheiros).
 
 ## 🌍 Idiomas

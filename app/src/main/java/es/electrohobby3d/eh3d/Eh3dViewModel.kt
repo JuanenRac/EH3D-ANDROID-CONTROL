@@ -11,6 +11,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.fleetNotices
+import es.electrohobby3d.eh3d.model.fleetStates
 import es.electrohobby3d.eh3d.model.HeadStatus
 import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.Job
@@ -178,11 +180,13 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         preferences.edit().putString("origin", origin).apply()
         message = null
         phase = Phase.SignedIn
+        FleetWatch.schedule(getApplication())
         poll()
     }
 
     fun signOut() {
         poller?.cancel()
+        FleetWatch.cancel(getApplication())
         // the call that ends the session goes with the token that is being closed, not with the empty one set just below
         val closing = Eh3dApi(origin, api.token)
         viewModelScope.launch { closing.logout() }
@@ -262,18 +266,12 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun signOutQuietly() { api.token = ""; login = null; phase = Phase.SignedOut; poller?.cancel() }
+    private fun signOutQuietly() { FleetWatch.cancel(getApplication()); api.token = ""; login = null; phase = Phase.SignedOut; poller?.cancel() }
 
     /** A machine that stops, finishes or waits for the operator is told in a notice, once. */
     private fun raise(now: Fleet) {
-        val current = now.machines.associate { it.id to (it.job?.state ?: it.state) }
-        if (lastStates.isNotEmpty()) for (m in now.machines) {
-            val before = lastStates[m.id] ?: continue
-            val after = current.getValue(m.id)
-            if (before != after && after == "waiting_operator") Notifier.show(getApplication(), m.id.hashCode(), m.name, tr("Espera al operario: confirme el paso en la máquina."))
-            if (before != after && m.job == null && JobStates.active(before)) Notifier.show(getApplication(), m.id.hashCode(), m.name, tr("El trabajo ha terminado o se ha detenido."))
-        }
-        lastStates = current
+        for (n in fleetNotices(lastStates, now)) Notifier.showNotice(getApplication(), n)
+        lastStates = fleetStates(now)
     }
 
     // ---- what the buttons do
