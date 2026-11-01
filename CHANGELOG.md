@@ -4,6 +4,7 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Starting a job from its page asks once more** (check that the machine is prepared and clear), as it does from Prepare, with the same words in every language; a touch by mistake no longer sets the machine going.
 - **The emergency stop asks the server to stop the machine** (`POST /machines/:id/stop`), whether or not the app knows which job runs on it, and shows the error if it did not get there; the camera asks for a one-use ticket instead of putting the token of the session in the address.
 
 - **Notices with the app closed:** a periodic job (WorkManager, every 15 minutes at best) asks the server with the session kept in the vault and tells a machine that waits for the operator or a job that ended; signing out stops it. The rule that decides what is told is one function used by the screen and by the job.

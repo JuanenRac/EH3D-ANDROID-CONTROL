@@ -256,6 +256,7 @@ fun JobsPage(model: Eh3dViewModel) {
 fun JobPage(model: Eh3dViewModel, id: String) {
     val job = model.job?.takeIf { it.summary.id == id }
     var askStop by remember { mutableStateOf(false) }
+    var askStart by remember { mutableStateOf(false) }
     var askDelete by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         TextButton({ model.back() }) { Text("‹ " + tr("Volver")) }
@@ -288,7 +289,7 @@ fun JobPage(model: Eh3dViewModel, id: String) {
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (s.state == "ready") Button({ model.start(s.id) }, enabled = model.canOperate) { Text(tr("Empezar")) }
+                    if (s.state == "ready") Button({ askStart = true }, enabled = model.canOperate) { Text(tr("Empezar")) }
                     if (JobStates.active(s.state)) Button({ askStop = true }, enabled = model.canOperate, colors = ButtonDefaults.buttonColors(containerColor = Forge.Danger, contentColor = Color.White)) { Text(tr("PARAR")) }
                     if (s.kind == "gcode" && s.state == "running") OutlinedButton({ model.pause(s.id) }, enabled = model.canOperate) { Text(tr("Pausar")) }
                     if (s.state == "waiting_operator" && s.kind == "gcode") Button({ model.resume(s.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
@@ -304,6 +305,12 @@ fun JobPage(model: Eh3dViewModel, id: String) {
         }
     }
     if (askStop) StopDialog(trf("Se cancelará %s.", job?.summary?.name.orEmpty()), onConfirm = { askStop = false; model.cancel(id) }, onDismiss = { askStop = false })
+    // starting asks the same question here as from Prepare: a touch by mistake must not set the machine going
+    if (askStart) androidx.compose.material3.AlertDialog(
+        onDismissRequest = { askStart = false }, containerColor = Forge.Panel, title = { Text(tr("Empezar el trabajo")) },
+        text = { Text(tr("Compruebe que la máquina está preparada y despejada. El trabajo empieza ahora.")) },
+        confirmButton = { Button({ askStart = false; model.start(id) }) { Text(tr("Empezar")) } }, dismissButton = { TextButton({ askStart = false }) { Text(tr("Cancelar")) } },
+    )
     if (askDelete) androidx.compose.material3.AlertDialog(
         onDismissRequest = { askDelete = false }, containerColor = Forge.Panel, title = { Text(tr("Borrar el trabajo")) }, text = { Text(tr("No se puede deshacer.")) },
         confirmButton = { Button({ askDelete = false; model.delete(id) }) { Text(tr("Borrar")) } }, dismissButton = { TextButton({ askDelete = false }) { Text(tr("Cancelar")) } },
