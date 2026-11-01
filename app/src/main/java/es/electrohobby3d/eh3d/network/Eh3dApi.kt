@@ -14,6 +14,7 @@ import es.electrohobby3d.eh3d.model.parseRingLight
 import es.electrohobby3d.eh3d.model.Job
 import es.electrohobby3d.eh3d.model.JobSummary
 import es.electrohobby3d.eh3d.model.Measure
+import es.electrohobby3d.eh3d.model.parseAllowDollar
 import es.electrohobby3d.eh3d.model.parseFleet
 import es.electrohobby3d.eh3d.model.parseHead
 import es.electrohobby3d.eh3d.model.parseJob
