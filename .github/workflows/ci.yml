@@ -27,7 +27,7 @@ jobs:
           python -I tools/make_structure.py --check --readmes
 
   tests:
-    name: Unit tests on the JVM
+    name: Tests, lint and the debug APK
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -37,5 +37,12 @@ jobs:
           java-version: "21"
       - name: Make the Gradle wrapper executable
         run: chmod +x gradlew
-      - name: Test
-        run: ./gradlew test --no-daemon
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Tests, lint and the debug APK
+        run: ./gradlew check assembleDebug --no-daemon
+      - name: Keep the debug APK
+        uses: actions/upload-artifact@v5
+        with:
+          name: eh3d-android-control-debug
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
