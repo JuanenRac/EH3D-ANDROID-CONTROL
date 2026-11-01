@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.0.5] - Resume a stopped job and the GRBL switch in read only
+
 - **Go on from where a job stopped, with the file the server kept:** a job that failed or was cancelled (drilling, routing or G-code) has a button that asks the server (`resume-from`) for a new job made from the saved request, with the holes, paths or lines already done left out; the file is not picked again. The new job opens on its page, ready and never started, and says which job it goes on from. Messages for the new refusal `not_stopped` and for the new texts in the seven tables of languages. Written; Gradle was not run.
 - **The switch of the `$` lines of GRBL, read only:** the page of a machine that takes G-code says whether the administrator allowed the `$` lines of GRBL (`$H` and the like) for that machine; it is changed in Studio. An older server that does not say is read as not allowed.
 - 2 tests more (the job that can be gone on from and the switch), written and not run.
