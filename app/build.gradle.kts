@@ -1,7 +1,7 @@
 plugins { id("com.android.application"); id("org.jetbrains.kotlin.plugin.compose") }
 
 android { namespace = "es.electrohobby3d.eh3d"; compileSdk = 37
-    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 7; versionName = "0.0.7" }
+    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 8; versionName = "0.0.8" }
     buildFeatures { compose = true; buildConfig = true }
     // The release is shrunk and obfuscated (R8). Signing is not done here: the APK is signed afterwards with the maintainer's own key, kept outside the repository.
     buildTypes { release { isMinifyEnabled = true; isShrinkResources = true; proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro") } }

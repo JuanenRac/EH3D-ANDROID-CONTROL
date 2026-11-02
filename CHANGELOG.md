@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.0.8] - Summary before a start, an honest link and shared test cases
+
 - **A summary before a job starts:** the dry run of the exact plan (how far each axis goes, the steps and the time) and the warnings of the server (a work that looks tiny, too big, far from the corner, stretched or past the course of an axis) are read, and Start shows what the job does, how long it takes, how far each axis goes and what looks wrong, with Start and Cancel; a setting turns it off (on by default) and then Start only asks once more.
 - **The refusal `outside_course` has its own clear text** in the eight languages (the plan takes an axis past its course; move the work on the table or let the machine's tuning warn).
 - **The state of the connection is told honestly:** connected, data that is getting old (with its age after five seconds), no connection only after two failures in a row (one blink of the Wi-Fi no longer shows it), and an address that answers another service; the retries slow down from 1.5 s to 10 s while the server is away and a button tries again now.
