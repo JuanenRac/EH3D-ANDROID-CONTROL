@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **A summary before a job starts:** the dry run of the exact plan (how far each axis goes, the steps and the time) and the warnings of the server (a work that looks tiny, too big, far from the corner, stretched or past the course of an axis) are read, and Start shows what the job does, how long it takes, how far each axis goes and what looks wrong, with Start and Cancel; a setting turns it off (on by default) and then Start only asks once more.
+- **The refusal `outside_course` has its own clear text** in the eight languages (the plan takes an axis past its course; move the work on the table or let the machine's tuning warn).
+- **The state of the connection is told honestly:** connected, data that is getting old (with its age after five seconds), no connection only after two failures in a row (one blink of the Wi-Fi no longer shows it), and an address that answers another service; the retries slow down from 1.5 s to 10 s while the server is away and a button tries again now.
+- **Pressing the stop without a connection warns** that the order may not arrive and to use the physical stop of the machine; a stop that did not reach the server says so plainly, and after a stop that did, the app says it was sent, then confirmed or that the machine still works.
+- **Case files shared with the other phone app:** the summary, the link, the failures, the stops, the notices, the addresses and the fields of the answers are tested from the same files in both apps, and a field that the server adds to its examples fails the test until the app reads it or says it ignores it.
+- **A job says who started it and who stopped it:** the page of a job shows who stopped it (the server now sends both names).
+- **Differences between the two phone apps are written down** in `docs/PLATFORM_DIFFERENCES.md`.
 - **The answers of the server are read in the tests from its own examples:** the fleet, the jobs, a job, the preview, the spindle and an error are the files that the tests of the server make, so a change in the answers that the app does not follow fails here.
 - **Issue forms and a pull-request template:** the repository now has the bug report (it asks for the versions that `eh3d-updater --cli status --offline` lists), documentation, improvement and hardware validation forms (with the machine used) and the pull-request template of the suite.
 
