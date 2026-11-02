@@ -96,7 +96,9 @@ fun PreparePage(model: Eh3dViewModel, machineId: String) {
             Text(tr("Un trabajo nunca arranca solo: se pone en marcha cuando usted lo confirma."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
     }
-    if (askStart) AlertDialog(
+    val planned = when (p.work) { Work.Gcode -> listOfNotNull(p.gcodeView); Work.Drill -> listOfNotNull(p.drill.view); Work.Route -> listOfNotNull(p.route.view); else -> listOfNotNull(p.drill.view, p.route.view) }
+    if (askStart && model.confirmStart && planned.isNotEmpty()) StartSummaryDialog(planned, onStart = { askStart = false; model.startPrepared(machineId) }, onCancel = { askStart = false })
+    else if (askStart) AlertDialog(
         onDismissRequest = { askStart = false }, containerColor = Forge.Panel, title = { Text(tr("Empezar el trabajo")) },
         text = { Text(tr("Compruebe que la máquina está preparada y despejada. El trabajo empieza ahora.")) },
         confirmButton = { Button({ askStart = false; model.startPrepared(machineId) }) { Text(tr("Empezar")) } },

@@ -17,6 +17,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -60,6 +61,11 @@ fun MorePage(model: Eh3dViewModel) {
                 Text(tr("Tema"), Modifier.weight(1f), color = Forge.Text)
                 Text("Forge", color = Forge.Amber)
             }
+            Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(tr("Mostrar el resumen antes de empezar un trabajo"), Modifier.weight(1f), color = Forge.Text)
+                Switch(model.confirmStart, { model.chooseConfirmStart(it) })
+            }
+            Text(tr("Activado por defecto: qué hace el trabajo, cuánto tarda, hasta dónde llegan los ejes y qué parece mal, con un botón para empezar. Desactivado: Empezar solo pide una confirmación."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
         Card {
             Row(Modifier.fillMaxWidth().clickable { model.open(Page.Help) }.padding(vertical = 6.dp)) { Text(tr("Ayuda"), color = Forge.Text) }

@@ -38,6 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import es.electrohobby3d.eh3d.model.FleetMachine
+import es.electrohobby3d.eh3d.model.LinkState
+import es.electrohobby3d.eh3d.model.StopOutcome
 import es.electrohobby3d.eh3d.model.formatDuration
 
 /** The colour and the word of the state of a machine: it works (amber), waits for the operator (orange) or is free (green). */
@@ -52,7 +54,14 @@ fun machineState(m: FleetMachine): Pair<String, Color> = when (m.state) {
 fun AppFrame(model: Eh3dViewModel) {
     val page = model.page
     Column(Modifier.fillMaxSize()) {
-        if (model.offline) Text(tr("Sin conexión con el servidor: se muestra lo último que se supo."), Modifier.fillMaxWidth().background(Forge.Danger.copy(alpha = 0.2f)).padding(8.dp), color = Forge.Danger, style = MaterialTheme.typography.bodySmall)
+        LinkBanner(model)
+        model.stopNotes.forEach { note ->
+            val color = when (note.outcome) { StopOutcome.Confirmed -> Forge.Green; StopOutcome.StillWorking -> Forge.Danger; StopOutcome.Sent -> Forge.Orange }
+            Row(Modifier.fillMaxWidth().background(color.copy(alpha = 0.2f)).padding(horizontal = 8.dp, vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(stopNoteText(note), Modifier.weight(1f), color = color, style = MaterialTheme.typography.bodySmall)
+                TextButton({ model.dismissStopNote(note.machineId) }) { Text(tr("Cerrar")) }
+            }
+        }
         Column(Modifier.weight(1f)) {
             when (page) {
                 Page.Home -> HomePage(model)
@@ -78,6 +87,18 @@ fun AppFrame(model: Eh3dViewModel) {
     }
 }
 
+/** The banner under the top of the screen when the link to the server is not good: what is wrong, how old the data is and a button to try again now. */
+@Composable
+fun LinkBanner(model: Eh3dViewModel) {
+    val state = model.linkState
+    val text = linkBanner(model.link, state) ?: return
+    val color = if (state == LinkState.Stale) Forge.Orange else Forge.Danger
+    Row(Modifier.fillMaxWidth().background(color.copy(alpha = 0.2f)).padding(horizontal = 8.dp, vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+        Text(text, Modifier.weight(1f), color = color, style = MaterialTheme.typography.bodySmall)
+        TextButton({ model.retryNow() }) { Text(tr("Reintentar ahora")) }
+    }
+}
+
 @Composable
 fun HomePage(model: Eh3dViewModel) {
     var askAll by remember { mutableStateOf(false) }
@@ -90,7 +111,11 @@ fun HomePage(model: Eh3dViewModel) {
                     Text("EH3D", style = MaterialTheme.typography.headlineMedium, color = Forge.Amber)
                     Text(model.login?.let { "${it.name} · ${roleName(it.role)}" }.orEmpty(), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 }
-                Light(if (model.offline) Forge.Danger else Forge.Green, live = !model.offline)
+                val state = model.linkState
+                val linkColor = if (state == LinkState.Connected) Forge.Green else if (state == LinkState.Stale) Forge.Orange else Forge.Danger
+                Pill(linkWord(state), linkColor)
+                Spacer(Modifier.width(8.dp))
+                Light(linkColor, live = state == LinkState.Connected)
             }
         }
         item {
@@ -108,7 +133,7 @@ fun HomePage(model: Eh3dViewModel) {
         items(fleet.machines, key = { it.id }) { m -> MachineCard(m) { model.open(Page.Machine(m.id)) } }
         item { Spacer(Modifier.padding(bottom = 8.dp)) }
     }
-    if (askAll) StopDialog(tr("¿Parar todas las máquinas que trabajan?"), onConfirm = { askAll = false; model.emergencyStopAll() }, onDismiss = { askAll = false })
+    if (askAll) StopDialog(tr("¿Parar todas las máquinas que trabajan?"), model.offline, onConfirm = { askAll = false; model.emergencyStopAll() }, onDismiss = { askAll = false })
 }
 
 @Composable
@@ -136,11 +161,17 @@ fun MachineCard(m: FleetMachine, onOpen: () -> Unit) {
 
 /** The question before a stop: one tap on the red button stops, anything else leaves things as they are. */
 @Composable
-fun StopDialog(question: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {
+fun StopDialog(question: String, offline: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(tr("PARADA DE EMERGENCIA"), color = Forge.Danger) },
-        text = { Text(question + "\n\n" + tr("La máquina se detiene, el husillo y los motores se apagan y el trabajo se cancela.")) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(question + "\n\n" + tr("La máquina se detiene, el husillo y los motores se apagan y el trabajo se cancela."))
+                // a stop that cannot reach the server may not reach the machine: say so before the button, and where the sure way is
+                if (offline) Text(tr("Sin conexión con el servidor: la orden de parada puede no llegar. Use la parada física de la máquina."), color = Forge.Danger, style = MaterialTheme.typography.bodyMedium)
+            }
+        },
         confirmButton = { Button(onConfirm, colors = ButtonDefaults.buttonColors(containerColor = Forge.Danger, contentColor = Color.White)) { Text(tr("PARAR AHORA")) } },
         dismissButton = { TextButton(onDismiss) { Text(tr("No parar")) } },
         containerColor = Forge.Panel,

@@ -92,6 +92,8 @@ data class JobSummary(
     val line: Int = 0,
     /** The job this one goes on from (made by `resume-from`); empty for the others and for an older server. */
     val resumedFrom: String = "",
+    /** Who started the job and who stopped it (empty while it has not been, and for an older server). */
+    val startedBy: String = "", val stoppedBy: String = "",
 ) {
     val percent: Int get() = if (itemsTotal <= 0) 0 else (itemsDone * 100 / itemsTotal).coerceIn(0, 100)
 }
@@ -100,6 +102,7 @@ private fun summaryOf(j: JSONObject) = JobSummary(
     j.str("id"), j.str("machine"), j.str("name"), j.str("kind"), j.str("state"), j.str("by"),
     j.int("items_total"), j.int("items_done"), j.int("holes_total"), j.int("holes_done"), j.str("message"), pauseOf(j.optJSONObject("pause")), j.dbl("estimate_s") ?: 0.0,
     j.optLong("created"), if (j.has("finished") && !j.isNull("finished")) j.optLong("finished") else null, j.int("line"), j.str("resumed_from"),
+    j.str("started_by"), j.str("stopped_by"),
 )
 
 fun parseJobs(text: String): List<JobSummary> {
@@ -119,9 +122,17 @@ data class JobView(
     val skippedTools: List<Int> = emptyList(), val skipped: Int = 0,
     /** What the spindle of the machine cannot give, when the switch of the machine lets the job through (`warn`). */
     val spindleWarnings: List<SpindleWarning> = emptyList(),
+    /** The exact steps of the plan followed on paper (null for a G-code job and for an older server), and what looks wrong in the work (empty when nothing does). */
+    val dryRun: DryRun? = null, val warnings: List<WorkWarning> = emptyList(),
 ) {
     companion object { val EMPTY = JobView("", "", emptyList(), emptyList(), emptyList(), null, 0, emptyList(), 0.0, 0.0) }
 }
+
+/** The dry run of a plan: how far each axis goes (X, Y, Z in mm from the switches), the steps, the seconds they take and whether every axis stays inside its course. */
+data class DryRun(val minMm: List<Double>, val maxMm: List<Double>, val endMm: List<Double>, val steps: Long, val seconds: Double, val withinCourse: Boolean)
+
+/** What looks wrong in the work: `tiny`, `too_big`, `far`, `scale` or `out_of_course`, the numbers it is about in [values] (mm) and, for the last, the [axis]. */
+data class WorkWarning(val code: String, val axis: String, val values: List<Double>)
 
 /** One excess of a tool over the spindle: `rpm_above_max`, `rpm_below_min`, `feed_xy_above_max` or `feed_z_above_max`, the tool, the value asked for and the limit. */
 data class SpindleWarning(val code: String, val tool: Int, val value: Int, val limit: Int)
@@ -156,6 +167,7 @@ fun parseView(v: JSONObject): JobView {
     val b = v.optJSONArray("bounds_mm")
     val skippedTools = v.optJSONArray("skipped_tools")
     val warnings = v.optJSONArray("spindle_warnings")
+    val workWarnings = v.optJSONArray("warnings")
     return JobView(
         v.str("kind"), v.str("name"),
         (0 until tools.length()).mapNotNull { tools.optJSONObject(it) }.map { ToolView(it.int("number"), it.int("spindle_rpm"), it.int("count"), it.int("feed_mm_min"), it.dbl("depth_mm"), if (it.has("iterations") && !it.isNull("iterations")) it.optInt("iterations") else null) },
@@ -168,8 +180,18 @@ fun parseView(v: JSONObject): JobView {
         v.int("items"), (0 until ends.length()).map { ends.optInt(it) }, v.dbl("estimate_s") ?: 0.0, v.dbl("travel_mm") ?: 0.0,
         (0 until (skippedTools?.length() ?: 0)).map { skippedTools!!.optInt(it) }, v.int("skipped"),
         (0 until (warnings?.length() ?: 0)).mapNotNull { warnings!!.optJSONObject(it) }.map { SpindleWarning(it.str("code"), it.int("tool"), it.int("value"), it.int("limit")) },
+        parseDryRun(v.optJSONObject("dry_run")),
+        (0 until (workWarnings?.length() ?: 0)).mapNotNull { workWarnings!!.optJSONObject(it) }.map { w ->
+            val values = w.optJSONArray("values")
+            WorkWarning(w.str("code"), w.str("axis"), (0 until (values?.length() ?: 0)).map { values!!.optDouble(it) })
+        },
     )
 }
+
+private fun JSONObject.triple(name: String): List<Double> = optJSONArray(name)?.let { a -> (0 until a.length()).map { a.optDouble(it) } }.orEmpty()
+
+private fun parseDryRun(j: JSONObject?): DryRun? =
+    j?.let { DryRun(it.triple("min_mm"), it.triple("max_mm"), it.triple("end_mm"), it.optLong("steps"), it.dbl("seconds") ?: 0.0, it.optBoolean("within_course", true)) }
 
 fun parseJob(text: String): Job {
     val j = JSONObject(text)

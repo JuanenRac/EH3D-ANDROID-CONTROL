@@ -11,6 +11,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.ServerLink
+import es.electrohobby3d.eh3d.model.LinkPolicy
+import es.electrohobby3d.eh3d.model.LinkState
+import es.electrohobby3d.eh3d.model.StopNote
+import es.electrohobby3d.eh3d.model.classifyFailure
+import es.electrohobby3d.eh3d.model.followStops
 import es.electrohobby3d.eh3d.model.fleetNotices
 import es.electrohobby3d.eh3d.model.fleetStates
 import es.electrohobby3d.eh3d.model.HeadStatus
@@ -81,8 +87,16 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var origin by mutableStateOf(preferences.getString("origin", "") ?: ""); private set
     var login: Login? by mutableStateOf(null); private set
     var fleet by mutableStateOf(Fleet.EMPTY); private set
-    /** True while the server does not answer: what is on the screen is the last that was known. */
-    var offline by mutableStateOf(false); private set
+    /** How the link to the server is: the failures in a row and when the last good answer came. What is on the screen is the last that was known. */
+    var link by mutableStateOf(ServerLink()); private set
+    private val linkPolicy = LinkPolicy()
+    val linkState: LinkState get() = link.state(linkPolicy)
+    /** True while the server does not answer (or answers as another service): what is on the screen is the last that was known. */
+    val offline: Boolean get() = linkState == LinkState.Offline || linkState == LinkState.WrongServer
+    /** The stops that were sent and what the fleet says of them since. */
+    var stopNotes by mutableStateOf(emptyList<StopNote>()); private set
+    /** Whether the summary of a job is shown before it starts (on by default; the person can turn it off in the settings). */
+    var confirmStart by mutableStateOf(preferences.getBoolean("confirm_start", true)); private set
     var message: String? by mutableStateOf(null); private set
     var rememberMe by mutableStateOf(credentials.has()); private set
     var jobs: List<JobSummary> by mutableStateOf(emptyList()); private set
@@ -204,6 +218,11 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun dismissMessage() { message = null }
+    fun chooseConfirmStart(value: Boolean) { confirmStart = value; preferences.edit().putBoolean("confirm_start", value).apply() }
+    /** Asks the server now instead of waiting for the next try (the waits grow while the server is away). */
+    fun retryNow() { if (phase == Phase.SignedIn) poll() }
+    fun dismissStopNote(machineId: String) { stopNotes = stopNotes.filter { it.machineId != machineId } }
+    private fun clock(): Long = android.os.SystemClock.elapsedRealtime()
     fun setVisible(value: Boolean) { visible = value; if (value && phase == Phase.SignedIn) poll() }
 
     // ---- the pages
@@ -231,7 +250,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         poller = viewModelScope.launch {
             while (phase == Phase.SignedIn) {
                 if (visible) refresh()
-                delay(if (visible) 1_500 else 10_000)
+                delay(if (visible) linkPolicy.retryDelayMs(link.failures) else 10_000)
             }
         }
     }
@@ -239,11 +258,12 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     private fun refreshNow() { if (phase == Phase.SignedIn) viewModelScope.launch { refresh() } }
 
     private suspend fun refresh() {
+        val asked = clock()
         try {
             val now = api.fleet()
             raise(now)
             fleet = now
-            offline = false
+            if (stopNotes.isNotEmpty()) stopNotes = followStops(stopNotes, now, asked, clock())
             when (val p = page) {
                 is Page.Machine -> {
                     val active = now.machine(p.id)?.job
@@ -263,8 +283,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 Page.Jobs -> jobs = api.jobs()
                 else -> Unit
             }
+            link = link.succeeded(clock())
         } catch (error: ApiException) {
-            if (error.unauthorized) { sessions.clear(); signOutQuietly() } else offline = true
+            if (error.unauthorized) { sessions.clear(); signOutQuietly() }
+            else link = classifyFailure(error.status, error.code)?.let { link.failed(it, clock()) } ?: link.succeeded(clock())   // an answer of the server itself (a job that is gone) is a link that works
         }
     }
 
@@ -285,14 +307,28 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun start(id: String) = act { api.start(id) }
     fun confirm(id: String) = act { api.confirm(id) }
-    fun cancel(id: String) = act { api.cancel(id) }
+    fun cancel(id: String) = stopping(job?.summary?.takeIf { it.id == id }?.machine) { api.cancel(id) }
     fun delete(id: String) = act { api.delete(id); if (page is Page.JobPage) back() }
 
     /** The emergency stop of one machine: the server ends whatever is active on it at once, without waiting for the line it is sending; a stop that did not get there shows its error. */
-    fun emergencyStop(machineId: String) = act { api.stopMachine(machineId) }
+    fun emergencyStop(machineId: String) = stopping(machineId) { api.stopMachine(machineId) }
 
     /** The emergency stop of every machine that is working. */
-    fun emergencyStopAll() { fleet.machines.filter { it.job != null }.forEach { m -> act { api.stopMachine(m.id) } } }
+    fun emergencyStopAll() { fleet.machines.filter { it.job != null }.forEach { m -> stopping(m.id) { api.stopMachine(m.id) } } }
+
+    /** A stop: when the server takes it a note follows what the fleet says next; when it does not get there the person is told plainly that the machine was NOT stopped. */
+    private fun stopping(machineId: String?, work: suspend () -> Unit) {
+        viewModelScope.launch {
+            try {
+                work()
+                if (machineId != null) stopNotes = stopNotes.filter { it.machineId != machineId } + StopNote(machineId, fleet.machine(machineId)?.name ?: machineId, clock())
+                refresh()
+            } catch (error: ApiException) {
+                if (error.unauthorized) signOutQuietly()
+                else message = if (error.status == 0 || error.status >= 500) tr("La orden de parada NO ha llegado al servidor. Use la parada física de la máquina.") else errorText(error)
+            }
+        }
+    }
 
     fun pause(id: String) = act { api.pause(id) }
     fun resume(id: String) = act { api.resume(id) }
@@ -513,6 +549,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "no_light" -> tr("Este nodo no tiene aro de luz.")
         error.code == "no_inspection" -> tr("Verifica primero un agujero: la escala sale de su ancho.")
         error.code == "no_hole" -> tr("La última verificación no encontró ningún agujero con el que medir la escala.")
+        error.code == "outside_course" -> tr("Los pasos exactos del plan sacan un eje de su recorrido. Mueva el trabajo en la mesa, o ponga dry_run = warn en el ajuste de la máquina si sabe lo que hace.")
         error.code == "spindle_limit" -> tr("El trabajo pide más de lo que da el husillo de la máquina.")
         error.code == "bad_spindle" -> tr("Husillo o límites no válidos.")
         error.code == "not_pausable" -> tr("Solo se puede pausar un trabajo de G-code.")

@@ -176,7 +176,7 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
         }
         items(model.jobs.take(6), key = { it.id }) { j -> JobRow(j) { model.open(Page.JobPage(j.id)) } }
     }
-    if (askStop) StopDialog(trf("Se parará %s.", machine.name), onConfirm = { askStop = false; model.emergencyStop(id) }, onDismiss = { askStop = false })
+    if (askStop) StopDialog(trf("Se parará %s.", machine.name), model.offline, onConfirm = { askStop = false; model.emergencyStop(id) }, onDismiss = { askStop = false })
 }
 
 @Composable
@@ -300,13 +300,15 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }
                 if (JobStates.canGoOn(s.state)) Text(tr("El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.resumedFrom.isNotBlank()) Text(trf("Continúa el trabajo %s", s.resumedFrom), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                if (s.stoppedBy.isNotBlank()) Text(trf("Detenido por %s", s.stoppedBy), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.state == "ready") Text(tr("Un trabajo nunca arranca solo: pulse Empezar con la máquina preparada."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
-    if (askStop) StopDialog(trf("Se cancelará %s.", job?.summary?.name.orEmpty()), onConfirm = { askStop = false; model.cancel(id) }, onDismiss = { askStop = false })
+    if (askStop) StopDialog(trf("Se cancelará %s.", job?.summary?.name.orEmpty()), model.offline, onConfirm = { askStop = false; model.cancel(id) }, onDismiss = { askStop = false })
     // starting asks the same question here as from Prepare: a touch by mistake must not set the machine going
-    if (askStart) androidx.compose.material3.AlertDialog(
+    if (askStart && model.confirmStart && job != null && job.view.kind.isNotEmpty()) StartSummaryDialog(listOf(job.view), onStart = { askStart = false; model.start(id) }, onCancel = { askStart = false })
+    else if (askStart) androidx.compose.material3.AlertDialog(
         onDismissRequest = { askStart = false }, containerColor = Forge.Panel, title = { Text(tr("Empezar el trabajo")) },
         text = { Text(tr("Compruebe que la máquina está preparada y despejada. El trabajo empieza ahora.")) },
         confirmButton = { Button({ askStart = false; model.start(id) }) { Text(tr("Empezar")) } }, dismissButton = { TextButton({ askStart = false }) { Text(tr("Cancelar")) } },
