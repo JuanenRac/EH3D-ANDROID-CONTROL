@@ -1,0 +1,205 @@
+{
+ "groups": [
+  {
+   "example": "fleet",
+   "read": [
+    "busy",
+    "connection",
+    "id",
+    "idle",
+    "job",
+    "machines",
+    "model",
+    "name",
+    "ready",
+    "state",
+    "station",
+    "summary",
+    "waiting"
+   ],
+   "ignored": [
+    "stations"
+   ]
+  },
+  {
+   "example": "jobs",
+   "read": [
+    "by",
+    "created",
+    "estimate_s",
+    "finished",
+    "holes_done",
+    "holes_total",
+    "id",
+    "items_done",
+    "items_total",
+    "kind",
+    "line",
+    "machine",
+    "message",
+    "name",
+    "pause",
+    "resumed_from",
+    "state",
+    "started_by",
+    "stopped_by"
+   ],
+   "ignored": [
+    "started"
+   ]
+  },
+  {
+   "example": "job",
+   "read": [
+    "bounds_mm",
+    "by",
+    "count",
+    "created",
+    "depth_mm",
+    "dry_run",
+    "end_mm",
+    "estimate_s",
+    "feed_mm_min",
+    "finished",
+    "hole_ends",
+    "holes",
+    "holes_done",
+    "holes_total",
+    "id",
+    "items",
+    "items_done",
+    "items_total",
+    "iterations",
+    "kind",
+    "line",
+    "machine",
+    "max_mm",
+    "message",
+    "min_mm",
+    "name",
+    "number",
+    "paths",
+    "pause",
+    "resumed_from",
+    "seconds",
+    "skipped",
+    "skipped_tools",
+    "spindle_rpm",
+    "spindle_warnings",
+    "state",
+    "steps",
+    "tool",
+    "tools",
+    "travel_mm",
+    "view",
+    "warnings",
+    "within_course",
+    "x_mm",
+    "y_mm",
+    "started_by",
+    "stopped_by"
+   ],
+   "ignored": [
+    "started"
+   ]
+  },
+  {
+   "example": "preview",
+   "read": [
+    "bounds_mm",
+    "count",
+    "depth_mm",
+    "dry_run",
+    "end_mm",
+    "estimate_s",
+    "feed_mm_min",
+    "hole_ends",
+    "holes",
+    "items",
+    "iterations",
+    "kind",
+    "max_mm",
+    "min_mm",
+    "name",
+    "number",
+    "paths",
+    "seconds",
+    "skipped",
+    "skipped_tools",
+    "spindle_rpm",
+    "spindle_warnings",
+    "steps",
+    "tool",
+    "tools",
+    "travel_mm",
+    "warnings",
+    "within_course",
+    "x_mm",
+    "y_mm"
+   ],
+   "ignored": []
+  },
+  {
+   "example": "spindle",
+   "read": [
+    "active",
+    "guard",
+    "limits",
+    "max_bit_mm",
+    "max_rpm",
+    "max_xy_mm_min",
+    "max_z_mm_min",
+    "min_rpm",
+    "node_max_rpm",
+    "original",
+    "power_w",
+    "spindle",
+    "vfd"
+   ],
+   "ignored": []
+  },
+  {
+   "example": "session",
+   "read": [
+    "name",
+    "role"
+   ],
+   "ignored": [
+    "is_token"
+   ]
+  },
+  {
+   "example": "error",
+   "read": [
+    "detail",
+    "error"
+   ],
+   "ignored": []
+  },
+  {
+   "example": "health",
+   "read": [
+    "version"
+   ],
+   "ignored": [
+    "api_revision",
+    "name",
+    "status"
+   ]
+  },
+  {
+   "example": null,
+   "read": [
+    "code",
+    "axis",
+    "values",
+    "points_mm",
+    "pen",
+    "spindle_rpm",
+    "limit",
+    "value"
+   ],
+   "ignored": []
+  }
+ ]
+}

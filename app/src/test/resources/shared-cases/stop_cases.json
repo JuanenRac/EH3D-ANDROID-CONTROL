@@ -1,0 +1,78 @@
+{
+ "keep_ms": 8000,
+ "grace_ms": 3000,
+ "cases": [
+  {
+   "name": "the machine ends its job: sent, then still working is held back by the grace time, then confirmed, then gone",
+   "stop": {
+    "machine": "m1",
+    "name": "Bungard",
+    "at": 1000
+   },
+   "looks": [
+    {
+     "asked": 1500,
+     "now": 2000,
+     "machine": "busy",
+     "expect": "sent"
+    },
+    {
+     "asked": 3000,
+     "now": 4500,
+     "machine": "busy",
+     "expect": "still_working"
+    },
+    {
+     "asked": 5000,
+     "now": 5500,
+     "machine": "idle",
+     "expect": "confirmed"
+    },
+    {
+     "asked": 9000,
+     "now": 9500,
+     "machine": "idle",
+     "expect": "confirmed"
+    },
+    {
+     "asked": 13000,
+     "now": 13600,
+     "machine": "idle",
+     "expect": "gone"
+    }
+   ]
+  },
+  {
+   "name": "a look that was asked for before the stop does not count for it",
+   "stop": {
+    "machine": "m1",
+    "name": "Bungard",
+    "at": 5000
+   },
+   "looks": [
+    {
+     "asked": 4000,
+     "now": 6000,
+     "machine": "idle",
+     "expect": "sent"
+    }
+   ]
+  },
+  {
+   "name": "a machine that left the fleet is not working any more",
+   "stop": {
+    "machine": "m1",
+    "name": "Bungard",
+    "at": 0
+   },
+   "looks": [
+    {
+     "asked": 100,
+     "now": 4000,
+     "machine": "missing",
+     "expect": "confirmed"
+    }
+   ]
+  }
+ ]
+}

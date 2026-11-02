@@ -78,6 +78,17 @@ class ApiExamplesTest {
         val bounds = view.getJSONArray("bounds_mm")
         assertEquals(bounds.getDouble(2), job.view.bounds!![2], 1e-9)
         assertEquals(view.getDouble("estimate_s"), job.view.estimateS, 1e-9)
+        // the dry run and the warnings the server sends with every drilling or routing view
+        val dry = view.getJSONObject("dry_run")
+        val dryRead = job.view.dryRun
+        assertNotNull(dryRead)
+        assertEquals(dry.getJSONArray("max_mm").getDouble(2), dryRead!!.maxMm[2], 1e-9)
+        assertEquals(dry.getJSONArray("min_mm").length(), dryRead.minMm.size)
+        assertEquals(dry.getJSONArray("end_mm").length(), dryRead.endMm.size)
+        assertEquals(dry.getLong("steps"), dryRead.steps)
+        assertEquals(dry.getDouble("seconds"), dryRead.seconds, 1e-9)
+        assertEquals(dry.getBoolean("within_course"), dryRead.withinCourse)
+        assertEquals(view.getJSONArray("warnings").length(), job.view.warnings.size)
     }
 
     @Test fun thePreviewIsTheViewThatTheJobCarries() {
@@ -88,6 +99,8 @@ class ApiExamplesTest {
         assertEquals(inJob.items, preview.items)
         assertEquals(inJob.tools.map { it.number }, preview.tools.map { it.number })
         assertTrue(preview.spindleWarnings.isEmpty())
+        assertNotNull(preview.dryRun)
+        assertEquals(inJob.dryRun, preview.dryRun)
     }
 
     @Test fun theSpindleIsReadWithItsLimitsAndTheOneInForce() {

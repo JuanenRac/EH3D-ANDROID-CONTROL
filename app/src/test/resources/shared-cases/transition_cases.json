@@ -1,0 +1,260 @@
+[
+ {
+  "name": "nothing to compare with the first time",
+  "before": {},
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "waiting",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "waiting_operator",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   }
+  ],
+  "expect": []
+ },
+ {
+  "name": "a job that now waits for the operator",
+  "before": {
+   "m1": "running"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "waiting",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "waiting_operator",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   }
+  ],
+  "expect": [
+   {
+    "machine": "m1",
+    "kind": "waiting"
+   }
+  ]
+ },
+ {
+  "name": "a job that was active and is gone ended",
+  "before": {
+   "m1": "running"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "idle",
+    "job": null,
+    "ready": 0
+   }
+  ],
+  "expect": [
+   {
+    "machine": "m1",
+    "kind": "ended"
+   }
+  ]
+ },
+ {
+  "name": "a job that goes on running tells nothing",
+  "before": {
+   "m1": "running"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "busy",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "running",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   }
+  ],
+  "expect": []
+ },
+ {
+  "name": "a job that goes on after the wait tells nothing",
+  "before": {
+   "m1": "waiting_operator"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "busy",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "running",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   }
+  ],
+  "expect": []
+ },
+ {
+  "name": "a machine that was free and is free tells nothing",
+  "before": {
+   "m1": "idle"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "idle",
+    "job": null,
+    "ready": 0
+   }
+  ],
+  "expect": []
+ },
+ {
+  "name": "a machine that was not known before tells nothing",
+  "before": {
+   "m2": "running"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "waiting",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "waiting_operator",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   }
+  ],
+  "expect": []
+ },
+ {
+  "name": "two machines, one waits and one ends",
+  "before": {
+   "m1": "running",
+   "m2": "connecting"
+  },
+  "machines": [
+   {
+    "id": "m1",
+    "name": "Machine m1",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "waiting",
+    "job": {
+     "id": "j-m1",
+     "name": "job",
+     "kind": "drill",
+     "state": "waiting_operator",
+     "by": "juan",
+     "items_done": 1,
+     "items_total": 4,
+     "holes_done": 1,
+     "holes_total": 4,
+     "percent": 25,
+     "pause": null,
+     "estimate_s": 10.0
+    },
+    "ready": 0
+   },
+   {
+    "id": "m2",
+    "name": "Machine m2",
+    "model": "m",
+    "station": "s",
+    "connection": "node",
+    "state": "idle",
+    "job": null,
+    "ready": 0
+   }
+  ],
+  "expect": [
+   {
+    "machine": "m1",
+    "kind": "waiting"
+   },
+   {
+    "machine": "m2",
+    "kind": "ended"
+   }
+  ]
+ }
+]

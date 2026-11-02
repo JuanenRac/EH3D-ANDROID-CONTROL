@@ -1,0 +1,154 @@
+{
+ "policy": {
+  "offline_after": 2,
+  "stale_after_s": 5,
+  "retry_ms": [
+   1500,
+   3000,
+   6000,
+   10000
+  ]
+ },
+ "cases": [
+  {
+   "name": "one failure is not yet no connection, two are, and the waits grow",
+   "steps": [
+    {
+     "event": "ok",
+     "t": 0,
+     "state": "connected",
+     "failures": 0,
+     "age_s": 0,
+     "retry_ms": 1500
+    },
+    {
+     "event": "unreachable",
+     "t": 1500,
+     "state": "connected",
+     "failures": 1,
+     "age_s": 1,
+     "retry_ms": 1500
+    },
+    {
+     "event": "unreachable",
+     "t": 3000,
+     "state": "offline",
+     "failures": 2,
+     "age_s": 3,
+     "retry_ms": 3000
+    },
+    {
+     "event": "unreachable",
+     "t": 6000,
+     "state": "offline",
+     "failures": 3,
+     "age_s": 6,
+     "retry_ms": 6000
+    },
+    {
+     "event": "unreachable",
+     "t": 12000,
+     "state": "offline",
+     "failures": 4,
+     "age_s": 12,
+     "retry_ms": 10000
+    },
+    {
+     "event": "unreachable",
+     "t": 22000,
+     "state": "offline",
+     "failures": 5,
+     "age_s": 22,
+     "retry_ms": 10000
+    },
+    {
+     "event": "ok",
+     "t": 23000,
+     "state": "connected",
+     "failures": 0,
+     "age_s": 0,
+     "retry_ms": 1500
+    }
+   ]
+  },
+  {
+   "name": "one slow answer makes the data old before it makes the link offline",
+   "steps": [
+    {
+     "event": "ok",
+     "t": 0,
+     "state": "connected",
+     "failures": 0,
+     "age_s": 0,
+     "retry_ms": 1500
+    },
+    {
+     "event": "unreachable",
+     "t": 6000,
+     "state": "stale",
+     "failures": 1,
+     "age_s": 6,
+     "retry_ms": 1500
+    },
+    {
+     "event": "unreachable",
+     "t": 7500,
+     "state": "offline",
+     "failures": 2,
+     "age_s": 7,
+     "retry_ms": 3000
+    }
+   ]
+  },
+  {
+   "name": "an address that answers another service is told at once",
+   "steps": [
+    {
+     "event": "ok",
+     "t": 0,
+     "state": "connected",
+     "failures": 0,
+     "age_s": 0,
+     "retry_ms": 1500
+    },
+    {
+     "event": "wrong_server",
+     "t": 1500,
+     "state": "wrong_server",
+     "failures": 1,
+     "age_s": 1,
+     "retry_ms": 1500
+    },
+    {
+     "event": "ok",
+     "t": 3000,
+     "state": "connected",
+     "failures": 0,
+     "age_s": 0,
+     "retry_ms": 1500
+    }
+   ]
+  },
+  {
+   "name": "before any good answer there is no age to tell",
+   "steps": [
+    {
+     "event": "unreachable",
+     "t": 1000,
+     "state": "connected",
+     "failures": 1,
+     "age_s": null,
+     "retry_ms": 1500
+    },
+    {
+     "event": "unreachable",
+     "t": 2500,
+     "state": "offline",
+     "failures": 2,
+     "age_s": null,
+     "retry_ms": 3000
+    }
+   ]
+  }
+ ]
+}

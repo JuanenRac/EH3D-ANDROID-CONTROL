@@ -1,0 +1,57 @@
+[
+ {
+  "status": 0,
+  "code": "unreachable",
+  "failure": "unreachable"
+ },
+ {
+  "status": 200,
+  "code": "bad_json",
+  "failure": "wrong_server"
+ },
+ {
+  "status": 404,
+  "code": "http_404",
+  "failure": "wrong_server"
+ },
+ {
+  "status": 404,
+  "code": "no_such_job",
+  "failure": null
+ },
+ {
+  "status": 401,
+  "code": "http_401",
+  "failure": null
+ },
+ {
+  "status": 403,
+  "code": "http_403",
+  "failure": null
+ },
+ {
+  "status": 429,
+  "code": "http_429",
+  "failure": null
+ },
+ {
+  "status": 422,
+  "code": "outside_course",
+  "failure": null
+ },
+ {
+  "status": 500,
+  "code": "http_500",
+  "failure": "unreachable"
+ },
+ {
+  "status": 502,
+  "code": "http_502",
+  "failure": "unreachable"
+ },
+ {
+  "status": 500,
+  "code": "internal",
+  "failure": "unreachable"
+ }
+]
