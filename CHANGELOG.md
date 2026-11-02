@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.0.7] - The release no longer closes when it starts
+
+- **The app closed at once when it started (version 0.0.6, the installed release):** the periodic watch of the fleet brought WorkManager, which keeps its jobs in a database that is made by reflection through its empty constructor; the shrinker of the release removed that constructor, so the app failed before it drew anything. The constructor is kept now. The debug build is not shrunk, which is why the tests did not show it.
+- **The CI builds the release too and checks it:** `assembleRelease` runs besides the debug build, and `tools/check_release_build.py` fails when the shrinker removed the empty constructor of a generated class (`*_Impl`), the failure that closed the app.
+
 ## [0.0.6] - Starting a job asks once more, the emergency stop asks the server to stop the machine and signing out closes the session
 
 - **Starting a job from its page asks once more** (check that the machine is prepared and clear), as it does from Prepare, with the same words in every language; a touch by mistake no longer sets the machine going.
