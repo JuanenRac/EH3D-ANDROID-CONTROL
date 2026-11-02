@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The answers of the server are read in the tests from its own examples:** the fleet, the jobs, a job, the preview, the spindle and an error are the files that the tests of the server make, so a change in the answers that the app does not follow fails here.
+
 ## [0.0.7] - The release no longer closes when it starts
 
 - **The app closed at once when it started (version 0.0.6, the installed release):** the periodic watch of the fleet brought WorkManager, which keeps its jobs in a database that is made by reflection through its empty constructor; the shrinker of the release removed that constructor, so the app failed before it drew anything. The constructor is kept now. The debug build is not shrunk, which is why the tests did not show it.

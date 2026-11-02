@@ -138,7 +138,7 @@ Ouvrez l'application, saisissez l'adresse du serveur (et le port 18200), appuyez
 
 ## 🧪 Tests
 
-`./gradlew test` exécute les tests unitaires sur la JVM : les lecteurs du JSON du serveur (flotte, travaux, tête, mesure), la position de la tête et la géométrie des deux vues, le contrôle de l'adresse, la conservation chiffrée de la session, la version et la barrière de release de la mise à jour, et les langues (chaque phrase du source dans les sept tables, avec les mêmes trous).
+`./gradlew test` exécute les tests unitaires sur la JVM : les lecteurs du JSON du serveur (flotte, travaux, tête, mesure), la position de la tête et la géométrie des deux vues, le contrôle de l'adresse, la conservation chiffrée de la session, la version et la barrière de release de la mise à jour, et les langues (chaque phrase du source dans les sept tables, avec les mêmes trous). Ils lisent aussi les exemples de réponses que produisent les tests du serveur : une réponse qui change sans que l'appli suive échoue ici.
 
 ## 🏗️ Compilation et publication
 

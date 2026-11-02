@@ -138,7 +138,7 @@ App öffnen, die Adresse des Servers (und Port 18200) eingeben, Verbinden drück
 
 ## 🧪 Tests
 
-`./gradlew test` führt die Unit-Tests auf der JVM aus: die Leser des Server-JSON (Flotte, Aufträge, Kopf, Messung), die Position des Kopfes und die Geometrie der beiden Ansichten, die Adressprüfung, die verschlüsselte Sitzungsspeicherung, die Version und das Release-Tor des Updates sowie die Sprachen (jeder Satz des Quelltexts in den sieben Tabellen, mit denselben Platzhaltern).
+`./gradlew test` führt die Unit-Tests auf der JVM aus: die Leser des Server-JSON (Flotte, Aufträge, Kopf, Messung), die Position des Kopfes und die Geometrie der beiden Ansichten, die Adressprüfung, die verschlüsselte Sitzungsspeicherung, die Version und das Release-Tor des Updates sowie die Sprachen (jeder Satz des Quelltexts in den sieben Tabellen, mit denselben Platzhaltern). Sie lesen auch die Beispiele der Antworten, die die Tests des Servers erzeugen; eine Antwort, die sich ändert, ohne dass die App folgt, schlägt hier fehl.
 
 ## 🏗️ Build und Veröffentlichung
 

@@ -138,7 +138,7 @@ Open the app, type the address of the server (and port 18200), press Connect and
 
 ## 🧪 Testing
 
-`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes).
+`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes). They also read the examples of the answers that the tests of the server make, so an answer that changes without the app following fails here.
 
 ## 🏗️ Build & Release
 

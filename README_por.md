@@ -138,7 +138,7 @@ Abra a aplicação, escreva o endereço do servidor (e a porta 18200), prima Lig
 
 ## 🧪 Testes
 
-`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços).
+`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui.
 
 ## 🏗️ Compilação e publicação
 

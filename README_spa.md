@@ -138,7 +138,7 @@ Abra la app, escriba la dirección del servidor (y el puerto 18200), pulse Conec
 
 ## 🧪 Pruebas
 
-`./gradlew test` ejecuta las pruebas unitarias en la JVM: los lectores del JSON del servidor (flota, trabajos, cabezal, medida), la posición del cabezal y la geometría de las dos vistas, la comprobación de la dirección, la conservación cifrada de la sesión, la versión y la puerta de la release de la actualización, y los idiomas (cada frase del código en las siete tablas, con los mismos huecos).
+`./gradlew test` ejecuta las pruebas unitarias en la JVM: los lectores del JSON del servidor (flota, trabajos, cabezal, medida), la posición del cabezal y la geometría de las dos vistas, la comprobación de la dirección, la conservación cifrada de la sesión, la versión y la puerta de la release de la actualización, y los idiomas (cada frase del código en las siete tablas, con los mismos huecos). También leen los ejemplos de respuestas que hacen las pruebas del servidor, de modo que una respuesta que cambia sin que la app la siga falla aquí.
 
 ## 🏗️ Compilación y publicación
 

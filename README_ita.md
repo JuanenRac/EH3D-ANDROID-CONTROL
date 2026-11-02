@@ -138,7 +138,7 @@ Aprire l'app, scrivere l'indirizzo del server (e la porta 18200), premere Connet
 
 ## 🧪 Test
 
-`./gradlew test` esegue i test unitari sulla JVM: i lettori del JSON del server (flotta, lavori, testa, misura), la posizione della testa e la geometria delle due viste, il controllo dell'indirizzo, la conservazione cifrata della sessione, la versione e il cancello della release dell'aggiornamento, e le lingue (ogni frase del sorgente nelle sette tabelle, con gli stessi segnaposto).
+`./gradlew test` esegue i test unitari sulla JVM: i lettori del JSON del server (flotta, lavori, testa, misura), la posizione della testa e la geometria delle due viste, il controllo dell'indirizzo, la conservazione cifrata della sessione, la versione e il cancello della release dell'aggiornamento, e le lingue (ogni frase del sorgente nelle sette tabelle, con gli stessi segnaposto). Leggono anche gli esempi di risposte prodotti dai test del server, così una risposta che cambia senza che l'app la segua fa fallire i test.
 
 ## 🏗️ Compilazione e rilascio
 
