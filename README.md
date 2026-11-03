@@ -217,6 +217,7 @@ README and texts exist in English, Spanish, French, Italian, German, Chinese, Ja
 ## 📚 Documentation
 
 * [The API of the server](https://github.com/JuanenRac/EH3D-SERVER/blob/main/docs/API.md): what this app reads and asks.
+* [Differences between the Android and the iPhone apps](docs/PLATFORM_DIFFERENCES.md): what the system forces to be different.
 * [Changelog](CHANGELOG.md)
 
 ## 🤝 Contributing & Community
