@@ -3,6 +3,7 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **A watchdog for the manual build:** `.github/workflows/build-watchdog.yml` looks every hour for a build that stays queued or running longer than the limit in `.github/build-watchdog.json` and opens (or updates) an issue `build-stuck`, which it closes when no build is stuck.
 - **The release APK is built in GitHub Actions:** `.github/workflows/apk-build.yml` (manual, owner only) builds it with JDK 21 and Gradle without any cache, checks the application id, the version name and a version code that rises, writes `SHA256SUMS`, a build manifest and a provenance attestation, and opens an issue `build-failed` when it fails; the APK leaves unsigned and is signed on the maintainer's computer. See `docs/BUILD.md`.
 - **Shared checks updated:** the validator also compares the badge and the Version row of the README with the manifest, fails when one of its checks cannot run, and the CHANGELOG step of the workflow reads the base branch from the environment.
 - **More tests:** the preparation of a job, the link, the stops, the drawing and the summary from their edges, the tags and the releases of the update channel, and the addresses an operator types.
