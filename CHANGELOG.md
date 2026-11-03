@@ -3,6 +3,7 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **The release APK is built in GitHub Actions:** `.github/workflows/apk-build.yml` (manual, owner only) builds it with JDK 21 and Gradle without any cache, checks the application id, the version name and a version code that rises, writes `SHA256SUMS`, a build manifest and a provenance attestation, and opens an issue `build-failed` when it fails; the APK leaves unsigned and is signed on the maintainer's computer. See `docs/BUILD.md`.
 - **Shared checks updated:** the validator also compares the badge and the Version row of the README with the manifest, fails when one of its checks cannot run, and the CHANGELOG step of the workflow reads the base branch from the environment.
 - **More tests:** the preparation of a job, the link, the stops, the drawing and the summary from their edges, the tags and the releases of the update channel, and the addresses an operator types.
 - **A version tag with a number too big for an integer is refused** instead of ending in an exception, and an address with a port that does not exist (0 or above 65535) is no longer accepted.

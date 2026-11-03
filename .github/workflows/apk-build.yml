@@ -1,0 +1,475 @@
+# =============================================================================
+# EH3D-ANDROID-CONTROL - Manual APK build (build here, sign locally)
+# Copyright (C) 2026 JuanenRac (Electro Hobby 3D)
+# GPL-3.0-or-later - see LICENSE
+# =============================================================================
+# Started by hand only (workflow_dispatch): it never runs on a push or a pull request. It compiles the release APK of the exact commit it pins (Gradle, JDK 21), aligns it, builds it
+# TWICE and records whether both builds give the same bytes, and uploads it with SHA256SUMS and a build manifest as one artifact with a build-provenance attestation.
+#
+# The APK that leaves here is UNSIGNED, and no signing key exists in this workflow: the build stops when it finds a keystore or a key setting. The signature of the release
+# (apksigner with the key of the owner) is made on the maintainer's machine, from this artifact, and the keystore never leaves it. With dry_run on (the default) nothing but
+# the artifact is made; with it off a DRAFT release v<version> with the unsigned APK is also prepared by a separate job that waits for the approval of the owner.
+# A failed or stuck build writes the Job Summary and opens (or updates) the issue "build-failed"; a later good build closes it. build-watch.yml finds a build that never ends.
+
+name: APK build (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: build and check only, no draft release"
+        type: boolean
+        required: true
+        default: true
+      ref:
+        description: "Branch, tag or commit of this repository"
+        type: string
+        required: true
+        default: main
+
+permissions:
+  contents: read
+
+# One build per ref at a time, and a running build is never cancelled by a newer one.
+concurrency:
+  group: apk-build-${{ inputs.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: Plan the build
+    if: ${{ github.actor == github.repository_owner }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.plan.outputs.version }}
+      code: ${{ steps.plan.outputs.code }}
+      sha: ${{ steps.plan.outputs.sha }}
+    steps:
+      - name: Only the owner starts a build
+        shell: bash
+        env:
+          ACTOR: ${{ github.actor }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          [ "$ACTOR" = "$OWNER" ] || { echo "::error::only the owner of the repository starts a build"; exit 1; }
+
+      - name: Check the inputs
+        shell: bash
+        env:
+          REF: ${{ inputs.ref }}
+        run: |
+          set -euo pipefail
+          [[ "$REF" =~ ^[A-Za-z0-9._/-]{1,100}$ ]] || { echo "::error::the ref has characters that a branch, tag or commit does not have"; exit 1; }
+
+      - name: Check out this repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Make sure the commit belongs to the main branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          # only code that is already in main is built: a branch or a fork commit that is not in main is refused
+          git merge-base --is-ancestor HEAD refs/remotes/origin/main || { echo "::error::the commit $(git rev-parse --short HEAD) is not part of the main branch; merge it first"; exit 1; }
+
+      - name: Work out the version and pin the commit
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(python3 -c "import json; print(json.load(open('eh3d.project.json', encoding='utf-8'))['version'])")"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo "::error::the version $version is not a version x.y.z or x.y.z.w"; exit 1; }
+          grep -q "^## \[$version\]" CHANGELOG.md || { echo "::error::CHANGELOG.md has no section for $version (raise the version BEFORE the build)"; exit 1; }
+          grep -q "versionName = \"$version\"" app/build.gradle.kts || { echo "::error::app/build.gradle.kts does not say versionName $version"; exit 1; }
+          # the versionCode has to rise over the one of the newest earlier release tag, or the phone does not take the APK as an update
+          code="$(grep -oE 'versionCode = [0-9]+' app/build.gradle.kts | grep -oE '[0-9]+')"
+          [ -n "$code" ] || { echo "::error::app/build.gradle.kts has no versionCode"; exit 1; }
+          previous="$(git tag -l 'v[0-9]*' | grep -vx "v$version" | sort -V | tail -n 1)"
+          if [ -n "$previous" ]; then
+            old="$(git show "$previous:app/build.gradle.kts" | grep -oE 'versionCode = [0-9]+' | grep -oE '[0-9]+' || true)"
+            if [ -n "$old" ] && [ "$code" -le "$old" ]; then
+              echo "::error::versionCode $code does not rise over $old of $previous (raise it BEFORE the build)"
+              exit 1
+            fi
+            echo "versionCode $code over $old of $previous"
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build the APK (${{ matrix.id }})
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        id: [build-1, build-2]
+    steps:
+      - name: Check out the exact commit that was planned
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ needs.plan.outputs.sha }}
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Gradle without any cache (a release build neither reads nor writes one)
+        uses: gradle/actions/setup-gradle@48b5f213c81028ace310571dc5ec0fbbca0b2947 # v4
+        with:
+          cache-disabled: true
+
+      - name: Make sure the build has no signing key to take
+        shell: bash
+        run: |
+          set -euo pipefail
+          if env | grep -qiE '^(ORG_GRADLE_PROJECT_.*(store|keystore|keyalias|keypassword)|ANDROID_KEYSTORE|KEYSTORE|STORE_PASSWORD|KEY_PASSWORD)'; then
+            echo "::error::a signing setting is present in this job; the APK built here must not be signed"
+            exit 1
+          fi
+          if [ -e keystore.properties ] || [ -e app/keystore.properties ] || [ -n "$(git ls-files '*.jks' '*.keystore' 'keystore.properties')" ]; then
+            echo "::error::a keystore file is in the repository"
+            exit 1
+          fi
+
+      - name: Compile the release APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleRelease
+          ls -l app/build/outputs/apk/release/
+
+      - name: Align the APK and check its version and that it is unsigned
+        shell: bash
+        env:
+          VERSION: ${{ needs.plan.outputs.version }}
+          CODE: ${{ needs.plan.outputs.code }}
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          built=app/build/outputs/apk/release/app-release-unsigned.apk
+          test -f "$built" || { echo "::error::Gradle did not leave an unsigned release APK"; ls app/build/outputs/apk/release/; exit 1; }
+          tools="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)"
+          "${tools}zipalign" -f -p 4 "$built" "out/EH3D-ANDROID-CONTROL-release-unsigned.apk"
+          "${tools}zipalign" -c -p 4 "out/EH3D-ANDROID-CONTROL-release-unsigned.apk"
+          "${tools}aapt2" dump badging "out/EH3D-ANDROID-CONTROL-release-unsigned.apk" > badging-full.txt
+          head -n 1 badging-full.txt | tee badging.txt
+          grep -q "name='es.electrohobby3d.eh3d'" badging.txt || { echo "::error::unexpected application id"; exit 1; }
+          grep -q "versionCode='$CODE'" badging.txt || { echo "::error::the APK does not carry versionCode $CODE"; exit 1; }
+          grep -q "versionName='$VERSION'" badging.txt || { echo "::error::the APK does not carry version $VERSION (raise the version BEFORE the build)"; exit 1; }
+          if python3 - "out/EH3D-ANDROID-CONTROL-release-unsigned.apk" <<'PY'
+          import re, sys, zipfile
+          names = zipfile.ZipFile(sys.argv[1]).namelist()
+          signed = [n for n in names if re.match(r"META-INF/.*\.(RSA|DSA|EC|SF)$", n)]
+          sys.exit(0 if signed else 1)
+          PY
+          then
+            echo "::error::the APK carries a signature; it must leave Actions unsigned"
+            exit 1
+          fi
+          if "${tools}apksigner" verify "out/EH3D-ANDROID-CONTROL-release-unsigned.apk" >/dev/null 2>&1; then
+            echo "::error::apksigner verifies the APK, so it is signed"
+            exit 1
+          fi
+          { echo "### EH3D-ANDROID-CONTROL $VERSION (unsigned, aligned; signed locally)"; cat badging.txt; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: parts-${{ matrix.id }}
+          path: out/EH3D-ANDROID-CONTROL-release-unsigned.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  collect:
+    name: Compare, attest and prepare the files
+    needs: [plan, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    env:
+      VERSION: ${{ needs.plan.outputs.version }}
+      CODE: ${{ needs.plan.outputs.code }}
+      SHA: ${{ needs.plan.outputs.sha }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download both builds
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: parts-*
+          path: parts
+
+      - name: Compare the two builds (informative) and keep the first
+        id: compare
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(ls -d parts/parts-* | wc -l)" -eq 2 || { echo "::error::expected two builds"; ls parts; exit 1; }
+          a="$(sha256sum "parts/parts-build-1/EH3D-ANDROID-CONTROL-release-unsigned.apk" | cut -d' ' -f1)"
+          b="$(sha256sum "parts/parts-build-2/EH3D-ANDROID-CONTROL-release-unsigned.apk" | cut -d' ' -f1)"
+          mkdir files
+          cp "parts/parts-build-1/EH3D-ANDROID-CONTROL-release-unsigned.apk" files/
+          if [ "$a" = "$b" ]; then
+            echo "reproducible=true" >> "$GITHUB_OUTPUT"
+            echo "### Reproducible: two builds, same sha256 \`$a\`" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "reproducible=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::the two APK builds differ ($a, $b): the build is not byte-for-byte reproducible"
+            echo "### Not reproducible: build 1 \`$a\`, build 2 \`$b\`" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Write SHA256SUMS and the build manifest
+        shell: bash
+        env:
+          REPRODUCIBLE: ${{ steps.compare.outputs.reproducible }}
+        run: |
+          set -euo pipefail
+          cd files
+          test "$(ls | wc -l)" -eq 1 || { echo "::error::expected one APK"; ls; exit 1; }
+          sha256sum * > SHA256SUMS
+          python3 - <<'PY'
+          import json, os
+          files = []
+          for line in open("SHA256SUMS", encoding="utf-8"):
+              digest, name = line.strip().split("  ", 1)
+              files.append({"name": name, "sha256": digest, "bytes": os.path.getsize(name)})
+          json.dump({
+              "schema": "eh3d-build/1", "repository": os.environ["GITHUB_REPOSITORY"], "project": "android-control", "version": os.environ["VERSION"],
+              "commit": os.environ["SHA"], "built_on": "github-actions", "run_id": os.environ["GITHUB_RUN_ID"],
+              "run_url": f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",
+              "toolchain": "gradle :app:assembleRelease (no build cache), JDK 21 (temurin), zipalign -p 4; no signing key in the job", "version_code": os.environ["CODE"],
+              "package_format": "apk (unsigned, aligned)", "reproducible": os.environ["REPRODUCIBLE"] == "true", "signed": False, "files": files,
+          }, open("build-manifest.json", "w", encoding="utf-8"), indent=2)
+          PY
+          cat SHA256SUMS
+          { echo "### EH3D-ANDROID-CONTROL $VERSION (unsigned APK)"; sed 's/^/- /' SHA256SUMS; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Attest the provenance of the files
+        uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
+        with:
+          subject-path: |
+            files/*.apk
+            files/SHA256SUMS
+
+      - name: Upload the build
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: apk-android-control-${{ needs.plan.outputs.version }}
+          path: files/*
+          if-no-files-found: error
+          retention-days: 30
+
+  verify:
+    name: Verify the artifact as a stranger would
+    needs: [plan, collect]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      attestations: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SIGNER: ${{ github.repository }}/.github/workflows/apk-build.yml
+    steps:
+      - name: Download the build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: apk-android-control-${{ needs.plan.outputs.version }}
+          path: build
+
+      - name: Check hashes, manifest and attestation
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build
+          sha256sum -c SHA256SUMS
+          python3 - <<'PY'
+          import json, os, re, zipfile
+          manifest = json.load(open("build-manifest.json", encoding="utf-8"))
+          assert manifest["signed"] is False and len(manifest["files"]) == 1, "unexpected manifest"
+          assert manifest["repository"] == os.environ["GITHUB_REPOSITORY"] and str(manifest["run_id"]) == os.environ["GITHUB_RUN_ID"], "the manifest is not of this run"
+          name = manifest["files"][0]["name"]
+          assert name == "EH3D-ANDROID-CONTROL-release-unsigned.apk", "unexpected APK name"
+          names = zipfile.ZipFile(name).namelist()
+          assert "AndroidManifest.xml" in names and any(n.endswith(".dex") for n in names), "this is not an APK"
+          assert not [n for n in names if re.match(r"META-INF/.*\.(RSA|DSA|EC|SF)$", n)], "the APK is signed"
+          print("manifest ok:", manifest["project"], manifest["version"], "reproducible:", manifest["reproducible"])
+          PY
+          for file in *.apk SHA256SUMS; do
+            gh attestation verify "$file" --repo "$GITHUB_REPOSITORY" --signer-workflow "$SIGNER" --source-digest "$GITHUB_SHA" >/dev/null
+            echo "attestation ok: $file"
+          done
+
+  draft:
+    name: Prepare the draft release (owner approval)
+    needs: [plan, collect, verify]
+    if: ${{ !inputs.dry_run && github.actor == github.repository_owner }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: release
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ needs.plan.outputs.version }}
+      SHA: ${{ needs.plan.outputs.sha }}
+      GH_TOKEN: ${{ github.token }}
+      ACTOR: ${{ github.actor }}
+      OWNER: ${{ github.repository_owner }}
+    steps:
+      - name: Only the owner prepares a draft
+        shell: bash
+        run: |
+          set -euo pipefail
+          [ "$ACTOR" = "$OWNER" ] || { echo "::error::only the owner of the repository prepares a draft"; exit 1; }
+
+      - name: Download the verified build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: apk-android-control-${{ needs.plan.outputs.version }}
+          path: files
+
+      - name: Prepare the draft release with the unsigned APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$VERSION"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "::error::the release $tag already exists: raise the version before a new build"
+            exit 1
+          fi
+          gh release create "$tag" files/* --draft --target "$SHA" --title "EH3D-ANDROID-CONTROL $VERSION (unsigned APK)" \
+            --notes "Unsigned APK made by GitHub Actions. It is not installable until it is signed; the signed APK of the release replaces it."
+          echo "- draft release \`$tag\` prepared with the unsigned APK" >> "$GITHUB_STEP_SUMMARY"
+
+  notify:
+    name: Tell the owner (issue build-failed)
+    if: ${{ always() && github.actor == github.repository_owner }}
+    needs: [plan, build, collect, draft, verify]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+      actions: read
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NEEDS: ${{ toJSON(needs) }}
+      REF: ${{ inputs.ref }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Open, update or close the issue build-failed
+        id: report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, subprocess, sys
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          run_id = os.environ["GITHUB_RUN_ID"]
+          run_url = os.environ["RUN_URL"]
+          summary = os.environ["GITHUB_STEP_SUMMARY"]
+          order = ["plan", "build", "collect", "draft", "verify"]
+
+
+          def gh(*args, check=True):
+              result = subprocess.run(["gh", *args], capture_output=True, text=True)
+              if check and result.returncode != 0:
+                  raise RuntimeError("gh " + " ".join(args[:3]) + " failed: " + result.stderr.strip()[:300])
+              return result.stdout
+
+
+          def write_summary(text):
+              with open(summary, "a", encoding="utf-8") as handle:
+                  handle.write(text + "\n")
+
+
+          try:
+              needs = json.loads(os.environ["NEEDS"])
+              results = {name: needs.get(name, {}).get("result", "missing") for name in order}
+              if os.environ.get("DRY_RUN") == "true" and results.get("draft") == "skipped":
+                  results["draft"] = "success"  # a dry run makes no draft on purpose
+              bad = {name: result for name, result in results.items() if result != "success"}
+              number = gh("issue", "list", "--repo", repo, "--label", "build-failed", "--state", "open", "--json", "number", "--jq", ".[0].number // empty").strip()
+              if bad:
+                  # what the API knows about each job: conclusion (failure, cancelled, timed_out, skipped), failed step, reason
+                  jobs = json.loads(gh("api", f"repos/{repo}/actions/runs/{run_id}/jobs?per_page=100"))["jobs"]
+                  lines = []
+                  causes = 0
+                  for job in jobs:
+                      if job["name"].startswith("Tell the owner"):
+                          continue
+                      conclusion = job.get("conclusion") or job.get("status")
+                      if conclusion in ("success", "skipped") and not any(s.get("conclusion") in ("failure", "cancelled", "timed_out") for s in job.get("steps", [])):
+                          continue
+                      step = next((s["name"] for s in job.get("steps", []) if s.get("conclusion") in ("failure", "cancelled", "timed_out")), None)
+                      reason = ""
+                      if conclusion != "skipped":
+                          causes += 1
+                          annotations = gh("api", f"repos/{repo}/check-runs/{job['id']}/annotations", check=False)
+                          try:
+                              messages = [a["message"] for a in json.loads(annotations or "[]") if a.get("annotation_level") in ("failure", "error")]
+                          except ValueError:
+                              messages = []
+                          if messages:
+                              reason = messages[0].strip().splitlines()[0][:300]
+                      what = {"failure": "failed", "cancelled": "was cancelled", "timed_out": "ran out of time", "skipped": "was skipped because an earlier job did not pass"}.get(conclusion, "ended as " + str(conclusion))
+                      line = f"- **{job['name']}** {what}"
+                      if step:
+                          line += f" (step: {step})"
+                      if reason:
+                          line += f": {reason}"
+                      line += f" - {job['html_url']}"
+                      lines.append(line)
+                  if causes == 0:
+                      lines.append("- no job reports a failure, but these ended without success: " + ", ".join(f"{n}={r}" for n, r in bad.items()) + " (a job was skipped without an earlier failure)")
+                  body = "\n".join([
+                      "The build did not finish correctly.",
+                      "",
+                      f"Run: {run_url}",
+                      f"Ref: `{os.environ.get('REF', '')}`, dry run: {os.environ.get('DRY_RUN', '')}",
+                      "Results: " + ", ".join(f"{n}={r}" for n, r in results.items()),
+                      "",
+                      *lines,
+                      "",
+                      "Open the run, read the log of the job above, fix the cause and start the workflow again; a later good build closes this issue.",
+                  ])
+                  write_summary("### The build did not finish correctly\n" + "\n".join(lines))
+                  if number:
+                      gh("issue", "comment", number, "--repo", repo, "--body", body)
+                  else:
+                      gh("label", "create", "build-failed", "--repo", repo, "--color", "B60205", "--description", "A build in GitHub Actions failed", check=False)
+                      gh("issue", "create", "--repo", repo, "--label", "build-failed", "--title", "Build failed", "--body", body)
+                  print("::error::the build did not finish correctly: " + ", ".join(f"{n}={r}" for n, r in bad.items()) + " - " + run_url)
+              else:
+                  write_summary("### The build passed")
+                  if number:
+                      gh("issue", "close", number, "--repo", repo, "--comment", f"A later build passed: {run_url}")
+          except Exception as error:  # the report itself failed: say so loudly, with the cause
+              text = f"{type(error).__name__}: {error}"
+              print(f"::error::the notify job could not report the state of the build ({text}). Check the run by hand: {run_url}")
+              write_summary(f"### The notify job failed\n\nIt could not open, update or close the issue build-failed.\n\nCause: `{text}`\n\nRun: {run_url}")
+              sys.exit(1)
+          PY
+
+      - name: Say it if this notify job itself failed
+        if: ${{ failure() }}
+        shell: bash
+        run: |
+          echo "::error::the notify job failed before it could report the build; open the run and read its summary: $RUN_URL"
+          echo "### The notify job failed, so the issue build-failed may be missing. Read the log above. Run: $RUN_URL" >> "$GITHUB_STEP_SUMMARY"
