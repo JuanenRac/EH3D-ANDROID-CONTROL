@@ -9,6 +9,7 @@ All notable changes to this project are documented here.
 - **More tests:** the preparation of a job, the link, the stops, the drawing and the summary from their edges, the tags and the releases of the update channel, and the addresses an operator types.
 - **A version tag with a number too big for an integer is refused** instead of ending in an exception, and an address with a port that does not exist (0 or above 65535) is no longer accepted.
 - **The workflows are hardened:** every action is pinned by its commit with its version in a comment, and the checkouts keep no credentials.
+- **More tests of the update channel:** which tags are versions, which release is newer and which link of the APK is accepted.
 
 ## [0.0.8] - Summary before a start, an honest link and shared test cases
 
