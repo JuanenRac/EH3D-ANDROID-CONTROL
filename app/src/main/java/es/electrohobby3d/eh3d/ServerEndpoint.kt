@@ -55,6 +55,8 @@ data class ServerEndpoint(val origin: String) {
         fun parse(value: String): ServerEndpoint? = try {
             val uri = URI(value.trim())
             val host = uri.host ?: return null
+            // a port that does not exist is not an address (java.net.URI reads any number)
+            if (uri.port != -1 && uri.port !in 1..65535) return null
             val accepted = uri.scheme == "https" || (uri.scheme == "http" && isPrivateLanHost(host))
             if (!accepted || uri.userInfo != null || uri.query != null || uri.fragment != null) null
             else ServerEndpoint("${uri.scheme}://${host}" + if (uri.port == -1) "" else ":${uri.port}")

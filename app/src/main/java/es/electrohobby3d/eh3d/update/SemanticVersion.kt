@@ -26,12 +26,12 @@ data class SemanticVersion(val major: Int, val minor: Int, val patch: Int, val b
         /** Returns null instead of guessing when a GitHub tag is not stable semver. */
         fun parseStable(value: String): SemanticVersion? {
             val match = stablePattern.matchEntire(value.trim()) ?: return null
-            return SemanticVersion(
-                major = match.groupValues[1].toInt(),
-                minor = match.groupValues[2].toInt(),
-                patch = match.groupValues[3].toInt(),
-                build = match.groupValues[4].takeIf { it.isNotEmpty() }?.toInt(),
-            )
+            // a number too big for an Int is not a version either (it must not end in an exception)
+            val major = match.groupValues[1].toIntOrNull() ?: return null
+            val minor = match.groupValues[2].toIntOrNull() ?: return null
+            val patch = match.groupValues[3].toIntOrNull() ?: return null
+            val build = match.groupValues[4].takeIf { it.isNotEmpty() }?.let { it.toIntOrNull() ?: return null }
+            return SemanticVersion(major, minor, patch, build)
         }
     }
 }
