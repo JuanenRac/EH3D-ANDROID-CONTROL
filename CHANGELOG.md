@@ -4,6 +4,7 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 - **The page of a job says who started it** as well as who stopped it, with the text the machine page already uses.
+- **Every refusal of the server has a text in the eight languages:** 31 more codes of the catalog of the server (the tuning, the G-code, the ids, the LED ring, the updates, the jobs and the machines among them) say what went wrong in the language of the app instead of the raw message; a test fails when a code of the catalog has neither a text nor a stated reason (the refusals of files that carry the message of the server, and the codes of the design programs the app never asks for).
 - **The case files shared with the iPhone app are checked in CI:** `tools/check_shared_cases.py` compares them with the ones of the other repository (the sibling folder, or the public one on GitHub) and fails when one differs, is missing or cannot be read; its own test runs before it.
 - **Brand:** Add the application icon and the logos of the program.
 - **A watchdog for the manual build:** `.github/workflows/build-watchdog.yml` looks every hour for a build that stays queued or running longer than the limit in `.github/build-watchdog.json` and opens (or updates) an issue `build-stuck`, which it closes when no build is stuck.

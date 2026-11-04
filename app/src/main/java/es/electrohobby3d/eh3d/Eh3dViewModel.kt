@@ -557,6 +557,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "not_stopped" -> tr("Solo se puede seguir desde un trabajo cancelado o fallido.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
+        ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty()
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")
         else -> trf("El servidor respondió: %s", error.message ?: error.code)
     }
