@@ -300,6 +300,7 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }
                 if (JobStates.canGoOn(s.state)) Text(tr("El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.resumedFrom.isNotBlank()) Text(trf("Continúa el trabajo %s", s.resumedFrom), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                if (s.startedBy.isNotBlank()) Text(trf("Lanzado por %s", s.startedBy), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.stoppedBy.isNotBlank()) Text(trf("Detenido por %s", s.stoppedBy), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.state == "ready") Text(tr("Un trabajo nunca arranca solo: pulse Empezar con la máquina preparada."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }

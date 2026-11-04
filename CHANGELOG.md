@@ -3,6 +3,8 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **The page of a job says who started it** as well as who stopped it, with the text the machine page already uses.
+- **The case files shared with the iPhone app are checked in CI:** `tools/check_shared_cases.py` compares them with the ones of the other repository (the sibling folder, or the public one on GitHub) and fails when one differs, is missing or cannot be read; its own test runs before it.
 - **Brand:** Add the application icon and the logos of the program.
 - **A watchdog for the manual build:** `.github/workflows/build-watchdog.yml` looks every hour for a build that stays queued or running longer than the limit in `.github/build-watchdog.json` and opens (or updates) an issue `build-stuck`, which it closes when no build is stuck.
 - **The release APK is built in GitHub Actions:** `.github/workflows/apk-build.yml` (manual, owner only) builds it with JDK 21 and Gradle without any cache, checks the application id, the version name and a version code that rises, writes `SHA256SUMS`, a build manifest and a provenance attestation, and opens an issue `build-failed` when it fails; the APK leaves unsigned and is signed on the maintainer's computer. See `docs/BUILD.md`.

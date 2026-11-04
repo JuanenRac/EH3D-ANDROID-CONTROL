@@ -27,6 +27,12 @@ jobs:
         run: |
           python -I tools/make_architecture.py --check
           python -I tools/make_structure.py --check --readmes
+      - name: Case files shared with the iPhone app
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python -I tools/test_check_shared_cases.py
+          python -I tools/check_shared_cases.py
 
   tests:
     name: Tests, lint and the debug APK
