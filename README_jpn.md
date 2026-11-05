@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
-  <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
+  <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
   <img src="https://img.shields.io/badge/Version-0.0.8-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
@@ -54,7 +54,7 @@
 | ヘッドのカメラ | 🟠 | ドリルヘッド（EH3D-NODE-BUNGARD-AUX）のカメラを、サーバー経由の MJPEG で表示し、回転数・温度・保護出力、レーザーによるテーブル測定を行います。実装済みですが、実ノードでは未実行です。 |
 | 更新 | 🟠 | GitHub でこのプロジェクトの最新リリースを確認し、APK をダウンロードして、パッケージ・バージョン・署名を検査したうえで Android のインストーラーに渡します。自分では決してインストールしません。実装・テスト済みですが、端末から GitHub に対しては未実行です。 |
 | 実機での利用 | 🔴 | まだです。アプリは スマートフォン でも、実サーバーに対しても、機械とも実行されていません。最初に試すのは、工房の EH3D-SERVER へのサインインです。 |
-| ドキュメント | 🟡 | 8 言語の README、8 言語のアプリ内ヘルプ、使用するサーバー API のメモ。 |
+| ドキュメント | 🟡 | 8 言語の README、37 言語のアプリ内ヘルプ、使用するサーバー API のメモ。 |
 
 ## 🎯 概要
 
@@ -160,7 +160,7 @@ EH3D-ANDROID-CONTROL/
 ├── app/
 │   ├── build.gradle.kts proguard-rules.pro      ビルドと縮小ルール
 │   ├── src/main/AndroidManifest.xml             権限と唯一のアクティビティ
-│   ├── src/main/assets/i18n/                    8言語の文言
+│   ├── src/main/assets/i18n/                    37言語の文言
 │   ├── src/main/java/es/electrohobby3d/eh3d/    アプリのコード
 │   └── src/test/java/es/electrohobby3d/eh3d/    JVM 上のテスト
 ├── tools/
@@ -204,7 +204,20 @@ EH3D-ANDROID-CONTROL/
 
 ## 🌍 言語
 
-README とテキストは、英語、スペイン語、フランス語、イタリア語、ドイツ語、中国語、日本語、ヨーロッパポルトガル語で提供されています。
+README は英語、スペイン語、フランス語、イタリア語、ドイツ語、中国語、日本語、ヨーロッパポルトガル語で提供されています。アプリ自体は 37 言語に対応しています（最初の 8 言語はコンピューター版 EH3D プログラムと同じです）。残りの 29 言語はモデルによる翻訳で、ネイティブスピーカーによる確認を待っています。ブラジルポルトガル語とカナダフランス語は、ヨーロッパポルトガル語およびフランス語と異なる文だけを持ち、ある言語にない文は英語で表示されます。
+
+| コード | 言語 | コード | 言語 | コード | 言語 | コード | 言語 |
+|---|---|---|---|---|---|---|---|
+| `en` | English | `es` | Español | `it` | Italiano | `de` | Deutsch |
+| `fr` | Français | `pt` | Português | `zh` | 中文 | `ja` | 日本語 |
+| `bg` | Български | `hr` | Hrvatski | `cs` | Čeština | `da` | Dansk |
+| `nl` | Nederlands | `et` | Eesti | `fi` | Suomi | `el` | Ελληνικά |
+| `hu` | Magyar | `ga` | Gaeilge | `lv` | Latviešu | `lt` | Lietuvių |
+| `mt` | Malti | `pl` | Polski | `ro` | Română | `sk` | Slovenčina |
+| `sl` | Slovenščina | `sv` | Svenska | `no` | Norsk | `is` | Íslenska |
+| `uk` | Українська | `ru` | Русский | `sr` | Српски | `sq` | Shqip |
+| `ca` | Català | `gl` | Galego | `eu` | Euskara | `pt-br` | Português (Brasil) |
+| `fr-ca` | Français (Canada) |  |  |  |  |  |  |
 
 ## 🔗 関連プロジェクト
 
@@ -223,7 +236,7 @@ README とテキストは、英語、スペイン語、フランス語、イタ�
 ## 🤝 コントリビュートとコミュニティ
 
 * プルリクエストの前に `./gradlew test` と `python -I tools/ci_validate.py` を実行してください。どちらも成功する必要があります。[CONTRIBUTING.md](CONTRIBUTING.md) と[行動規範](CODE_OF_CONDUCT.md)を参照してください。
-* アプリが表示するすべての文言は `app/src/main/assets/i18n` の表に8言語で入っており、テストが欠けを防ぎます。
+* アプリが表示するすべての文言は `app/src/main/assets/i18n` の表に37言語で入っており、テストが欠けを防ぎます。
 * 脆弱性は非公開で報告してください：[SECURITY.md](SECURITY.md)。質問・提案・報告：electrohobby3d@gmail.com（[SUPPORT.md](SUPPORT.md)）。
 
 ## 👤 作者

@@ -64,14 +64,14 @@
         },
         {
           "desc": {
-            "en": "the texts in eight languages",
-            "es": "los textos en ocho idiomas",
-            "it": "i testi in otto lingue",
-            "de": "die Texte in acht Sprachen",
-            "fr": "les textes en huit langues",
-            "pt": "os textos em oito idiomas",
-            "zh": "八种语言的文本",
-            "ja": "8言語の文言"
+            "en": "the texts in 37 languages",
+            "es": "los textos en 37 idiomas",
+            "it": "i testi in 37 lingue",
+            "de": "die Texte in 37 Sprachen",
+            "fr": "les textes en 37 langues",
+            "pt": "os textos em 37 idiomas",
+            "zh": "37 种语言的文本",
+            "ja": "37言語の文言"
           },
           "name": "src/main/assets/i18n/",
           "tree_name": "src/main/assets/i18n/"

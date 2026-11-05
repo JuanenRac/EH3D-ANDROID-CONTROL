@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
-  <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
+  <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
   <img src="https://img.shields.io/badge/Version-0.0.8-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
@@ -54,7 +54,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 | Cámara del cabezal | 🟠 | La cámara del cabezal de taladrado (EH3D-NODE-BUNGARD-AUX) en MJPEG a través del servidor, sus vueltas, temperatura y salida de protección, y una medida de la mesa con el láser. Escrito, nunca ejecutado con un nodo real. |
 | Actualizaciones | 🟠 | Mira la última release de este proyecto en GitHub, descarga el APK, comprueba el paquete, la versión y la firma y se lo entrega al instalador de Android; nunca instala por sí sola. Escrito y probado; nunca ejecutado contra GitHub desde un teléfono. |
 | Uso real | 🔴 | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
-| Documentación | 🟡 | README en ocho idiomas, la ayuda de la app en ocho idiomas y las notas de la API del servidor que usa. |
+| Documentación | 🟡 | README en ocho idiomas, la ayuda de la app en 37 idiomas y las notas de la API del servidor que usa. |
 
 ## 🎯 Resumen
 
@@ -160,7 +160,7 @@ EH3D-ANDROID-CONTROL/
 ├── app/
 │   ├── build.gradle.kts proguard-rules.pro      la compilación y las reglas de reducción
 │   ├── src/main/AndroidManifest.xml             permisos y la única actividad
-│   ├── src/main/assets/i18n/                    los textos en ocho idiomas
+│   ├── src/main/assets/i18n/                    los textos en 37 idiomas
 │   ├── src/main/java/es/electrohobby3d/eh3d/    el código de la app
 │   └── src/test/java/es/electrohobby3d/eh3d/    las pruebas en la JVM
 ├── tools/
@@ -204,7 +204,20 @@ EH3D-ANDROID-CONTROL/
 
 ## 🌍 Idiomas
 
-El README y los textos existen en inglés, español, francés, italiano, alemán, chino, japonés y portugués de Portugal.
+El README existe en inglés, español, francés, italiano, alemán, chino, japonés y portugués de Portugal. La propia app habla 37 idiomas (los ocho primeros son los de los programas EH3D del ordenador); los 29 restantes los ha traducido el modelo y esperan la revisión de hablantes nativos. El portugués de Brasil y el francés de Canadá solo guardan las frases que difieren del portugués de Portugal y del francés; una frase que un idioma no tiene se muestra en inglés.
+
+| Código | Idioma | Código | Idioma | Código | Idioma | Código | Idioma |
+|---|---|---|---|---|---|---|---|
+| `en` | English | `es` | Español | `it` | Italiano | `de` | Deutsch |
+| `fr` | Français | `pt` | Português | `zh` | 中文 | `ja` | 日本語 |
+| `bg` | Български | `hr` | Hrvatski | `cs` | Čeština | `da` | Dansk |
+| `nl` | Nederlands | `et` | Eesti | `fi` | Suomi | `el` | Ελληνικά |
+| `hu` | Magyar | `ga` | Gaeilge | `lv` | Latviešu | `lt` | Lietuvių |
+| `mt` | Malti | `pl` | Polski | `ro` | Română | `sk` | Slovenčina |
+| `sl` | Slovenščina | `sv` | Svenska | `no` | Norsk | `is` | Íslenska |
+| `uk` | Українська | `ru` | Русский | `sr` | Српски | `sq` | Shqip |
+| `ca` | Català | `gl` | Galego | `eu` | Euskara | `pt-br` | Português (Brasil) |
+| `fr-ca` | Français (Canada) |  |  |  |  |  |  |
 
 ## 🔗 Proyectos relacionados
 
@@ -223,7 +236,7 @@ El README y los textos existen en inglés, español, francés, italiano, alemán
 ## 🤝 Contribuir y comunidad
 
 * Antes de un pull request ejecute `./gradlew test` y `python -I tools/ci_validate.py`: ambos deben pasar. Vea [CONTRIBUTING.md](CONTRIBUTING.md) y el [código de conducta](CODE_OF_CONDUCT.md).
-* Cada texto que muestra la app está en las tablas de `app/src/main/assets/i18n` en los ocho idiomas; una prueba las mantiene completas.
+* Cada texto que muestra la app está en las tablas de `app/src/main/assets/i18n` en los 37 idiomas; una prueba las mantiene completas.
 * Informe de una vulnerabilidad en privado: [SECURITY.md](SECURITY.md). Preguntas, ideas e informes: electrohobby3d@gmail.com ([SUPPORT.md](SUPPORT.md)).
 
 ## 👤 AUTOR

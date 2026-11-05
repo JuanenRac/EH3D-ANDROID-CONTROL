@@ -36,7 +36,7 @@
       "title": "Screens, Forge theme",
       "lines": [
         "machines, jobs, stop, help;",
-        "eight languages, Forge theme"
+        "37 languages, Forge theme"
       ],
       "code": [
         "app/src/main/java/es/electrohobby3d/eh3d/HomeScreens.kt",
