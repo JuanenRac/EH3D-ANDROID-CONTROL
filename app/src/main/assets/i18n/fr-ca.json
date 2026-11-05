@@ -1,0 +1,10 @@
+{
+ "No se alcanza el servidor. Compruebe la dirección y que el teléfono está en la misma red.": "Le serveur est injoignable. Vérifiez l'adresse et que le cellulaire est sur le même réseau.",
+ "Recordarme en este teléfono": "Se souvenir de moi sur ce cellulaire",
+ "%d de %d hechos · quedan %s": "%d sur %d faits · il reste %s",
+ "Ajustes": "Paramètres",
+ "Buscar de nuevo": "Rechercher de nouveau",
+ "Abrir el ajuste": "Ouvrir le paramètre",
+ "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Avec « Se souvenir de moi », l'utilisateur et le mot de passe sont conservés chiffrés sur ce cellulaire, pour ce serveur seulement. Décochez pour les oublier aussitôt.",
+ "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Votre mot de passe n'est pas conservé sur le cellulaire. La session l'est, chiffrée, et se renouvelle tant que vous utilisez l'application : vous n'aurez pas à vous reconnecter sauf si elle expire ou si vous la fermez."
+}
