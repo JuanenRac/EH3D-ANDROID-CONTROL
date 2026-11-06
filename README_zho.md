@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
   <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
-  <img src="https://img.shields.io/badge/Version-0.0.8-0f6cbd.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.0.9-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
 
@@ -29,7 +29,7 @@
 
 | | |
 |---|---|
-| 版本 | `0.0.8` |
+| 版本 | `0.0.9` |
 | 成熟度 | 脚手架 |
 | 测试 | JVM 上的单元测试 |
 | 技术栈 | Kotlin, Jetpack Compose |
