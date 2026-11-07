@@ -21,6 +21,12 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 | An address with a path after the host (`http://192.168.0.5:8080/x`) | The path is dropped | The address is refused |
 | Two addresses for one installation (at home and away) | Not there | `DualEndpoint` |
 | Updates | Downloads the APK and hands it to the installer | Tells that a version exists and links to it |
+| Certificate of a secure server | Not pinned; the phrase is not in its tables | Pinned the first time it is seen; one extra phrase in the 37 tables says so |
+| The stream of the head camera | Also stops while the app is out of sight and can decode at a smaller size for the grid | Read with `URLSession` and stops with its screen |
+
+## Not there in either app yet
+
+* Jog (moving an axis by hand) and a live progress stream of a job: the server has no route for jog and sends progress only in the job (`percent`, `items_done`, `holes_done`, `estimate_s`), which both apps already show; they will follow when the server offers the route.
 
 ## Not run yet
 
