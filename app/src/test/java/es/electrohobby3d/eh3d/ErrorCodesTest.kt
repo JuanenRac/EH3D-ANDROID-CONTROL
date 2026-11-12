@@ -15,6 +15,8 @@ class ErrorCodesTest {
     private val showsTheMessage = setOf(
         "bad_board", "bad_dcf", "bad_hole", "bad_ncd", "bad_path", "bad_picture", "bad_profile", "bad_samples", "bad_sorting", "bad_tool",
         "both_sources", "store", "too_many_holes", "unknown_tool",
+        // the message of the server is shown as it comes: the phone never builds these requests itself
+        "bad_rack", "not_supported", "plugin_failed", "too_many_clients",
     )
 
     /** The codes of the artifacts, projects, tasks and uploads of the design programs: the control app never asks for any of them. */
@@ -22,6 +24,8 @@ class ErrorCodesTest {
         "artifact_in_use", "bad_artifact", "bad_params", "bad_scope", "bad_share", "bad_template", "bad_upload", "blob_damaged", "engine_missing",
         "forbidden_scope", "hash_mismatch", "idempotency_conflict", "no_project", "queue_full", "quota", "shares_off", "stale_parent", "store_full",
         "task_active", "tasks_off", "unknown_artifact", "unknown_kind", "unknown_project", "unknown_task", "unknown_upload", "upload_conflict", "upload_incomplete",
+        // the files of a project, the catalogs, the plugins, the design program and the switches of security: the phone has no page for them
+        "bad_app", "bad_catalog", "bad_container", "bad_design_request", "bad_filename", "bad_plugin_request", "bad_policy", "catalog_readonly", "design_run_unavailable", "file_too_big", "locked", "not_locked", "precondition_failed", "precondition_required", "project_quota", "unknown_catalog", "unknown_file", "unknown_item", "unknown_plugin", "unknown_session", "unknown_version", "weak_confirm_required",
     )
 
     private fun handledByTheModel(): Set<String> =

@@ -10,6 +10,11 @@
     "status": 422
   },
   {
+    "code": "bad_app",
+    "description": "The name of the application is not one this server accepts (lower case letters, digits and hyphens, one of the known applications or of auth_extra_apps).",
+    "status": 422
+  },
+  {
     "code": "bad_artifact",
     "description": "The description of an artifact does not fit (name, format, result_type, inputs or params).",
     "status": 422
@@ -20,8 +25,18 @@
     "status": 422
   },
   {
+    "code": "bad_catalog",
+    "description": "The dataset uploaded to a catalog does not fit: not JSON or CSV that reads, items that are not objects, an item without the field that names it (or repeated), a missing format, or more items than catalog_max_items.",
+    "status": 422
+  },
+  {
     "code": "bad_cfg",
     "description": "The tuning text of the machine does not read.",
+    "status": 422
+  },
+  {
+    "code": "bad_container",
+    "description": "The .eh3dproj container cannot be read or written: structure, names, sizes, integrity record, or the project has no project.json.",
     "status": 422
   },
   {
@@ -37,6 +52,16 @@
   {
     "code": "bad_dcf",
     "description": "The text of DRILLPRO.DCF or ROUTEPRO.RCF does not read.",
+    "status": 422
+  },
+  {
+    "code": "bad_design_request",
+    "description": "The request to run the design program does not fit: the kind is not one of check, bom, fabpack or panel, the board file is missing, or the options are not accepted for the kind.",
+    "status": 422
+  },
+  {
+    "code": "bad_filename",
+    "description": "The name of a file is not safe: empty, absolute, with .. or a drive, with control characters, a reserved name of Windows, too long, or the same as another in other letter case.",
     "status": 422
   },
   {
@@ -85,8 +110,23 @@
     "status": 502
   },
   {
+    "code": "bad_plugin_request",
+    "description": "The request does not fit what the plugin of the machine takes, or the settings of a machine of a plugin are not valid.",
+    "status": 422
+  },
+  {
+    "code": "bad_policy",
+    "description": "The switch of security is not one that can change while the server runs, or its value is not of the right type or is out of range.",
+    "status": 422
+  },
+  {
     "code": "bad_profile",
     "description": "The inspection profile is not valid.",
+    "status": 422
+  },
+  {
+    "code": "bad_rack",
+    "description": "The rack of a job request of the second version does not fit: places that repeat, the test pin as a place, more places than rack_max_slots, a carry_slot without carry_in, or a place the machine does not define or reach.",
     "status": 422
   },
   {
@@ -155,9 +195,24 @@
     "status": 422
   },
   {
+    "code": "catalog_readonly",
+    "description": "The catalog is built in and is not written, not even by an administrator.",
+    "status": 409
+  },
+  {
+    "code": "design_run_unavailable",
+    "description": "The server is not set up to run the design program: design_run is off or design_program is not set.",
+    "status": 501
+  },
+  {
     "code": "engine_missing",
     "description": "The kind of task is known but this build has no engine for it.",
     "status": 422
+  },
+  {
+    "code": "file_too_big",
+    "description": "The file is bigger than project_max_file_mb.",
+    "status": 413
   },
   {
     "code": "forbidden",
@@ -210,6 +265,11 @@
     "status": 403
   },
   {
+    "code": "locked",
+    "description": "Somebody else is editing the project (its lock has not expired).",
+    "status": 423
+  },
+  {
     "code": "machine_busy",
     "description": "A job is running on the machine.",
     "status": 409
@@ -260,6 +320,11 @@
     "status": 409
   },
   {
+    "code": "not_locked",
+    "description": "The project has no lock to release.",
+    "status": 409
+  },
+  {
     "code": "not_pausable",
     "description": "Only a G-code job can be held.",
     "status": 409
@@ -280,6 +345,11 @@
     "status": 409
   },
   {
+    "code": "not_supported",
+    "description": "The plugin of the machine does not support this operation (for example, holding a drilling job), or its machines are made elsewhere.",
+    "status": 501
+  },
+  {
     "code": "out_of_table",
     "description": "A hole or a path is outside the table of the machine.",
     "status": 422
@@ -288,6 +358,26 @@
     "code": "outside_course",
     "description": "The work goes past the course of an axis (the machine's switch is on reject).",
     "status": 422
+  },
+  {
+    "code": "plugin_failed",
+    "description": "The plugin or the machine behind it failed while doing this.",
+    "status": 502
+  },
+  {
+    "code": "precondition_failed",
+    "description": "The If-Match tag is not the one of the current version: read the file again before writing.",
+    "status": 412
+  },
+  {
+    "code": "precondition_required",
+    "description": "A write over an existing file needs If-Match with the tag (SHA-256) of the version it was made from.",
+    "status": 428
+  },
+  {
+    "code": "project_quota",
+    "description": "The project, the application or the store would pass its limit (project_max_mb, project_max_files, project_max_projects).",
+    "status": 507
   },
   {
     "code": "queue_full",
@@ -350,6 +440,11 @@
     "status": 422
   },
   {
+    "code": "too_many_clients",
+    "description": "As many clients listen to the stream of events as events_clients_max allows.",
+    "status": 429
+  },
+  {
     "code": "too_many_holes",
     "description": "More holes than one inspection takes.",
     "status": 422
@@ -362,6 +457,21 @@
   {
     "code": "unknown_artifact",
     "description": "There is no artifact with this id, or it belongs to somebody else.",
+    "status": 404
+  },
+  {
+    "code": "unknown_catalog",
+    "description": "There is no catalog with this name.",
+    "status": 404
+  },
+  {
+    "code": "unknown_file",
+    "description": "The project has no such file.",
+    "status": 404
+  },
+  {
+    "code": "unknown_item",
+    "description": "The catalog has no item with this name.",
     "status": 404
   },
   {
@@ -380,8 +490,18 @@
     "status": 404
   },
   {
+    "code": "unknown_plugin",
+    "description": "There is no plugin of this kind.",
+    "status": 422
+  },
+  {
     "code": "unknown_project",
     "description": "There is no project with this id, or it belongs to somebody else.",
+    "status": 404
+  },
+  {
+    "code": "unknown_session",
+    "description": "There is no open login with this id, or it is not the caller's, or the login cannot be renewed any more.",
     "status": 404
   },
   {
@@ -410,6 +530,11 @@
     "status": 404
   },
   {
+    "code": "unknown_version",
+    "description": "The file has no such version (or it was dropped past project_versions_kept).",
+    "status": 404
+  },
+  {
     "code": "update_refused",
     "description": "The update helper refused the request.",
     "status": 409
@@ -432,6 +557,11 @@
   {
     "code": "user_exists",
     "description": "A user with this name already exists.",
+    "status": 409
+  },
+  {
+    "code": "weak_confirm_required",
+    "description": "The new value of the switch of security is looser than recommended: send confirm_weak: true to apply it.",
     "status": 409
   },
   {
