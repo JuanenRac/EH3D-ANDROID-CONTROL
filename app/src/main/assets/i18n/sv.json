@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Ansluter till din server…",
  "Ocultar": "Dölj",
  "Mostrar": "Visa",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Med ”Kom ihåg mig” sparas användaren och lösenordet krypterade på den här telefonen, bara för den här servern. Ta bort bocken för att glömma dem direkt.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Ditt lösenord sparas inte på telefonen. Sessionen sparas, krypterad, och förnyas medan du använder appen: du behöver inte logga in igen om den inte löper ut eller du stänger appen.",
  "Aro de luz": "Ljusring",
  "apagado": "av",
  "Apagar": "Stäng av",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Uppdateringshjälpen avvisade begäran.",
  "Las actualizaciones no están configuradas en este servidor.": "Uppdateringar är inte inställda på den här servern.",
  "Ese usuario ya existe.": "Den användaren finns redan.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Den här maskinen tar inte emot den här sortens jobb: en nod tar emot borrning och fräsning, en GRBL-maskin tar emot G-kod och simulatorn tar emot alla tre."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Den här maskinen tar inte emot den här sortens jobb: en nod tar emot borrning och fräsning, en GRBL-maskin tar emot G-kod och simulatorn tar emot alla tre.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Med ”Kom ihåg mig” sparas bara sessionstoken för den här servern, krypterad på den här telefonen (aldrig användare eller lösenord); den löper ut efter 30 dagar och återkallas när du loggar ut.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Inget sparas på telefonen: efter att du stängt appen måste du logga in igen. Bocka i ”Kom ihåg mig” för att behålla den krypterade sessionstoken i 30 dagar."
 }

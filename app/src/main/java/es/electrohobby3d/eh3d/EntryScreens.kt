@@ -108,8 +108,8 @@ fun EntryScreen(model: Eh3dViewModel) {
     val savedPort = remember { model.savedOrigin().substringAfterLast(':', "18200").takeIf { it.all(Char::isDigit) && it.isNotEmpty() } ?: "18200" }
     var host by rememberSaveable { mutableStateOf(savedHost) }
     var port by rememberSaveable { mutableStateOf(savedPort) }
-    var name by rememberSaveable { mutableStateOf(model.savedUser()) }
-    var password by rememberSaveable { mutableStateOf(model.savedPassword()) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
     var code by rememberSaveable { mutableStateOf("") }
     var remember by rememberSaveable { mutableStateOf(model.rememberMe) }
     var visible by rememberSaveable { mutableStateOf(false) }
@@ -189,8 +189,8 @@ fun EntryScreen(model: Eh3dViewModel) {
             Spacer(Modifier.height(18.dp))
             if (!setup && model.phase == Phase.SignedOut) {
                 Text(
-                    if (remember) tr("Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.")
-                    else tr("Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres."),
+                    if (remember) tr("Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.")
+                    else tr("No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días."),
                     color = Forge.Dim, fontSize = 12.sp, textAlign = TextAlign.Center,
                 )
             }

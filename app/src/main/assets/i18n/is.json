@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Tengist netþjóninum þínum…",
  "Ocultar": "Fela",
  "Mostrar": "Sýna",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Með „Muna eftir mér“ eru notandinn og lykilorðið geymd dulkóðuð í þessum síma, aðeins fyrir þennan netþjón. Fjarlægðu hakið til að gleyma þeim strax.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Lykilorðið þitt er ekki geymt í símanum. Setan er geymd, dulkóðuð, og endurnýjast meðan þú notar forritið: þú þarft ekki að skrá þig inn aftur nema hún renni út eða þú lokir forritinu.",
  "Aro de luz": "Ljóshringur",
  "apagado": "slökkt",
  "Apagar": "Slökkva",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Uppfærsluhjálpin hafnaði beiðninni.",
  "Las actualizaciones no están configuradas en este servidor.": "Uppfærslur eru ekki settar upp á þessum netþjóni.",
  "Ese usuario ya existe.": "Þessi notandi er þegar til.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Þessi vél tekur ekki við þessari tegund verks: nóði tekur við borun og fræsingu, GRBL-vél tekur við G-kóða og hermirinn tekur við öllum þremur."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Þessi vél tekur ekki við þessari tegund verks: nóði tekur við borun og fræsingu, GRBL-vél tekur við G-kóða og hermirinn tekur við öllum þremur.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Með „Muna eftir mér“ er aðeins setulykill þessa netþjóns vistaður, dulkóðaður á þessum síma (aldrei notandi eða lykilorð); hann rennur út eftir 30 daga og er afturkallaður þegar þú skráir þig út.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ekkert er vistað í símanum: eftir að forritinu er lokað þarftu að skrá þig inn aftur. Hakaðu við „Muna eftir mér“ til að halda dulkóðuðum setulykli í 30 daga."
 }

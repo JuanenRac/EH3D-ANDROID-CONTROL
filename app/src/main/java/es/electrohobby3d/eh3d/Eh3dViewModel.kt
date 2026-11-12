@@ -79,7 +79,6 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     private val store = PreferencesStore(preferences)
     private val box = KeystoreBox()
     private val sessions = SessionVault(store, box)
-    private val credentials = CredentialVault(store, box)
     private var api = Eh3dApi("")
 
     var phase by mutableStateOf(Phase.Booting); private set
@@ -98,7 +97,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** Whether the summary of a job is shown before it starts (on by default; the person can turn it off in the settings). */
     var confirmStart by mutableStateOf(preferences.getBoolean("confirm_start", true)); private set
     var message: String? by mutableStateOf(null); private set
-    var rememberMe by mutableStateOf(credentials.has()); private set
+    var rememberMe by mutableStateOf(sessions.has()); private set
     var jobs: List<JobSummary> by mutableStateOf(emptyList()); private set
     var job: Job? by mutableStateOf(null); private set
     var head: HeadStatus? by mutableStateOf(null); private set
@@ -129,11 +128,12 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** Gives the camera address a ticket just before it is opened. */
     val resolveStream: suspend (String) -> String get() = { api.withTicket(it) }
 
-    init { start() }
+    init {
+        SessionVault.purgeLegacy(store)   // the user and the password that an earlier version kept are deleted at the first start
+        start()
+    }
 
     fun savedOrigin(): String = origin
-    fun savedUser(): String = credentials.load(origin)?.username.orEmpty()
-    fun savedPassword(): String = credentials.load(origin)?.password.orEmpty()
 
     private fun start() {
         viewModelScope.launch {
@@ -143,10 +143,6 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
             if (kept != null) {
                 api.token = kept.value
                 try { login = api.session(); phase = Phase.SignedIn; poll(); return@launch } catch (_: ApiException) { sessions.clear(); api.token = "" }
-            }
-            val saved = credentials.load(origin)
-            if (saved != null) {
-                try { doSignIn(origin, saved.username, saved.password, true); return@launch } catch (_: Exception) { /* the sign-in screen asks again */ }
             }
             phase = Phase.SignedOut
         }
@@ -190,8 +186,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         val result = api.login(name.trim(), password)
         api.token = result.token
         login = result
-        sessions.save(origin, "token", result.token)
-        if (remember) credentials.save(origin, name.trim(), password) else credentials.clear()
+        if (remember) sessions.save(origin, "token", result.token) else sessions.clear()   // only the token of the session is ever kept, and only when asked
         rememberMe = remember
         preferences.edit().putString("origin", origin).apply()
         message = null
@@ -207,7 +202,6 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         val closing = Eh3dApi(origin, api.token)
         viewModelScope.launch { closing.logout() }
         sessions.clear()
-        credentials.clear()
         rememberMe = false
         api.token = ""
         login = null

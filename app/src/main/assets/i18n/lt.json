@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Jungiamasi prie jūsų serverio…",
  "Ocultar": "Slėpti",
  "Mostrar": "Rodyti",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Pasirinkus „Prisiminti mane“, naudotojas ir slaptažodis šiame telefone saugomi užšifruoti, tik šiam serveriui. Nuimkite žymę, kad jie būtų užmiršti iš karto.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Jūsų slaptažodis telefone nesaugomas. Sesija saugoma užšifruota ir atsinaujina, kol naudojate programą: jums nereikės prisijungti iš naujo, nebent ji pasibaigs arba programą uždarysite.",
  "Aro de luz": "Šviesos žiedas",
  "apagado": "išjungta",
  "Apagar": "Išjungti",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Naujinimo pagalbininkas atmetė užklausą.",
  "Las actualizaciones no están configuradas en este servidor.": "Naujinimai šiame serveryje nenustatyti.",
  "Ese usuario ya existe.": "Toks naudotojas jau yra.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šios staklės nepriima tokio darbo: mazgas priima gręžimą ir frezavimą, GRBL staklės priima G kodą, o simuliatorius priima visus tris."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šios staklės nepriima tokio darbo: mazgas priima gręžimą ir frezavimą, GRBL staklės priima G kodą, o simuliatorius priima visus tris.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Pasirinkus „Prisiminti mane“, šiame telefone saugomas tik šio serverio sesijos prieigos raktas, užšifruotas (niekada naudotojo vardas ar slaptažodis); jis baigia galioti po 30 dienų ir atšaukiamas atsijungus.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefone nesaugoma nieko: uždarę programėlę turėsite prisijungti iš naujo. Pažymėkite „Prisiminti mane“, kad užšifruotas sesijos raktas būtų saugomas 30 dienų."
 }

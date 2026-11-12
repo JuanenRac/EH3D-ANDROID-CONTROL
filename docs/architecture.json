@@ -82,8 +82,7 @@
       ],
       "code": [
         "app/src/main/java/es/electrohobby3d/eh3d/ServerEndpoint.kt",
-        "app/src/main/java/es/electrohobby3d/eh3d/SessionVault.kt",
-        "app/src/main/java/es/electrohobby3d/eh3d/CredentialVault.kt"
+        "app/src/main/java/es/electrohobby3d/eh3d/SessionVault.kt"
       ]
     },
     {

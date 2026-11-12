@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Připojování k vašemu serveru…",
  "Ocultar": "Skrýt",
  "Mostrar": "Zobrazit",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "S volbou „Zapamatovat si mě“ se uživatel a heslo uchovávají šifrovaně v tomto telefonu, jen pro tento server. Zrušením zaškrtnutí je hned zapomenete.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Vaše heslo se v telefonu neukládá. Relace se ukládá šifrovaně a obnovuje se, dokud aplikaci používáte: nebudete se muset znovu přihlašovat, pokud nevyprší nebo ji nezavřete.",
  "Aro de luz": "Světelný kroužek",
  "apagado": "vyp.",
  "Apagar": "Vypnout",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Pomocník aktualizací odmítl požadavek.",
  "Las actualizaciones no están configuradas en este servidor.": "Aktualizace nejsou na tomto serveru nastaveny.",
  "Ese usuario ya existe.": "Takový uživatel už existuje.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tento stroj tento druh úlohy nepřijímá: uzel přijímá vrtání a frézování, stroj GRBL přijímá G-kód a simulátor přijímá všechny tři."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tento stroj tento druh úlohy nepřijímá: uzel přijímá vrtání a frézování, stroj GRBL přijímá G-kód a simulátor přijímá všechny tři.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "S volbou „Zapamatovat si mě“ se na tomto telefonu ukládá pouze šifrovaný token relace tohoto serveru (nikdy uživatel ani heslo); vyprší po 30 dnech a při odhlášení se zruší.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "V telefonu se neukládá nic: po zavření aplikace se budete muset přihlásit znovu. Zaškrtnutím „Zapamatovat si mě“ se šifrovaný token relace uchová 30 dní."
 }

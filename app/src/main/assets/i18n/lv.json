@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Savienojas ar jūsu serveri…",
  "Ocultar": "Paslēpt",
  "Mostrar": "Rādīt",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Ar „Atcerēties mani” lietotājs un parole tiek glabāti šifrēti šajā tālrunī, tikai šim serverim. Noņemiet atzīmi, lai tos uzreiz aizmirstu.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Jūsu parole netiek glabāta tālrunī. Sesija tiek glabāta šifrēta, un tā atjaunojas, kamēr lietojat lietotni: jums nebūs jāpiesakās vēlreiz, ja vien tā nebeigsies vai jūs to neaizvērsiet.",
  "Aro de luz": "Gaismas gredzens",
  "apagado": "izslēgts",
  "Apagar": "Izslēgt",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Atjaunināšanas palīgs noraidīja pieprasījumu.",
  "Las actualizaciones no están configuradas en este servidor.": "Atjauninājumi šajā serverī nav iestatīti.",
  "Ese usuario ya existe.": "Šāds lietotājs jau pastāv.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šī iekārta nepieņem šāda veida darbu: mezgls pieņem urbšanu un frēzēšanu, GRBL iekārta pieņem G-kodu, un simulators pieņem visus trīs."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šī iekārta nepieņem šāda veida darbu: mezgls pieņem urbšanu un frēzēšanu, GRBL iekārta pieņem G-kodu, un simulators pieņem visus trīs.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Ar „Atcerēties mani” šajā tālrunī tiek saglabāts tikai šī servera sesijas marķieris, šifrēts (nekad lietotājvārds vai parole); tas beidzas pēc 30 dienām un tiek atsaukts, izrakstoties.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Tālrunī netiek saglabāts nekas: pēc lietotnes aizvēršanas būs jāpierakstās no jauna. Atzīmējiet „Atcerēties mani”, lai šifrētais sesijas marķieris tiktu glabāts 30 dienas."
 }

@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Connectant amb el vostre servidor…",
  "Ocultar": "Amaga",
  "Mostrar": "Mostra",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Amb «Recorda’m» l’usuari i la contrasenya es guarden xifrats en aquest telèfon, només per a aquest servidor. Desmarqueu-ho per oblidar-los a l’instant.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "La vostra contrasenya no es guarda al telèfon. La sessió sí, xifrada, i es renova mentre feu servir l’aplicació: no haureu de tornar a iniciar la sessió llevat que caduqui o tanqueu l’aplicació.",
  "Aro de luz": "Anell de llum",
  "apagado": "apagat",
  "Apagar": "Apaga",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "L’assistent d’actualització ha rebutjat la petició.",
  "Las actualizaciones no están configuradas en este servidor.": "Les actualitzacions no estan configurades en aquest servidor.",
  "Ese usuario ya existe.": "Aquest usuari ja existeix.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Aquesta màquina no accepta aquest tipus de feina: un node accepta foradat i fresat, una màquina GRBL accepta G-code i el simulador accepta els tres."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Aquesta màquina no accepta aquest tipus de feina: un node accepta foradat i fresat, una màquina GRBL accepta G-code i el simulador accepta els tres.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Amb «Recorda’m» només es guarda, xifrat en aquest telèfon, el testimoni de sessió d’aquest servidor (mai l’usuari ni la contrasenya); caduca als 30 dies i es revoca en tancar la sessió.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "No es guarda res al telèfon: en tancar l’aplicació haureu de tornar a entrar. Marqueu «Recorda’m» per conservar el testimoni de sessió, xifrat, durant 30 dies."
 }

@@ -95,8 +95,6 @@
  "La última verificación no encontró ningún agujero con el que medir la escala.": "A última verificação não encontrou nenhum furo para medir a escala.",
  "El nodo del cabezal no responde.": "O nó do cabeçote de furação não responde.",
  "Conectando con tu servidor…": "Conectando ao seu servidor…",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Com «Lembrar de mim», o usuário e a senha ficam guardados criptografados neste celular, só para este servidor. Desmarque para esquecê-los imediatamente.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Sua senha não fica guardada no celular. A sessão sim, criptografada, e é renovada enquanto você usa o aplicativo: você não precisará entrar de novo, a menos que ela expire ou você feche o aplicativo.",
  "rebabas o polvo alrededor": "rebarbas ou pó ao redor",
  "no se ven canales": "não há canais visíveis",
  "canales demasiado estrechos": "canais estreitos demais",
@@ -192,5 +190,7 @@
  "El trabajo es demasiado grande (más de un millón de líneas, o más de lo que admite el servidor).": "O trabalho é grande demais (mais de um milhão de linhas, ou mais do que o servidor aceita).",
  "El nombre o la contraseña no son correctos, o la sesión ha terminado.": "O nome ou a senha não estão corretos, ou a sessão terminou.",
  "Ese usuario no existe.": "Esse usuário não existe.",
- "Ese usuario ya existe.": "Esse usuário já existe."
+ "Ese usuario ya existe.": "Esse usuário já existe.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Com “Lembrar de mim”, só o token de sessão deste servidor é guardado, criptografado neste celular (nunca o usuário nem a senha); ele expira após 30 dias e é revogado ao sair.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nada é guardado no celular: depois de fechar o app você precisará entrar de novo. Marque “Lembrar de mim” para manter o token de sessão, criptografado, por 30 dias."
 }

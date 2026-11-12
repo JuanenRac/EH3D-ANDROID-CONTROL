@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Connessione al tuo server…",
  "Ocultar": "Nascondi",
  "Mostrar": "Mostra",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Con «Ricordami» utente e password vengono conservati cifrati su questo telefono, solo per questo server. Togli la spunta per dimenticarli subito.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "La tua password non viene salvata sul telefono. La sessione sì, cifrata, e si rinnova finché usi l'app: non dovrai accedere di nuovo a meno che scada o la chiuda tu.",
  "Aro de luz": "Anello luminoso",
  "apagado": "spento",
  "Apagar": "Spegni",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "L'assistente degli aggiornamenti ha rifiutato la richiesta.",
  "Las actualizaciones no están configuradas en este servidor.": "Gli aggiornamenti non sono configurati su questo server.",
  "Ese usuario ya existe.": "Quell'utente esiste già.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Questa macchina non accetta questo tipo di lavoro: un nodo accetta foratura e fresatura, una macchina GRBL accetta G-code e il simulatore tutti e tre."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Questa macchina non accetta questo tipo di lavoro: un nodo accetta foratura e fresatura, una macchina GRBL accetta G-code e il simulatore tutti e tre.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Con «Ricordami» viene conservato solo il token di sessione di questo server, cifrato su questo telefono (mai l'utente né la password); scade dopo 30 giorni e viene revocato all'uscita.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Sul telefono non viene conservato nulla: dovrai accedere di nuovo dopo aver chiuso l'app. Spunta «Ricordami» per conservare il token di sessione, cifrato, per 30 giorni."
 }

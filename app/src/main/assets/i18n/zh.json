@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "正在连接你的服务器…",
  "Ocultar": "隐藏",
  "Mostrar": "显示",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "勾选“记住我”后，用户名和密码会加密保存在这部手机上，仅用于此服务器。取消勾选即可立即清除。",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "密码不会保存在手机上。会话会加密保存，并在你使用应用期间自动续期：除非过期或你主动关闭，否则无需再次登录。",
  "Aro de luz": "环形灯",
  "apagado": "关",
  "Apagar": "关灯",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "更新助手拒绝了该请求。",
  "Las actualizaciones no están configuradas en este servidor.": "此服务器未设置更新功能。",
  "Ese usuario ya existe.": "该用户已存在。",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "此机床不接受这种作业：节点接受钻孔和铣切，GRBL 机床接受 G 代码，模拟器三种都接受。"
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "此机床不接受这种作业：节点接受钻孔和铣切，GRBL 机床接受 G 代码，模拟器三种都接受。",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "勾选“记住我”后，仅会在本手机上加密保存此服务器的会话令牌（绝不保存用户名和密码）；30 天后过期，退出登录时即被撤销。",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "手机上不会保存任何内容：关闭应用后需要重新登录。勾选“记住我”可将会话令牌加密保存 30 天。"
 }

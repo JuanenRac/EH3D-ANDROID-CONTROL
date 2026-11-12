@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "サーバーに接続しています…",
  "Ocultar": "隠す",
  "Mostrar": "表示",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "「ログイン情報を保存」をオンにすると、ユーザー名とパスワードはこのサーバー専用に暗号化してこの端末に保存されます。チェックを外すとすぐに消去されます。",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "パスワードは端末に保存されません。セッションは暗号化して保存され、アプリを使っている間は更新されます。期限切れになるか、自分で閉じない限り、再ログインは不要です。",
  "Aro de luz": "リングライト",
  "apagado": "オフ",
  "Apagar": "消灯",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "更新ヘルパーがリクエストを拒否しました。",
  "Las actualizaciones no están configuradas en este servidor.": "このサーバーでは更新が設定されていません。",
  "Ese usuario ya existe.": "そのユーザーは既に存在します。",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "このマシンはこの種類のジョブを受け付けません。ノードは穴あけとルーティング、GRBL マシンは G コード、シミュレーターは三つとも受け付けます。"
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "このマシンはこの種類のジョブを受け付けません。ノードは穴あけとルーティング、GRBL マシンは G コード、シミュレーターは三つとも受け付けます。",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "「ログイン状態を保持」を選ぶと、このサーバーのセッショントークンだけが暗号化してこの端末に保存されます（ユーザー名とパスワードは保存しません）。30日で期限切れになり、ログアウトすると失効します。",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "端末には何も保存されません。アプリを閉じると再度ログインが必要です。「ログイン状態を保持」にチェックすると、セッショントークンが暗号化されて30日間保持されます。"
 }

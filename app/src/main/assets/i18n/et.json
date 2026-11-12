@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Ühendumine teie serveriga…",
  "Ocultar": "Peida",
  "Mostrar": "Näita",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Valikuga „Jäta mind meelde” hoitakse kasutajat ja parooli krüpteeritult sellel telefonil, ainult selle serveri jaoks. Eemaldage linnuke, et need kohe unustada.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Teie parooli telefonis ei hoita. Seanssi hoitakse krüpteeritult ja see uueneb, kuni rakendust kasutate: te ei pea uuesti sisse logima, kui see ei aegu või te seda ei sulge.",
  "Aro de luz": "Valgusrõngas",
  "apagado": "väljas",
  "Apagar": "Lülita välja",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Uuendusabiline lükkas päringu tagasi.",
  "Las actualizaciones no están configuradas en este servidor.": "Uuendused pole sellel serveril seadistatud.",
  "Ese usuario ya existe.": "Selline kasutaja on juba olemas.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "See masin sellist tööd ei võta: sõlm võtab puurimist ja freesimist, GRBL-masin võtab G-koodi ning simulaator võtab kõiki kolme."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "See masin sellist tööd ei võta: sõlm võtab puurimist ja freesimist, GRBL-masin võtab G-koodi ning simulaator võtab kõiki kolme.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Valikuga „Jäta mind meelde“ salvestatakse selles telefonis ainult selle serveri seansitõend, krüptituna (mitte kunagi kasutajat ega parooli); see aegub 30 päeva pärast ja tühistatakse väljalogimisel.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefoni ei salvestata midagi: pärast rakenduse sulgemist tuleb uuesti sisse logida. Märgi „Jäta mind meelde“, et seansitõend krüptituna 30 päevaks alles jääks."
 }

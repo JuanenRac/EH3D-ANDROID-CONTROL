@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Zure zerbitzariarekin konektatzen…",
  "Ocultar": "Ezkutatu",
  "Mostrar": "Erakutsi",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "«Gogoratu nazazu» aukerarekin erabiltzailea eta pasahitza zifratuta gordetzen dira telefono honetan, zerbitzari honetarako bakarrik. Kendu markatzea berehala ahazteko.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Zure pasahitza ez da telefonoan gordetzen. Saioa gordetzen da, zifratuta, eta berritzen da aplikazioa erabiltzen duzun bitartean: ez duzu berriro saioa hasi beharko iraungi edo aplikazioa itxi ezean.",
  "Aro de luz": "Argi-eraztuna",
  "apagado": "itzalita",
  "Apagar": "Itzali",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Eguneratze-laguntzaileak eskaera baztertu du.",
  "Las actualizaciones no están configuradas en este servidor.": "Eguneratzeak ez daude konfiguratuta zerbitzari honetan.",
  "Ese usuario ya existe.": "Erabiltzaile hori badago dagoeneko.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Makina honek ez du onartzen lan mota hau: nodo batek zulaketa eta fresaketa onartzen ditu, GRBL makina batek G-code onartzen du eta simulagailuak hirurak onartzen ditu."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Makina honek ez du onartzen lan mota hau: nodo batek zulaketa eta fresaketa onartzen ditu, GRBL makina batek G-code onartzen du eta simulagailuak hirurak onartzen ditu.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "«Gogoratu nazazu» aukerarekin zerbitzari honen saio-tokena bakarrik gordetzen da, zifratuta telefono honetan (inoiz ez erabiltzailea edo pasahitza); 30 egunera iraungitzen da eta saioa amaitzean baliogabetzen da.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ez da ezer gordetzen telefonoan: aplikazioa itxi ondoren berriz hasi beharko duzu saioa. Markatu «Gogoratu nazazu» saio-tokena zifratuta 30 egunez gordetzeko."
 }

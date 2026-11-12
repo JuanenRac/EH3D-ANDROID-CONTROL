@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Свързване със сървъра ви…",
  "Ocultar": "Скрий",
  "Mostrar": "Покажи",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "С „Запомни ме“ потребителят и паролата се пазят криптирани на този телефон, само за този сървър. Махнете отметката, за да ги забравите веднага.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Паролата ви не се пази на телефона. Сесията се пази, криптирана, и се подновява, докато използвате приложението: няма да се налага да влизате отново, освен ако изтече или го затворите.",
  "Aro de luz": "Светлинен пръстен",
  "apagado": "изкл.",
  "Apagar": "Изключи",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Помощникът за обновяване отхвърли заявката.",
  "Las actualizaciones no están configuradas en este servidor.": "Обновяванията не са настроени на този сървър.",
  "Ese usuario ya existe.": "Този потребител вече съществува.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Тази машина не приема този вид задача: възел приема пробиване и фрезоване, GRBL машина приема G-код, а симулаторът приема и трите."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Тази машина не приема този вид задача: възел приема пробиване и фрезоване, GRBL машина приема G-код, а симулаторът приема и трите.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "С «Запомни ме» се пази само токенът на сесията за този сървър, шифрован на този телефон (никога потребителят или паролата); изтича след 30 дни и се отменя при изход.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефона не се пази нищо: след затваряне на приложението трябва да влезете отново. Отметнете «Запомни ме», за да се пази токенът на сесията, шифрован, 30 дни."
 }

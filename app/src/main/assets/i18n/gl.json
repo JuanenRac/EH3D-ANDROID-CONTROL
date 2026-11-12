@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Conectando co seu servidor…",
  "Ocultar": "Agochar",
  "Mostrar": "Amosar",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Con «Lembrarme» o usuario e o contrasinal gárdanse cifrados neste teléfono, só para este servidor. Desmarque a opción para esquecelos de contado.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "O seu contrasinal non se garda no teléfono. A sesión gárdase, cifrada, e renóvase mentres usa a aplicación: non terá que volver iniciar sesión salvo que caduque ou peche a aplicación.",
  "Aro de luz": "Anel de luz",
  "apagado": "apagado",
  "Apagar": "Apagar",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "O asistente de actualización rexeitou a petición.",
  "Las actualizaciones no están configuradas en este servidor.": "As actualizacións non están configuradas neste servidor.",
  "Ese usuario ya existe.": "Ese usuario xa existe.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Esta máquina non acepta este tipo de traballo: un nodo acepta furado e fresado, unha máquina GRBL acepta G-code e o simulador acepta os tres."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Esta máquina non acepta este tipo de traballo: un nodo acepta furado e fresado, unha máquina GRBL acepta G-code e o simulador acepta os tres.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Con «Lembrarme» só se garda, cifrado neste teléfono, o testemuño de sesión deste servidor (nunca o usuario nin o contrasinal); caduca aos 30 días e revógase ao pechar a sesión.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Non se garda nada no teléfono: ao pechar a aplicación terás que entrar de novo. Marca «Lembrarme» para conservar o testemuño de sesión, cifrado, durante 30 días."
 }

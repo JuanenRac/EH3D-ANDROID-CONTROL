@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Σύνδεση με τον διακομιστή σας…",
  "Ocultar": "Απόκρυψη",
  "Mostrar": "Εμφάνιση",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Με το «Να με θυμάσαι» ο χρήστης και ο κωδικός φυλάσσονται κρυπτογραφημένα σε αυτό το τηλέφωνο, μόνο για αυτόν τον διακομιστή. Αφαιρέστε το σημάδι για να τους ξεχάσει αμέσως.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Ο κωδικός σας δεν φυλάσσεται στο τηλέφωνο. Η συνεδρία φυλάσσεται, κρυπτογραφημένη, και ανανεώνεται όσο χρησιμοποιείτε την εφαρμογή: δεν θα χρειαστεί να συνδεθείτε ξανά εκτός αν λήξει ή την κλείσετε.",
  "Aro de luz": "Φωτεινός δακτύλιος",
  "apagado": "σβηστό",
  "Apagar": "Σβήσιμο",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Ο βοηθός ενημέρωσης απέρριψε το αίτημα.",
  "Las actualizaciones no están configuradas en este servidor.": "Οι ενημερώσεις δεν έχουν ρυθμιστεί σε αυτόν τον διακομιστή.",
  "Ese usuario ya existe.": "Αυτός ο χρήστης υπάρχει ήδη.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Αυτό το μηχάνημα δεν δέχεται αυτό το είδος εργασίας: ένας κόμβος δέχεται διάτρηση και φρεζάρισμα, ένα μηχάνημα GRBL δέχεται G-code και ο προσομοιωτής δέχεται και τα τρία."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Αυτό το μηχάνημα δεν δέχεται αυτό το είδος εργασίας: ένας κόμβος δέχεται διάτρηση και φρεζάρισμα, ένα μηχάνημα GRBL δέχεται G-code και ο προσομοιωτής δέχεται και τα τρία.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Με το «Να με θυμάσαι» αποθηκεύεται μόνο το διακριτικό συνεδρίας αυτού του διακομιστή, κρυπτογραφημένο σε αυτό το τηλέφωνο (ποτέ ο χρήστης ή ο κωδικός)· λήγει μετά από 30 ημέρες και ανακαλείται με την αποσύνδεση.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Στο τηλέφωνο δεν αποθηκεύεται τίποτα: μετά το κλείσιμο της εφαρμογής θα πρέπει να συνδεθείτε ξανά. Επιλέξτε «Να με θυμάσαι» για να διατηρείται το διακριτικό συνεδρίας, κρυπτογραφημένο, για 30 ημέρες."
 }

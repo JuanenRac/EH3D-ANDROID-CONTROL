@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Povezivanje s vašim poslužiteljem…",
  "Ocultar": "Sakrij",
  "Mostrar": "Prikaži",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Uz „Zapamti me“ korisnik i lozinka čuvaju se šifrirani na ovom telefonu, samo za ovaj poslužitelj. Uklonite kvačicu da ih odmah zaboravite.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Vaša se lozinka ne čuva na telefonu. Sesija se čuva, šifrirana, i obnavlja se dok koristite aplikaciju: neće se trebati ponovno prijavljivati osim ako istekne ili je zatvorite.",
  "Aro de luz": "Svjetlosni prsten",
  "apagado": "isključeno",
  "Apagar": "Isključi",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Pomoćnik za ažuriranje odbio je zahtjev.",
  "Las actualizaciones no están configuradas en este servidor.": "Ažuriranja nisu postavljena na ovom poslužitelju.",
  "Ese usuario ya existe.": "Taj korisnik već postoji.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ovaj stroj ne prima ovu vrstu posla: čvor prima bušenje i glodanje, GRBL stroj prima G-kod, a simulator prima sva tri."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ovaj stroj ne prima ovu vrstu posla: čvor prima bušenje i glodanje, GRBL stroj prima G-kod, a simulator prima sva tri.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "S „Zapamti me” na ovom se telefonu pohranjuje samo token sesije ovog poslužitelja, šifriran (nikada korisnik ni lozinka); istječe nakon 30 dana i opoziva se pri odjavi.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Na telefonu se ne pohranjuje ništa: nakon zatvaranja aplikacije morat ćete se ponovno prijaviti. Označite „Zapamti me” da se šifrirani token sesije čuva 30 dana."
 }

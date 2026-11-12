@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Подключение к вашему серверу…",
  "Ocultar": "Скрыть",
  "Mostrar": "Показать",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "С опцией «Запомнить меня» пользователь и пароль хранятся в зашифрованном виде на этом телефоне только для этого сервера. Снимите галочку, чтобы забыть их сразу.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Ваш пароль не хранится на телефоне. Сеанс хранится в зашифрованном виде и продлевается, пока вы пользуетесь приложением: вам не придётся входить снова, если он не истечёт или вы не закроете приложение.",
  "Aro de luz": "Световое кольцо",
  "apagado": "выкл.",
  "Apagar": "Выключить",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Помощник обновления отклонил запрос.",
  "Las actualizaciones no están configuradas en este servidor.": "Обновления на этом сервере не настроены.",
  "Ese usuario ya existe.": "Такой пользователь уже существует.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Этот станок не принимает такой вид задания: узел принимает сверление и фрезерование, станок GRBL принимает G-код, а симулятор принимает все три."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Этот станок не принимает такой вид задания: узел принимает сверление и фрезерование, станок GRBL принимает G-код, а симулятор принимает все три.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "При включённой опции «Запомнить меня» на этом телефоне хранится только токен сеанса этого сервера в зашифрованном виде (никогда имя пользователя или пароль); он истекает через 30 дней и отзывается при выходе.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефоне ничего не хранится: после закрытия приложения нужно будет войти снова. Отметьте «Запомнить меня», чтобы токен сеанса хранился в зашифрованном виде 30 дней."
 }

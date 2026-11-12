@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Opretter forbindelse til din server…",
  "Ocultar": "Skjul",
  "Mostrar": "Vis",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Med „Husk mig“ gemmes brugeren og adgangskoden krypteret på denne telefon, kun til denne server. Fjern fluebenet for at glemme dem med det samme.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Din adgangskode gemmes ikke på telefonen. Sessionen gemmes, krypteret, og fornyes, mens du bruger appen: du skal ikke logge ind igen, medmindre den udløber, eller du lukker den.",
  "Aro de luz": "Lysring",
  "apagado": "slukket",
  "Apagar": "Sluk",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Opdateringshjælperen afviste anmodningen.",
  "Las actualizaciones no están configuradas en este servidor.": "Opdateringer er ikke sat op på denne server.",
  "Ese usuario ya existe.": "Den bruger findes allerede.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Denne maskine tager ikke denne slags job: en knude tager boring og fræsning, en GRBL-maskine tager G-kode, og simulatoren tager alle tre."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Denne maskine tager ikke denne slags job: en knude tager boring og fræsning, en GRBL-maskine tager G-kode, og simulatoren tager alle tre.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Med “Husk mig” gemmes kun sessionstokenet for denne server, krypteret på denne telefon (aldrig brugernavn eller adgangskode); det udløber efter 30 dage og tilbagekaldes, når du logger ud.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Der gemmes ikke noget på telefonen: du skal logge ind igen, når du har lukket appen. Sæt kryds ved “Husk mig” for at beholde sessionstokenet, krypteret, i 30 dage."
 }

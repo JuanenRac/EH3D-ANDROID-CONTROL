@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Po lidhet me serverin tuaj…",
  "Ocultar": "Fshih",
  "Mostrar": "Shfaq",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Me “Më kujto” përdoruesi dhe fjalëkalimi ruhen të shifruar në këtë telefon, vetëm për këtë server. Hiqni shenjën për t’i harruar menjëherë.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Fjalëkalimi juaj nuk ruhet në telefon. Seanca ruhet, e shifruar, dhe rinovohet ndërsa përdorni aplikacionin: nuk do t’ju duhet të hyni sërish veç nëse skadon ose e mbyllni.",
  "Aro de luz": "Unaza e dritës",
  "apagado": "fikur",
  "Apagar": "Fik",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Ndihmësi i përditësimit e refuzoi kërkesën.",
  "Las actualizaciones no están configuradas en este servidor.": "Përditësimet nuk janë konfiguruar në këtë server.",
  "Ese usuario ya existe.": "Ai përdorues ekziston tashmë.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Kjo makinë nuk e pranon këtë lloj pune: një nyje pranon shpim dhe frezim, një makinë GRBL pranon G-kod dhe simulatori pranon të tria."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Kjo makinë nuk e pranon këtë lloj pune: një nyje pranon shpim dhe frezim, një makinë GRBL pranon G-kod dhe simulatori pranon të tria.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Me «Më kujto» ruhet vetëm shenja e sesionit të këtij serveri, e enkriptuar në këtë telefon (kurrë përdoruesi apo fjalëkalimi); skadon pas 30 ditësh dhe shfuqizohet kur del.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Në telefon nuk ruhet asgjë: pasi të mbyllësh aplikacionin do të duhet të hysh përsëri. Shëno «Më kujto» që shenja e sesionit, e enkriptuar, të ruhet për 30 ditë."
 }

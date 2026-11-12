@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Se conectează la serverul dvs.…",
  "Ocultar": "Ascunde",
  "Mostrar": "Arată",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Cu „Ține-mă minte” utilizatorul și parola sunt păstrate criptat pe acest telefon, doar pentru acest server. Debifați pentru a le uita imediat.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Parola dvs. nu este păstrată pe telefon. Sesiunea este păstrată, criptată, și se reînnoiește cât folosiți aplicația: nu va trebui să vă autentificați din nou decât dacă expiră sau o închideți.",
  "Aro de luz": "Inel luminos",
  "apagado": "oprit",
  "Apagar": "Oprește",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Asistentul de actualizare a refuzat cererea.",
  "Las actualizaciones no están configuradas en este servidor.": "Actualizările nu sunt configurate pe acest server.",
  "Ese usuario ya existe.": "Acel utilizator există deja.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Această mașină nu primește acest fel de lucrare: un nod primește găurire și frezare, o mașină GRBL primește cod G, iar simulatorul le primește pe toate trei."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Această mașină nu primește acest fel de lucrare: un nod primește găurire și frezare, o mașină GRBL primește cod G, iar simulatorul le primește pe toate trei.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Cu „Ține-mă minte” se păstrează doar tokenul de sesiune al acestui server, criptat pe acest telefon (niciodată utilizatorul sau parola); expiră după 30 de zile și este revocat la deconectare.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nu se păstrează nimic pe telefon: după închiderea aplicației va trebui să vă conectați din nou. Bifați „Ține-mă minte” pentru a păstra tokenul de sesiune, criptat, 30 de zile."
 }

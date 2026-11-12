@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Yhdistetään palvelimeesi…",
  "Ocultar": "Piilota",
  "Mostrar": "Näytä",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "„Muista minut” -valinnalla käyttäjä ja salasana säilytetään salattuina tässä puhelimessa, vain tätä palvelinta varten. Poista rasti unohtaaksesi ne heti.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Salasanaasi ei säilytetä puhelimessa. Istunto säilytetään salattuna ja se uusiutuu, kun käytät sovellusta: sinun ei tarvitse kirjautua uudelleen, ellei se vanhene tai suljet sovellusta.",
  "Aro de luz": "Valorengas",
  "apagado": "pois",
  "Apagar": "Sammuta",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Päivitysapuri hylkäsi pyynnön.",
  "Las actualizaciones no están configuradas en este servidor.": "Päivityksiä ei ole otettu käyttöön tällä palvelimella.",
  "Ese usuario ya existe.": "Tuo käyttäjä on jo olemassa.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tämä kone ei ota vastaan tällaista työtä: noodi ottaa poraus- ja jyrsintätöitä, GRBL-kone G-koodia ja simulaattori kaikkia kolmea."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tämä kone ei ota vastaan tällaista työtä: noodi ottaa poraus- ja jyrsintätöitä, GRBL-kone G-koodia ja simulaattori kaikkia kolmea.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Valinnalla ”Muista minut” tallennetaan vain tämän palvelimen istuntotunniste salattuna tälle puhelimelle (ei koskaan käyttäjätunnusta tai salasanaa); se vanhenee 30 päivän kuluttua ja mitätöidään uloskirjautumisessa.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Puhelimeen ei tallenneta mitään: sovelluksen sulkemisen jälkeen sinun on kirjauduttava uudelleen. Valitse ”Muista minut”, niin salattu istuntotunniste säilyy 30 päivää."
 }

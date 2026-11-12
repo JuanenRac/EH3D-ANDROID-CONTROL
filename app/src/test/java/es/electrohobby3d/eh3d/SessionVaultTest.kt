@@ -23,8 +23,40 @@ class SessionVaultTest {
 
     @Test fun `keeps the session of the server and gives it back`() {
         val vault = SessionVault(MemoryStore(), ReversingBox())
-        vault.save(origin, "token", "abc123")
-        assertEquals(StoredSession(origin, "token", "abc123"), vault.load(origin))
+        vault.save(origin, "token", "abc123", nowMs = 1_000)
+        assertEquals(StoredSession(origin, "token", "abc123", 1_000 + SessionVault.DEFAULT_TTL_MS), vault.load(origin, nowMs = 2_000))
+    }
+
+    @Test fun `a session expires 30 days after the sign-in and is dropped`() {
+        val store = MemoryStore()
+        val vault = SessionVault(store, ReversingBox())
+        vault.save(origin, "token", "abc123", nowMs = 0)
+        assertEquals("abc123", vault.load(origin, nowMs = SessionVault.DEFAULT_TTL_MS - 1)?.value)
+        assertNull(vault.load(origin, nowMs = SessionVault.DEFAULT_TTL_MS))
+        assertTrue(store.values.isEmpty())   // the expired one is forgotten, not kept
+    }
+
+    @Test fun `a session kept before the expiry existed is dropped and asks for the sign-in again`() {
+        val store = MemoryStore()
+        store.put(SessionVault.KEY, ReversingBox().seal("$origin\ntoken\nabc123"))
+        assertNull(SessionVault(store, ReversingBox()).load(origin, nowMs = 5))
+        assertTrue(store.values.isEmpty())
+    }
+
+    @Test fun `the user and the password that an earlier version kept are deleted`() {
+        val store = MemoryStore()
+        store.put(SessionVault.LEGACY_CREDENTIALS_KEY, ReversingBox().seal("$origin\nana\nsecret pass"))
+        store.put("origin", origin)
+        assertTrue(SessionVault.purgeLegacy(store))
+        assertNull(store.get(SessionVault.LEGACY_CREDENTIALS_KEY))
+        assertEquals(origin, store.get("origin"))   // what is not a secret stays
+        assertTrue(!SessionVault.purgeLegacy(store))
+    }
+
+    @Test fun `a value with a line break is not kept because it could not come back whole`() {
+        val store = MemoryStore()
+        SessionVault(store, ReversingBox()).save(origin, "token", "a\nb")
+        assertTrue(store.values.isEmpty())
     }
 
     @Test fun `writes nothing readable and never the password`() {
@@ -35,14 +67,14 @@ class SessionVaultTest {
 
     @Test fun `a session kept for another server is not given to this one`() {
         val vault = SessionVault(MemoryStore(), ReversingBox())
-        vault.save(origin, "token", "abc123")
-        assertNull(vault.load("http://10.0.0.5:18200"))
+        vault.save(origin, "token", "abc123", nowMs = 0)
+        assertNull(vault.load("http://10.0.0.5:18200", nowMs = 1))
     }
 
     @Test fun `what another key sealed cannot be read and is dropped`() {
         val store = MemoryStore()
-        SessionVault(store, ReversingBox("A")).save(origin, "token", "abc123")
-        assertNull(SessionVault(store, ReversingBox("B")).load(origin))
+        SessionVault(store, ReversingBox("A")).save(origin, "token", "abc123", nowMs = 0)
+        assertNull(SessionVault(store, ReversingBox("B")).load(origin, nowMs = 1))
         assertTrue(store.values.isEmpty())
     }
 
@@ -51,8 +83,8 @@ class SessionVaultTest {
         val vault = SessionVault(store, ReversingBox())
         vault.save(origin, "token", "")
         assertTrue(store.values.isEmpty())
-        vault.save(origin, "token", "abc123")
+        vault.save(origin, "token", "abc123", nowMs = 0)
         vault.clear()
-        assertNull(vault.load(origin))
+        assertNull(vault.load(origin, nowMs = 1))
     }
 }

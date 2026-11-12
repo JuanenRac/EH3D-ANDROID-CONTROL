@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Łączenie z Twoim serwerem…",
  "Ocultar": "Ukryj",
  "Mostrar": "Pokaż",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Przy „Zapamiętaj mnie” użytkownik i hasło są przechowywane zaszyfrowane na tym telefonie, tylko dla tego serwera. Odznacz, aby od razu o nich zapomnieć.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Twoje hasło nie jest przechowywane na telefonie. Sesja jest przechowywana, zaszyfrowana, i odnawia się, gdy korzystasz z aplikacji: nie będziesz musiał logować się ponownie, chyba że wygaśnie albo zamkniesz aplikację.",
  "Aro de luz": "Pierścień świetlny",
  "apagado": "wyłączony",
  "Apagar": "Wyłącz",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Pomocnik aktualizacji odrzucił żądanie.",
  "Las actualizaciones no están configuradas en este servidor.": "Aktualizacje nie są skonfigurowane na tym serwerze.",
  "Ese usuario ya existe.": "Taki użytkownik już istnieje.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ta maszyna nie przyjmuje tego rodzaju zadania: węzeł przyjmuje wiercenie i frezowanie, maszyna GRBL przyjmuje G-code, a symulator przyjmuje wszystkie trzy."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ta maszyna nie przyjmuje tego rodzaju zadania: węzeł przyjmuje wiercenie i frezowanie, maszyna GRBL przyjmuje G-code, a symulator przyjmuje wszystkie trzy.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Przy opcji „Zapamiętaj mnie” na tym telefonie zapisywany jest tylko zaszyfrowany token sesji tego serwera (nigdy użytkownik ani hasło); wygasa po 30 dniach i jest unieważniany po wylogowaniu.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Na telefonie nie jest zapisywane nic: po zamknięciu aplikacji trzeba zalogować się ponownie. Zaznacz „Zapamiętaj mnie”, aby zaszyfrowany token sesji był przechowywany przez 30 dni."
 }

@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Verbinde mit deinem Server…",
  "Ocultar": "Verbergen",
  "Mostrar": "Anzeigen",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Mit „Angemeldet bleiben“ werden Benutzer und Passwort verschlüsselt auf diesem Telefon gespeichert, nur für diesen Server. Entferne das Häkchen, um sie sofort zu vergessen.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Dein Passwort wird nicht auf dem Telefon gespeichert. Die Sitzung schon, verschlüsselt, und sie erneuert sich, solange du die App benutzt: Du musst dich nicht erneut anmelden, außer sie läuft ab oder du beendest sie.",
  "Aro de luz": "Lichtring",
  "apagado": "aus",
  "Apagar": "Ausschalten",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Der Update-Helfer hat die Anfrage abgelehnt.",
  "Las actualizaciones no están configuradas en este servidor.": "Die Updates sind auf diesem Server nicht eingerichtet.",
  "Ese usuario ya existe.": "Diesen Benutzer gibt es schon.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Diese Maschine nimmt diese Art Auftrag nicht an: Ein Knoten nimmt Bohren und Fräsen, eine GRBL-Maschine G-Code und der Simulator alle drei."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Diese Maschine nimmt diese Art Auftrag nicht an: Ein Knoten nimmt Bohren und Fräsen, eine GRBL-Maschine G-Code und der Simulator alle drei.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Mit „Angemeldet bleiben“ wird nur der Sitzungsschlüssel dieses Servers verschlüsselt auf diesem Telefon gespeichert (nie der Benutzer oder das Passwort); er läuft nach 30 Tagen ab und wird beim Abmelden widerrufen.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Auf dem Telefon wird nichts gespeichert: Nach dem Schließen der App müssen Sie sich neu anmelden. Mit „Angemeldet bleiben“ bleibt der verschlüsselte Sitzungsschlüssel 30 Tage erhalten."
 }

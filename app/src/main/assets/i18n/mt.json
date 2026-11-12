@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Qed jingħaqad mas-server tiegħek…",
  "Ocultar": "Aħbi",
  "Mostrar": "Uri",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Bi “Ftakarni” l-utent u l-password jinżammu ikkriptati fuq dan it-telefon, għal dan is-server biss. Neħħi s-sinjal biex jintesew minnufih.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Il-password tiegħek ma tinżammx fuq it-telefon. Is-sessjoni tinżamm, ikkriptata, u titġedded sakemm tuża l-app: m'għandekx bżonn terġa' tidħol sakemm ma tiskadix jew ma tagħlaqhiex.",
  "Aro de luz": "Ċirku tad-dawl",
  "apagado": "mitfi",
  "Apagar": "Itfi",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "L-għajnuna tal-aġġornament irrifjutat it-talba.",
  "Las actualizaciones no están configuradas en este servidor.": "L-aġġornamenti mhumiex issettjati fuq dan is-server.",
  "Ese usuario ya existe.": "Dak l-utent diġà jeżisti.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Din il-magna ma taċċettax dan it-tip ta' ħidma: nodu jaċċetta tħaffir u tħaffir bil-frieża, magna GRBL taċċetta G-code, u s-simulatur jaċċetta t-tlieta."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Din il-magna ma taċċettax dan it-tip ta' ħidma: nodu jaċċetta tħaffir u tħaffir bil-frieża, magna GRBL taċċetta G-code, u s-simulatur jaċċetta t-tlieta.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Bi “Ftakarni” jinżamm biss it-token tas-sessjoni ta’ dan is-server, ikkriptat fuq dan it-telefon (qatt l-utent jew il-password); jiskadi wara 30 jum u jiġi revokat meta toħroġ.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ma jinżamm xejn fuq it-telefon: wara li tagħlaq l-app ikollok tidħol mill-ġdid. Immarka “Ftakarni” biex iżżomm it-token tas-sessjoni, ikkriptat, għal 30 jum."
 }

@@ -1,9 +1,10 @@
 // EH3D-ANDROID-CONTROL - keeps the server's session between launches, so the app opens already signed in.
 // Copyright (C) 2026 JuanenRac (Electro Hobby 3D). GPL-3.0-or-later.
 //
-// What is kept is the session cookie the server handed out - never the password, which is typed once and forgotten. The cookie is sealed with a key that lives in the Android
-// Keystore (it cannot be taken out of the phone) before it is written. The server renews a session that is in use and ends one that is not, so a phone that is not opened for
-// a long time asks for the password again, and so does a session the server has ended (or a different password): the stored cookie is then simply refused and dropped.
+// What is kept is the session token the server handed out - never the user or the password, which are typed each time. The token is kept only when the person ticked "remember me"
+// (off by default), sealed with a key that lives in the Android Keystore (it cannot be taken out of the phone) before it is written, and it carries its own expiry (30 days from
+// the sign-in): an expired one is dropped without being used. The server renews a session that is in use and ends one that is not, and signing out ends the session at the server (it
+// is revoked) and forgets the token here, so a token that is refused is simply dropped. The user and the password that an earlier version could keep are deleted by `purgeLegacy`.
 package es.electrohobby3d.eh3d
 
 import android.content.SharedPreferences
@@ -79,22 +80,27 @@ class KeystoreBox(private val alias: String = "eh3d-session", private val bindTo
 }
 
 /** The session of one server: which cookie, and its value. */
-data class StoredSession(val origin: String, val name: String, val value: String)
+data class StoredSession(val origin: String, val name: String, val value: String, val expiresAtMs: Long)
 
-class SessionVault(private val store: KeyValueStore, private val box: SecretBox) {
-    /** Remembers the session of [origin]; replaces whatever was kept. */
-    fun save(origin: String, name: String, value: String) {
-        if (name.isBlank() || value.isBlank()) return
-        store.put(KEY, box.seal("${origin}\n${name}\n${value}"))
+class SessionVault(private val store: KeyValueStore, private val box: SecretBox, private val ttlMs: Long = DEFAULT_TTL_MS) {
+    /** Remembers the session of [origin] until [ttlMs] after [nowMs]; replaces whatever was kept. */
+    fun save(origin: String, name: String, value: String, nowMs: Long = System.currentTimeMillis()) {
+        if (name.isBlank() || value.isBlank() || '\n' in origin || '\n' in name || '\n' in value) return
+        store.put(KEY, box.seal("${origin}\n${name}\n${value}\n${nowMs + ttlMs}"))
     }
 
-    /** The session kept for [origin], or null when there is none, it is for another server, or it cannot be read. */
-    fun load(origin: String): StoredSession? {
+    /**
+     * The session kept for [origin], or null when there is none, it is for another server, it cannot be read, or it has expired (an expired one, one made before the expiry existed
+     * and one that is damaged are dropped).
+     */
+    fun load(origin: String, nowMs: Long = System.currentTimeMillis()): StoredSession? {
         val sealed = store.get(KEY) ?: return null
         if (!box.usable()) return null   // the phone is locked and the key wants it unlocked: what is kept stays kept
-        val parts = box.open(sealed)?.split("\n", limit = 3) ?: run { store.remove(KEY); return null }
-        if (parts.size != 3 || parts[0] != origin) return null
-        return StoredSession(parts[0], parts[1], parts[2])
+        val parts = box.open(sealed)?.split("\n", limit = 4) ?: run { store.remove(KEY); return null }
+        val expires = parts.getOrNull(3)?.toLongOrNull()
+        if (parts.size != 4 || expires == null || nowMs >= expires) { store.remove(KEY); return null }
+        if (parts[0] != origin) return null
+        return StoredSession(parts[0], parts[1], parts[2], expires)
     }
 
     /** True when a session is kept, whether or not it can be read now. */
@@ -102,5 +108,18 @@ class SessionVault(private val store: KeyValueStore, private val box: SecretBox)
 
     fun clear() { store.remove(KEY) }
 
-    companion object { const val KEY = "session" }
+    companion object {
+        const val KEY = "session"
+        /** How long a remembered session is kept: 30 days. */
+        const val DEFAULT_TTL_MS: Long = 30L * 24 * 60 * 60 * 1000
+        /** The key under which an earlier version kept the user and the password of "remember me". */
+        const val LEGACY_CREDENTIALS_KEY = "credentials"
+
+        /** Deletes what the earlier "remember me" kept (the user and the password); true when there was something. */
+        fun purgeLegacy(store: KeyValueStore): Boolean {
+            val had = store.get(LEGACY_CREDENTIALS_KEY) != null
+            store.remove(LEGACY_CREDENTIALS_KEY)
+            return had
+        }
+    }
 }

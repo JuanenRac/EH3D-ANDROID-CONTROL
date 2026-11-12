@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Kapcsolódás a szerveréhez…",
  "Ocultar": "Elrejtés",
  "Mostrar": "Megjelenítés",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Az „Emlékezzen rám” jelölésével a felhasználó és a jelszó titkosítva marad ezen a telefonon, csak ehhez a szerverhez. Törölje a jelölést, hogy azonnal elfelejtse őket.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "A jelszava nincs eltárolva a telefonon. A munkamenet titkosítva tárolódik, és megújul, amíg használja az alkalmazást: nem kell újra bejelentkeznie, hacsak le nem jár vagy be nem zárja.",
  "Aro de luz": "Fénygyűrű",
  "apagado": "ki",
  "Apagar": "Kikapcsolás",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "A frissítési segéd elutasította a kérést.",
  "Las actualizaciones no están configuradas en este servidor.": "A frissítések nincsenek beállítva ezen a szerveren.",
  "Ese usuario ya existe.": "Ez a felhasználó már létezik.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ez a gép nem fogad ilyen fajta munkát: a csomópont fúrást és marást fogad, a GRBL gép G-kódot, a szimulátor mindhármat."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ez a gép nem fogad ilyen fajta munkát: a csomópont fúrást és marást fogad, a GRBL gép G-kódot, a szimulátor mindhármat.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Az „Emlékezzen rám” esetén csak a kiszolgáló munkamenet-tokenje kerül titkosítva a telefonra (soha a felhasználónév vagy a jelszó); 30 nap után lejár, kijelentkezéskor pedig visszavonják.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "A telefonon semmi sem marad: az alkalmazás bezárása után újra be kell jelentkeznie. Jelölje be az „Emlékezzen rám” lehetőséget, hogy a titkosított munkamenet-token 30 napig megmaradjon."
 }

@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Verbinden met uw server…",
  "Ocultar": "Verbergen",
  "Mostrar": "Tonen",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Met „Onthoud mij” worden de gebruiker en het wachtwoord versleuteld op deze telefoon bewaard, alleen voor deze server. Haal het vinkje weg om ze meteen te vergeten.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Uw wachtwoord wordt niet op de telefoon bewaard. De sessie wel, versleuteld, en ze wordt vernieuwd zolang u de app gebruikt: u hoeft zich niet opnieuw aan te melden tenzij ze verloopt of u de app sluit.",
  "Aro de luz": "Lichtring",
  "apagado": "uit",
  "Apagar": "Uitschakelen",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "De updatehulp weigerde het verzoek.",
  "Las actualizaciones no están configuradas en este servidor.": "De updates zijn op deze server niet ingesteld.",
  "Ese usuario ya existe.": "Die gebruiker bestaat al.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Deze machine neemt dit soort taak niet aan: een knooppunt neemt boren en frezen aan, een GRBL-machine neemt G-code aan en de simulator neemt alle drie aan."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Deze machine neemt dit soort taak niet aan: een knooppunt neemt boren en frezen aan, een GRBL-machine neemt G-code aan en de simulator neemt alle drie aan.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Met “Onthoud mij” wordt alleen het sessietoken van deze server versleuteld op deze telefoon bewaard (nooit de gebruiker of het wachtwoord); het verloopt na 30 dagen en wordt ingetrokken bij het afmelden.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Er wordt niets op de telefoon bewaard: na het sluiten van de app moet je opnieuw inloggen. Vink “Onthoud mij” aan om het sessietoken versleuteld 30 dagen te bewaren."
 }

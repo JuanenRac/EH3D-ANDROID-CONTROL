@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Connecting to your server…",
  "Ocultar": "Hide",
  "Mostrar": "Show",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "With “Remember me” the user and the password are kept encrypted on this phone, for this server only. Clear the tick to forget them at once.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Your password is not kept on the phone. The session is, encrypted, and it renews while you use the app: you will not have to sign in again unless it expires or you close it.",
  "Aro de luz": "Light ring",
  "apagado": "off",
  "Apagar": "Turn off",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "The update helper refused the request.",
  "Las actualizaciones no están configuradas en este servidor.": "The updates are not set up on this server.",
  "Ese usuario ya existe.": "That user already exists.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "This machine does not take this kind of job: a node takes drilling and routing, a GRBL machine takes G-code, and the simulator takes all three."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "This machine does not take this kind of job: a node takes drilling and routing, a GRBL machine takes G-code, and the simulator takes all three.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "With “Remember me” only the session pass of this server is kept, encrypted on this phone (never the user or the password); it expires after 30 days and is revoked when you sign out.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nothing is kept on the phone: you will have to sign in again after closing the app. Tick “Remember me” to keep the session pass, encrypted, for 30 days."
 }

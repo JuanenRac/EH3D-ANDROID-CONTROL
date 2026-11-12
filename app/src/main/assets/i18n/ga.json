@@ -168,8 +168,6 @@
  "Conectando con tu servidor…": "Ag nascadh le do fhreastalaí…",
  "Ocultar": "Folaigh",
  "Mostrar": "Taispeáin",
- "Con «Recordarme» el usuario y la contraseña se guardan cifrados en este teléfono, solo para este servidor. Quita la marca para olvidarlos al momento.": "Le “Cuimhnigh orm” coimeádtar an t-úsáideoir agus an focal faire criptithe ar an teileafón seo, don fhreastalaí seo amháin. Bain an tic chun iad a dhearmad láithreach.",
- "Tu contraseña no se guarda en el teléfono. La sesión sí, cifrada, y se renueva mientras uses la app: no tendrás que volver a entrar salvo que caduque o la cierres.": "Ní choimeádtar d'fhocal faire ar an teileafón. Coimeádtar an seisiún, criptithe, agus athnuaitear é agus an aip á húsáid agat: ní bheidh ort síniú isteach arís mura rachaidh sé in éag nó mura ndúnann tú í.",
  "Aro de luz": "Fáinne solais",
  "apagado": "múchta",
  "Apagar": "Múch",
@@ -373,5 +371,7 @@
  "El asistente de actualización rechazó la petición.": "Dhiúltaigh cúntóir na nuashonruithe don iarratas.",
  "Las actualizaciones no están configuradas en este servidor.": "Níl nuashonruithe socraithe ar an bhfreastalaí seo.",
  "Ese usuario ya existe.": "Tá an t-úsáideoir sin ann cheana.",
- "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ní ghlacann an meaisín seo leis an gcineál taisc seo: glacann nód le druileáil agus muileáil, glacann meaisín GRBL le G-code, agus glacann an insamhlóir leis na trí cinn."
+ "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ní ghlacann an meaisín seo leis an gcineál taisc seo: glacann nód le druileáil agus muileáil, glacann meaisín GRBL le G-code, agus glacann an insamhlóir leis na trí cinn.",
+ "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Le “Cuimhnigh orm” ní stóráiltear ach comhartha seisiúin an fhreastalaí seo, criptithe ar an teileafón seo (gan úsáideoir ná pasfhocal go deo); rachaidh sé in éag tar éis 30 lá agus cuirtear ar ceal é nuair a shínítear amach.",
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ní stóráiltear aon rud ar an teileafón: beidh ort síniú isteach arís tar éis an aip a dhúnadh. Tic “Cuimhnigh orm” chun an comhartha seisiúin a choimeád, criptithe, ar feadh 30 lá."
 }
