@@ -80,3 +80,4 @@ jobs:
           name: eh3d-android-control-debug
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+          retention-days: 30
