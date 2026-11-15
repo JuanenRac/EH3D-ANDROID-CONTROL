@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The build tools and libraries are updated:** the Android Gradle plugin 9.5.1, Kotlin 2.4.21, Gradle 9.9.1, coroutines 1.11.0, WorkManager 2.12.0 and the JSON test library, with the tests, the lint and the debug APK of the CI passing.
+
 ## [0.1.0] - Safer remember-me and sign-out and the current refusal catalog
 
 - **The shared validation tools are updated:** the validator also runs the workflow and lessons checks of the suite with their latest rules, including a check to run before every push.
