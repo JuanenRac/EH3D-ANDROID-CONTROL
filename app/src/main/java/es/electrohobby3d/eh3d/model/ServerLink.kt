@@ -38,8 +38,8 @@ data class ServerLink(val failures: Int = 0, val lastOkMs: Long? = null, val atM
  * No answer at all and a 5xx are an unreachable server; an answer that is not the JSON of EH3D-SERVER, or an error without the `error` member of the API, is another service on that address.
  */
 fun classifyFailure(status: Int, code: String): LinkFailure? = when {
-    status == 0 -> LinkFailure.Unreachable
     code == "bad_json" -> LinkFailure.WrongServer
+    status == 0 -> LinkFailure.Unreachable
     status >= 500 -> LinkFailure.Unreachable
     code.startsWith("http_") && status in 400..499 && status != 401 && status != 403 && status != 429 -> LinkFailure.WrongServer
     else -> null

@@ -196,7 +196,7 @@ class MoreModelTest {
 
     @Test fun `a failure is told apart by its status and its code`() {
         assertEquals(LinkFailure.Unreachable, classifyFailure(0, ""))
-        assertEquals(LinkFailure.Unreachable, classifyFailure(0, "bad_json"))
+        assertEquals(LinkFailure.WrongServer, classifyFailure(0, "bad_json"))
         assertEquals(LinkFailure.WrongServer, classifyFailure(200, "bad_json"))
         assertEquals(LinkFailure.WrongServer, classifyFailure(500, "bad_json"))
         assertEquals(LinkFailure.Unreachable, classifyFailure(500, ""))

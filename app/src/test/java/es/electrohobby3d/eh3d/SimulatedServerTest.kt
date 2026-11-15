@@ -177,6 +177,9 @@ class SimulatedServerTest {
         phone.look()
         assertEquals(LinkFailure.WrongServer, phone.link.failure)
         assertEquals(LinkState.WrongServer, phone.link.state())
+        // a body that is not JSON is another service whatever status the client could read from it
+        assertEquals(LinkFailure.WrongServer, classifyFailure(0, "bad_json"))
+        assertEquals(LinkFailure.Unreachable, classifyFailure(0, "unreachable"))
         server.mode = Mode.Up
         phone.look()
         assertEquals(LinkState.Connected, phone.link.state())
