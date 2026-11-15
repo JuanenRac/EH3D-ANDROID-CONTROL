@@ -81,7 +81,7 @@ jobs:
       - name: Tests, lint and the debug APK
         run: ./gradlew check assembleDebug assembleRelease createDebugUnitTestCoverageReport --no-daemon
       - name: The rules of the app are covered by the tests
-        run: python3 tools/check_coverage_floor.py app/build/reports/coverage --floor 0
+        run: python3 tools/check_coverage_floor.py app/build/reports/coverage --floor 70 --all-floor 20
       - name: The release keeps what the libraries make by reflection
         run: python3 tools/check_release_build.py
       - name: Keep the debug APK
