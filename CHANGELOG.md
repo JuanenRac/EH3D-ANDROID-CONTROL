@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.1] - The release carries its APK again
+
+- **The release asset `EH3D-ANDROID-CONTROL-release.apk` is attached again:** 0.1.0 was published without it and the in-app update could not find the file; the app now finds it in this release and can update.
+
 - **A reply that is not JSON is the wrong server, not a lost connection:** `classifyFailure` now checks the `bad_json` code before the status, so a body that is not the JSON of EH3D-SERVER is told as another service on the address even when the client could read no status from it (the old order called it no connection). The test that fixed the old behaviour is changed and the case is added to the scenarios of the simulated server.
 
 - **Simulation of the server for the app:** add `app/src/test/java/es/electrohobby3d/eh3d/SimulatedServerTest.kt`, a simulated EH3D-SERVER of this computer that remembers who is signed in, shows one machine with one job and can be made to fail: the link dropped, another service on the address, a 503, a restart that forgets the sessions, a stop that takes a moment to reach the machine. A phone that looks at the fleet every second and a half with the real client and the real rules of the link and of the stops (the clock is a number, so nothing waits) shows what the screen would say at each step. Eight tests cover the blink and the no connection with the waits that grow, an answer called old, the wrong service, the 503 and the 404, the sign-in again after a restart, a stop that is confirmed, a stop that never reaches the machine and the notices after an outage. Nothing has run against a real server or a phone. The same scenarios are still to be written for the iPhone app.
