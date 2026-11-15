@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.0` |
 | Maturité | Échafaudage |
-| Tests | tests unitaires sur la JVM |
+| Tests | 243 tests unitaires sur la JVM |
 | Pile technique | Kotlin, Jetpack Compose |
 | Sur du matériel réel | Pas encore : l'application n'a pas été exécutée sur un téléphone, contre un vrai serveur ni avec une machine ; la première chose à essayer est de se connecter au EH3D-SERVER de l'atelier. |
 
@@ -140,7 +140,7 @@ Ouvrez l'application, saisissez l'adresse du serveur (et le port 18200), appuyez
 
 ## 🧪 Tests
 
-`./gradlew test` exécute les tests unitaires sur la JVM : les lecteurs du JSON du serveur (flotte, travaux, tête, mesure), la position de la tête et la géométrie des deux vues, le contrôle de l'adresse, la conservation chiffrée de la session, la version et la barrière de release de la mise à jour, et les langues (chaque phrase du source dans les sept tables, avec les mêmes trous). Ils lisent aussi les exemples de réponses que produisent les tests du serveur : une réponse qui change sans que l'appli suive échoue ici. Les deux apps mobiles parcourent aussi les mêmes fichiers de cas (le résumé, la connexion, l'arrêt, les avis, les adresses et les champs lus), si bien que l'une ne peut pas différer de l'autre sans qu'un test échoue.
+`./gradlew test` exécute les tests unitaires sur la JVM : les lecteurs du JSON du serveur (flotte, travaux, tête, mesure), la position de la tête et la géométrie des deux vues, le contrôle de l'adresse, la conservation chiffrée de la session, la version et la barrière de release de la mise à jour, et les langues (chaque phrase du source dans les sept tables, avec les mêmes trous). Ils lisent aussi les exemples de réponses que produisent les tests du serveur : une réponse qui change sans que l'appli suive échoue ici. Les deux apps mobiles parcourent aussi les mêmes fichiers de cas (le résumé, la connexion, l'arrêt, les avis, les adresses et les champs lus), si bien que l'une ne peut pas différer de l'autre sans qu'un test échoue. `python -I tools/check_app_parity.py` vérifie que les exemples des réponses, le catalogue des refus et les tables des 37 langues sont les mêmes dans les deux applications mobiles (la seule phrase du certificat épinglé est la seule différence permise), et la CI affiche la part du code qui porte des règles que ces tests couvrent.
 
 ## 🏗️ Compilation et publication
 

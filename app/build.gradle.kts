@@ -4,7 +4,7 @@ android { namespace = "es.electrohobby3d.eh3d"; compileSdk = 37
     defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 10; versionName = "0.1.0" }
     buildFeatures { compose = true; buildConfig = true }
     // The release is shrunk and obfuscated (R8). Signing is not done here: the APK is signed afterwards with the maintainer's own key, kept outside the repository.
-    buildTypes { release { isMinifyEnabled = true; isShrinkResources = true; proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro") } }
+    buildTypes { debug { enableUnitTestCoverage = true }; release { isMinifyEnabled = true; isShrinkResources = true; proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro") } }
     // Lint is part of the check: a warning stops the build. What is deliberate is written down in lint.xml with its reason.
     lint { warningsAsErrors = true; abortOnError = true; checkDependencies = false; lintConfig = file("lint.xml") }
 }
