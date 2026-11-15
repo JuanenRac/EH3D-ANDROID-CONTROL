@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **A floor of coverage in the CI:** the build stops when the tests cover less than 70 % of the lines of the code that holds rules (the model, the client of the API, the update, the address, the session and the languages; it is 72 % today, it was 66 % before the last tests) or less than 20 % of the whole app, whose screens cannot be run on the JVM.
+
 - **75 more tests, a check that the two phone apps agree and a measure of coverage:** the client of the API is tested against a server that lives in the test (paths, methods, headers, bodies, refusals, a service that is not JSON, a server that is away), the readers of the answers of the server are tested from their edges (what is missing, null or from an older server), `tools/check_app_parity.py` fails when the examples of the answers, the catalog of the refusals or the tables of the 37 languages differ from the ones of the iPhone app, and the CI prints how much of the code that holds rules the tests cover (`tools/check_coverage_floor.py`).
 - **The build tools and libraries are updated:** the Android Gradle plugin 9.5.1, Kotlin 2.4.21, Gradle 9.9.1, coroutines 1.11.0, WorkManager 2.12.0 and the JSON test library, with the tests, the lint and the debug APK of the CI passing.
 
