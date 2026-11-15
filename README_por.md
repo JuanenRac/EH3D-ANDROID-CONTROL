@@ -31,7 +31,7 @@
 |---|---|
 | Versão | `0.1.0` |
 | Maturidade | Estrutura inicial |
-| Testes | testes unitários na JVM |
+| Testes | 243 testes unitários na JVM |
 | Tecnologias | Kotlin, Jetpack Compose |
 | Em hardware real | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
 
@@ -140,7 +140,7 @@ Abra a aplicação, escreva o endereço do servidor (e a porta 18200), prima Lig
 
 ## 🧪 Testes
 
-`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste.
+`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste. `python -I tools/check_app_parity.py` verifica que os exemplos das respostas, o catálogo das recusas e as tabelas das 37 línguas são os mesmos nas duas aplicações móveis (a única frase do certificado fixado é a única diferença permitida), e a CI imprime quanto do código que guarda regras estes testes cobrem.
 
 ## 🏗️ Compilação e publicação
 

@@ -31,7 +31,7 @@
 |---|---|
 | Versione | `0.1.0` |
 | Maturità | Impalcatura |
-| Test | test unitari sulla JVM |
+| Test | 243 test unitari sulla JVM |
 | Stack tecnologico | Kotlin, Jetpack Compose |
 | Su hardware reale | Non ancora: l'app non è stata eseguita su un telefono, contro un server reale né con una macchina; la prima cosa da provare è accedere all'EH3D-SERVER dell'officina. |
 
@@ -140,7 +140,7 @@ Aprire l'app, scrivere l'indirizzo del server (e la porta 18200), premere Connet
 
 ## 🧪 Test
 
-`./gradlew test` esegue i test unitari sulla JVM: i lettori del JSON del server (flotta, lavori, testa, misura), la posizione della testa e la geometria delle due viste, il controllo dell'indirizzo, la conservazione cifrata della sessione, la versione e il cancello della release dell'aggiornamento, e le lingue (ogni frase del sorgente nelle sette tabelle, con gli stessi segnaposto). Leggono anche gli esempi di risposte prodotti dai test del server, così una risposta che cambia senza che l'app la segua fa fallire i test. Le due app per telefono percorrono inoltre gli stessi file di casi (il riepilogo, la connessione, l'arresto, gli avvisi, gli indirizzi e i campi letti), così una non può differire dall'altra senza che un test fallisca.
+`./gradlew test` esegue i test unitari sulla JVM: i lettori del JSON del server (flotta, lavori, testa, misura), la posizione della testa e la geometria delle due viste, il controllo dell'indirizzo, la conservazione cifrata della sessione, la versione e il cancello della release dell'aggiornamento, e le lingue (ogni frase del sorgente nelle sette tabelle, con gli stessi segnaposto). Leggono anche gli esempi di risposte prodotti dai test del server, così una risposta che cambia senza che l'app la segua fa fallire i test. Le due app per telefono percorrono inoltre gli stessi file di casi (il riepilogo, la connessione, l'arresto, gli avvisi, gli indirizzi e i campi letti), così una non può differire dall'altra senza che un test fallisca. `python -I tools/check_app_parity.py` verifica che gli esempi delle risposte, il catalogo dei rifiuti e le tabelle delle 37 lingue siano gli stessi nelle due app per telefono (l'unica frase del certificato fissato è l'unica differenza ammessa), e la CI stampa quanta parte del codice che contiene regole questi test coprono.
 
 ## 🏗️ Compilazione e rilascio
 

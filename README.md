@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.0` |
 | Maturity | Scaffolding |
-| Tests | unit tests on the JVM |
+| Tests | 243 unit tests on the JVM |
 | Stack | Kotlin, Jetpack Compose |
 | On real hardware | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 
@@ -140,7 +140,7 @@ Open the app, type the address of the server (and port 18200), press Connect and
 
 ## 🧪 Testing
 
-`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes). They also read the examples of the answers that the tests of the server make, so an answer that changes without the app following fails here. Both phone apps also walk the same files of cases (the summary, the link, the stop, the notices, the addresses and the fields they read), so one cannot differ from the other without a test failing.
+`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes). They also read the examples of the answers that the tests of the server make, so an answer that changes without the app following fails here. Both phone apps also walk the same files of cases (the summary, the link, the stop, the notices, the addresses and the fields they read), so one cannot differ from the other without a test failing. `python -I tools/check_app_parity.py` checks that the examples of the answers, the catalog of the refusals and the tables of the 37 languages are the same in both phone apps (the one phrase of the pinned certificate is the only difference allowed), and the CI prints how much of the code that holds rules these tests cover.
 
 ## 🏗️ Build & Release
 

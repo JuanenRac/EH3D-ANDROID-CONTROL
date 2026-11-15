@@ -55,6 +55,14 @@ jobs:
         run: |
           python -I tools/test_check_shared_cases.py
           python -I tools/check_shared_cases.py
+      - name: Examples, catalog and languages shared with the iPhone app
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python -I tools/test_check_app_parity.py
+          python -I tools/check_app_parity.py
+      - name: The check of the floor of coverage
+        run: python -I tools/test_check_coverage_floor.py
 
   tests:
     name: Tests, lint and the debug APK
@@ -71,7 +79,9 @@ jobs:
         run: chmod +x gradlew
       - uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4
       - name: Tests, lint and the debug APK
-        run: ./gradlew check assembleDebug assembleRelease --no-daemon
+        run: ./gradlew check assembleDebug assembleRelease createDebugUnitTestCoverageReport --no-daemon
+      - name: The rules of the app are covered by the tests
+        run: python3 tools/check_coverage_floor.py app/build/reports/coverage --floor 0
       - name: The release keeps what the libraries make by reflection
         run: python3 tools/check_release_build.py
       - name: Keep the debug APK
