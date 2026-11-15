@@ -14,7 +14,7 @@
   ],
   "deployment_target": "mobile",
   "maturity": "scaffolding",
-  "evidence": "host-test",
+  "evidence": "simulator",
   "family": "CNC Workflow Tools",
   "parent": "EH3D-SERVER",
   "build": "./gradlew.bat test assembleDebug",
