@@ -12,6 +12,8 @@ data class AvailableUpdate(
     val releaseName: String,
     val notes: String,
     val assetUrl: String,
+    /** The SHA-256 the release publishes for the APK (lower-case hex), or null when it publishes none. */
+    val sha256: String? = null,
 )
 
 /** Result of checking the trusted public release endpoint. */
@@ -57,9 +59,23 @@ object ReleaseMetadataParser {
                 releaseName = release.optStr("name", "EH3D Control v${remoteVersion}"),
                 notes = release.optStr("body").trim(),
                 assetUrl = assetUrl,
+                sha256 = parseDigest(asset.optStr("digest")),
             ),
         )
     }
+
+    private val SHA256_HEX = Regex("^[0-9a-f]{64}$")
+
+    /** Reads GitHub's `sha256:<hex>` asset digest; anything else counts as "not published". */
+    fun parseDigest(raw: String): String? {
+        val value = raw.trim().lowercase()
+        if (!value.startsWith("sha256:")) return null
+        return value.removePrefix("sha256:").takeIf { SHA256_HEX.matches(it) }
+    }
+
+    /** A release that publishes no digest cannot be checked; one that does must match. */
+    fun digestMatches(expected: String?, actual: String): Boolean =
+        expected == null || expected.equals(actual, ignoreCase = true)
 }
 
 /** A string member, or [default] when it is missing or not a string. */

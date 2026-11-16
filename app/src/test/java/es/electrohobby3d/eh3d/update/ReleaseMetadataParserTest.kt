@@ -35,4 +35,24 @@ class ReleaseMetadataParserTest {
         assertEquals(UpdateCheckResult.UpToDate, ReleaseMetadataParser.parseLatestStable(release("v0.3.6", extras = ",\"draft\":true"), "0.3.5"))
         assertEquals(UpdateCheckResult.UpToDate, ReleaseMetadataParser.parseLatestStable(release("v0.3.5"), "0.3.5"))
     }
+
+    private val hex = "a".repeat(64)
+
+    @Test fun `reads the published digest and ignores anything that is not a sha256`() {
+        assertEquals(hex, ReleaseMetadataParser.parseDigest("sha256:${hex.uppercase()}"))
+        assertEquals(null, ReleaseMetadataParser.parseDigest("sha1:$hex"))
+        assertEquals(null, ReleaseMetadataParser.parseDigest("sha256:abc"))
+        assertEquals(null, ReleaseMetadataParser.parseDigest(""))
+    }
+
+    @Test fun `a published digest must match the downloaded bytes and a missing one cannot be checked`() {
+        assertTrue(ReleaseMetadataParser.digestMatches(hex, hex))
+        assertTrue(!ReleaseMetadataParser.digestMatches(hex, "c".repeat(64)))
+        assertTrue(ReleaseMetadataParser.digestMatches(null, hex))
+    }
+
+    @Test fun `the update carries the digest of the asset`() {
+        val payload = release("v0.3.6").replace("\"browser_download_url\"", "\"digest\":\"sha256:$hex\",\"browser_download_url\"")
+        assertEquals(hex, ((ReleaseMetadataParser.parseLatestStable(payload, "0.3.5")) as UpdateCheckResult.Available).update.sha256)
+    }
 }

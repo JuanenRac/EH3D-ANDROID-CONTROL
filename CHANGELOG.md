@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The update checks the SHA-256 that the release publishes for the APK:** the downloaded bytes are hashed while they are written and a file that does not match the published digest is deleted and refused before it is looked at as a package (a release that publishes no digest is checked as before: package name, version code and signing key). Tests cover reading the digest and the comparison.
+
 ## [0.1.1] - The release carries its APK again
 
 - **The release asset `EH3D-ANDROID-CONTROL-release.apk` is attached again:** 0.1.0 was published without it and the in-app update could not find the file; the app now finds it in this release and can update.
