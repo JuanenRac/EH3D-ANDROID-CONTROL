@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The update checks the SHA-256 that the release publishes for the APK:** the downloaded bytes are hashed while they are written and a file that does not match the published digest is deleted and refused before it is looked at as a package (a release that publishes no digest is checked as before: package name, version code and signing key). Tests cover reading the digest and the comparison.
+
 - **A stop that is refused because the session is no longer valid says so, and "stop all" reaches every machine:** the plain notice that the stop did NOT arrive is shown before the app returns to the sign-in, and the stop of the whole fleet is sent to every machine the fleet lists, not only to those that were working at the last reading.
 
 ## [0.1.1] - The release carries its APK again

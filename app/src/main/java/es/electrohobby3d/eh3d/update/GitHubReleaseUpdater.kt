@@ -92,6 +92,7 @@ class GitHubReleaseUpdater(private val context: Context) {
                     partial.delete()
                     apk.delete()
                     var downloaded = 0L
+                    val sha = java.security.MessageDigest.getInstance("SHA-256")
                     connection.inputStream.use { input ->
                         partial.outputStream().use { output ->
                             val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
@@ -99,6 +100,7 @@ class GitHubReleaseUpdater(private val context: Context) {
                                 val bytesRead = input.read(buffer)
                                 if (bytesRead == -1) break
                                 output.write(buffer, 0, bytesRead)
+                                sha.update(buffer, 0, bytesRead)
                                 downloaded += bytesRead
                                 onProgress(
                                     if (expectedLength > 0) ((downloaded * 100) / expectedLength).toInt() else null,
@@ -112,6 +114,11 @@ class GitHubReleaseUpdater(private val context: Context) {
                         return@withContext UpdateDownloadResult.Failed(
                             trf("La descarga del APK quedó incompleta: se esperaban %s bytes y llegaron %s.", expectedLength, downloaded),
                         )
+                    }
+                    val actual = sha.digest().joinToString("") { "%02x".format(it) }
+                    if (!ReleaseMetadataParser.digestMatches(update.sha256, actual)) {
+                        partial.delete()
+                        return@withContext UpdateDownloadResult.Failed(tr("El archivo descargado no es un paquete de Android válido."))
                     }
                     if (!partial.renameTo(apk)) {
                         return@withContext UpdateDownloadResult.Failed(tr("No se pudo finalizar el archivo APK descargado."))
