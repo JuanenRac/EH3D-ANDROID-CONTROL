@@ -307,8 +307,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The emergency stop of one machine: the server ends whatever is active on it at once, without waiting for the line it is sending; a stop that did not get there shows its error. */
     fun emergencyStop(machineId: String) = stopping(machineId) { api.stopMachine(machineId) }
 
-    /** The emergency stop of every machine that is working. */
-    fun emergencyStopAll() { fleet.machines.filter { it.job != null }.forEach { m -> stopping(m.id) { api.stopMachine(m.id) } } }
+    /** The emergency stop of every machine the fleet lists, working or not: the last reading may be older than a job that has just started, and stopping an idle machine does no harm. */
+    fun emergencyStopAll() { fleet.machines.forEach { m -> stopping(m.id) { api.stopMachine(m.id) } } }
 
     /** A stop: when the server takes it a note follows what the fleet says next; when it does not get there the person is told plainly that the machine was NOT stopped. */
     private fun stopping(machineId: String?, work: suspend () -> Unit) {
@@ -318,8 +318,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 if (machineId != null) stopNotes = stopNotes.filter { it.machineId != machineId } + StopNote(machineId, fleet.machine(machineId)?.name ?: machineId, clock())
                 refresh()
             } catch (error: ApiException) {
+                // A stop that did not get there is said plainly in every case, also when the session is the reason.
+                message = if (error.unauthorized || error.status == 0 || error.status >= 500) tr("La orden de parada NO ha llegado al servidor. Use la parada física de la máquina.") else errorText(error)
                 if (error.unauthorized) signOutQuietly()
-                else message = if (error.status == 0 || error.status >= 500) tr("La orden de parada NO ha llegado al servidor. Use la parada física de la máquina.") else errorText(error)
             }
         }
     }
