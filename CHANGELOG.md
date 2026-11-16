@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **A start-up with no link to the server keeps the saved session:** the session is deleted only when the server itself refuses it (401); a server out of reach, an error of the server or the page of another service on that address leaves it in place, says there is no connection and tries again with growing waits.
+
 - **The update checks the SHA-256 that the release publishes for the APK:** the downloaded bytes are hashed while they are written and a file that does not match the published digest is deleted and refused before it is looked at as a package (a release that publishes no digest is checked as before: package name, version code and signing key). Tests cover reading the digest and the comparison.
 
 - **A stop that is refused because the session is no longer valid says so, and "stop all" reaches every machine:** the plain notice that the stop did NOT arrive is shown before the app returns to the sign-in, and the stop of the whole fleet is sent to every machine the fleet lists, not only to those that were working at the last reading.

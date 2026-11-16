@@ -135,14 +135,31 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun savedOrigin(): String = origin
 
+    private companion object {
+        /** How many times the start-up is tried again while the server is out of reach and the kept session is waiting. */
+        const val START_RETRIES = 12
+    }
+
     private fun start() {
         viewModelScope.launch {
             if (origin.isBlank()) { phase = Phase.SignedOut; return@launch }
             api = Eh3dApi(origin)
             val kept = sessions.load(origin)
             if (kept != null) {
+                val mine = api
                 api.token = kept.value
-                try { login = api.session(); phase = Phase.SignedIn; poll(); return@launch } catch (_: ApiException) { sessions.clear(); api.token = "" }
+                var wait = 5_000L
+                for (attempt in 0 until START_RETRIES) {
+                    try { login = api.session(); phase = Phase.SignedIn; poll(); return@launch } catch (error: ApiException) {
+                        // Only a refusal of the server deletes the kept session; with no link it stays and the start is tried again.
+                        if (error.endsKeptSession) { sessions.clear(); api.token = ""; break }
+                        message = tr("Sin conexión con el servidor.")
+                        phase = Phase.SignedOut
+                        delay(wait)
+                        wait = (wait * 2).coerceAtMost(60_000L)
+                        if (api !== mine || phase != Phase.SignedOut) return@launch   // the person signed in or chose another server in the meantime
+                    }
+                }
             }
             phase = Phase.SignedOut
         }
