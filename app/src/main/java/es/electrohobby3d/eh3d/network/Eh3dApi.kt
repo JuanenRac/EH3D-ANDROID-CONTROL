@@ -33,6 +33,9 @@ import java.net.URLEncoder
 /** The server refused, or could not be reached: [status] is the HTTP status (0 when there was no answer) and [code] the `error` code of the server, if it sent one. */
 class ApiException(val status: Int, val code: String, message: String) : IOException(message) {
     val unauthorized get() = status == 401
+
+    /** At start-up the kept session is deleted only when the server itself refused it (401); a server out of reach, a 5xx or a page of another service keeps it. */
+    val endsKeptSession get() = unauthorized
 }
 
 /** Who is signed in: the token (a login's or a program's), the name and the role (`viewer`, `operator` or `admin`). */
