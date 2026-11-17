@@ -19,8 +19,6 @@ import es.electrohobby3d.eh3d.model.ServerLink
 import es.electrohobby3d.eh3d.model.Side
 import es.electrohobby3d.eh3d.model.PendingStop
 import es.electrohobby3d.eh3d.model.StopNote
-import es.electrohobby3d.eh3d.model.StopScope
-import es.electrohobby3d.eh3d.model.machinesToStop
 import es.electrohobby3d.eh3d.model.stopsToResend
 import es.electrohobby3d.eh3d.model.StopOutcome
 import es.electrohobby3d.eh3d.model.ToolView
