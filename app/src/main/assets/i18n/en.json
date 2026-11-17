@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Dry run: the exact plan stays inside the course of every axis",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Dry run: the exact plan goes past the course of an axis",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "The whole work is only %s x %s mm: check the unit of the file",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "The file does not state its unit; the numbers are read as thousandths of an inch",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "The work (%s x %s mm) is bigger than the table (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "The work starts %s mm from the corner of the table: check the offset and the unit",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "The machine file stretches the work (scale %s x %s, not 1)",

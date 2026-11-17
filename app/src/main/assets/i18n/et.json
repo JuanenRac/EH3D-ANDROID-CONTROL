@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Proovikäik: täpne plaan jääb iga telje käigu sisse",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Proovikäik: täpne plaan läheb telje käigust kaugemale",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Kogu töö on vaid %s x %s mm: kontrollige faili ühikut",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Failis pole ühikut märgitud; arve loetakse tolli tuhandikena",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Töö (%s x %s mm) on suurem kui laud (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Töö algab %s mm kaugusel laua nurgast: kontrollige nihet ja ühikut",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Masinafail venitab tööd (skaala %s x %s, mitte 1)",

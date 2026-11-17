@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "空跑：精确计划保持在每个轴的行程之内",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "空跑：精确计划超出了某个轴的行程",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "整个作业只有 %s x %s mm：请检查文件的单位",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "文件未声明单位，数值按千分之一英寸读取",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "作业 (%s x %s mm) 大于工作台 (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "作业起点距工作台角落 %s mm：请检查偏移和单位",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "机器文件会拉伸作业（比例 %s x %s，不是 1）",

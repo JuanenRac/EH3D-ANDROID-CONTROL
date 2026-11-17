@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Szárazfutás: a pontos terv minden tengely mozgástartományán belül marad",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Szárazfutás: a pontos terv túllépi egy tengely mozgástartományát",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "A teljes munka csak %s x %s mm: ellenőrizze a fájl mértékegységét",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "A fájl nem adja meg a mértékegységet; a számokat ezred hüvelykként olvassa be",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "A munka (%s x %s mm) nagyobb az asztalnál (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "A munka %s mm-re kezdődik az asztal sarkától: ellenőrizze az eltolást és a mértékegységet",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "A gép fájlja megnyújtja a munkát (méretarány %s x %s, nem 1)",

@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Prøvekjøring: den nøyaktige planen holder seg innenfor kjøreområdet til hver akse",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Prøvekjøring: den nøyaktige planen går utenfor kjøreområdet til en akse",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Hele arbeidet er bare %s x %s mm: kontroller enheten i filen",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Filen oppgir ikke enhet; tallene leses som tusendeler av en tomme",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Arbeidet (%s x %s mm) er større enn bordet (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Arbeidet starter %s mm fra hjørnet av bordet: kontroller forskyvningen og enheten",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Maskinfilen strekker arbeidet (skala %s x %s, ikke 1)",

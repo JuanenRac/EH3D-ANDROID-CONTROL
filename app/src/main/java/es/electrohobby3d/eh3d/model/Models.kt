@@ -131,7 +131,7 @@ data class JobView(
 /** The dry run of a plan: how far each axis goes (X, Y, Z in mm from the switches), the steps, the seconds they take and whether every axis stays inside its course. */
 data class DryRun(val minMm: List<Double>, val maxMm: List<Double>, val endMm: List<Double>, val steps: Long, val seconds: Double, val withinCourse: Boolean)
 
-/** What looks wrong in the work: `tiny`, `too_big`, `far`, `scale` or `out_of_course`, the numbers it is about in [values] (mm) and, for the last, the [axis]. */
+/** What looks wrong in the work: `tiny`, `too_big`, `far`, `scale`, `out_of_course` or `units_supposed` (no numbers), the numbers it is about in [values] (mm) and, for the last, the [axis]. */
 data class WorkWarning(val code: String, val axis: String, val values: List<Double>)
 
 /** One excess of a tool over the spindle: `rpm_above_max`, `rpm_below_min`, `feed_xy_above_max` or `feed_z_above_max`, the tool, the value asked for and the limit. */

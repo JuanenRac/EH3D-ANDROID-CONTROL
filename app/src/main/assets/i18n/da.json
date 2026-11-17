@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Prøvekørsel: den nøjagtige plan bliver inden for hver akses vandring",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Prøvekørsel: den nøjagtige plan overskrider en akses vandring",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Hele arbejdet er kun %s x %s mm: kontrollér filens enhed",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Filen angiver ikke sin enhed; tallene læses som tusindedele tommer",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Arbejdet (%s x %s mm) er større end bordet (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Arbejdet starter %s mm fra bordets hjørne: kontrollér forskydningen og enheden",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Maskinfilen strækker arbejdet (skala %s x %s, ikke 1)",

@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Δοκιμαστική εκτέλεση: το ακριβές σχέδιο μένει εντός της διαδρομής κάθε άξονα",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Δοκιμαστική εκτέλεση: το ακριβές σχέδιο ξεπερνά τη διαδρομή ενός άξονα",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Ολόκληρη η εργασία είναι μόνο %s x %s mm: ελέγξτε τη μονάδα του αρχείου",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Το αρχείο δεν δηλώνει μονάδα μέτρησης· οι αριθμοί διαβάζονται ως χιλιοστά της ίντσας",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Η εργασία (%s x %s mm) είναι μεγαλύτερη από το τραπέζι (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Η εργασία ξεκινά %s mm από τη γωνία του τραπεζιού: ελέγξτε τη μετατόπιση και τη μονάδα",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Το αρχείο του μηχανήματος τεντώνει την εργασία (κλίμακα %s x %s, όχι 1)",

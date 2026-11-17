@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Skúšobný beh: presný plán zostáva v rozsahu každej osi",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Skúšobný beh: presný plán presahuje rozsah osi",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Celá práca má iba %s x %s mm: skontrolujte jednotku súboru",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Súbor neuvádza jednotku; čísla sa čítajú ako tisíciny palca",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Práca (%s x %s mm) je väčšia ako stôl (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Práca začína %s mm od rohu stola: skontrolujte posun a jednotku",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Súbor stroja naťahuje prácu (mierka %s x %s, nie 1)",

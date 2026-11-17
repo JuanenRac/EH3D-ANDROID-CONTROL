@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Proba lehorra: plan zehatza ardatz bakoitzaren ibilbidearen barruan geratzen da",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Proba lehorra: plan zehatzak ardatz baten ibilbidea gainditzen du",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Lan osoak %s x %s mm baino ez ditu: egiaztatu fitxategiaren unitatea",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Fitxategiak ez du unitaterik adierazten; zenbakiak hazbetearen milaren zati gisa irakurtzen dira",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Lana (%s x %s mm) mahaia (%s x %s mm) baino handiagoa da",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Lana mahaiaren izkinatik %s mm-ra hasten da: egiaztatu desplazamendua eta unitatea",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Makinaren fitxategiak lana luzatzen du (eskala %s x %s, ez 1)",
