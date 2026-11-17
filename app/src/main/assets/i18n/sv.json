@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Torrkörning: den exakta planen håller sig inom varje axels rörelseområde",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Torrkörning: den exakta planen går utanför en axels rörelseområde",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Hela arbetet är bara %s x %s mm: kontrollera filens enhet",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Filen anger ingen enhet; talen läses som tusendels tum",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Arbetet (%s x %s mm) är större än bordet (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Arbetet börjar %s mm från bordets hörn: kontrollera förskjutningen och enheten",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Maskinfilen sträcker arbetet (skala %s x %s, inte 1)",

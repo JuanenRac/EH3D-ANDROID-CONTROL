@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Rith tirim: fanann an plean cruinn laistigh de thaisteal gach aise",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Rith tirim: téann an plean cruinn thar thaisteal aise",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Níl san obair ar fad ach %s x %s mm: seiceáil aonad an chomhaid",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Ní luann an comhad a aonad; léitear na huimhreacha mar mhíleúin d'orlach",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Tá an obair (%s x %s mm) níos mó ná an tábla (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Tosaíonn an obair %s mm ó choirnéal an tábla: seiceáil an fritháireamh agus an t-aonad",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Síneann comhad an mheaisín an obair (scála %s x %s, ní 1)",

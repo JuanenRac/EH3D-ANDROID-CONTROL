@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Proefrun: het exacte plan blijft binnen de slag van elke as",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Proefrun: het exacte plan gaat voorbij de slag van een as",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Het hele werk is slechts %s x %s mm: controleer de eenheid van het bestand",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Het bestand vermeldt geen eenheid; de getallen worden gelezen als duizendsten van een inch",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Het werk (%s x %s mm) is groter dan de tafel (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Het werk begint %s mm van de hoek van de tafel: controleer de offset en de eenheid",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Het machinebestand rekt het werk uit (schaal %s x %s, niet 1)",

@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Пробно извршавање: тачан план остаје унутар хода сваке осе",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Пробно извршавање: тачан план прелази ход осе",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Цео рад је само %s x %s мм: проверите јединицу датотеке",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Датотека не наводи јединицу мере; бројеви се читају као хиљадити делови инча",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Рад (%s x %s мм) је већи од стола (%s x %s мм)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Рад почиње %s мм од угла стола: проверите помак и јединицу",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Датотека машине развлачи рад (размера %s x %s, не 1)",

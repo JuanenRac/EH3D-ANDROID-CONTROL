@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Rulare de probă: planul exact rămâne în cursa fiecărei axe",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Rulare de probă: planul exact depășește cursa unei axe",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Toată lucrarea are doar %s x %s mm: verificați unitatea fișierului",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Fișierul nu indică unitatea de măsură; numerele sunt citite ca miimi de inch",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Lucrarea (%s x %s mm) este mai mare decât masa (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Lucrarea începe la %s mm de colțul mesei: verificați decalajul și unitatea",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Fișierul mașinii întinde lucrarea (scara %s x %s, nu 1)",

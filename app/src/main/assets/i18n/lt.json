@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Bandomasis paleidimas: tikslus planas lieka kiekvienos ašies eigos ribose",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Bandomasis paleidimas: tikslus planas viršija ašies eigą",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Visas darbas yra tik %s x %s mm: patikrinkite failo vienetą",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Faile nenurodytas vienetas; skaičiai skaitomi kaip tūkstantosios colio dalys",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Darbas (%s x %s mm) didesnis už stalą (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Darbas prasideda %s mm nuo stalo kampo: patikrinkite poslinkį ir vienetą",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Staklių failas ištempia darbą (mastelis %s x %s, ne 1)",

@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Tmexxija xotta: il-pjan eżatt jibqa' fil-ħabta ta' kull assi",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Tmexxija xotta: il-pjan eżatt jaqbeż il-ħabta ta' assi",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Ix-xogħol kollu huwa biss %s x %s mm: iċċekkja l-unità tal-fajl",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Il-fajl ma jindikax l-unità tiegħu; in-numri jinqraw bħala elfiet ta' pulzier",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Ix-xogħol (%s x %s mm) huwa akbar mill-mejda (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Ix-xogħol jibda %s mm mill-kantuniera tal-mejda: iċċekkja l-offset u l-unità",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Il-fajl tal-magna jiġbed ix-xogħol (skala %s x %s, mhux 1)",

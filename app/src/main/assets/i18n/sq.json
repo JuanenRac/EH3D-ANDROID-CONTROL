@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Provë e thatë: plani i saktë mbetet brenda kursit të çdo boshti",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Provë e thatë: plani i saktë kalon kursin e një boshti",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "I gjithë puna është vetëm %s x %s mm: kontrolloni njësinë e skedarit",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Skedari nuk tregon njësinë; numrat lexohen si të mijtat e inçit",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Puna (%s x %s mm) është më e madhe se tavolina (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Puna fillon %s mm nga këndi i tavolinës: kontrolloni zhvendosjen dhe njësinë",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Skedari i makinës e shtrin punën (shkalla %s x %s, jo 1)",

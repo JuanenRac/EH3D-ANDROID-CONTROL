@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Sausā palaišana: precīzais plāns paliek katras ass gājiena robežās",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Sausā palaišana: precīzais plāns pārsniedz ass gājienu",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Viss darbs ir tikai %s x %s mm: pārbaudiet faila mērvienību",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Failā nav norādīta mērvienība; skaitļi tiek lasīti kā collas tūkstošdaļas",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Darbs (%s x %s mm) ir lielāks par galdu (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Darbs sākas %s mm no galda stūra: pārbaudiet nobīdi un mērvienību",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Iekārtas fails izstiepj darbu (mērogs %s x %s, nevis 1)",

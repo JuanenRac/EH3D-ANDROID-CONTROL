@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Prova a secco: il piano esatto resta entro la corsa di ogni asse",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Prova a secco: il piano esatto esce dalla corsa di un asse",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Tutto il lavoro misura solo %s x %s mm: controlla l'unità del file",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Il file non indica l'unità; i numeri sono letti come millesimi di pollice",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Il lavoro (%s x %s mm) è più grande del piano (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Il lavoro inizia a %s mm dall'angolo del piano: controlla lo scostamento e l'unità",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Il file della macchina deforma il lavoro (scala %s x %s, non 1)",

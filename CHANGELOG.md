@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The warning that a drill file did not state its unit is written in the language of the app:** the server's `units_supposed` warning had no phrase of its own and showed as a generic server warning; it now has its text in the 37 languages.
+
 - **A start-up with no link to the server keeps the saved session:** the session is deleted only when the server itself refuses it (401); a server out of reach, an error of the server or the page of another service on that address leaves it in place, says there is no connection and tries again with growing waits.
 
 - **The update checks the SHA-256 that the release publishes for the APK:** the downloaded bytes are hashed while they are written and a file that does not match the published digest is deleted and refused before it is looked at as a package (a release that publishes no digest is checked as before: package name, version code and signing key). Tests cover reading the digest and the comparison.

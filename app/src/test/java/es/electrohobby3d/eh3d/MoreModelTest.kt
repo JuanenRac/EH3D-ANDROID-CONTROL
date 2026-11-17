@@ -389,6 +389,11 @@ class MoreModelTest {
         assertFalse(startSummary(view(dryRun = reach.copy(withinCourse = true))).outOfCourse)
     }
 
+    @Test fun `a file whose unit was supposed has its own phrase and not the generic one`() {
+        val text = warningText(WorkWarning("units_supposed", "", emptyList()))
+        assertTrue(text, "pulgada" in text && "Aviso del servidor" !in text)
+    }
+
     @Test fun `every warning gives the numbers of its phrase in order and an unknown one gives its code`() {
         assertEquals(listOf("0.5", "0.3"), warningArgs(WorkWarning("tiny", "", listOf(0.46, 0.25))))
         assertEquals(listOf("400", "300", "300", "200"), warningArgs(WorkWarning("too_big", "", listOf(400.0, 300.04, 299.96, 200.0))))

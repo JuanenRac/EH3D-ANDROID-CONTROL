@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Prova en sec: el pla exacte es queda dins del recorregut de cada eix",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Prova en sec: el pla exacte supera el recorregut d’un eix",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Tot el treball fa només %s x %s mm: comproveu la unitat del fitxer",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "El fitxer no indica la unitat; els nombres es llegeixen com a mil·lèsimes de polzada",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "El treball (%s x %s mm) és més gran que la taula (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "El treball comença a %s mm de la cantonada de la taula: comproveu el desplaçament i la unitat",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "El fitxer de la màquina estira el treball (escala %s x %s, no 1)",

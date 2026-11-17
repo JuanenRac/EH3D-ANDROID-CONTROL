@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "ドライラン：正確な計画はすべての軸の可動範囲内に収まります",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "ドライラン：正確な計画が軸の可動範囲を超えます",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "作業全体が %s x %s mm しかありません：ファイルの単位を確認してください",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "ファイルに単位の指定がありません。数値は1/1000インチとして読み込みます",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "作業 (%s x %s mm) がテーブル (%s x %s mm) より大きいです",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "作業はテーブルの角から %s mm の位置から始まります：オフセットと単位を確認してください",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "機械ファイルが作業を伸縮します（倍率 %s x %s、1 ではありません）",

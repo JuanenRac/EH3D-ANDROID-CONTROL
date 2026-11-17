@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Пробний прогін: точний план лишається в межах ходу кожної осі",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Пробний прогін: точний план виходить за хід осі",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Уся робота має лише %s x %s мм: перевірте одиницю виміру у файлі",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "У файлі не вказано одиницю виміру; числа читаються як тисячні частки дюйма",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Робота (%s x %s мм) більша за стіл (%s x %s мм)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Робота починається за %s мм від кута столу: перевірте зсув й одиницю виміру",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Файл верстата розтягує роботу (масштаб %s x %s, а не 1)",

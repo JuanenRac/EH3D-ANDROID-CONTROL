@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Poskusni tek: natančen načrt ostane znotraj hoda vsake osi",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Poskusni tek: natančen načrt preseže hod osi",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Celotno delo je veliko samo %s x %s mm: preverite enoto datoteke",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Datoteka ne navaja enote; števila se berejo kot tisočinke palca",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Delo (%s x %s mm) je večje od mize (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Delo se začne %s mm od vogala mize: preverite zamik in enoto",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Datoteka stroja delo razteguje (merilo %s x %s, ne 1)",

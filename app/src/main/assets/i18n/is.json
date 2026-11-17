@@ -319,6 +319,7 @@
  "Simulación en seco: el plan exacto queda dentro del recorrido de cada eje": "Þurrkeyrsla: nákvæma áætlunin helst innan hreyfisviðs hvers áss",
  "Simulación en seco: el plan exacto sale del recorrido de un eje": "Þurrkeyrsla: nákvæma áætlunin fer yfir hreyfisvið áss",
  "Todo el trabajo mide solo %s x %s mm: revise la unidad del archivo": "Allt verkið er aðeins %s x %s mm: athugaðu mælieiningu skrárinnar",
+ "El archivo no indica su unidad; los números se leen como milésimas de pulgada": "Skráin tilgreinir ekki einingu; tölurnar eru lesnar sem þúsundustu hlutar úr tommu",
  "El trabajo (%s x %s mm) es mayor que la mesa (%s x %s mm)": "Verkið (%s x %s mm) er stærra en borðið (%s x %s mm)",
  "El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad": "Verkið byrjar %s mm frá horni borðsins: athugaðu hliðrunina og mælieininguna",
  "El archivo de la máquina estira el trabajo (escala %s x %s, no 1)": "Vélarskráin teygir verkið (kvarði %s x %s, ekki 1)",
