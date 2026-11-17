@@ -17,7 +17,11 @@ import es.electrohobby3d.eh3d.model.Plan
 import es.electrohobby3d.eh3d.model.Prepare
 import es.electrohobby3d.eh3d.model.ServerLink
 import es.electrohobby3d.eh3d.model.Side
+import es.electrohobby3d.eh3d.model.PendingStop
 import es.electrohobby3d.eh3d.model.StopNote
+import es.electrohobby3d.eh3d.model.StopScope
+import es.electrohobby3d.eh3d.model.machinesToStop
+import es.electrohobby3d.eh3d.model.stopsToResend
 import es.electrohobby3d.eh3d.model.StopOutcome
 import es.electrohobby3d.eh3d.model.ToolView
 import es.electrohobby3d.eh3d.model.Work
@@ -211,6 +215,13 @@ class MoreModelTest {
     }
 
     // ---- the stops
+
+    @Test fun `a stop refused for the ended session is sent again after signing in only while it is recent`() {
+        val pending = listOf(PendingStop("a", 1_000), PendingStop("b", 200_000), PendingStop("a", 1_500))
+        assertEquals(listOf("b"), stopsToResend(pending, 250_000))
+        assertEquals(listOf("a"), stopsToResend(pending, 100_000))
+        assertEquals(emptyList<String>(), stopsToResend(pending, 100))
+    }
 
     private fun machine(state: String, job: Boolean) = FleetMachine(
         "m1", "Bungard", "ccd-mtc", "taller", "node", state,

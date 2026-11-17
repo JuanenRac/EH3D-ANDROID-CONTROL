@@ -14,7 +14,9 @@ import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.ServerLink
 import es.electrohobby3d.eh3d.model.LinkPolicy
 import es.electrohobby3d.eh3d.model.LinkState
+import es.electrohobby3d.eh3d.model.PendingStop
 import es.electrohobby3d.eh3d.model.StopNote
+import es.electrohobby3d.eh3d.model.stopsToResend
 import es.electrohobby3d.eh3d.model.classifyFailure
 import es.electrohobby3d.eh3d.model.followStops
 import es.electrohobby3d.eh3d.model.fleetNotices
@@ -94,6 +96,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     val offline: Boolean get() = linkState == LinkState.Offline || linkState == LinkState.WrongServer
     /** The stops that were sent and what the fleet says of them since. */
     var stopNotes by mutableStateOf(emptyList<StopNote>()); private set
+    private var pendingStops = emptyList<PendingStop>()
     /** Whether the summary of a job is shown before it starts (on by default; the person can turn it off in the settings). */
     var confirmStart by mutableStateOf(preferences.getBoolean("confirm_start", true)); private set
     var message: String? by mutableStateOf(null); private set
@@ -209,6 +212,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         message = null
         phase = Phase.SignedIn
         FleetWatch.schedule(getApplication())
+        val again = stopsToResend(pendingStops, clock())
+        pendingStops = emptyList()
+        again.forEach { id -> stopping(id) { api.stopMachine(id) } }
         poll()
     }
 
@@ -337,7 +343,11 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
             } catch (error: ApiException) {
                 // A stop that did not get there is said plainly in every case, also when the session is the reason.
                 message = if (error.unauthorized || error.status == 0 || error.status >= 500) tr("La orden de parada NO ha llegado al servidor. Use la parada física de la máquina.") else errorText(error)
-                if (error.unauthorized) signOutQuietly()
+                if (error.unauthorized) {
+                    // the session ended: the stop is kept for a short time and sent again after the next sign-in
+                    if (machineId != null) pendingStops = pendingStops.filter { it.machineId != machineId } + PendingStop(machineId, clock())
+                    signOutQuietly()
+                }
             }
         }
     }

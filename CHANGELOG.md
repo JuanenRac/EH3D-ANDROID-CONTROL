@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **A stop that the ended session refused is sent again after signing in:** the machine ids are kept in memory only, for two minutes, so signing in late never stops a job that was started afterwards; the person is told at once that the stop did not arrive.
+
 - **The warning that a drill file did not state its unit is written in the language of the app:** the server's `units_supposed` warning had no phrase of its own and showed as a generic server warning; it now has its text in the 37 languages.
 
 - **A start-up with no link to the server keeps the saved session:** the session is deleted only when the server itself refuses it (401); a server out of reach, an error of the server or the page of another service on that address leaves it in place, says there is no connection and tries again with growing waits.

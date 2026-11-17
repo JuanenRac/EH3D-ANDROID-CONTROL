@@ -25,3 +25,9 @@ fun followStops(notes: List<StopNote>, fleet: Fleet, askedMs: Long, nowMs: Long,
     val resolved = if (outcome == StopOutcome.Confirmed) n.resolvedMs ?: nowMs else null
     if (resolved != null && nowMs - resolved > keepMs) null else n.copy(outcome = outcome, resolvedMs = resolved)
 }
+
+/** A stop that the server refused because the session had ended (401), kept in memory only until the person signs in again. */
+data class PendingStop(val machineId: String, val atMs: Long)
+
+/** The stops to send again after signing in: only those no older than [maxAgeMs], so a late sign-in never stops a job that was started afterwards. */
+fun stopsToResend(pending: List<PendingStop>, nowMs: Long, maxAgeMs: Long = 120_000): List<String> = pending.filter { nowMs - it.atMs in 0..maxAgeMs }.map { it.machineId }.distinct()
