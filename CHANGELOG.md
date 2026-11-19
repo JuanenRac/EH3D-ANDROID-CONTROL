@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.2] - Newest improvements of the Android app
+
 - **A stop that the ended session refused is sent again after signing in:** the machine ids are kept in memory only, for two minutes, so signing in late never stops a job that was started afterwards; the person is told at once that the stop did not arrive.
 
 - **The warning that a drill file did not state its unit is written in the language of the app:** the server's `units_supposed` warning had no phrase of its own and showed as a generic server warning; it now has its text in the 37 languages.
