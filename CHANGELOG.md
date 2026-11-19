@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The login goes through the single login of the server:** the app signs in with `POST /auth/login` and says it is the `android` application, so the server keeps the application with the login and in its audit (it used the first, application-less route before).
+
 ## [0.1.2] - Newest improvements of the Android app
 
 - **A stop that the ended session refused is sent again after signing in:** the machine ids are kept in memory only, for two minutes, so signing in late never stops a job that was started afterwards; the person is told at once that the stop did not arrive.

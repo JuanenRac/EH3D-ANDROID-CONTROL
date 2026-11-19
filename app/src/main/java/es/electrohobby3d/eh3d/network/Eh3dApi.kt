@@ -30,6 +30,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
+/** The application this app says it logs in for (`POST /auth/login`): the server keeps it with the login and in the audit. */
+const val LOGIN_APP = "android"
+
 /** The server refused, or could not be reached: [status] is the HTTP status (0 when there was no answer) and [code] the `error` code of the server, if it sent one. */
 class ApiException(val status: Int, val code: String, message: String) : IOException(message) {
     val unauthorized get() = status == 401
@@ -105,7 +108,8 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     }
 
     suspend fun login(name: String, password: String): Login {
-        val j = JSONObject(call("/login", "POST", JSONObject().put("name", name).put("password", password).toString()))
+        // The single login of the server: the application it is for is kept with the login and in the audit.
+        val j = JSONObject(call("/auth/login", "POST", JSONObject().put("name", name).put("password", password).put("app", LOGIN_APP).toString()))
         return Login(j.optString("token"), j.optString("name", name), j.optString("role", "viewer"))
     }
 

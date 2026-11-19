@@ -89,7 +89,7 @@ class SimulatedServerTest {
                 Mode.Unavailable -> { reply(exchange, 503, """{"error":"unavailable"}"""); return }
                 Mode.Up -> {}
             }
-            if (path == "/api/v1/login") {
+            if (path == "/api/v1/auth/login") {
                 val token = "t" + issued.incrementAndGet()
                 tokens.add(token)
                 logins.incrementAndGet()

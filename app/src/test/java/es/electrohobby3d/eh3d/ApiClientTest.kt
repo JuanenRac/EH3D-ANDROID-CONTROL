@@ -74,8 +74,9 @@ class ApiClientTest {
         assertEquals("t_abc", login.token)
         assertEquals("Ana", login.name)
         assertEquals("operator", login.role)
-        assertEquals("/api/v1/login", seen[0].path)
+        assertEquals("/api/v1/auth/login", seen[0].path)
         assertEquals("ana", JSONObject(seen[0].body).getString("name"))
+        assertEquals("android", JSONObject(seen[0].body).getString("app"))
         assertNull(seen[0].authorization)
     }
 
