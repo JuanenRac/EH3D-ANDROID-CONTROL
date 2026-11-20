@@ -56,9 +56,9 @@ class ServerErrorsTest {
         val german = ServerErrors.text("machine_alarm", "de")!!
         assertNotEquals(english, spanish)
         assertNotEquals(spanish, german)
-        assertTrue(english.startsWith("The machine"))
-        assertTrue(spanish.startsWith("La máquina"))
-        assertTrue(german.startsWith("Die Maschine"))
+        assertTrue(english.startsWith("An emergency stop"))
+        assertTrue(spanish.startsWith("Una parada de emergencia"))
+        assertTrue(german.startsWith("Ein Not-Halt"))
     }
 
     @Test fun `a variant takes the text of its main language and a language without a table takes English`() {
