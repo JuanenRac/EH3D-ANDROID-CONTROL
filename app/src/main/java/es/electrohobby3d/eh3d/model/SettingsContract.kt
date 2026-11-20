@@ -76,7 +76,7 @@ internal fun plainValue(v: Any?): Any? = when {
     v is JSONArray -> (0 until v.length()).map { plainValue(v.get(it)) }
     v is Int -> v.toLong()
     v is Long -> v
-    v is Double -> if (v == Math.rint(v) && Math.abs(v) < 1e15) v.toLong() else v
+    v is Number -> v.toDouble().let { d -> if (d == Math.rint(d) && Math.abs(d) < 1e15) d.toLong() else d }
     v is Boolean || v is String -> v
     else -> v.toString()
 }
