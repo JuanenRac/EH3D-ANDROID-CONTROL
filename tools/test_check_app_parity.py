@@ -16,8 +16,9 @@ SPEC.loader.exec_module(P)
 PIN = next(iter(P.IOS_ONLY))
 
 
-def side(examples=None, catalog=None, i18n=None):
-    return {"examples": examples or {"fleet.json": {"a": 1}}, "catalog": catalog or {"error-codes.json": {"codes": []}}, "i18n": i18n or {"en.json": {"Hola": "Hello"}}}
+def side(examples=None, catalog=None, i18n=None, assets=None):
+    return {"examples": examples or {"fleet.json": {"a": 1}}, "catalog": catalog or {"error-codes.json": {"codes": []}}, "i18n": i18n or {"en.json": {"Hola": "Hello"}},
+            "assets": assets if assets is not None else {"settings-texts.json": {"k": {"en": "x"}}}}
 
 
 class Documents(unittest.TestCase):
@@ -81,6 +82,17 @@ class Everything(unittest.TestCase):
         found = P.compare_all(side(), other)
         self.assertEqual(sorted(line.split(":")[0] for line in found), ["catalog", "examples", "i18n"])
 
+    def test_the_files_of_the_settings_page_are_compared_as_data(self):
+        other = side(assets={"settings-texts.json": {"k": {"en": "y"}}})
+        self.assertEqual(P.compare_all(side(), other), ["assets: settings-texts.json differs"])
+        self.assertEqual(P.compare_all(side(assets={}), side()), ["assets: settings-texts.json is only in the iPhone app"])
+        self.assertEqual(P.compare_all(side(), side(assets={})), ["assets: settings-texts.json is only in the Android app"])
+
+    def test_a_side_without_the_assets_key_is_still_compared(self):
+        bare = side()
+        del bare["assets"]
+        self.assertEqual(P.compare_all(bare, bare), [])
+
 
 class Reading(unittest.TestCase):
     def setUp(self):
@@ -106,7 +118,10 @@ class Reading(unittest.TestCase):
         self.put(where["catalog"], "error-codes.json", {"c": 1})
         self.put(where["catalog"], "other.json", {"c": 2})
         self.put(where["i18n"], "en.json", {"Hola": "Hello"})
+        self.put(where["assets"], "settings-contract.json", {"settings": []})
+        self.put(where["assets"], "server-errors.json", {"x": ["a"]})
         got = P.read_side(self.root, "android")
+        self.assertEqual(got["assets"], {"settings-contract.json": {"settings": []}})
         self.assertEqual(got["examples"], {"fleet.json": {"m": 1}})
         self.assertEqual(got["catalog"], {"error-codes.json": {"c": 1}})
         self.assertEqual(got["i18n"], {"en.json": {"Hola": "Hello"}})
@@ -136,6 +151,10 @@ class TheTwoApps(unittest.TestCase):
         mine, other = P.read_side(root, side_key), P.read_side(sibling, other_key)
         sides = {side_key: mine, other_key: other}
         self.assertEqual(P.compare_all(sides["android"], sides["ios"]), [])
+
+    def test_both_apps_carry_the_two_files_of_the_settings_page(self):
+        found = P.read_side(HERE.parent, P.which_side(HERE.parent))["assets"]
+        self.assertEqual(sorted(found), sorted(P.ASSET_FILES))
 
     def test_the_tables_are_thirty_six_files_of_phrases_and_spanish_is_the_source(self):
         tables = P.load_folder(HERE.parent / P.APPS[P.which_side(HERE.parent)]["i18n"])

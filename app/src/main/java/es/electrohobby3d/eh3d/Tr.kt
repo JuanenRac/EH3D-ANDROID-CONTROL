@@ -10,7 +10,9 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import es.electrohobby3d.eh3d.model.EmbeddedContract
 import es.electrohobby3d.eh3d.model.ServerErrors
+import es.electrohobby3d.eh3d.model.SettingsTexts
 import org.json.JSONObject
 import java.util.Locale
 
@@ -45,6 +47,8 @@ object Tr {
         language = pick(saved, phoneCode(locale.language, locale.country))
         load(app, language)
         ServerErrors.ensureLoaded { app.assets.open("server-errors.json").bufferedReader(Charsets.UTF_8).use { it.readText() } }
+        SettingsTexts.ensureLoaded { app.assets.open("settings-texts.json").bufferedReader(Charsets.UTF_8).use { it.readText() } }
+        EmbeddedContract.ensureLoaded { app.assets.open("settings-contract.json").bufferedReader(Charsets.UTF_8).use { it.readText() } }
     }
 
     /** Chooses a language and remembers it. */

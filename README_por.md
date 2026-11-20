@@ -31,7 +31,7 @@
 |---|---|
 | Versão | `0.1.4` |
 | Maturidade | Estrutura inicial |
-| Testes | 334 testes unitários na JVM |
+| Testes | 375 testes unitários na JVM |
 | Tecnologias | Kotlin, Jetpack Compose |
 | Em hardware real | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
 
@@ -55,6 +55,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Câmara do cabeçote | 🟠 | A câmara do cabeçote de furação (EH3D-NODE-BUNGARD-AUX) em MJPEG através do servidor, as suas rotações, temperatura e saída de proteção, e uma medição da mesa com o laser. Escrito, nunca executado com um nó real. |
 | Atualizações | 🟠 | Consulta a última release deste projeto no GitHub, descarrega o APK, verifica o pacote, a versão e a assinatura e entrega-o ao instalador do Android; nunca instala sozinha. Escrito e testado; nunca executado contra o GitHub a partir de um telemóvel. |
 | Máquinas dos plugins | 🟠 | A página inicial lista as máquinas de laser, pick-and-place, placas, CNC, Gerber, CAM, impressora 3D, visão e CAD do servidor com um distintivo APENAS SIMULADOR (nada é mostrado como provado em hardware), os seus bloqueios a vermelho, uma paragem de emergência com um toque e sem perguntas, a libertação de um bloqueio apenas para administradores (confirmada duas vezes), a fila de cada máquina (um trabalho é iniciado por uma pessoa, confirmado duas vezes, e nunca sozinho), os limites de temperatura de uma impressora e, para um administrador, os interruptores do servidor desligados por predefinição. Escrito e testado contra um servidor simulado; nunca executado num telemóvel nem com uma máquina real. |
+| Definições do servidor | 🟠 | Uma página em Mais desenha cada definição e interruptor do servidor a partir do seu contrato (89 chaves em 15 grupos; lidas do servidor e, quando não é possível, da cópia guardada na aplicação, só de leitura): etiqueta, ajuda e aviso em oito idiomas, o valor em vigor, o valor por omissão com um botão para o repor, se a alteração se aplica já ou precisa de reinício e o controlo do seu tipo. Um administrador altera as 19 chaves que o servidor altera em funcionamento e é-lhe perguntado uma segunda vez nas de risco; as outras 70 são mostradas com a nota de que se definem em server.cfg; um segredo nunca é mostrado. Escrita e testada contra um servidor simulado; nunca executada contra um real. |
 | Uso real | 🔴 | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
 | Documentação | 🟡 | README em oito idiomas, a ajuda da aplicação em 37 idiomas e as notas da API do servidor que usa. |
 
@@ -69,6 +70,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 * A placa, os furos (um anel até serem furados), os trajetos (ténues até serem cortados) e o cabeçote, em 2D e numa vista isométrica que roda com o dedo; a posição do cabeçote é uma estimativa a partir dos passos feitos. Testado como geometria, nunca visto num telemóvel.
 * A câmara do cabeçote de furação (EH3D-NODE-BUNGARD-AUX) em MJPEG através do servidor, as suas rotações, temperatura e saída de proteção, e uma medição da mesa com o laser. Escrito, nunca executado com um nó real.
 * Consulta a última release deste projeto no GitHub, descarrega o APK, verifica o pacote, a versão e a assinatura e entrega-o ao instalador do Android; nunca instala sozinha. Escrito e testado; nunca executado contra o GitHub a partir de um telemóvel.
+* Uma página em Mais desenha cada definição e interruptor do servidor a partir do seu contrato (89 chaves em 15 grupos; lidas do servidor e, quando não é possível, da cópia guardada na aplicação, só de leitura): etiqueta, ajuda e aviso em oito idiomas, o valor em vigor, o valor por omissão com um botão para o repor, se a alteração se aplica já ou precisa de reinício e o controlo do seu tipo. Um administrador altera as 19 chaves que o servidor altera em funcionamento e é-lhe perguntado uma segunda vez nas de risco; as outras 70 são mostradas com a nota de que se definem em server.cfg; um segredo nunca é mostrado. Escrita e testada contra um servidor simulado; nunca executada contra um real.
 
 A página de uma máquina também tem o anel de LEDs da cabeça (desligado e três níveis) e um cartão Verificação de qualidade: pede ao servidor que olhe para a placa com a câmara da cabeça de furação, julga os furos e os canais fresados e mostra o veredicto grande como um cartaz (APROVADO, REPROVADO ou não avaliável) com o que se encontrou, o perfil (padrão, passo fino, protótipo) e a calibração da escala. Os primeiros ecrãs (o de arranque com a marca, a espera enquanto a sessão é restaurada e o de entrada com os seus ícones, o olho da palavra-passe e a nota sobre o que fica no telemóvel) seguem o aspeto das outras apps da suite.
 
@@ -142,7 +144,7 @@ Abra a aplicação, escreva o endereço do servidor (e a porta 18200), prima Lig
 
 ## 🧪 Testes
 
-`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste. `python -I tools/check_app_parity.py` verifica que os exemplos das respostas, o catálogo das recusas e as tabelas das 37 línguas são os mesmos nas duas aplicações móveis (a única frase do certificado fixado é a única diferença permitida), e a CI imprime quanto do código que guarda regras estes testes cobrem.
+`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste. `python -I tools/check_app_parity.py` verifica que os exemplos das respostas, o catálogo das recusas e as tabelas das 37 línguas são os mesmos nas duas aplicações móveis (a única frase do certificado fixado é a única diferença permitida), e a CI imprime quanto do código que guarda regras estes testes cobrem. `python -I tools/sync_settings_contract.py --check` verifica que a cópia do contrato de definições do servidor (e a tabela das frases da sua página) é válida e, com o EH3D-SERVER ao lado deste repositório, que é o mesmo ficheiro que o do servidor; `check_app_parity.py` verifica ainda que as duas aplicações levam a mesma cópia e a mesma tabela.
 
 ## 🏗️ Compilação e publicação
 
@@ -163,10 +165,12 @@ EH3D-ANDROID-CONTROL/
 │   ├── build.gradle.kts proguard-rules.pro      a compilação e as regras de redução
 │   ├── src/main/AndroidManifest.xml             permissões e a única atividade
 │   ├── src/main/assets/i18n/                    os textos em 37 idiomas
+│   ├── src/main/assets/settings-contract.json   a cópia do contrato de definições
 │   ├── src/main/java/es/electrohobby3d/eh3d/    o código da aplicação
 │   └── src/test/java/es/electrohobby3d/eh3d/    os testes na JVM
 ├── tools/
 │   ├── ci_validate.py                           manifesto, versões, paridade dos README
+│   ├── sync_settings_contract.py                verifica a cópia do contrato
 │   └── make_architecture.py make_structure.py   desenham as duas imagens do README
 ├── docs/                                        as fontes das duas imagens
 ├── gradle/                                      os ficheiros do wrapper do Gradle

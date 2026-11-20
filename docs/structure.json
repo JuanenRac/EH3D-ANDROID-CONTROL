@@ -78,6 +78,20 @@
         },
         {
           "desc": {
+            "en": "the copy of the settings contract",
+            "es": "la copia del contrato de ajustes",
+            "it": "la copia del contratto impostazioni",
+            "de": "die Kopie des Einstellungsvertrags",
+            "fr": "la copie du contrat des réglages",
+            "pt": "a cópia do contrato de definições",
+            "zh": "设置契约的副本",
+            "ja": "設定契約のコピー"
+          },
+          "name": "src/main/assets/settings-contract.json",
+          "tree_name": "src/main/assets/settings-contract.json"
+        },
+        {
+          "desc": {
             "en": "the code of the app",
             "es": "el código de la app",
             "it": "il codice dell'app",
@@ -134,6 +148,20 @@
           },
           "name": "ci_validate.py",
           "tree_name": "ci_validate.py"
+        },
+        {
+          "desc": {
+            "en": "checks the settings contract copy",
+            "es": "comprueba la copia del contrato",
+            "it": "verifica la copia del contratto",
+            "de": "prüft die Vertragskopie",
+            "fr": "vérifie la copie du contrat",
+            "pt": "verifica a cópia do contrato",
+            "zh": "检查设置契约的副本",
+            "ja": "設定契約のコピーを検査"
+          },
+          "name": "sync_settings_contract.py",
+          "tree_name": "sync_settings_contract.py"
         },
         {
           "desc": {

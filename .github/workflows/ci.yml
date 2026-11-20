@@ -61,6 +61,10 @@ jobs:
         run: |
           python -I tools/test_check_app_parity.py
           python -I tools/check_app_parity.py
+      - name: The copy of the settings contract of the server
+        run: |
+          python -I tools/test_sync_settings_contract.py
+          python -I tools/sync_settings_contract.py --check
       - name: The check of the floor of coverage
         run: python -I tools/test_check_coverage_floor.py
 

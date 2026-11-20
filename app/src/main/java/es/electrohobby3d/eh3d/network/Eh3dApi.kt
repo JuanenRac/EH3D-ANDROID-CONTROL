@@ -231,6 +231,12 @@ open class Eh3dApi(
         return true
     }
 
+    /** The contract of the settings of the server with the values in force (`GET /settings/contract`): administrators only, any other role is refused with 403. Answers the text of the reply. */
+    suspend fun settingsContract(): String = call("/settings/contract")
+
+    /** Writes one setting by the method and the route its entry of the contract names (path without `/api/v1`). Answers the text of the reply: the new policy and, in `changed`, what the server did. */
+    suspend fun writeSetting(method: String, path: String, body: String): String = call(path, method, body)
+
     /** The switches of security of the server that the app explains (administrators only; any other role is refused with 403). */
     suspend fun policySwitches(): List<PolicySwitch> = parsePolicySwitches(call("/auth/policy"))
 

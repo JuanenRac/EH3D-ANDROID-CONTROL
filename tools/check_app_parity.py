@@ -1,5 +1,6 @@
 # EH3D phone apps - tools/check_app_parity.py: what the Android app and the iPhone app must hold the same, besides the case files (tools/check_shared_cases.py):
-# the examples of the answers of the server, the catalog of the refusal codes and the tables of the 37 languages. The only phrase that may be in the iPhone tables and not in the Android ones is the
+# the examples of the answers of the server, the catalog of the refusal codes, the tables of the 37 languages and the files of the settings page (the copy of the settings contract of the server and the
+# table of its sentences in eight languages). The only phrase that may be in the iPhone tables and not in the Android ones is the
 # one of the certificate that is pinned (docs/PLATFORM_DIFFERENCES.md says why).
 #   python -I tools/check_app_parity.py [--other FOLDER_OF_THE_OTHER_REPOSITORY]
 # Without --other it looks for the sibling folder of the other app and, when there is none, asks GitHub (the public repository, main branch).
@@ -13,10 +14,12 @@ from pathlib import Path
 
 OWNER = "JuanenRac"
 APPS = {
-    "android": {"repo": "EH3D-ANDROID-CONTROL", "examples": "app/src/test/resources/api-examples", "catalog": "app/src/test/resources", "i18n": "app/src/main/assets/i18n"},
-    "ios": {"repo": "EH3D-IOS-CONTROL", "examples": "Tests/Eh3dCoreTests/Examples", "catalog": "Tests/Eh3dCoreTests/Catalog", "i18n": "Sources/Eh3dCore/Resources/i18n"},
+    "android": {"repo": "EH3D-ANDROID-CONTROL", "examples": "app/src/test/resources/api-examples", "catalog": "app/src/test/resources", "i18n": "app/src/main/assets/i18n", "assets": "app/src/main/assets"},
+    "ios": {"repo": "EH3D-IOS-CONTROL", "examples": "Tests/Eh3dCoreTests/Examples", "catalog": "Tests/Eh3dCoreTests/Catalog", "i18n": "Sources/Eh3dCore/Resources/i18n", "assets": "Sources/Eh3dCore/Resources"},
 }
 CATALOG_FILE = "error-codes.json"
+# the files of the settings page that both apps carry byte for byte as data: the copy of the contract of the server and the sentences of the page in eight languages
+ASSET_FILES = ("settings-contract.json", "settings-texts.json")
 # the phrases that only the iPhone app has, with the reason (the system makes the difference)
 IOS_ONLY = {"El certificado del servidor no es el que se guardó la primera vez: no se conecta.": "the certificate of a secure server is pinned on the iPhone only"}
 
@@ -50,17 +53,20 @@ def compare_tables(android: dict, ios: dict, ios_only: dict = IOS_ONLY) -> list:
 
 
 def compare_all(android: dict, ios: dict) -> list:
-    """Every comparison; each side is {"examples": {...}, "catalog": {...}, "i18n": {...}}."""
+    """Every comparison; each side is {"examples": {...}, "catalog": {...}, "i18n": {...}, "assets": {...}}."""
     problems = compare_documents("examples", android["examples"], ios["examples"])
     problems += compare_documents("catalog", android["catalog"], ios["catalog"])
     problems += compare_tables(android["i18n"], ios["i18n"])
+    problems += compare_documents("assets", android.get("assets", {}), ios.get("assets", {}))
     return problems
 
 
 def read_side(root: Path, app: str) -> dict:
     where = APPS[app]
     catalog = load_folder(root / where["catalog"])
-    return {"examples": load_folder(root / where["examples"]), "catalog": {CATALOG_FILE: catalog[CATALOG_FILE]} if CATALOG_FILE in catalog else {}, "i18n": load_folder(root / where["i18n"])}
+    assets = load_folder(root / where["assets"]) if (root / where["assets"]).is_dir() else {}
+    return {"examples": load_folder(root / where["examples"]), "catalog": {CATALOG_FILE: catalog[CATALOG_FILE]} if CATALOG_FILE in catalog else {}, "i18n": load_folder(root / where["i18n"]),
+            "assets": {name: assets[name] for name in ASSET_FILES if name in assets}}
 
 
 def _get(url: str) -> bytes:
@@ -71,19 +77,21 @@ def _get(url: str) -> bytes:
         return response.read()
 
 
-def github_folder(repo: str, rel: str, only: str = "") -> dict:
-    """The JSON files of a folder of the public repository (main branch); with `only`, just that file."""
+def github_folder(repo: str, rel: str, only=()) -> dict:
+    """The JSON files of a folder of the public repository (main branch); with `only` (a name or a list of names), just those files."""
+    wanted = {only} if isinstance(only, str) else set(only)
     listing = json.loads(_get(f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref=main"))
     out = {}
     for item in listing:
-        if item.get("type") == "file" and item["name"].endswith(".json") and (not only or item["name"] == only):
+        if item.get("type") == "file" and item["name"].endswith(".json") and (not wanted or item["name"] in wanted):
             out[item["name"]] = json.loads(_get(item["download_url"]).decode("utf-8"))
     return out
 
 
 def read_github(app: str) -> dict:
     where = APPS[app]
-    return {"examples": github_folder(where["repo"], where["examples"]), "catalog": github_folder(where["repo"], where["catalog"], CATALOG_FILE), "i18n": github_folder(where["repo"], where["i18n"])}
+    return {"examples": github_folder(where["repo"], where["examples"]), "catalog": github_folder(where["repo"], where["catalog"], CATALOG_FILE), "i18n": github_folder(where["repo"], where["i18n"]),
+            "assets": github_folder(where["repo"], where["assets"], ASSET_FILES)}
 
 
 def which_side(root: Path):
@@ -124,7 +132,7 @@ def main(argv: list) -> int:
     if problems:
         print(f"{len(problems)} difference(s) between the Android app and the iPhone app: change both, or write the difference in docs/PLATFORM_DIFFERENCES.md.")
         return 1
-    print(f"OK: {len(sides['android']['examples'])} examples, the catalog and {len(sides['android']['i18n'])} tables of languages agree in both apps.")
+    print(f"OK: {len(sides['android']['examples'])} examples, the catalog, {len(sides['android']['i18n'])} tables of languages and {len(sides['android']['assets'])} files of the settings page agree in both apps.")
     return 0
 
 

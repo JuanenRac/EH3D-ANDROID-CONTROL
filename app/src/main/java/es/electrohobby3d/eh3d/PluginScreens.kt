@@ -138,7 +138,7 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
 
 /** The second touch: a question with a button that does it and a button that leaves things as they are. */
 @Composable
-private fun AskAgain(title: String, text: String, confirm: String, dismiss: String, danger: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
+internal fun AskAgain(title: String, text: String, confirm: String, dismiss: String, danger: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title, color = if (danger) Forge.Danger else Forge.Amber) },

@@ -1,0 +1,312 @@
+{
+ "ssc_apply_now": {
+  "en": "Applies at once",
+  "es": "Se aplica ya",
+  "de": "Wirkt sofort",
+  "fr": "S'applique tout de suite",
+  "it": "Ha effetto subito",
+  "ja": "すぐに反映",
+  "zh": "立即生效",
+  "pt": "Aplica-se já"
+ },
+ "ssc_apply_restart": {
+  "en": "Needs a restart",
+  "es": "Necesita reinicio",
+  "de": "Braucht einen Neustart",
+  "fr": "Nécessite un redémarrage",
+  "it": "Richiede il riavvio",
+  "ja": "再起動が必要",
+  "zh": "需要重启",
+  "pt": "Precisa de reinício"
+ },
+ "ssc_bad_choice": {
+  "en": "Choose one of the values offered.",
+  "es": "Elige uno de los valores ofrecidos.",
+  "de": "Wählen Sie einen der angebotenen Werte.",
+  "fr": "Choisissez l'une des valeurs proposées.",
+  "it": "Scegli uno dei valori proposti.",
+  "ja": "提示された値から選んでください。",
+  "zh": "请选择所提供的值之一。",
+  "pt": "Escolha um dos valores oferecidos."
+ },
+ "ssc_bad_number": {
+  "en": "Enter a whole number from {min} to {max}.",
+  "es": "Escribe un número entero de {min} a {max}.",
+  "de": "Geben Sie eine ganze Zahl von {min} bis {max} ein.",
+  "fr": "Saisissez un nombre entier de {min} à {max}.",
+  "it": "Inserisci un numero intero da {min} a {max}.",
+  "ja": "{min} から {max} までの整数を入力してください。",
+  "zh": "请输入 {min} 到 {max} 之间的整数。",
+  "pt": "Escreva um número inteiro de {min} a {max}."
+ },
+ "ssc_bad_text": {
+  "en": "The text is longer than {n} characters.",
+  "es": "El texto supera los {n} caracteres.",
+  "de": "Der Text ist länger als {n} Zeichen.",
+  "fr": "Le texte dépasse {n} caractères.",
+  "it": "Il testo supera i {n} caratteri.",
+  "ja": "テキストが {n} 文字を超えています。",
+  "zh": "文本超过 {n} 个字符。",
+  "pt": "O texto excede {n} carateres."
+ },
+ "ssc_cancel": {
+  "en": "Cancel",
+  "es": "Cancelar",
+  "de": "Abbrechen",
+  "fr": "Annuler",
+  "it": "Annulla",
+  "ja": "キャンセル",
+  "zh": "取消",
+  "pt": "Cancelar"
+ },
+ "ssc_confirm": {
+  "en": "Confirm",
+  "es": "Confirmar",
+  "de": "Bestätigen",
+  "fr": "Confirmer",
+  "it": "Conferma",
+  "ja": "確認",
+  "zh": "确认",
+  "pt": "Confirmar"
+ },
+ "ssc_confirm_risk": {
+  "en": "Changing {key} is risky. {warning}",
+  "es": "Cambiar {key} tiene riesgo. {warning}",
+  "de": "{key} zu ändern ist riskant. {warning}",
+  "fr": "Modifier {key} présente un risque. {warning}",
+  "it": "Modificare {key} comporta un rischio. {warning}",
+  "ja": "{key} の変更にはリスクがあります。{warning}",
+  "zh": "更改 {key} 有风险。{warning}",
+  "pt": "Alterar {key} tem risco. {warning}"
+ },
+ "ssc_default": {
+  "en": "Default",
+  "es": "Por defecto",
+  "de": "Standard",
+  "fr": "Par défaut",
+  "it": "Predefinito",
+  "ja": "既定値",
+  "zh": "默认值",
+  "pt": "Por omissão"
+ },
+ "ssc_embedded": {
+  "en": "The server did not give its contract ({why}), so this is the copy kept in the app, read-only: the values in force are not shown.",
+  "es": "El servidor no dio su contrato ({why}), así que esta es la copia guardada en la app, en modo de solo lectura: no se muestran los valores en vigor.",
+  "de": "Der Server hat seinen Vertrag nicht geliefert ({why}); dies ist die in der App gespeicherte Kopie, nur lesbar: die gültigen Werte werden nicht angezeigt.",
+  "fr": "Le serveur n'a pas fourni son contrat ({why}) : voici la copie conservée dans l'application, en lecture seule ; les valeurs en vigueur ne sont pas affichées.",
+  "it": "Il server non ha fornito il suo contratto ({why}): questa è la copia conservata nell'app, in sola lettura; i valori in vigore non sono mostrati.",
+  "ja": "サーバーが契約を返さなかったため（{why}）、アプリに保存されたコピーを読み取り専用で表示しています。現在有効な値は表示されません。",
+  "zh": "服务器未提供其契约（{why}），因此显示的是应用中保存的副本，只读：不显示当前生效的值。",
+  "pt": "O servidor não deu o seu contrato ({why}); esta é a cópia guardada na aplicação, só de leitura: os valores em vigor não são mostrados."
+ },
+ "ssc_help": {
+  "en": "Every setting and switch of the server, drawn from its contract. The ones the server changes while it runs have a control here; the others are set in server.cfg and read when the server starts.",
+  "es": "Todos los ajustes e interruptores del servidor, dibujados desde su contrato. Los que el servidor cambia con él en marcha tienen aquí un control; los demás se fijan en server.cfg y se leen al arrancar el servidor.",
+  "de": "Alle Einstellungen und Schalter des Servers, aus seinem Vertrag gezeichnet. Was der Server im laufenden Betrieb ändert, hat hier ein Bedienelement; der Rest wird in server.cfg gesetzt und beim Start des Servers gelesen.",
+  "fr": "Tous les réglages et interrupteurs du serveur, dessinés à partir de son contrat. Ceux que le serveur modifie en fonctionnement ont ici un contrôle ; les autres se règlent dans server.cfg et se lisent au démarrage du serveur.",
+  "it": "Tutte le impostazioni e gli interruttori del server, ricavati dal suo contratto. Quelli che il server modifica mentre è in esecuzione hanno qui un controllo; gli altri si impostano in server.cfg e si leggono all'avvio del server.",
+  "ja": "サーバーのすべての設定とスイッチを、その契約から表示します。サーバーが動作中に変更できるものにはここにコントロールがあり、それ以外は server.cfg で設定され、サーバーの起動時に読み込まれます。",
+  "zh": "服务器的所有设置和开关，均由其契约生成。服务器运行时可更改的项目在此有控件；其余项目在 server.cfg 中设置，并在服务器启动时读取。",
+  "pt": "Todas as definições e interruptores do servidor, desenhados a partir do seu contrato. As que o servidor altera com ele a funcionar têm aqui um controlo; as outras definem-se em server.cfg e leem-se quando o servidor arranca."
+ },
+ "ssc_in_file": {
+  "en": "Set in server.cfg and read when the server starts.",
+  "es": "Se fija en server.cfg y se lee al arrancar el servidor.",
+  "de": "Wird in server.cfg gesetzt und beim Start des Servers gelesen.",
+  "fr": "Se règle dans server.cfg et se lit au démarrage du serveur.",
+  "it": "Si imposta in server.cfg e si legge all'avvio del server.",
+  "ja": "server.cfg で設定し、サーバーの起動時に読み込まれます。",
+  "zh": "在 server.cfg 中设置，服务器启动时读取。",
+  "pt": "Define-se em server.cfg e lê-se quando o servidor arranca."
+ },
+ "ssc_in_force": {
+  "en": "In force now",
+  "es": "En vigor ahora",
+  "de": "Jetzt gültig",
+  "fr": "En vigueur maintenant",
+  "it": "In vigore ora",
+  "ja": "現在有効",
+  "zh": "当前生效",
+  "pt": "Em vigor agora"
+ },
+ "ssc_list_hint": {
+  "en": "Separate the items with commas.",
+  "es": "Separa los elementos con comas.",
+  "de": "Trennen Sie die Einträge mit Kommas.",
+  "fr": "Séparez les éléments par des virgules.",
+  "it": "Separa gli elementi con virgole.",
+  "ja": "項目はカンマで区切ります。",
+  "zh": "各项用逗号分隔。",
+  "pt": "Separe os elementos com vírgulas."
+ },
+ "ssc_live": {
+  "en": "Contract read from the server {v}.",
+  "es": "Contrato leído del servidor {v}.",
+  "de": "Vertrag vom Server {v} gelesen.",
+  "fr": "Contrat lu depuis le serveur {v}.",
+  "it": "Contratto letto dal server {v}.",
+  "ja": "サーバー {v} から契約を読み込みました。",
+  "zh": "已从服务器 {v} 读取契约。",
+  "pt": "Contrato lido do servidor {v}."
+ },
+ "ssc_loading": {
+  "en": "Loading...",
+  "es": "Cargando...",
+  "de": "Wird geladen ...",
+  "fr": "Chargement...",
+  "it": "Caricamento...",
+  "ja": "読み込み中...",
+  "zh": "加载中...",
+  "pt": "A carregar..."
+ },
+ "ssc_off": {
+  "en": "off",
+  "es": "desactivado",
+  "de": "aus",
+  "fr": "désactivé",
+  "it": "disattivo",
+  "ja": "オフ",
+  "zh": "关",
+  "pt": "desativado"
+ },
+ "ssc_on": {
+  "en": "on",
+  "es": "activado",
+  "de": "an",
+  "fr": "activé",
+  "it": "attivo",
+  "ja": "オン",
+  "zh": "开",
+  "pt": "ativado"
+ },
+ "ssc_other": {
+  "en": "Other settings the server reports",
+  "es": "Otros ajustes que informa el servidor",
+  "de": "Weitere Einstellungen, die der Server meldet",
+  "fr": "Autres réglages signalés par le serveur",
+  "it": "Altre impostazioni segnalate dal server",
+  "ja": "サーバーが報告するその他の設定",
+  "zh": "服务器报告的其他设置",
+  "pt": "Outras definições indicadas pelo servidor"
+ },
+ "ssc_readonly_role": {
+  "en": "Only an administrator can change the settings.",
+  "es": "Solo un administrador puede cambiar los ajustes.",
+  "de": "Nur ein Administrator darf die Einstellungen ändern.",
+  "fr": "Seul un administrateur peut modifier les réglages.",
+  "it": "Solo un amministratore può modificare le impostazioni.",
+  "ja": "設定を変更できるのは管理者のみです。",
+  "zh": "只有管理员才能更改设置。",
+  "pt": "Só um administrador pode alterar as definições."
+ },
+ "ssc_readonly_short": {
+  "en": "Read only",
+  "es": "Solo lectura",
+  "de": "Nur lesbar",
+  "fr": "Lecture seule",
+  "it": "Sola lettura",
+  "ja": "読み取り専用",
+  "zh": "只读",
+  "pt": "Só de leitura"
+ },
+ "ssc_refresh": {
+  "en": "Refresh",
+  "es": "Actualizar",
+  "de": "Aktualisieren",
+  "fr": "Actualiser",
+  "it": "Aggiorna",
+  "ja": "更新",
+  "zh": "刷新",
+  "pt": "Atualizar"
+ },
+ "ssc_restore": {
+  "en": "Restore the default",
+  "es": "Restaurar el valor por defecto",
+  "de": "Standardwert wiederherstellen",
+  "fr": "Rétablir la valeur par défaut",
+  "it": "Ripristina il valore predefinito",
+  "ja": "既定値に戻す",
+  "zh": "恢复默认值",
+  "pt": "Repor o valor por omissão"
+ },
+ "ssc_risk_high": {
+  "en": "Risky: read the warning.",
+  "es": "Con riesgo: lee el aviso.",
+  "de": "Riskant: Lesen Sie den Hinweis.",
+  "fr": "À risque : lisez l'avertissement.",
+  "it": "A rischio: leggi l'avviso.",
+  "ja": "リスクあり: 警告を読んでください。",
+  "zh": "有风险：请阅读提示。",
+  "pt": "Com risco: leia o aviso."
+ },
+ "ssc_save": {
+  "en": "Save",
+  "es": "Guardar",
+  "de": "Speichern",
+  "fr": "Enregistrer",
+  "it": "Salva",
+  "ja": "保存",
+  "zh": "保存",
+  "pt": "Guardar"
+ },
+ "ssc_saved": {
+  "en": "Saved.",
+  "es": "Guardado.",
+  "de": "Gespeichert.",
+  "fr": "Enregistré.",
+  "it": "Salvato.",
+  "ja": "保存しました。",
+  "zh": "已保存。",
+  "pt": "Guardado."
+ },
+ "ssc_saved_restart": {
+  "en": "Saved. It takes effect when the server restarts.",
+  "es": "Guardado. Se aplica cuando el servidor se reinicie.",
+  "de": "Gespeichert. Wirkt, wenn der Server neu startet.",
+  "fr": "Enregistré. Prend effet au redémarrage du serveur.",
+  "it": "Salvato. Ha effetto al riavvio del server.",
+  "ja": "保存しました。サーバーの再起動後に反映されます。",
+  "zh": "已保存。服务器重启后生效。",
+  "pt": "Guardado. Aplica-se quando o servidor reiniciar."
+ },
+ "ssc_secret": {
+  "en": "Secret: its value is never shown or written here.",
+  "es": "Secreto: su valor nunca se muestra ni se escribe aquí.",
+  "de": "Geheim: Der Wert wird hier nie angezeigt oder geschrieben.",
+  "fr": "Secret : sa valeur n'est jamais affichée ni écrite ici.",
+  "it": "Segreto: il suo valore non viene mai mostrato né scritto qui.",
+  "ja": "秘密: この値はここでは表示も書き込みもされません。",
+  "zh": "机密：其值绝不会在此显示或写入。",
+  "pt": "Segredo: o seu valor nunca é mostrado nem escrito aqui."
+ },
+ "ssc_title": {
+  "en": "Settings of the server",
+  "es": "Ajustes del servidor",
+  "de": "Einstellungen des Servers",
+  "fr": "Réglages du serveur",
+  "it": "Impostazioni del server",
+  "ja": "サーバーの設定",
+  "zh": "服务器设置",
+  "pt": "Definições do servidor"
+ },
+ "ssc_unknown": {
+  "en": "Not in the copy kept in the app.",
+  "es": "No está en la copia guardada en la app.",
+  "de": "Nicht in der in der App gespeicherten Kopie.",
+  "fr": "Absent de la copie conservée dans l'application.",
+  "it": "Non è nella copia conservata nell'app.",
+  "ja": "アプリに保存されたコピーにありません。",
+  "zh": "不在应用保存的副本中。",
+  "pt": "Não consta da cópia guardada na aplicação."
+ },
+ "ssc_weak_confirm": {
+  "en": "This makes the server less strict than recommended. Apply it anyway?",
+  "es": "Esto hace el servidor menos estricto de lo recomendado. ¿Aplicarlo de todos modos?",
+  "de": "Dadurch wird der Server weniger streng als empfohlen. Trotzdem anwenden?",
+  "fr": "Le serveur sera moins strict que recommandé. L'appliquer quand même ?",
+  "it": "Così il server diventa meno rigoroso di quanto raccomandato. Applicarlo comunque?",
+  "ja": "サーバーが推奨より緩くなります。それでも適用しますか？",
+  "zh": "这会使服务器比推荐的更宽松。仍要应用吗？",
+  "pt": "Isto torna o servidor menos rigoroso do que o recomendado. Aplicar na mesma?"
+ }
+}

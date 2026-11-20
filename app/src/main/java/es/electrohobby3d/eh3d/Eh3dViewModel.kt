@@ -14,7 +14,14 @@ import es.electrohobby3d.eh3d.model.AuthSession
 import es.electrohobby3d.eh3d.model.Candidate
 import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.EmbeddedContract
+import es.electrohobby3d.eh3d.model.LoadedContract
+import es.electrohobby3d.eh3d.model.SaveResult
 import es.electrohobby3d.eh3d.model.ServerErrors
+import es.electrohobby3d.eh3d.model.Setting
+import es.electrohobby3d.eh3d.model.SettingsTexts
+import es.electrohobby3d.eh3d.model.loadContract
+import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.PolicySwitch
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
@@ -59,11 +66,16 @@ sealed interface Page {
     data object Help : Page
     data object About : Page
     data object Languages : Page
+    /** Every setting and switch of the server, drawn from its contract. */
+    data object ServerSettings : Page
     data class Machine(val id: String) : Page
     data class JobPage(val id: String) : Page
     /** The page that prepares a job on a machine: what to do, the file, its tools and where to start. */
     data class Prepare(val machine: String) : Page
 }
+
+/** What became of the last change of a setting: it was saved (or not) and the sentence to say it, in the language of the app. */
+data class SettingNote(val ok: Boolean, val text: String)
 
 /** What the page that prepares a job holds: the work chosen, the file of each side with what the server planned from it, and the free G-code program. */
 data class PrepareUi(
@@ -105,6 +117,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The jobs of the generic queue of the server (the ones of the machines of the plugins) and, for an administrator, the switches of security of the server that the app explains. */
     var workJobs by mutableStateOf(emptyList<WorkJob>()); private set
     var switches by mutableStateOf(emptyList<PolicySwitch>()); private set
+    /** The page of the settings: the contract (the live one, or the copy of the app read-only), what became of each change and the key that is being saved. */
+    var settingsView by mutableStateOf<LoadedContract?>(null); private set
+    var settingsNotes by mutableStateOf(emptyMap<String, SettingNote>()); private set
+    var settingsBusy by mutableStateOf<String?>(null); private set
 
     var phase by mutableStateOf(Phase.Booting); private set
     var busy by mutableStateOf(Busy.No); private set
@@ -334,6 +350,39 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         if (!canAdmin) { switches = emptyList(); return }
         viewModelScope.launch {
             try { switches = api.policySwitches() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else if (error.status != 0) switches = emptyList() }
+        }
+    }
+
+    /** Reads the contract of the settings of the server: the live one for an administrator; when the server does not give it, the copy of the app, read-only, with the reason. */
+    fun loadSettings() {
+        viewModelScope.launch {
+            settingsView = loadContract({ try { api.settingsContract() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly(); throw error } }, EmbeddedContract.get())
+        }
+    }
+
+    /**
+     * Sends one change of a setting by the route its entry of the contract names (the screen has asked a second time when the risk is high). A value looser than recommended makes the server ask for
+     * `confirm_weak`: [onWeak] is called so the screen asks again, and nothing is sent twice by itself.
+     */
+    fun changeSetting(setting: Setting, value: Any?, confirmWeak: Boolean, onWeak: () -> Unit) {
+        if (settingsBusy != null) return
+        settingsBusy = setting.key
+        settingsNotes = settingsNotes - setting.key
+        viewModelScope.launch {
+            try {
+                when (val result = saveSetting({ method, path, body -> api.writeSetting(method, path, body) }, setting, value, confirmWeak)) {
+                    is SaveResult.Saved -> {
+                        settingsNotes = settingsNotes + (setting.key to SettingNote(true, SettingsTexts.text(if (result.restartRequired) "ssc_saved_restart" else "ssc_saved", Tr.language)))
+                        loadSettings()
+                    }
+                    SaveResult.NeedsWeakConfirm -> onWeak()
+                    is SaveResult.Refused -> if (result.error.unauthorized) signOutQuietly() else {
+                        val text = errorText(result.error)
+                        settingsNotes = settingsNotes + (setting.key to SettingNote(false, text))
+                        message = text
+                    }
+                }
+            } finally { settingsBusy = null }
         }
     }
 
@@ -665,6 +714,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun chooseLanguage(code: String) { Tr.choose(getApplication(), code) }
 
+    /** A refusal of a change of the settings: the sentence of the code in the language of the app, then the detail of the server, which names the key. */
+    private fun policyErrorText(error: ApiException): String =
+        listOfNotNull(ServerErrors.text(error.code, Tr.language), error.message?.takeIf { it != error.code }).joinToString(" ").ifBlank { error.code }
+
     private fun errorText(error: ApiException): String = when {
         error.status == 0 -> tr("No se alcanza el servidor. Compruebe la dirección y que el teléfono está en la misma red.")
         error.code == "bad_credentials" || error.code == "invalid_credentials" || error.status == 401 -> tr("Usuario o contraseña incorrectos.")
@@ -686,6 +739,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "not_stopped" -> tr("Solo se puede seguir desde un trabajo cancelado o fallido.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
+        error.code == "bad_policy" || error.code == "weak_confirm_required" || error.code == "forbidden_scope" -> policyErrorText(error)
         ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty()
         ServerErrors.text(error.code, Tr.language) != null -> ServerErrors.text(error.code, Tr.language).orEmpty()
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")

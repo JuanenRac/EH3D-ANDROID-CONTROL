@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import es.electrohobby3d.eh3d.model.SettingsTexts
 import es.electrohobby3d.eh3d.update.AppUpdateState
 import es.electrohobby3d.eh3d.update.AppUpdateViewModel
 
@@ -72,6 +73,10 @@ fun MorePage(model: Eh3dViewModel) {
             Row(Modifier.fillMaxWidth().clickable { model.open(Page.Languages) }.padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(tr("Idioma"), Modifier.weight(1f), color = Forge.Text)
                 Text(Tr.languages.firstOrNull { it.first == Tr.language }?.second.orEmpty(), color = Forge.Amber)
+            }
+            Row(Modifier.fillMaxWidth().clickable { model.open(Page.ServerSettings) }.padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(SettingsTexts.text("ssc_title", Tr.language), Modifier.weight(1f), color = Forge.Text)
+                Text(if (model.canAdmin) "›" else SettingsTexts.text("ssc_readonly_short", Tr.language), color = Forge.Amber)
             }
             Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(tr("Tema"), Modifier.weight(1f), color = Forge.Text)
