@@ -287,7 +287,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun stopSearch() { discovery?.stop(); discovery = null; if (searching) searchEnded = true; searching = false }
 
-    override fun onCleared() { discovery?.stop(); super.onCleared() }
+    override fun onCleared() { discovery?.stop() }
 
     // ---- the open logins
     fun loadSessions() {
