@@ -2,12 +2,12 @@
 "air_assist_off":[
 "The air assist of the laser is off and the machine requires it on.",
 "La asistencia de aire del láser está apagada y la máquina exige que esté encendida.",
-"L'aria di assistenza del laser è spenta e la macchina richiede che sia accesa.",
+"L'assistenza d'aria del laser è spenta e la macchina richiede che sia accesa.",
 "Die Luftunterstützung des Lasers ist aus, die Maschine verlangt sie eingeschaltet.",
-"L'assistance d'air du laser est coupée et la machine exige qu'elle soit allumée.",
-"A assistência de ar do laser está desligada e a máquina exige que esteja ligada.",
-"激光的辅助气体已关闭，机器要求其开启。",
-"レーザーのエアアシストがオフで、機械はオンを必要としています。"
+"L'assistance d'air du laser est éteinte et la machine l'exige allumée.",
+"A assistência de ar do laser está desligada e a máquina exige-a ligada.",
+"激光器的气辅助已关闭，而机器要求开启。",
+"レーザーのエアアシストがオフですが、機械はオンを必要としています。"
 ],
 "artifact_in_use":[
 "A task still works on this artifact or made it: remove the task first.",
@@ -51,13 +51,13 @@
 ],
 "bad_axis":[
 "The axis of the jog must be x, y or z.",
-"El eje del desplazamiento debe ser x, y o z.",
-"L'asse del movimento deve essere x, y o z.",
-"Die Achse der Verfahrbewegung muss x, y oder z sein.",
-"L'axe du déplacement doit être x, y ou z.",
-"O eixo do deslocamento tem de ser x, y ou z.",
-"点动的轴必须是 x、y 或 z。",
-"ジョグの軸は x、y、z のいずれかです。"
+"El eje del movimiento manual debe ser x, y o z.",
+"L'asse del movimento manuale deve essere x, y o z.",
+"Die Achse der Handverfahrung muss x, y oder z sein.",
+"L'axe du déplacement manuel doit être x, y ou z.",
+"O eixo do movimento manual tem de ser x, y ou z.",
+"手动移动的轴必须是 x、y 或 z。",
+"ジョグの軸は x、y、z のいずれかにしてください。"
 ],
 "bad_board":[
 "The board margin must be from 0 to 50 mm.",
@@ -140,14 +140,14 @@
 "設計プログラムの実行リクエストが合っていません。基板ファイルとオプションを確認してください。"
 ],
 "bad_feed":[
-"The feed of the jog must be above 0 and not over the limit of the machine.",
-"El avance del desplazamiento debe ser mayor que 0 y no pasar del límite de la máquina.",
-"L'avanzamento del movimento deve essere maggiore di 0 e non superare il limite della macchina.",
-"Der Vorschub der Verfahrbewegung muss über 0 liegen und darf die Grenze der Maschine nicht überschreiten.",
-"L'avance du déplacement doit être supérieure à 0 et ne pas dépasser la limite de la machine.",
-"O avanço do deslocamento tem de ser superior a 0 e não ultrapassar o limite da máquina.",
-"点动进给必须大于 0，且不能超过机器的限制。",
-"ジョグの送り速度は 0 より大きく、機械の上限以内にしてください。"
+"The feed of the jog must be a number above 0 and up to the limit of the machine.",
+"El avance del movimiento manual debe ser un número mayor que 0 y no superar el límite de la máquina.",
+"L'avanzamento del movimento manuale deve essere un numero maggiore di 0 e non superiore al limite della macchina.",
+"Der Vorschub der Handverfahrung muss eine Zahl über 0 und höchstens das Limit der Maschine sein.",
+"L'avance du déplacement manuel doit être un nombre supérieur à 0 et ne pas dépasser la limite de la machine.",
+"O avanço do movimento manual tem de ser um número acima de 0 e não superior ao limite da máquina.",
+"手动移动的进给速度必须是大于 0 且不超过机器上限的数字。",
+"ジョグの送り速度は、0 より大きく機械の上限以下の数値にしてください。"
 ],
 "bad_filename":[
 "The name of a file is not safe (empty, absolute, with .. or a drive, reserved or too long).",
@@ -170,14 +170,14 @@
 "プログラムに G コードではない行があります。コントローラーの設定とリアルタイムコマンド（$、!、~、?）、制御文字、200 文字を超える行は拒否されます。"
 ],
 "bad_gerber":[
-"A Gerber or Excellon file cannot be read: the format, a coordinate or a command is wrong, or it has no data.",
-"No se puede leer un archivo Gerber o Excellon: el formato, una coordenada o una orden es incorrecta, o no tiene datos.",
-"Un file Gerber o Excellon non si può leggere: il formato, una coordinata o un comando è errato, oppure non contiene dati.",
-"Eine Gerber- oder Excellon-Datei ist nicht lesbar: Format, eine Koordinate oder ein Befehl ist falsch, oder sie enthält keine Daten.",
+"A Gerber or Excellon file cannot be read: its format, a coordinate or a command is wrong, or it holds no data.",
+"No se puede leer un fichero Gerber o Excellon: el formato, una coordenada o un comando es incorrecto, o no contiene datos.",
+"Non è possibile leggere un file Gerber o Excellon: il formato, una coordinata o un comando è errato, oppure non contiene dati.",
+"Eine Gerber- oder Excellon-Datei kann nicht gelesen werden: Format, eine Koordinate oder ein Befehl ist falsch, oder sie enthält keine Daten.",
 "Un fichier Gerber ou Excellon est illisible : le format, une coordonnée ou une commande est incorrect, ou il ne contient aucune donnée.",
 "Não é possível ler um ficheiro Gerber ou Excellon: o formato, uma coordenada ou um comando está errado, ou não tem dados.",
 "无法读取 Gerber 或 Excellon 文件：格式、坐标或命令有误，或文件中没有数据。",
-"Gerber または Excellon ファイルを読み取れません。形式・座標・コマンドが誤っているか、データがありません。"
+"Gerber または Excellon ファイルを読み取れません。形式・座標・コマンドのいずれかが不正か、データがありません。"
 ],
 "bad_heater":[
 "The heater must be hotend, bed or chamber.",
@@ -187,7 +187,7 @@
 "Le chauffage doit être hotend, bed ou chamber.",
 "O aquecedor tem de ser hotend, bed ou chamber.",
 "加热器必须是 hotend、bed 或 chamber。",
-"ヒーターは hotend、bed、chamber のいずれかです。"
+"ヒーターは hotend、bed、chamber のいずれかにしてください。"
 ],
 "bad_hole":[
 "A hole has a coordinate that is not a number.",
@@ -219,6 +219,16 @@
 "向 LED 环提出的要求节点不支持（不认识的亮度、色调或扇区）。",
 "LED リングに、ノードが使わない指定（未知の明るさ・色調・セクター）が要求されました。"
 ],
+"bad_mesh":[
+"The mesh to slice is not a closed STL or 3MF that the slicer can read, or it has no closed outline.",
+"La malla a laminar no es un STL o 3MF cerrado que el laminador pueda leer, o no tiene contorno cerrado.",
+"La mesh da affettare non è un STL o 3MF chiuso leggibile dallo slicer, oppure non ha un contorno chiuso.",
+"Das zu slicende Netz ist kein geschlossenes STL oder 3MF, das der Slicer lesen kann, oder es hat keine geschlossene Kontur.",
+"Le maillage à trancher n'est pas un STL ou 3MF fermé lisible par le slicer, ou n'a pas de contour fermé.",
+"A malha a fatiar não é um STL ou 3MF fechado que o fatiador consiga ler, ou não tem contorno fechado.",
+"要切片的网格不是切片软件可读取的封闭 STL 或 3MF，或没有闭合轮廓。",
+"スライス対象のメッシュが、スライサーで読める閉じた STL / 3MF ではないか、閉じた輪郭がありません。"
+],
 "bad_name":[
 "The name is not valid: letters, digits, dot, underscore and hyphen, up to 32 characters.",
 "El nombre no es válido: letras, dígitos, punto, guion bajo y guion, hasta 32 caracteres.",
@@ -240,14 +250,14 @@
 "穴あけファイルを読み取れません。"
 ],
 "bad_operation":[
-"An operation of the laser job is not valid: check its layer, mode (cut or engrave), power, speed and passes.",
-"Una operación del trabajo láser no es válida: compruebe su capa, modo (cortar o grabar), potencia, velocidad y pasadas.",
-"Un'operazione del lavoro laser non è valida: controlla livello, modo (taglio o incisione), potenza, velocità e passate.",
-"Ein Arbeitsschritt des Laserauftrags ist ungültig: Ebene, Modus (Schneiden oder Gravieren), Leistung, Geschwindigkeit und Durchgänge prüfen.",
-"Une opération du travail laser n'est pas valide : vérifiez sa couche, son mode (découpe ou gravure), sa puissance, sa vitesse et ses passes.",
-"Uma operação do trabalho laser não é válida: verifique a camada, o modo (corte ou gravação), a potência, a velocidade e as passagens.",
-"激光作业中的某个操作无效：请检查其图层、模式（切割或雕刻）、功率、速度和次数。",
-"レーザー作業の操作が無効です。レイヤー、モード（切断または彫刻）、出力、速度、パス数を確認してください。"
+"An operation of the laser job is not valid: its layer, mode (cut or engrave), power, speed or passes.",
+"Una operación del trabajo láser no es válida: su capa, modo (corte o grabado), potencia, velocidad o pasadas.",
+"Un'operazione del lavoro laser non è valida: livello, modalità (taglio o incisione), potenza, velocità o passate.",
+"Eine Operation des Laser-Auftrags ist ungültig: Ebene, Modus (Schneiden oder Gravieren), Leistung, Geschwindigkeit oder Durchgänge.",
+"Une opération du travail laser n'est pas valide : calque, mode (découpe ou gravure), puissance, vitesse ou passes.",
+"Uma operação do trabalho laser não é válida: camada, modo (corte ou gravação), potência, velocidade ou passagens.",
+"激光作业中的某个操作无效：图层、模式（切割或雕刻）、功率、速度或次数有误。",
+"レーザー作業の操作が不正です。レイヤー、モード（切断または彫刻）、出力、速度、パス数を確認してください。"
 ],
 "bad_params":[
 "The parameters of the task do not fit its engine, or the idempotency key is not valid.",
@@ -280,14 +290,14 @@
 "ドリルヘッドのカメラ画像を読み取れません。"
 ],
 "bad_placement_list":[
-"The list of placements cannot be read as JSON or as CSV with the columns ref, part, x and y.",
+"The placement list cannot be read as JSON or as CSV with the columns ref, part, x and y.",
 "La lista de colocaciones no se puede leer como JSON ni como CSV con las columnas ref, part, x e y.",
-"L'elenco dei posizionamenti non si può leggere come JSON né come CSV con le colonne ref, part, x e y.",
+"L'elenco dei posizionamenti non è leggibile come JSON né come CSV con le colonne ref, part, x e y.",
 "Die Bestückungsliste lässt sich weder als JSON noch als CSV mit den Spalten ref, part, x und y lesen.",
-"La liste des placements ne peut être lue ni en JSON ni en CSV avec les colonnes ref, part, x et y.",
+"La liste de placements est illisible en JSON comme en CSV avec les colonnes ref, part, x et y.",
 "A lista de colocações não pode ser lida como JSON nem como CSV com as colunas ref, part, x e y.",
-"无法将贴装列表读取为 JSON，或包含 ref、part、x、y 列的 CSV。",
-"配置リストを JSON、または ref・part・x・y 列を持つ CSV として読み取れません。"
+"无法将贴装列表读取为 JSON，或带有 ref、part、x、y 列的 CSV。",
+"配置リストを JSON、または ref・part・x・y の列を持つ CSV として読み取れません。"
 ],
 "bad_plugin_request":[
 "The request does not fit what the machine plugin takes.",
@@ -340,14 +350,14 @@
 "サーバーは送信内容を受け付けませんでした。"
 ],
 "bad_rules":[
-"The rules of the check must be known rules with values inside their ranges.",
-"Las reglas de la comprobación deben ser reglas conocidas con valores dentro de su rango.",
-"Le regole del controllo devono essere regole note con valori entro i loro intervalli.",
-"Die Regeln der Prüfung müssen bekannte Regeln mit Werten im zulässigen Bereich sein.",
-"Les règles de la vérification doivent être des règles connues, avec des valeurs dans leurs plages.",
-"As regras da verificação têm de ser regras conhecidas, com valores dentro dos seus intervalos.",
-"检查规则必须是已知规则，且数值在允许范围内。",
-"チェックの規則は既知の規則で、値が範囲内である必要があります。"
+"The rules of the check must be an object of known rules with values inside their ranges.",
+"Las reglas de la comprobación deben ser un objeto de reglas conocidas con valores dentro de sus rangos.",
+"Le regole del controllo devono essere un oggetto di regole note con valori entro i loro intervalli.",
+"Die Regeln der Prüfung müssen ein Objekt bekannter Regeln mit Werten in ihren Bereichen sein.",
+"Les règles de la vérification doivent être un objet de règles connues avec des valeurs dans leurs plages.",
+"As regras da verificação têm de ser um objeto de regras conhecidas com valores dentro dos seus intervalos.",
+"检查规则必须是由已知规则组成的对象，且数值在允许范围内。",
+"チェックのルールは、既知のルールからなるオブジェクトで、値が範囲内である必要があります。"
 ],
 "bad_samples":[
 "The number of samples is out of range.",
@@ -479,6 +489,26 @@
 "此目录为内置目录，无法修改。",
 "このカタログは内蔵で、変更できません。"
 ],
+"compat_off":[
+"The Moonraker and OctoPrint routes are off: turn on compat_api on the security page.",
+"Las rutas de Moonraker y OctoPrint están desactivadas: activa compat_api en la página de seguridad.",
+"Le rotte di Moonraker e OctoPrint sono disattivate: attiva compat_api nella pagina di sicurezza.",
+"Die Moonraker- und OctoPrint-Routen sind aus: compat_api auf der Sicherheitsseite einschalten.",
+"Les routes Moonraker et OctoPrint sont désactivées : activez compat_api dans la page de sécurité.",
+"As rotas do Moonraker e do OctoPrint estão desligadas: ative compat_api na página de segurança.",
+"Moonraker 和 OctoPrint 路由已关闭：请在安全页面开启 compat_api。",
+"Moonraker と OctoPrint のルートはオフです。セキュリティページで compat_api をオンにしてください。"
+],
+"compat_write_off":[
+"The write routes of Moonraker and OctoPrint are off: turn on compat_write on the security page.",
+"Las rutas de escritura de Moonraker y OctoPrint están desactivadas: activa compat_write en la página de seguridad.",
+"Le rotte di scrittura di Moonraker e OctoPrint sono disattivate: attiva compat_write nella pagina di sicurezza.",
+"Die Schreibrouten von Moonraker und OctoPrint sind aus: compat_write auf der Sicherheitsseite einschalten.",
+"Les routes d'écriture de Moonraker et OctoPrint sont désactivées : activez compat_write dans la page de sécurité.",
+"As rotas de escrita do Moonraker e do OctoPrint estão desligadas: ative compat_write na página de segurança.",
+"Moonraker 和 OctoPrint 的写入路由已关闭：请在安全页面开启 compat_write。",
+"Moonraker と OctoPrint の書き込みルートはオフです。セキュリティページで compat_write をオンにしてください。"
+],
 "design_run_unavailable":[
 "This server is not set up to run the design program.",
 "Este servidor no está preparado para ejecutar el programa de diseño.",
@@ -491,13 +521,13 @@
 ],
 "enclosure_open":[
 "The enclosure of the laser is open and the machine requires it closed.",
-"La cubierta del láser está abierta y la máquina exige que esté cerrada.",
+"La cabina del láser está abierta y la máquina exige que esté cerrada.",
 "La protezione del laser è aperta e la macchina richiede che sia chiusa.",
 "Die Einhausung des Lasers ist offen, die Maschine verlangt sie geschlossen.",
-"Le capot du laser est ouvert et la machine exige qu'il soit fermé.",
-"A cobertura do laser está aberta e a máquina exige que esteja fechada.",
-"激光的防护罩已打开，机器要求其关闭。",
-"レーザーのカバーが開いています。機械は閉じていることを必要としています。"
+"Le capot du laser est ouvert et la machine l'exige fermé.",
+"A cabine do laser está aberta e a máquina exige-a fechada.",
+"激光器的防护罩处于打开状态，而机器要求关闭。",
+"レーザーの筐体が開いていますが、機械は閉じていることを必要としています。"
 ],
 "engine_missing":[
 "This kind of task is known, but this build of the server has no engine for it.",
@@ -508,6 +538,16 @@
 "Este tipo de tarefa é conhecido, mas esta versão do servidor não tem motor para ela.",
 "该任务类型是已知的，但此版本的服务器没有对应的引擎。",
 "このタスクの種類は既知ですが、このサーバーのビルドには対応するエンジンがありません。"
+],
+"farm_no_free_printer":[
+"No printer on the list is free, unlatched and able to take the job.",
+"Ninguna impresora de la lista está libre, sin bloqueo y en condiciones de aceptar el trabajo.",
+"Nessuna stampante dell'elenco è libera, sbloccata e in grado di accettare il lavoro.",
+"Kein Drucker der Liste ist frei, entsperrt und in der Lage, den Auftrag zu übernehmen.",
+"Aucune imprimante de la liste n'est libre, déverrouillée et capable de prendre le travail.",
+"Nenhuma impressora da lista está livre, desbloqueada e apta a aceitar o trabalho.",
+"列表中没有空闲、未锁定且能接收该作业的打印机。",
+"リスト内に、空いていてロックされておらず、このジョブを受けられるプリンターがありません。"
 ],
 "file_too_big":[
 "The file is bigger than the server accepts.",
@@ -520,14 +560,14 @@
 "ファイルがサーバーの受け付ける大きさを超えています。"
 ],
 "focus_not_checked":[
-"The head of the laser is not focused and the machine requires it to be.",
-"El cabezal del láser no está enfocado y la máquina exige que lo esté.",
-"La testa del laser non è a fuoco e la macchina richiede che lo sia.",
-"Der Laserkopf ist nicht fokussiert, die Maschine verlangt es.",
-"La tête du laser n'est pas mise au point et la machine l'exige.",
-"A cabeça do laser não está focada e a máquina exige que esteja.",
-"激光头未对焦，机器要求已对焦。",
-"レーザーヘッドのピントが合っていません。機械はピント合わせを必要としています。"
+"The focus input says the laser head is not focused and the machine requires it to be.",
+"La entrada de enfoque indica que el cabezal láser no está enfocado y la máquina exige que lo esté.",
+"L'ingresso di fuoco indica che la testa laser non è a fuoco e la macchina richiede che lo sia.",
+"Der Fokus-Eingang meldet, dass der Laserkopf nicht fokussiert ist, die Maschine verlangt es aber.",
+"L'entrée de mise au point indique que la tête laser n'est pas focalisée et la machine l'exige.",
+"A entrada de foco indica que a cabeça laser não está focada e a máquina exige que esteja.",
+"对焦输入显示激光头未对焦，而机器要求已对焦。",
+"フォーカス入力はレーザーヘッドが焦点未調整を示していますが、機械は調整済みを必要としています。"
 ],
 "forbidden":[
 "Your role does not allow this.",
@@ -580,14 +620,14 @@
 "ドリルヘッドのノードが応答しません。"
 ],
 "heater_timeout":[
-"A heater did not reach its target in time: the job stopped and the heaters went off.",
-"Un calentador no llegó a su temperatura a tiempo: el trabajo se detuvo y los calentadores se apagaron.",
-"Un riscaldatore non ha raggiunto la temperatura in tempo: il lavoro è stato fermato e i riscaldatori spenti.",
-"Eine Heizung hat ihre Zieltemperatur nicht rechtzeitig erreicht: der Auftrag wurde gestoppt und die Heizungen sind aus.",
-"Un chauffage n'a pas atteint sa température à temps : le travail s'est arrêté et les chauffages sont coupés.",
-"Um aquecedor não atingiu a temperatura a tempo: o trabalho parou e os aquecedores foram desligados.",
-"加热器未能及时达到目标温度：作业已停止，加热器已关闭。",
-"ヒーターが時間内に目標温度に達しませんでした。作業は停止し、ヒーターはオフになりました。"
+"A heater did not reach its target in time: the job stopped and the heaters were switched off.",
+"Un calentador no alcanzó su objetivo a tiempo: el trabajo se detuvo y los calentadores se apagaron.",
+"Un riscaldatore non ha raggiunto l'obiettivo in tempo: il lavoro si è fermato e i riscaldatori sono stati spenti.",
+"Eine Heizung hat ihr Ziel nicht rechtzeitig erreicht: Der Auftrag wurde gestoppt und die Heizungen ausgeschaltet.",
+"Un chauffage n'a pas atteint sa cible à temps : le travail est arrêté et les chauffages sont coupés.",
+"Um aquecedor não atingiu o alvo a tempo: o trabalho parou e os aquecedores foram desligados.",
+"加热器未能在规定时间内达到目标温度：作业已停止，加热器已关闭。",
+"ヒーターが時間内に目標温度に達しませんでした。ジョブを停止し、ヒーターをオフにしました。"
 ],
 "idempotency_conflict":[
 "That idempotency key was already used for a request with another content.",
@@ -600,14 +640,14 @@
 "その冪等キーは、内容の異なる別のリクエストで既に使われています。"
 ],
 "input_too_large":[
-"The files of the job are bigger than the worker accepts.",
-"Los archivos del trabajo son más grandes de lo que admite el procesador.",
-"I file del lavoro sono più grandi di quanto l'elaboratore accetti.",
+"The files of the job are larger than the worker accepts.",
+"Los ficheros del trabajo son más grandes de lo que acepta el procesador.",
+"I file del lavoro superano la dimensione accettata dal worker.",
 "Die Dateien des Auftrags sind größer, als der Worker annimmt.",
-"Les fichiers du travail sont plus gros que ce que le processeur accepte.",
+"Les fichiers du travail dépassent la taille acceptée par le worker.",
 "Os ficheiros do trabalho são maiores do que o processador aceita.",
-"作业文件超过了处理程序允许的大小。",
-"作業のファイルが処理側の受け付ける大きさを超えています。"
+"作业文件超过了工作进程允许的大小。",
+"ジョブのファイルが、ワーカーが受け付ける大きさを超えています。"
 ],
 "internal":[
 "The server failed on this request. Try again.",
@@ -630,44 +670,44 @@
 "ジョブは実行中です。先に停止してください。"
 ],
 "jog_while_running":[
-"A job is running or held on the machine: stop it before a jog.",
-"Hay un trabajo en marcha o en pausa en la máquina: páralo antes de desplazarla.",
-"Sulla macchina c'è un lavoro in corso o in pausa: fermalo prima di muovere manualmente.",
-"Auf der Maschine läuft ein Auftrag oder ist angehalten: erst stoppen, dann verfahren.",
-"Un travail est en cours ou en pause sur la machine : arrêtez-le avant de déplacer.",
-"Há um trabalho em curso ou em pausa na máquina: pare-o antes de a deslocar.",
-"机器上有作业正在运行或暂停：请先停止，再进行点动。",
-"機械で作業が実行中または一時停止中です。ジョグの前に停止してください。"
+"A job is running or held on the machine: stop it before moving by hand.",
+"Hay un trabajo en marcha o en pausa en la máquina: deténlo antes de mover a mano.",
+"Un lavoro è in corso o in pausa sulla macchina: fermalo prima di muovere a mano.",
+"Auf der Maschine läuft oder pausiert ein Auftrag: Stoppen Sie ihn vor dem Handverfahren.",
+"Un travail est en cours ou en pause sur la machine : arrêtez-le avant un déplacement manuel.",
+"Há um trabalho em curso ou em pausa na máquina: pare-o antes de mover à mão.",
+"机器上有作业正在运行或暂停：手动移动前请先停止。",
+"機械でジョブが実行中または一時停止中です。手動で動かす前に停止してください。"
 ],
 "laser_estop_latched":[
-"An emergency stop latched the laser: nothing starts on it until an administrator releases it.",
-"Una parada de emergencia ha bloqueado el láser: no empieza nada hasta que un administrador lo libere.",
-"Un arresto di emergenza ha bloccato il laser: non parte nulla finché un amministratore non lo sblocca.",
-"Ein Not-Halt hat den Laser verriegelt: nichts startet, bis ein Administrator ihn freigibt.",
+"An emergency stop latched the laser: nothing starts until an administrator releases it.",
+"Una parada de emergencia dejó el láser bloqueado: nada arranca hasta que un administrador lo libere.",
+"Un arresto di emergenza ha bloccato il laser: nulla parte finché un amministratore non lo sblocca.",
+"Ein Not-Halt hat den Laser verriegelt: Nichts startet, bis ein Administrator ihn freigibt.",
 "Un arrêt d'urgence a verrouillé le laser : rien ne démarre tant qu'un administrateur ne le libère pas.",
 "Uma paragem de emergência bloqueou o laser: nada arranca até um administrador o libertar.",
-"紧急停止已锁定激光：在管理员解除之前无法开始任何作业。",
+"紧急停止已锁定激光器：管理员解除锁定之前无法启动任何操作。",
 "非常停止でレーザーがラッチされました。管理者が解除するまで何も開始できません。"
 ],
 "laser_feed_limit":[
-"A line of the program asks for a feed over the limit of the laser.",
-"Una línea del programa pide un avance superior al límite del láser.",
-"Una riga del programma richiede un avanzamento oltre il limite del laser.",
-"Eine Zeile des Programms verlangt einen Vorschub über der Grenze des Lasers.",
-"Une ligne du programme demande une avance supérieure à la limite du laser.",
-"Uma linha do programa pede um avanço acima do limite do laser.",
-"程序中有一行要求的进给超过了激光的限制。",
-"プログラムの一行がレーザーの送り速度の上限を超えています。"
+"A line of the program asks for a cutting feed above the limit of the laser.",
+"Una línea del programa pide un avance de corte superior al límite del láser.",
+"Una riga del programma richiede un avanzamento di taglio superiore al limite del laser.",
+"Eine Zeile des Programms verlangt einen Schnittvorschub über dem Limit des Lasers.",
+"Une ligne du programme demande une avance de coupe supérieure à la limite du laser.",
+"Uma linha do programa pede um avanço de corte acima do limite do laser.",
+"程序中有一行要求的切割进给速度超过了激光器的上限。",
+"プログラムのある行が、レーザーの上限を超える切断送り速度を要求しています。"
 ],
 "laser_power_limit":[
-"The job asks for more power than the limit of the laser and the machine is set to refuse it.",
-"El trabajo pide más potencia que el límite del láser y la máquina está configurada para rechazarlo.",
-"Il lavoro richiede più potenza del limite del laser e la macchina è impostata per rifiutarlo.",
-"Der Auftrag verlangt mehr Leistung als die Grenze des Lasers, und die Maschine lehnt ihn ab.",
-"Le travail demande plus de puissance que la limite du laser et la machine est réglée pour le refuser.",
-"O trabalho pede mais potência do que o limite do laser e a máquina está configurada para o recusar.",
-"作业要求的功率超过激光的限制，机器设置为拒绝。",
-"作業の要求出力がレーザーの上限を超えており、機械は拒否する設定です。"
+"The job asks for more power than the limit of the laser and the machine rejects it.",
+"El trabajo pide más potencia que el límite del láser y la máquina lo rechaza.",
+"Il lavoro richiede più potenza del limite del laser e la macchina lo rifiuta.",
+"Der Auftrag verlangt mehr Leistung als das Limit des Lasers, und die Maschine lehnt ihn ab.",
+"Le travail demande plus de puissance que la limite du laser et la machine le refuse.",
+"O trabalho pede mais potência do que o limite do laser e a máquina rejeita-o.",
+"作业要求的功率超过激光器上限，机器拒绝执行。",
+"ジョブがレーザーの上限を超える出力を要求しており、機械が拒否しました。"
 ],
 "last_admin":[
 "The last administrator cannot be deleted, disabled or demoted.",
@@ -700,14 +740,14 @@
 "他のだれかがこのプロジェクトを編集中です。"
 ],
 "machine_alarm":[
-"The machine is latched by an emergency stop or an alarm: nothing starts or moves until an administrator releases it.",
-"La máquina está bloqueada por una parada de emergencia o una alarma: nada empieza ni se mueve hasta que un administrador la libere.",
-"La macchina è bloccata da un arresto di emergenza o da un allarme: nulla parte né si muove finché un amministratore non la sblocca.",
-"Die Maschine ist durch einen Not-Halt oder Alarm verriegelt: nichts startet oder bewegt sich, bis ein Administrator sie freigibt.",
-"La machine est verrouillée par un arrêt d'urgence ou une alarme : rien ne démarre ni ne bouge tant qu'un administrateur ne la libère pas.",
-"A máquina está bloqueada por uma paragem de emergência ou um alarme: nada arranca nem se move até um administrador a libertar.",
-"机器因紧急停止或报警而被锁定：在管理员解除之前不会开始或移动。",
-"非常停止またはアラームで機械がラッチされています。管理者が解除するまで開始も移動もできません。"
+"An emergency stop or an alarm latched the machine: nothing starts or moves until an administrator releases it.",
+"Una parada de emergencia o una alarma bloqueó la máquina: nada arranca ni se mueve hasta que un administrador la libere.",
+"Un arresto di emergenza o un allarme ha bloccato la macchina: nulla parte o si muove finché un amministratore non la sblocca.",
+"Ein Not-Halt oder ein Alarm hat die Maschine verriegelt: Nichts startet oder bewegt sich, bis ein Administrator sie freigibt.",
+"Un arrêt d'urgence ou une alarme a verrouillé la machine : rien ne démarre ni ne bouge tant qu'un administrateur ne la libère pas.",
+"Uma paragem de emergência ou um alarme bloqueou a máquina: nada arranca nem se move até um administrador a libertar.",
+"紧急停止或报警已锁定机器：管理员解除锁定之前无法启动或移动。",
+"非常停止またはアラームで機械がラッチされました。管理者が解除するまで開始も移動もできません。"
 ],
 "machine_busy":[
 "A job is running on this machine.",
@@ -741,13 +781,13 @@
 ],
 "missing_layer":[
 "The job has no file, or the check needs a copper layer and none of the files is one.",
-"El trabajo no trae archivo, o la comprobación necesita una capa de cobre y ningún archivo lo es.",
-"Il lavoro non ha file, oppure il controllo richiede uno strato di rame e nessun file lo è.",
-"Der Auftrag enthält keine Datei, oder die Prüfung braucht eine Kupferlage und keine Datei ist eine.",
-"Le travail n'a pas de fichier, ou la vérification demande une couche de cuivre et aucun fichier n'en est une.",
-"O trabalho não tem ficheiro, ou a verificação precisa de uma camada de cobre e nenhum dos ficheiros o é.",
-"作业没有文件，或检查需要铜层而没有任何文件是铜层。",
-"作業にファイルがないか、チェックに銅層が必要ですが、どのファイルも銅層ではありません。"
+"El trabajo no trae ningún fichero, o la comprobación necesita una capa de cobre y ninguno lo es.",
+"Il lavoro non contiene file, oppure il controllo richiede un livello di rame e nessun file lo è.",
+"Der Auftrag enthält keine Datei, oder die Prüfung braucht eine Kupferlage und keine der Dateien ist eine.",
+"Le travail ne contient aucun fichier, ou la vérification exige une couche de cuivre et aucun fichier n'en est une.",
+"O trabalho não traz nenhum ficheiro, ou a verificação precisa de uma camada de cobre e nenhum ficheiro o é.",
+"作业没有文件，或检查需要铜层而所有文件都不是铜层。",
+"ジョブにファイルがないか、チェックに銅層が必要なのにどのファイルも銅層ではありません。"
 ],
 "no_head":[
 "This machine has no node of the drill head: set head_address in its configuration.",
@@ -893,11 +933,11 @@
 "A move goes outside the travel of the machine.",
 "Un movimiento sale del recorrido de la máquina.",
 "Un movimento esce dalla corsa della macchina.",
-"Eine Bewegung verlässt den Verfahrbereich der Maschine.",
+"Eine Bewegung liegt außerhalb des Verfahrwegs der Maschine.",
 "Un déplacement sort de la course de la machine.",
 "Um movimento sai do curso da máquina.",
-"有一个移动超出了机器的行程。",
-"移動が機械のストロークの範囲外に出ています。"
+"有一个移动超出了机器的行程范围。",
+"移動が機械のストローク範囲を超えています。"
 ],
 "outside_course":[
 "The exact steps of the plan take an axis past its course. Move the work on the table, or set dry_run = warn in the tuning of the machine if you know what you are doing.",
@@ -920,14 +960,14 @@
 "プラグインまたはその先の機械で失敗しました。"
 ],
 "pnp_feeder_short":[
-"A part of the job is in no feeder, or the feeders hold fewer than the job needs.",
-"Una pieza del trabajo no está en ningún alimentador, o los alimentadores tienen menos de las que el trabajo necesita.",
-"Un componente del lavoro non è in nessun alimentatore, oppure gli alimentatori ne hanno meno di quanti servono.",
-"Ein Bauteil des Auftrags liegt in keinem Zuführer, oder die Zuführer enthalten weniger, als der Auftrag braucht.",
-"Une pièce du travail n'est dans aucun chargeur, ou les chargeurs en contiennent moins que nécessaire.",
-"Uma peça do trabalho não está em nenhum alimentador, ou os alimentadores têm menos do que o trabalho precisa.",
-"作业中的某个元件不在任何供料器中，或供料器中的数量少于作业所需。",
-"作業の部品がどのフィーダーにもないか、フィーダーの数量が作業に必要な量より少ないです。"
+"A part of the placement job is in no feeder, or the feeders hold fewer than the job needs.",
+"Una pieza del trabajo de colocación no está en ningún alimentador, o los alimentadores tienen menos de lo que el trabajo necesita.",
+"Un componente del lavoro di posizionamento non è in nessun alimentatore, oppure gli alimentatori ne contengono meno del necessario.",
+"Ein Bauteil des Bestückungsauftrags ist in keinem Feeder, oder die Feeder enthalten weniger, als der Auftrag braucht.",
+"Un composant du travail de placement n'est dans aucun chargeur, ou les chargeurs en contiennent moins que nécessaire.",
+"Uma peça do trabalho de colocação não está em nenhum alimentador, ou os alimentadores têm menos do que o trabalho precisa.",
+"贴装作业中有元件不在任何供料器中，或供料器中的数量少于作业所需。",
+"配置ジョブの部品がどのフィーダーにもないか、フィーダーの在庫がジョブに必要な数より少ないです。"
 ],
 "precondition_failed":[
 "Somebody changed the file since you read it: read it again before writing.",
@@ -961,23 +1001,33 @@
 ],
 "printer_latched":[
 "An emergency stop or a heater fault latched the printer: nothing starts or heats until an administrator releases it.",
-"Una parada de emergencia o un fallo de calentador ha bloqueado la impresora: nada empieza ni se calienta hasta que un administrador la libere.",
-"Un arresto di emergenza o un guasto a un riscaldatore ha bloccato la stampante: nulla parte né si scalda finché un amministratore non la sblocca.",
-"Ein Not-Halt oder ein Heizungsfehler hat den Drucker verriegelt: nichts startet oder heizt, bis ein Administrator ihn freigibt.",
+"Una parada de emergencia o un fallo de un calentador bloqueó la impresora: nada arranca ni se calienta hasta que un administrador la libere.",
+"Un arresto di emergenza o un guasto di un riscaldatore ha bloccato la stampante: nulla parte né si scalda finché un amministratore non la sblocca.",
+"Ein Not-Halt oder ein Heizungsfehler hat den Drucker verriegelt: Nichts startet oder heizt, bis ein Administrator ihn freigibt.",
 "Un arrêt d'urgence ou un défaut de chauffage a verrouillé l'imprimante : rien ne démarre ni ne chauffe tant qu'un administrateur ne la libère pas.",
 "Uma paragem de emergência ou uma falha de aquecedor bloqueou a impressora: nada arranca nem aquece até um administrador a libertar.",
-"紧急停止或加热器故障已锁定打印机：在管理员解除之前不会开始或加热。",
-"非常停止またはヒーターの故障でプリンターがラッチされました。管理者が解除するまで開始も加熱もできません。"
+"紧急停止或加热器故障已锁定打印机：管理员解除锁定之前无法启动或加热。",
+"非常停止またはヒーター異常でプリンターがラッチされました。管理者が解除するまで開始も加熱もできません。"
+],
+"printer_untrusted":[
+"The certificate of the printer is not the pinned one, or none is pinned: the connection is refused.",
+"El certificado de la impresora no es el fijado, o no hay ninguno fijado: se rechaza la conexión.",
+"Il certificato della stampante non è quello fissato, o non ne è fissato nessuno: la connessione è rifiutata.",
+"Das Zertifikat des Druckers ist nicht das festgelegte, oder es ist keines festgelegt: Die Verbindung wird abgelehnt.",
+"Le certificat de l'imprimante n'est pas celui qui est épinglé, ou aucun n'est épinglé : la connexion est refusée.",
+"O certificado da impressora não é o fixado, ou não há nenhum fixado: a ligação é recusada.",
+"打印机的证书不是已固定的证书，或尚未固定任何证书：连接被拒绝。",
+"プリンターの証明書が固定したものと一致しないか、固定されていないため、接続を拒否しました。"
 ],
 "program_over_limit":[
-"The program asks for a temperature or a feed over a limit of the printer, so it is refused whole.",
-"El programa pide una temperatura o un avance por encima de un límite de la impresora, así que se rechaza entero.",
-"Il programma richiede una temperatura o un avanzamento oltre un limite della stampante, quindi viene rifiutato per intero.",
-"Das Programm verlangt eine Temperatur oder einen Vorschub über einer Grenze des Druckers und wird deshalb ganz abgelehnt.",
-"Le programme demande une température ou une avance au-delà d'une limite de l'imprimante ; il est donc refusé en entier.",
-"O programa pede uma temperatura ou um avanço acima de um limite da impressora, pelo que é recusado por inteiro.",
-"程序要求的温度或进给超过了打印机的限制，因此整个程序被拒绝。",
-"プログラムがプリンターの上限を超える温度または送り速度を要求しているため、全体が拒否されました。"
+"The program asks for a temperature or a feed above a limit of the machine, so all of it is refused.",
+"El programa pide una temperatura o un avance por encima de un límite de la máquina, así que se rechaza entero.",
+"Il programma richiede una temperatura o un avanzamento oltre un limite della macchina, quindi viene rifiutato per intero.",
+"Das Programm verlangt eine Temperatur oder einen Vorschub über einem Limit der Maschine und wird deshalb ganz abgelehnt.",
+"Le programme demande une température ou une avance au-delà d'une limite de la machine : il est refusé en entier.",
+"O programa pede uma temperatura ou um avanço acima de um limite da máquina, por isso é recusado por inteiro.",
+"程序要求的温度或进给速度超过机器的某项上限，因此整个程序被拒绝。",
+"プログラムが機械の上限を超える温度または送り速度を要求しているため、全体を拒否しました。"
 ],
 "project_quota":[
 "The project or the store has no room left.",
@@ -1010,14 +1060,14 @@
 "待機中・実行中のタスク数が、1 人のユーザーに許される上限に達しています。"
 ],
 "sensor_fault":[
-"A heater reads below the minimum temperature: a broken sensor. The printer was stopped and stays latched until an administrator releases it.",
-"Un calentador marca por debajo de la temperatura mínima: sensor roto. La impresora se detuvo y sigue bloqueada hasta que un administrador la libere.",
-"Un riscaldatore legge sotto la temperatura minima: sensore guasto. La stampante è stata fermata e resta bloccata finché un amministratore non la sblocca.",
-"Eine Heizung zeigt weniger als die Mindesttemperatur: Sensor defekt. Der Drucker wurde gestoppt und bleibt verriegelt, bis ein Administrator ihn freigibt.",
-"Un chauffage lit sous la température minimale : capteur défectueux. L'imprimante a été arrêtée et reste verrouillée jusqu'à ce qu'un administrateur la libère.",
-"Um aquecedor lê abaixo da temperatura mínima: sensor avariado. A impressora parou e fica bloqueada até um administrador a libertar.",
-"有加热器读数低于最低温度：传感器损坏。打印机已停止并保持锁定，直到管理员解除。",
-"ヒーターの読み値が最低温度を下回っています（センサーの故障）。プリンターは停止し、管理者が解除するまでラッチされます。"
+"A heater reads below the minimum temperature, which means a broken sensor: the printer was stopped and latched.",
+"Un calentador marca por debajo de la temperatura mínima, señal de un sensor roto: la impresora se detuvo y quedó bloqueada.",
+"Un riscaldatore legge sotto la temperatura minima, segno di un sensore guasto: la stampante è stata fermata e bloccata.",
+"Eine Heizung meldet weniger als die Mindesttemperatur, was auf einen defekten Sensor hindeutet: Der Drucker wurde gestoppt und verriegelt.",
+"Un chauffage indique moins que la température minimale, signe d'un capteur défectueux : l'imprimante a été arrêtée et verrouillée.",
+"Um aquecedor indica menos do que a temperatura mínima, sinal de um sensor avariado: a impressora foi parada e bloqueada.",
+"加热器读数低于最低温度，说明传感器已损坏：打印机已停止并被锁定。",
+"ヒーターの読みが最低温度を下回っており、センサーの故障を示します。プリンターを停止し、ラッチしました。"
 ],
 "shares_off":[
 "Sharing is switched off on this server.",
@@ -1028,6 +1078,36 @@
 "A partilha está desativada neste servidor.",
 "此服务器已关闭共享功能。",
 "このサーバーでは共有がオフになっています。"
+],
+"slice_failed":[
+"The slicing program did not give a result.",
+"El programa de laminado no dio ningún resultado.",
+"Il programma di slicing non ha prodotto un risultato.",
+"Das Slicing-Programm hat kein Ergebnis geliefert.",
+"Le programme de tranchage n'a donné aucun résultat.",
+"O programa de fatiamento não deu resultado.",
+"切片程序没有给出结果。",
+"スライスのプログラムが結果を返しませんでした。"
+],
+"slice_limit":[
+"The object or the profile goes past a limit of the printer or the slicer; nothing is cut down to fit.",
+"El objeto o el perfil supera un límite de la impresora o del laminador; nada se recorta para que quepa.",
+"L'oggetto o il profilo supera un limite della stampante o dello slicer; nulla viene ridotto per adattarlo.",
+"Das Objekt oder das Profil überschreitet ein Limit des Druckers oder des Slicers; nichts wird passend gekürzt.",
+"L'objet ou le profil dépasse une limite de l'imprimante ou du slicer ; rien n'est rogné pour le faire tenir.",
+"O objeto ou o perfil ultrapassa um limite da impressora ou do fatiador; nada é cortado para caber.",
+"对象或配置超出了打印机或切片软件的某项限制；不会为适配而裁剪任何内容。",
+"オブジェクトまたはプロファイルがプリンターまたはスライサーの上限を超えています。収まるように切り詰めることはしません。"
+],
+"slice_off":[
+"Slicing on the server is off: turn on slice on the security page.",
+"El laminado en el servidor está desactivado: activa slice en la página de seguridad.",
+"Lo slicing sul server è disattivato: attiva slice nella pagina di sicurezza.",
+"Das Slicing auf dem Server ist aus: slice auf der Sicherheitsseite einschalten.",
+"Le tranchage sur le serveur est désactivé : activez slice dans la page de sécurité.",
+"O fatiamento no servidor está desligado: ative slice na página de segurança.",
+"服务器上的切片已关闭：请在安全页面开启 slice。",
+"サーバーでのスライスはオフです。セキュリティページで slice をオンにしてください。"
 ],
 "spindle_limit":[
 "The job asks for more than the spindle of the machine gives. Lower the turns or the feeds, or change the spindle of the machine.",
@@ -1100,34 +1180,34 @@
 "このサーバーでは計算タスクがオフになっています。"
 ],
 "temperature_over_limit":[
-"A temperature target is over the limit of the heater.",
-"Una temperatura pedida supera el límite del calentador.",
-"Una temperatura richiesta supera il limite del riscaldatore.",
-"Eine Zieltemperatur liegt über der Grenze der Heizung.",
-"Une température demandée dépasse la limite du chauffage.",
-"Uma temperatura pedida ultrapassa o limite do aquecedor.",
-"目标温度超过了加热器的限制。",
+"A temperature target is above the limit of the heater.",
+"Un objetivo de temperatura supera el límite del calentador.",
+"Un obiettivo di temperatura supera il limite del riscaldatore.",
+"Ein Temperaturziel liegt über dem Limit der Heizung.",
+"Une température cible dépasse la limite du chauffage.",
+"Um alvo de temperatura está acima do limite do aquecedor.",
+"目标温度超过了加热器的上限。",
 "目標温度がヒーターの上限を超えています。"
 ],
 "test_fire_refused":[
-"The test fire asks for more power than the laser allows for a test.",
-"El disparo de prueba pide más potencia de la que el láser permite para una prueba.",
-"Il colpo di prova richiede più potenza di quanta il laser ne consenta per una prova.",
-"Der Testschuss verlangt mehr Leistung, als der Laser für einen Test erlaubt.",
-"Le tir d'essai demande plus de puissance que le laser n'en permet pour un essai.",
-"O disparo de teste pede mais potência do que o laser permite para um teste.",
-"试射要求的功率超过了激光允许的试射功率。",
-"テスト照射の出力が、レーザーが試射に許す出力を超えています。"
+"The test fire asks for more power than the machine allows.",
+"El disparo de prueba pide más potencia de la que permite la máquina.",
+"Il colpo di prova richiede più potenza di quella consentita dalla macchina.",
+"Der Testschuss verlangt mehr Leistung, als die Maschine erlaubt.",
+"Le tir d'essai demande plus de puissance que la machine n'en permet.",
+"O disparo de teste pede mais potência do que a máquina permite.",
+"试射要求的功率超过了机器允许的范围。",
+"テスト照射が、機械の許容を超える出力を要求しています。"
 ],
 "thermal_runaway":[
-"A heater is far from its target for too long or past its limit: the printer was stopped and stays latched until an administrator releases it.",
-"Un calentador lleva demasiado tiempo lejos de su objetivo o ha pasado su límite: la impresora se detuvo y sigue bloqueada hasta que un administrador la libere.",
-"Un riscaldatore resta troppo a lungo lontano dall'obiettivo o ha superato il limite: la stampante è stata fermata e resta bloccata finché un amministratore non la sblocca.",
-"Eine Heizung ist zu lange weit vom Ziel entfernt oder über ihrer Grenze: der Drucker wurde gestoppt und bleibt verriegelt, bis ein Administrator ihn freigibt.",
-"Un chauffage reste trop longtemps loin de sa cible ou a dépassé sa limite : l'imprimante a été arrêtée et reste verrouillée jusqu'à ce qu'un administrateur la libère.",
-"Um aquecedor está há demasiado tempo longe do objetivo ou passou o limite: a impressora parou e fica bloqueada até um administrador a libertar.",
-"加热器长时间远离目标温度或已超过限制：打印机已停止并保持锁定，直到管理员解除。",
-"ヒーターが長時間目標から外れているか上限を超えました。プリンターは停止し、管理者が解除するまでラッチされます。"
+"A heater is far from its target for too long or past its limit: the printer was stopped and latched.",
+"Un calentador lleva demasiado tiempo lejos de su objetivo o ha pasado su límite: la impresora se detuvo y quedó bloqueada.",
+"Un riscaldatore è troppo a lungo lontano dall'obiettivo o oltre il limite: la stampante è stata fermata e bloccata.",
+"Eine Heizung ist zu lange weit von ihrem Ziel entfernt oder über ihrem Limit: Der Drucker wurde gestoppt und verriegelt.",
+"Un chauffage reste trop longtemps loin de sa cible ou dépasse sa limite : l'imprimante a été arrêtée et verrouillée.",
+"Um aquecedor está demasiado tempo longe do alvo ou acima do limite: a impressora foi parada e bloqueada.",
+"加热器长时间偏离目标或超过上限：打印机已停止并被锁定。",
+"ヒーターが長時間目標から外れているか上限を超えたため、プリンターを停止し、ラッチしました。"
 ],
 "throttled":[
 "Too many wrong passwords: wait a few minutes.",
@@ -1180,14 +1260,14 @@
 "名前かパスワードが違うか、ログインの期限が切れました。"
 ],
 "unit_unknown":[
-"A Gerber or Excellon file uses coordinates before it states its units.",
-"Un archivo Gerber o Excellon usa coordenadas antes de indicar sus unidades.",
+"A Gerber or Excellon file uses coordinates before it says its units.",
+"Un fichero Gerber o Excellon usa coordenadas antes de indicar sus unidades.",
 "Un file Gerber o Excellon usa coordinate prima di indicare le unità.",
 "Eine Gerber- oder Excellon-Datei verwendet Koordinaten, bevor sie ihre Einheiten angibt.",
 "Un fichier Gerber ou Excellon utilise des coordonnées avant d'indiquer ses unités.",
 "Um ficheiro Gerber ou Excellon usa coordenadas antes de indicar as suas unidades.",
 "Gerber 或 Excellon 文件在声明单位之前就使用了坐标。",
-"Gerber または Excellon ファイルが、単位を示す前に座標を使っています。"
+"Gerber または Excellon ファイルが、単位を宣言する前に座標を使っています。"
 ],
 "unknown_artifact":[
 "There is no artifact with this id, or it belongs to somebody else.",
