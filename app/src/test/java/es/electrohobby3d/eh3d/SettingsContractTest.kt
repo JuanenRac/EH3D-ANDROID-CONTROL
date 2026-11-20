@@ -245,7 +245,15 @@ class SettingsContractTest {
     // ---- the write
 
     /** The members of a JSON text do not come in a fixed order: two bodies are the same when they hold the same members. */
-    private fun assertSameJson(expected: String, actual: String) = assertTrue("$expected is not $actual", JSONObject(expected).similar(JSONObject(actual)))
+    private fun assertSameJson(expected: String, actual: String) = assertEquals(plain(JSONObject(expected)), plain(JSONObject(actual)))
+
+    /** A JSON value as maps, lists and primitives, so two of them compare as data whatever the order of the members. */
+    private fun plain(v: Any?): Any? = when (v) {
+        is JSONObject -> v.keys().asSequence().associateWith { plain(v.get(it)) }
+        is org.json.JSONArray -> (0 until v.length()).map { plain(v.get(it)) }
+        is Int -> v.toLong()
+        else -> v
+    }
 
     @Test fun theBodyCarriesTheKeyTheValueAndThePermissionToBeLooserOnlyWhenGiven() {
         val s = setting(entry("a")).single()
