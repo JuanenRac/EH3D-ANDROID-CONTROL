@@ -71,11 +71,16 @@ fun parseSessions(text: String): List<AuthSession> {
         .map { AuthSession(it.str("id"), it.str("name"), it.str("role", "viewer"), it.str("app"), it.str("ip"), it.optBoolean("current", false)) }
 }
 
-/** A machine of a plugin of the server (`GET /work/machines`) with what the plugin says of it in `detail`, flattened to lines of text. */
-data class WorkMachine(val id: String, val name: String, val plugin: String, val state: String, val latched: Boolean, val detail: List<Pair<String, String>>)
-
-/** The keys of `detail` that say the machine is stopped until an administrator releases it. */
-private val LATCH_KEYS = listOf("latched", "estop_latched", "alarm")
+/**
+ * A machine of a plugin of the server (`GET /work/machines`) with what the plugin says of it in `detail`, flattened to lines of text. [latched] is true when an interlock holds it ([interlocks]);
+ * [simulatorOnly] says it has only run against a simulator; [job] is the id of the job that runs on it, or empty; [autoStart] says its queue starts jobs by itself (a warning, never set from the phone);
+ * [limits] and [heaters] are the limits of temperature and the heaters of a 3D printer.
+ */
+data class WorkMachine(
+    val id: String, val name: String, val plugin: String, val state: String, val latched: Boolean, val detail: List<Pair<String, String>>,
+    val job: String = "", val simulatorOnly: Boolean = false, val interlocks: List<Interlock> = emptyList(), val autoStart: Boolean = false,
+    val limits: TempLimits? = null, val heaters: List<Heater> = emptyList(),
+)
 
 /** The machines of the answer `{"machines": [...]}` that are not of the `bungard` plugin (those are the fleet the app already shows). Nested objects are shown as `a.b`, lists by their size. */
 fun parseWorkMachines(text: String): List<WorkMachine> {
@@ -84,8 +89,12 @@ fun parseWorkMachines(text: String): List<WorkMachine> {
         val detail = m.optJSONObject("detail")
         val lines = ArrayList<Pair<String, String>>()
         if (detail != null) flatten("", detail, lines, 0)
-        val latched = detail != null && LATCH_KEYS.any { detail.optBoolean(it, false) }
-        WorkMachine(m.str("id"), m.str("name", m.str("id")), m.str("plugin"), m.str("state", "idle"), latched, lines)
+        val held = MachineSafety.interlocks(detail)
+        WorkMachine(
+            m.str("id"), m.str("name", m.str("id")), m.str("plugin"), m.str("state", "idle"), held.isNotEmpty(), lines,
+            job = m.str("job"), simulatorOnly = MachineSafety.simulatorOnly(detail, m.optJSONObject("capabilities")), interlocks = held,
+            autoStart = MachineSafety.startsByItself(detail), limits = MachineSafety.limits(detail), heaters = MachineSafety.heaters(detail),
+        )
     }
 }
 

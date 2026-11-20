@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.3` |
 | Reifegrad | Gerüst |
-| Tests | 300 Unit-Tests auf der JVM |
+| Tests | 334 Unit-Tests auf der JVM |
 | Technologie-Stack | Kotlin, Jetpack Compose |
 | Auf echter Hardware | Noch nicht: Die App wurde nicht auf einem Telefon, gegen einen echten Server oder mit einer Maschine ausgeführt; als Erstes ist die Anmeldung am EH3D-SERVER der Werkstatt zu versuchen. |
 
@@ -54,6 +54,7 @@ Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heut
 | 2D- und 3D-Ansicht | 🟠 | Platine, Löcher (ein Ring bis zum Bohren), Bahnen (blass bis zum Fräsen) und Kopf, in 2D und in einer isometrischen Ansicht, die sich mit dem Finger dreht; die Position des Kopfes ist eine Schätzung aus den erledigten Schritten. Als Geometrie getestet, nie auf einem Telefon gesehen. |
 | Kamera des Kopfes | 🟠 | Die Kamera des Bohrkopfes (EH3D-NODE-BUNGARD-AUX) als MJPEG über den Server, ihre Drehzahl, Temperatur und der Schutzausgang sowie eine Tischmessung mit dem Laser. Geschrieben, nie mit einem echten Knoten ausgeführt. |
 | Updates | 🟠 | Sie sucht die neueste Release dieses Projekts auf GitHub, lädt die APK, prüft Paket, Version und Signatur und übergibt sie dem Android-Installer; sie installiert nie von selbst. Geschrieben und getestet; nie von einem Telefon gegen GitHub ausgeführt. |
+| Maschinen der Plugins | 🟠 | Die Startseite listet die Laser-, Bestückungs-, Platinen-, CNC-, Gerber-, CAM-, 3D-Drucker-, Vision- und CAD-Maschinen des Servers mit einem Abzeichen NUR SIMULATOR (nichts wird als auf Hardware bewährt gezeigt), ihre Verriegelungen in Rot, einen Not-Halt mit einer Berührung und ohne Rückfrage, das Lösen einer Verriegelung nur für Administratoren (zweimal bestätigt), die Warteschlange jeder Maschine (ein Auftrag wird von einer Person gestartet, zweimal bestätigt, und nie von selbst), die Temperaturgrenzen eines Druckers und für Administratoren die Schalter des Servers, die standardmäßig aus sind. Geschrieben und gegen einen simulierten Server getestet; nie auf einem Telefon oder mit einer echten Maschine gelaufen. |
 | Echter Einsatz | 🔴 | Noch nicht: Die App wurde nicht auf einem Telefon, gegen einen echten Server oder mit einer Maschine ausgeführt; als Erstes ist die Anmeldung am EH3D-SERVER der Werkstatt zu versuchen. |
 | Dokumentation | 🟡 | README in acht Sprachen, die Hilfe der App in 37 Sprachen und die Hinweise zur verwendeten Server-API. |
 

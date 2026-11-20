@@ -31,7 +31,7 @@
 |---|---|
 | Versione | `0.1.3` |
 | Maturità | Impalcatura |
-| Test | 300 test unitari sulla JVM |
+| Test | 334 test unitari sulla JVM |
 | Stack tecnologico | Kotlin, Jetpack Compose |
 | Su hardware reale | Non ancora: l'app non è stata eseguita su un telefono, contro un server reale né con una macchina; la prima cosa da provare è accedere all'EH3D-SERVER dell'officina. |
 
@@ -54,6 +54,7 @@ Ogni riga è una parte di questo repository e il semaforo dice a che punto è og
 | Visore 2D e 3D | 🟠 | La scheda, i fori (un anello finché non sono forati), i percorsi (tenui finché non sono tagliati) e la testa, in 2D e in una vista isometrica che ruota con il dito; la posizione della testa è una stima dai passi fatti. Provato come geometria, mai visto su un telefono. |
 | Telecamera della testa | 🟠 | La telecamera della testa di foratura (EH3D-NODE-BUNGARD-AUX) in MJPEG tramite il server, i suoi giri, la temperatura e l'uscita di protezione, e una misura del tavolo con il laser. Scritto, mai eseguito con un nodo reale. |
 | Aggiornamenti | 🟠 | Guarda l'ultima release di questo progetto su GitHub, scarica l'APK, verifica pacchetto, versione e firma e lo consegna all'installer di Android; non installa mai da sola. Scritto e provato; mai eseguito contro GitHub da un telefono. |
+| Macchine dei plugin | 🟠 | La pagina iniziale elenca le macchine laser, pick-and-place, schede, CNC, Gerber, CAM, stampante 3D, visione e CAD del server con un badge SOLO SIMULATORE (nulla è mostrato come provato su hardware), i loro blocchi in rosso, un arresto di emergenza con un tocco e senza domande, lo sblocco solo per gli amministratori (chiesto due volte), la coda di ogni macchina (un lavoro lo avvia una persona, chiesto due volte, e mai da solo), i limiti di temperatura di una stampante e, per un amministratore, gli interruttori del server spenti per impostazione predefinita. Scritto e provato contro un server simulato; mai eseguito su un telefono né con una macchina reale. |
 | Uso reale | 🔴 | Non ancora: l'app non è stata eseguita su un telefono, contro un server reale né con una macchina; la prima cosa da provare è accedere all'EH3D-SERVER dell'officina. |
 | Documentazione | 🟡 | README in otto lingue, la guida dell'app in 37 lingue e le note dell'API del server che usa. |
 

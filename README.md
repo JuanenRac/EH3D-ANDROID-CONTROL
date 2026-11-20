@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.3` |
 | Maturity | Scaffolding |
-| Tests | 300 unit tests on the JVM |
+| Tests | 334 unit tests on the JVM |
 | Stack | Kotlin, Jetpack Compose |
 | On real hardware | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 
@@ -54,6 +54,7 @@ Each line is one part of this repository and the light says how far it is today.
 | 2D and 3D viewer | 🟠 | The board, the holes (a ring until drilled), the paths (dim until cut) and the head, in 2D and in an isometric view that turns with a finger; the place of the head is an estimate from the steps done. Tested as geometry, never seen on a phone. |
 | Camera of the head | 🟠 | The camera of the drill head (EH3D-NODE-BUNGARD-AUX) as MJPEG through the server, its turns, temperature and protect output, and one measure of the table with the laser. Written, never run with a real node. |
 | Updates | 🟠 | It looks at the newest release of this project on GitHub, downloads the APK, checks the package, the version and the signature, and hands it to Android's installer; it never installs by itself. Written and tested; never run against GitHub from a phone. |
+| Machines of the plugins | 🟠 | The home page lists the laser, pick-and-place, board, CNC, Gerber, CAM, 3D printer, vision and CAD machines of the server with a SIMULATOR ONLY badge (nothing is shown as proven on hardware), their interlocks in red, an emergency stop with one touch and no question, the release of a latch for administrators only (asked twice), the queue of each machine (a job is started by a person, asked twice, and never by itself), the temperature limits of a printer and, for an administrator, the switches of the server that are off by default. Written and tested against a simulated server; never run on a phone or with a real machine. |
 | Real use | 🔴 | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 | Documentation | 🟡 | README in eight languages, the help of the app in 37 languages and the notes of the server API it uses. |
 

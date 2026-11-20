@@ -324,6 +324,64 @@ class ApiClientTest {
         assertEquals("t_other", api.token)
     }
 
+    private fun plugin(plugin: String, job: String = "") = es.electrohobby3d.eh3d.model.WorkMachine("m1", "M", plugin, "idle", false, emptyList(), job = job)
+
+    @Test fun `the emergency stop of a CNC machine or a printer is its own route, sent at once with no other request`() {
+        for (kind in listOf("cnc", "printer3d")) withServer(ok("""{"ok":true}""")) { origin, seen ->
+            assertTrue(runBlocking { Eh3dApi(origin, "t").emergencyStopWork(plugin(kind)) })
+            assertEquals(listOf("POST /api/v1/work/machines/m1/emergency-stop"), seen.map { "${it.method} ${it.path}" })
+            assertEquals("Bearer t", seen[0].authorization)
+        }
+    }
+
+    @Test fun `the emergency stop of a machine without a route of its own cancels the job that runs on it`() = withServer(ok("""{"ok":true}""")) { origin, seen ->
+        assertTrue(runBlocking { Eh3dApi(origin, "t").emergencyStopWork(plugin("laser", job = "w-7")) })
+        assertEquals(listOf("POST /api/v1/work/jobs/w-7/cancel"), seen.map { "${it.method} ${it.path}" })
+    }
+
+    @Test fun `a machine with neither a route nor a job is asked nothing`() = withServer(ok()) { origin, seen ->
+        assertFalse(runBlocking { Eh3dApi(origin, "t").emergencyStopWork(plugin("pnp")) })
+        assertTrue(seen.isEmpty())
+    }
+
+    @Test fun `a stop that the server refuses is an error to show and is not hidden`() = withServer({ 403 to """{"error":"forbidden"}""" }) { origin, _ ->
+        val error = assertThrows(ApiException::class.java) { runBlocking { Eh3dApi(origin, "t").emergencyStopWork(plugin("cnc")) } }
+        assertTrue(error.forbidden)
+    }
+
+    @Test fun `the release of a latch uses the route of the plugin and a plugin that does not latch is asked nothing`() {
+        for ((kind, path) in listOf("cnc" to "release", "printer3d" to "release", "laser" to "laser/release")) withServer(ok("""{"released":true}""")) { origin, seen ->
+            assertTrue(runBlocking { Eh3dApi(origin, "t").releaseWork(plugin(kind)) })
+            assertEquals(listOf("POST /api/v1/work/machines/m1/$path"), seen.map { "${it.method} ${it.path}" })
+        }
+        withServer(ok()) { origin, seen ->
+            assertFalse(runBlocking { Eh3dApi(origin, "t").releaseWork(plugin("pcb")) })
+            assertTrue(seen.isEmpty())
+        }
+    }
+
+    @Test fun `the queue is read from the generic route and a job is started or cancelled by its id with an empty body`() = withServer(ok("""{"items":[{"id":"w-2","machine":"p1","state":"queued"}]}""")) { origin, seen ->
+        val api = Eh3dApi(origin, "t")
+        assertEquals(listOf("w-2"), runBlocking { api.workJobs() }.map { it.id })
+        runBlocking { api.startWorkJob("w-2"); api.cancelWorkJob("w-3") }
+        assertEquals(listOf("GET /api/v1/work/jobs", "POST /api/v1/work/jobs/w-2/start", "POST /api/v1/work/jobs/w-3/cancel"), seen.map { "${it.method} ${it.path}" })
+        assertEquals("limit=100", seen[0].query)
+        assertEquals("{}", seen[1].body)
+    }
+
+    @Test fun `the switches of the server are read from the policy and a role that is not an administrator is refused`() {
+        withServer(ok("""{"switches":[{"key":"mdns_announce","value":false,"safe":true}]}""")) { origin, seen ->
+            val list = runBlocking { Eh3dApi(origin, "t").policySwitches() }
+            assertEquals("/api/v1/auth/policy", seen[0].path)
+            assertEquals(listOf("mdns_announce"), list.map { it.key })
+        }
+        withServer({ 403 to """{"error":"forbidden"}""" }) { origin, _ ->
+            val api = Eh3dApi(origin, "t")
+            assertTrue(assertThrows(ApiException::class.java) { runBlocking { api.policySwitches() } }.forbidden)
+            assertEquals("t", api.token)
+        }
+    }
+
     @Test fun `the time-out of the settings is the one of the connection`() {
         val api = Eh3dApi("http://127.0.0.1:1", settings = es.electrohobby3d.eh3d.model.ConnectionSettings(timeoutS = 3, retries = 0))
         assertEquals(3, api.settings.timeoutS)

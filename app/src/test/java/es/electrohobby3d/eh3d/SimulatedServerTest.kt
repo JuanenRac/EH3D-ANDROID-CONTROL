@@ -9,6 +9,8 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.Interlock
+import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.LinkFailure
 import es.electrohobby3d.eh3d.model.LinkPolicy
 import es.electrohobby3d.eh3d.model.LinkState
@@ -32,12 +34,24 @@ import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.net.InetSocketAddress
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
 import java.util.concurrent.atomic.AtomicInteger
 
 class SimulatedServerTest {
     /** The ways the simulated server answers. */
     private enum class Mode { Up, Dead, Html, Unavailable }
+
+    private companion object {
+        /** The queue of the simulated server: a laser job that runs, a print that waits for a person and a print that is over. */
+        const val WORK_JOBS = """{"total":3,"offset":0,"limit":100,"items":[
+            {"id":"w-1","machine":"l1","plugin":"laser","name":"Badge","owner":"ana","state":"running","percent":40,"position":0},
+            {"id":"w-2","machine":"p1","plugin":"printer3d","name":"Benchy","owner":"ana","state":"queued","percent":0,"position":1},
+            {"id":"w-3","machine":"p1","plugin":"printer3d","name":"Old","owner":"ana","state":"done","percent":100,"position":0}]}"""
+
+        /** The switches of security as the server answers an administrator: the four of the app are off, and one more that the app leaves out. */
+        const val POLICY = """{"switches":[{"key":"url_token","value":false,"safe":true},{"key":"slice_enabled","value":false,"safe":true},{"key":"mdns_announce","value":false,"safe":true},{"key":"compat_api","value":false,"safe":true},{"key":"compat_write","value":false,"safe":true}]}"""
+    }
 
     /** A server of this computer with one machine, `m1`, and one job on it, `j1`; it forgets its sessions when it is restarted. */
     private class SimServer {
@@ -53,6 +67,11 @@ class SimulatedServerTest {
         @Volatile var failNext = 0
         /** The ids of the logins that were closed from the list. */
         val closedSessions = CopyOnWriteArraySet<String>()
+        /** The machines of the plugins: whether the simulated laser and printer are latched, the calls the phone made to `/work/`, and whether the login may release a latch and read the policy. */
+        @Volatile var laserLatched = false
+        @Volatile var printerLatched = false
+        @Volatile var admin = false
+        val workCalls = CopyOnWriteArrayList<String>()
         private val http: HttpServer = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
         val origin: String get() = "http://127.0.0.1:${http.address.port}"
 
@@ -70,6 +89,14 @@ class SimulatedServerTest {
             val bytes = text.toByteArray(Charsets.UTF_8)
             exchange.sendResponseHeaders(status, bytes.size.toLong())
             exchange.responseBody.use { it.write(bytes) }
+        }
+
+        private fun workMachinesJson(): String {
+            val laserJob = if (laserLatched) "null" else "\"w-1\""
+            val laserState = if (laserLatched) "idle" else "busy"
+            return """{"machines":[
+                {"id":"l1","name":"Laser","plugin":"laser","state":"$laserState","job":$laserJob,"capabilities":{"evidence":"simulator"},"detail":{"evidence":"simulator","simulator_only":true,"estop_latched":$laserLatched}},
+                {"id":"p1","name":"Printer","plugin":"printer3d","state":"idle","job":null,"detail":{"evidence":"simulator","simulator_only":true,"latched":$printerLatched,"auto_start_queue":false,"limits_c":{"hotend":260,"bed":100,"chamber":0},"temperatures":[{"name":"hotend","current_c":24.6,"target_c":0},{"name":"bed","current_c":23,"target_c":0}]}}]}"""
         }
 
         private fun fleetJson(): String {
@@ -115,6 +142,20 @@ class SimulatedServerTest {
                 path.startsWith("/api/v1/auth/sessions/") && exchange.requestMethod == "DELETE" -> { closedSessions.add(path.substringAfterLast('/')); reply(exchange, 200, """{"ok":true}""") }
                 path == "/api/v1/auth/logout-all" -> { tokens.clear(); reply(exchange, 200, """{"closed":1}""") }
                 path == "/api/v1/auth/logout" -> { tokens.remove(sent); reply(exchange, 200, """{"ok":true}""") }
+                path == "/api/v1/work/machines" -> reply(exchange, 200, workMachinesJson())
+                path == "/api/v1/work/jobs" -> reply(exchange, 200, WORK_JOBS)
+                path.startsWith("/api/v1/work/") && exchange.requestMethod == "POST" -> {
+                    workCalls.add("POST $path")
+                    when (path) {
+                        "/api/v1/work/jobs/w-1/cancel" -> { laserLatched = true; reply(exchange, 200, """{"ok":true}""") }
+                        "/api/v1/work/machines/p1/emergency-stop" -> { printerLatched = true; reply(exchange, 200, """{"ok":true}""") }
+                        "/api/v1/work/machines/l1/laser/release" -> if (admin) { laserLatched = false; reply(exchange, 200, """{"released":true}""") } else reply(exchange, 403, """{"error":"forbidden"}""")
+                        "/api/v1/work/machines/p1/release" -> if (admin) { printerLatched = false; reply(exchange, 200, """{"released":true}""") } else reply(exchange, 403, """{"error":"forbidden"}""")
+                        "/api/v1/work/jobs/w-2/start" -> reply(exchange, 200, """{"id":"w-2","state":"running"}""")
+                        else -> reply(exchange, 404, """{"error":"not_found"}""")
+                    }
+                }
+                path == "/api/v1/auth/policy" -> if (admin) reply(exchange, 200, POLICY) else reply(exchange, 403, """{"error":"forbidden"}""")
                 path == "/api/v1/fleet" -> reply(exchange, 200, fleetJson())
                 path == "/api/v1/jobs/j1/cancel" -> { if (jobState != null) stopReads = 2; reply(exchange, 200, """{"ok":true}""") }
                 else -> reply(exchange, 404, """{"error":"not_found"}""")
@@ -152,6 +193,73 @@ class SimulatedServerTest {
     private fun withSim(block: (SimServer, Phone) -> Unit) {
         val server = SimServer()
         try { block(server, Phone(server.origin)) } finally { server.close() }
+    }
+
+    @Test fun `a machine of a plugin says it is a simulator, and its emergency stop is one request that latches it`() = withSim { server, phone ->
+        phone.look()
+        val laser = runBlocking { phone.api.workMachines() }.first { it.id == "l1" }
+        assertTrue(laser.simulatorOnly)
+        assertEquals("w-1", laser.job)
+        assertTrue(MachineSafety.canStop(true, laser))
+        assertFalse(MachineSafety.canStop(false, laser))
+        assertTrue(runBlocking { phone.api.emergencyStopWork(laser) })
+        assertEquals(listOf("POST /api/v1/work/jobs/w-1/cancel"), server.workCalls.toList())
+        val held = runBlocking { phone.api.workMachines() }.first { it.id == "l1" }
+        assertEquals(listOf(Interlock.EstopLatched), held.interlocks)
+        assertTrue(held.latched)
+        assertFalse("a held machine is released, not stopped again", MachineSafety.canStop(true, held))
+        assertTrue(MachineSafety.canRelease(true, held))
+        assertFalse(MachineSafety.canRelease(false, held))
+    }
+
+    @Test fun `the printer stops by its own route and only an administrator gets the latch released`() = withSim { server, phone ->
+        phone.look()
+        val printer = runBlocking { phone.api.workMachines() }.first { it.id == "p1" }
+        assertTrue(printer.simulatorOnly)
+        assertEquals("", printer.job)
+        assertTrue(MachineSafety.canStop(true, printer))
+        assertEquals(listOf("hotend 25/0", "bed 23/0"), printer.heaters.map { MachineSafety.heaterText(it) })
+        assertEquals("260", MachineSafety.limitText(printer.limits?.hotendC ?: 0.0))
+        assertTrue(runBlocking { phone.api.emergencyStopWork(printer) })
+        val held = runBlocking { phone.api.workMachines() }.first { it.id == "p1" }
+        assertEquals(listOf(Interlock.Latched), held.interlocks)
+        val refused = assertThrows(ApiException::class.java) { runBlocking { phone.api.releaseWork(held) } }
+        assertTrue(refused.forbidden)
+        assertTrue("the refused release leaves it held", runBlocking { phone.api.workMachines() }.first { it.id == "p1" }.latched)
+        server.admin = true
+        assertTrue(runBlocking { phone.api.releaseWork(held) })
+        assertFalse(runBlocking { phone.api.workMachines() }.first { it.id == "p1" }.latched)
+        assertEquals(
+            listOf("POST /api/v1/work/machines/p1/emergency-stop", "POST /api/v1/work/machines/p1/release", "POST /api/v1/work/machines/p1/release"),
+            server.workCalls.toList(),
+        )
+    }
+
+    @Test fun `looking at the queue starts nothing, and a job starts only when it is asked for by its id`() = withSim { server, phone ->
+        phone.look()
+        val jobs = runBlocking { phone.api.workJobs() }
+        runBlocking { phone.api.workMachines() }
+        assertEquals(listOf("w-2"), MachineSafety.activeJobs(jobs, "p1").map { it.id })
+        assertEquals(listOf("w-1"), MachineSafety.activeJobs(jobs, "l1").map { it.id })
+        val waiting = jobs.first { it.id == "w-2" }
+        assertTrue(MachineSafety.canStartJob(true, waiting))
+        assertFalse(MachineSafety.canStartJob(false, waiting))
+        assertFalse(MachineSafety.canStartJob(true, jobs.first { it.id == "w-1" }))
+        assertTrue("reading the queue and the machines sent nothing", server.workCalls.isEmpty())
+        runBlocking { phone.api.startWorkJob(waiting.id) }
+        assertEquals(listOf("POST /api/v1/work/jobs/w-2/start"), server.workCalls.toList())
+    }
+
+    @Test fun `the switches of the server are read by an administrator only and the four are off`() = withSim { server, phone ->
+        phone.look()
+        val refused = assertThrows(ApiException::class.java) { runBlocking { phone.api.policySwitches() } }
+        assertTrue(refused.forbidden)
+        assertNotEquals("a refusal for the role keeps the login", "", phone.api.token)
+        server.admin = true
+        val list = runBlocking { phone.api.policySwitches() }
+        assertEquals(MachineSafety.SWITCH_KEYS, list.map { it.key })
+        assertTrue(list.none { it.on })
+        assertTrue(list.all { it.safe })
     }
 
     @Test fun `one failed look is a blink, two are no connection, the waits grow, and the first good answer ends it`() = withSim { server, phone ->

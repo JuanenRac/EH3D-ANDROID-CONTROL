@@ -39,7 +39,7 @@ import es.electrohobby3d.eh3d.update.AppUpdateViewModel
 fun MorePage(model: Eh3dViewModel) {
     val updates: AppUpdateViewModel = viewModel()
     val state by updates.state.collectAsState()
-    LaunchedEffect(Unit) { model.loadSessions() }
+    LaunchedEffect(Unit) { model.loadSessions(); model.loadSwitches() }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(tr("Más"), style = MaterialTheme.typography.headlineSmall, color = Forge.Text)
         Card {
@@ -61,6 +61,7 @@ fun MorePage(model: Eh3dViewModel) {
                 }
             }
         }
+        if (model.canAdmin && model.switches.isNotEmpty()) ServerSwitchesCard(model)
         Card {
             Title(tr("Actualización desde GitHub"))
             Text(trf("Versión instalada: %s", BuildConfig.VERSION_NAME), color = Forge.Text)

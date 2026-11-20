@@ -15,6 +15,8 @@ import es.electrohobby3d.eh3d.model.Candidate
 import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.ServerErrors
+import es.electrohobby3d.eh3d.model.PolicySwitch
+import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
 import es.electrohobby3d.eh3d.model.addCandidate
 import es.electrohobby3d.eh3d.model.ServerLink
@@ -100,6 +102,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The open logins of the person (this phone, Studio, the others) and the machines of the plugins of the server. */
     var sessionList by mutableStateOf(emptyList<AuthSession>()); private set
     var workMachines by mutableStateOf(emptyList<WorkMachine>()); private set
+    /** The jobs of the generic queue of the server (the ones of the machines of the plugins) and, for an administrator, the switches of security of the server that the app explains. */
+    var workJobs by mutableStateOf(emptyList<WorkJob>()); private set
+    var switches by mutableStateOf(emptyList<PolicySwitch>()); private set
 
     var phase by mutableStateOf(Phase.Booting); private set
     var busy by mutableStateOf(Busy.No); private set
@@ -255,7 +260,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         login = null
         fleet = Fleet.EMPTY
         job = null; head = null; jobs = emptyList()
-        sessionList = emptyList(); workMachines = emptyList()
+        sessionList = emptyList(); workMachines = emptyList(); workJobs = emptyList(); switches = emptyList()
         stack.clear(); stack.add(Page.Home)
         phase = Phase.SignedOut
     }
@@ -299,6 +304,36 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun closeSession(id: String) {
         viewModelScope.launch {
             try { api.closeSession(id); sessionList = api.sessions() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else message = errorText(error) }
+        }
+    }
+
+    // ---- the machines of the plugins and the switches of the server
+    /** The emergency stop of a machine of a plugin: one touch, no question. A stop that did not get there is said plainly: the machine was NOT stopped. */
+    fun emergencyStopWork(machine: WorkMachine) {
+        viewModelScope.launch {
+            try {
+                if (api.emergencyStopWork(machine)) message = tr("Parada de emergencia enviada.")
+            } catch (error: ApiException) {
+                message = if (error.unauthorized || error.status == 0 || error.status >= 500) tr("La orden de parada NO ha llegado al servidor. Use la parada física de la máquina.") else errorText(error)
+                if (error.unauthorized) signOutQuietly()
+            }
+            refreshNow()
+        }
+    }
+
+    /** Releases the latch of a machine of a plugin (an administrator; the screen has asked twice). */
+    fun releaseWork(machine: WorkMachine) = act { if (api.releaseWork(machine)) message = tr("Se ha soltado el enclavamiento.") }
+
+    /** Starts a job of the queue. Only a person's second touch calls this: nothing in the app starts a job by itself. */
+    fun startWorkJob(id: String) = act { api.startWorkJob(id) }
+
+    fun cancelWorkJob(id: String) = act { api.cancelWorkJob(id) }
+
+    /** Reads the switches of security of the server that the app explains; only an administrator is allowed to, and a server that does not have them shows none. */
+    fun loadSwitches() {
+        if (!canAdmin) { switches = emptyList(); return }
+        viewModelScope.launch {
+            try { switches = api.policySwitches() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else if (error.status != 0) switches = emptyList() }
         }
     }
 
@@ -366,7 +401,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 is Page.JobPage -> job = api.job(p.id)
                 Page.Jobs -> jobs = api.jobs()
-                Page.Home -> workMachines = try { api.workMachines() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workMachines else emptyList() }   // a server without plugins has none
+                Page.Home -> {
+                    workMachines = try { api.workMachines() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workMachines else emptyList() }   // a server without plugins has none
+                    if (workMachines.isNotEmpty()) workJobs = try { api.workJobs() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workJobs else emptyList() }
+                }
                 else -> Unit
             }
             link = link.succeeded(clock())

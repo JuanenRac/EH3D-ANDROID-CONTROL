@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.3` |
 | Maturité | Échafaudage |
-| Tests | 300 tests unitaires sur la JVM |
+| Tests | 334 tests unitaires sur la JVM |
 | Pile technique | Kotlin, Jetpack Compose |
 | Sur du matériel réel | Pas encore : l'application n'a pas été exécutée sur un téléphone, contre un vrai serveur ni avec une machine ; la première chose à essayer est de se connecter au EH3D-SERVER de l'atelier. |
 
@@ -54,6 +54,7 @@ Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'
 | Visionneuse 2D et 3D | 🟠 | La carte, les trous (un anneau jusqu'au perçage), les trajets (pâles jusqu'à la coupe) et la tête, en 2D et dans une vue isométrique qui tourne au doigt ; la position de la tête est une estimation à partir des étapes faites. Testé comme géométrie, jamais vu sur un téléphone. |
 | Caméra de la tête | 🟠 | La caméra de la tête de perçage (EH3D-NODE-BUNGARD-AUX) en MJPEG via le serveur, sa vitesse, sa température et sa sortie de protection, et une mesure de la table au laser. Écrit, jamais exécuté avec un vrai nœud. |
 | Mises à jour | 🟠 | Elle regarde la dernière release de ce projet sur GitHub, télécharge l'APK, vérifie le paquet, la version et la signature et le remet à l'installateur d'Android ; elle n'installe jamais seule. Écrit et testé ; jamais exécuté contre GitHub depuis un téléphone. |
+| Machines des plugins | 🟠 | La page d'accueil liste les machines laser, pick-and-place, cartes, CNC, Gerber, FAO, imprimante 3D, vision et CAO du serveur avec un badge SIMULATEUR SEULEMENT (rien n'est présenté comme éprouvé sur du matériel), leurs verrouillages en rouge, un arrêt d'urgence d'une seule touche et sans question, la levée d'un verrouillage réservée aux administrateurs (demandée deux fois), la file de chaque machine (un travail est démarré par une personne, demandé deux fois, et jamais tout seul), les limites de température d'une imprimante et, pour un administrateur, les interrupteurs du serveur éteints par défaut. Écrit et testé contre un serveur simulé ; jamais exécuté sur un téléphone ni avec une machine réelle. |
 | Usage réel | 🔴 | Pas encore : l'application n'a pas été exécutée sur un téléphone, contre un vrai serveur ni avec une machine ; la première chose à essayer est de se connecter au EH3D-SERVER de l'atelier. |
 | Documentation | 🟡 | README en huit langues, l'aide de l'application en 37 langues et les notes de l'API du serveur qu'elle utilise. |
 

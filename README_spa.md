@@ -31,7 +31,7 @@
 |---|---|
 | Versión | `0.1.3` |
 | Madurez | Andamiaje |
-| Pruebas | 300 pruebas unitarias en la JVM |
+| Pruebas | 334 pruebas unitarias en la JVM |
 | Pila tecnológica | Kotlin, Jetpack Compose |
 | En hardware real | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
 
@@ -54,6 +54,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 | Visor 2D y 3D | 🟠 | La placa, los agujeros (un anillo hasta taladrarlos), las trayectorias (tenues hasta cortarlas) y el cabezal, en 2D y en una vista isométrica que gira con el dedo; la posición del cabezal es una estimación a partir de los pasos hechos. Probado como geometría, nunca visto en un teléfono. |
 | Cámara del cabezal | 🟠 | La cámara del cabezal de taladrado (EH3D-NODE-BUNGARD-AUX) en MJPEG a través del servidor, sus vueltas, temperatura y salida de protección, y una medida de la mesa con el láser. Escrito, nunca ejecutado con un nodo real. |
 | Actualizaciones | 🟠 | Mira la última release de este proyecto en GitHub, descarga el APK, comprueba el paquete, la versión y la firma y se lo entrega al instalador de Android; nunca instala por sí sola. Escrito y probado; nunca ejecutado contra GitHub desde un teléfono. |
+| Máquinas de los plugins | 🟠 | La página de inicio lista las máquinas de láser, pick-and-place, placas, CNC, Gerber, CAM, impresora 3D, visión y CAD del servidor con una insignia SOLO SIMULADOR (nada se muestra como probado en hardware), sus enclavamientos en rojo, una parada de emergencia con un toque y sin preguntas, la liberación de un enclavamiento solo para administradores (con doble confirmación), la cola de cada máquina (un trabajo lo inicia una persona, con doble confirmación, y nunca solo), los límites de temperatura de una impresora y, para un administrador, los interruptores del servidor que vienen apagados por defecto. Escrito y probado contra un servidor simulado; nunca ejecutado en un teléfono ni con una máquina real. |
 | Uso real | 🔴 | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
 | Documentación | 🟡 | README en ocho idiomas, la ayuda de la app en 37 idiomas y las notas de la API del servidor que usa. |
 

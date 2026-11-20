@@ -25,7 +25,12 @@ import es.electrohobby3d.eh3d.model.parseMeasure
 import es.electrohobby3d.eh3d.model.JobView
 import es.electrohobby3d.eh3d.model.RefreshRule
 import es.electrohobby3d.eh3d.model.RetryRules
+import es.electrohobby3d.eh3d.model.MachineSafety
+import es.electrohobby3d.eh3d.model.PolicySwitch
+import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
+import es.electrohobby3d.eh3d.model.parsePolicySwitches
+import es.electrohobby3d.eh3d.model.parseWorkJobs
 import es.electrohobby3d.eh3d.model.parsePreview
 import es.electrohobby3d.eh3d.model.parseSessions
 import es.electrohobby3d.eh3d.model.parseWorkMachines
@@ -197,6 +202,37 @@ open class Eh3dApi(
 
     /** The machines of the plugins of the server (laser, pick-and-place, printer...) with what each says of itself in `detail`; the ones of the drilling and routing machines are in the fleet. */
     suspend fun workMachines(): List<WorkMachine> = parseWorkMachines(call("/work/machines"))
+
+    /** The jobs of the generic queue of the server (the newest first, at most 100): the ones that wait, run or are held are the ones the app shows. */
+    suspend fun workJobs(): List<WorkJob> = parseWorkJobs(call("/work/jobs?limit=100"))
+
+    /** Starts a job that waits in the queue. Only ever called from a button that a person pressed twice: nothing in the app starts a job by itself. */
+    suspend fun startWorkJob(id: String) { call("/work/jobs/${q(id)}/start", "POST", "{}") }
+
+    /** Cancels a job of the queue that waits or is held. */
+    suspend fun cancelWorkJob(id: String) { call("/work/jobs/${q(id)}/cancel", "POST", "{}") }
+
+    /**
+     * The emergency stop of a machine of a plugin, at once and with no question: the route of its plugin when it has one (CNC and 3D printer: heaters off, motors released, machine latched), else the
+     * cancel of the job that runs on it (a laser: the beam goes off and the machine latches). A machine with neither a route nor a job asks for nothing. A stop that got no answer is sent once more:
+     * the server takes a stop twice without harm, and one that never arrived is worse than one that arrives twice. Returns false when there was nothing to send.
+     */
+    suspend fun emergencyStopWork(machine: WorkMachine): Boolean {
+        val route = MachineSafety.stopRoute(machine.plugin)
+        val path = if (route != null) "/work/machines/${q(machine.id)}/$route" else if (machine.job.isNotEmpty()) "/work/jobs/${q(machine.job)}/cancel" else return false
+        try { call(path, "POST", "{}") } catch (error: ApiException) { if (error.status == 0) call(path, "POST", "{}") else throw error }
+        return true
+    }
+
+    /** Releases the latch of an emergency stop or of a fault (an administrator); a plugin that does not latch has no such route and nothing is asked. Returns false when there was nothing to send. */
+    suspend fun releaseWork(machine: WorkMachine): Boolean {
+        val route = MachineSafety.releaseRoute(machine.plugin) ?: return false
+        call("/work/machines/${q(machine.id)}/$route", "POST", "{}")
+        return true
+    }
+
+    /** The switches of security of the server that the app explains (administrators only; any other role is refused with 403). */
+    suspend fun policySwitches(): List<PolicySwitch> = parsePolicySwitches(call("/auth/policy"))
 
     suspend fun session(): Login {
         val j = JSONObject(call("/session"))

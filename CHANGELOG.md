@@ -4,6 +4,24 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Every refusal code of the server has its text, 151 of them:** `app/src/main/assets/server-errors.json` now holds the 36 codes the server added for the laser, the pick-and-place machine, the board station, the CNC machine, the Gerber files, the CAM programs, the 3D printer, the slicer and the Moonraker and OctoPrint routes (an enclosure that is open, a latched machine, a heater that runs away, a printer that shows a certificate that is not the pinned one...), in English, Spanish, Italian, German, French, European Portuguese, Chinese and Japanese. `tools/gen_server_errors.py` writes the table, and `tools/server_errors_extra.json` keeps the rows of the eight newest codes for a checkout where Studio does not have them yet. New tests keep the table equal to the catalog of the server (they are skipped when the server folder is not next to this one) and keep the codes added after the copy of the catalog in the tests.
+
+- **The machines of the plugins say they are a simulator:** the laser, pick-and-place, board, CNC, Gerber, CAM, 3D printer, vision and CAD machines of the server have only run against simulators, and the server says so in `detail` (`simulator_only`, `evidence`) and in the capabilities. The home page now shows a SIMULATOR ONLY badge on each of them and a line that says there is no proof on a real machine yet; nothing is shown in green for them.
+
+- **Interlocks are in red and the emergency stop is one touch:** a machine held by a latch, by the latch of an emergency stop or by an alarm shows each of them as a red mark. A machine that can be stopped (an operator or an administrator, and the plugin has an emergency stop or a job runs on the machine) has a red button that stops at once with no question: the route of its own for the CNC machine and the printer (`/work/machines/{id}/emergency-stop`), the cancel of the job that runs for the others. A stop that gets no answer is sent once more, and one that never arrives is said plainly: use the physical stop.
+
+- **The release of a latch is for administrators and asks twice:** a held machine shows the button to release the latch only to an administrator, whose touch opens a question with a second button; an operator or a viewer is told that only an administrator can do it. The routes are the ones of the plugins (`release` for the CNC machine and the printer, `laser/release` for the laser) and a refusal of the server is shown as it comes.
+
+- **A print is started by a person, never by itself:** under each machine the app lists the jobs of its queue (running, held and waiting, from `GET /work/jobs`); a waiting job has Start and Cancel for an operator, each asking a second time, and a machine that is held cannot start anything. The 3D printer says that a person must start every print, and a machine that reports a queue that starts jobs by itself (`auto_start_queue`) gets a red warning: the app never switches that on.
+
+- **The limits of temperature and the heaters of a printer are visible:** the card of a 3D printer shows the hottest the hotend, the bed and the chamber may be asked (a dash for a heater the printer does not have) and the temperature and target of each heater, as the plugin reports them.
+
+- **An administrator sees the switches of the server that are off by default:** More lists, for an administrator, `mdns_announce`, `compat_api`, `compat_write` and `slice_enabled` with whether each is on (orange when it is looser than recommended) and what it does when it is on; they are changed in EH3D-STUDIO, never from the phone.
+
+- **The new texts are in the 37 languages:** 32 phrases (the badge, the interlocks, the stop and the release, the queue, the temperature limits and the switches) in each of the 34 complete tables, written for each language and waiting for a review by native speakers.
+
+- **34 more tests:** the rules of the safety of the machines (who may stop, release, start and cancel, the order of the interlocks, the alarm words, the limits and heaters, the queue, the switches), the routes the client uses for each plugin, a simulated server with a laser and a printer that latch when they are stopped and refuse the release to who is not an administrator, a queue that is only read until a person starts a job, and the contract of the table of refusal texts.
+
 ## [0.1.3] - Login that renews itself, sessions, retries, connection settings and every refusal code in eight languages
 
 - **The login is renewed by itself:** the answer of the login now gives the id of the login and how long it lasts (`expires_s`); a request that finds the login in the last quarter of its life first renews it with `POST /auth/refresh` (once, and only for a person's login), a session kept from the last start is renewed when the app opens, and a refusal with 401 makes the client forget the token while a 403 keeps it. Signing out now uses `POST /auth/logout`.

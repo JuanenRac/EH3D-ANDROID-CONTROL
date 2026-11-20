@@ -7,6 +7,7 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 * The rules live in plain code with no screen in it: the summary before a job starts (`model/Summary.kt`), the state of the link (`model/ServerLink.kt`), what became of a stop (`model/Stop.kt`) and what is told when a machine changes (`fleetNotices`). The iPhone app has the same files in `Sources/Eh3dCore`.
 * Both apps walk the same case files (`app/src/test/resources/shared-cases` here, `Tests/Eh3dCoreTests/Cases` there): the summary, the link, the failures, the stops, the notices, the addresses and the fields of the answers that are read. The files are identical in both repositories; when one changes, copy it to the other.
 * The test of the fields fails when an example of the server carries a field that the app neither reads nor lists as ignored, and when a field listed as read is nowhere in the code.
+* The safety of the machines of the plugins is the same logic in both apps (`model/WorkSafety.kt` here, the same rules in `Sources/Eh3dCore` there): the SIMULATOR ONLY badge, the interlocks, who may stop, release, start and cancel, the queue of a machine and the switches of the server. Nothing in them depends on the system.
 * The texts are the same Spanish phrases in the same tables of 37 languages (36 files: Spanish is the source and has none) (`app/src/main/assets/i18n` here, `Sources/Eh3dCore/Resources/i18n` there).
 
 ## What the system makes different
@@ -27,6 +28,7 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 
 ## Not there in either app yet
 
+* A stop of a machine of a plugin that the server refused because the session had ended is not sent again after signing in (the stops of the drilling and routing machines are): the person is told at once that it did not arrive and to use the physical stop.
 * Jog (moving an axis by hand) and a live progress stream of a job: the server has no route for jog and sends progress only in the job (`percent`, `items_done`, `holes_done`, `estimate_s`), which both apps already show; they will follow when the server offers the route.
 
 ## Not run yet
