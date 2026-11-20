@@ -10,6 +10,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import es.electrohobby3d.eh3d.model.ServerErrors
 import org.json.JSONObject
 import java.util.Locale
 
@@ -43,6 +44,7 @@ object Tr {
         val locale = Locale.getDefault()
         language = pick(saved, phoneCode(locale.language, locale.country))
         load(app, language)
+        ServerErrors.ensureLoaded { app.assets.open("server-errors.json").bufferedReader(Charsets.UTF_8).use { it.readText() } }
     }
 
     /** Chooses a language and remembers it. */
