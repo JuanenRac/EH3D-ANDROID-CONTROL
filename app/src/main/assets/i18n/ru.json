@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Такой пользователь уже существует.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Этот станок не принимает такой вид задания: узел принимает сверление и фрезерование, станок GRBL принимает G-код, а симулятор принимает все три.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "При включённой опции «Запомнить меня» на этом телефоне хранится только токен сеанса этого сервера в зашифрованном виде (никогда имя пользователя или пароль); он истекает через 30 дней и отзывается при выходе.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефоне ничего не хранится: после закрытия приложения нужно будет войти снова. Отметьте «Запомнить меня», чтобы токен сеанса хранился в зашифрованном виде 30 дней."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефоне ничего не хранится: после закрытия приложения нужно будет войти снова. Отметьте «Запомнить меня», чтобы токен сеанса хранился в зашифрованном виде 30 дней.",
+ "Conexión con el servidor": "Подключение к серверу",
+ "Tiempo de espera de cada intento: %d s": "Тайм-аут каждой попытки: %d с",
+ "Reintentos tras un fallo de red: %d": "Повторные попытки после сбоя сети: %d",
+ "Buscar el servidor en la red local (mDNS)": "Искать сервер в локальной сети (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "По умолчанию выключено. Найденное только предлагается: оно никогда не подключается само, а ответить может любое устройство в сети.",
+ "Buscar en la red": "Искать в сети",
+ "No se ha encontrado ningún servidor.": "Сервер не найден.",
+ "Sesiones abiertas": "Открытые сеансы",
+ "Esta sesión": "Этот сеанс",
+ "Cerrar la sesión en todos los aparatos": "Выйти на всех устройствах",
+ "Otras máquinas": "Другие машины",
+ "Bloqueada": "Заблокирована"
 }

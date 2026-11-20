@@ -10,7 +10,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import es.electrohobby3d.eh3d.model.AuthSession
+import es.electrohobby3d.eh3d.model.Candidate
+import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
+import es.electrohobby3d.eh3d.model.ServerErrors
+import es.electrohobby3d.eh3d.model.WorkMachine
+import es.electrohobby3d.eh3d.model.addCandidate
 import es.electrohobby3d.eh3d.model.ServerLink
 import es.electrohobby3d.eh3d.model.LinkPolicy
 import es.electrohobby3d.eh3d.model.LinkState
@@ -83,6 +89,18 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     private val sessions = SessionVault(store, box)
     private var api = Eh3dApi("")
 
+    /** The time-out, the retries and the search on the local network (off unless the person turns it on), as the settings of the connection keep them. */
+    var connection by mutableStateOf(ConnectionSettings.read(preferences::getInt, preferences::getBoolean)); private set
+    /** The servers found on the local network, for the person to choose one; nothing connects by itself. */
+    var candidates by mutableStateOf(emptyList<Candidate>()); private set
+    var searching by mutableStateOf(false); private set
+    /** True once a search has ended (so "nothing found" is only said after one). */
+    var searchEnded by mutableStateOf(false); private set
+    private var discovery: ServerDiscovery? = null
+    /** The open logins of the person (this phone, Studio, the others) and the machines of the plugins of the server. */
+    var sessionList by mutableStateOf(emptyList<AuthSession>()); private set
+    var workMachines by mutableStateOf(emptyList<WorkMachine>()); private set
+
     var phase by mutableStateOf(Phase.Booting); private set
     var busy by mutableStateOf(Busy.No); private set
     var origin by mutableStateOf(preferences.getString("origin", "") ?: ""); private set
@@ -141,19 +159,25 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     private companion object {
         /** How many times the start-up is tried again while the server is out of reach and the kept session is waiting. */
         const val START_RETRIES = 12
+        /** How long the search for the server on the local network lasts. */
+        const val SEARCH_MS = 8_000L
     }
 
     private fun start() {
         viewModelScope.launch {
             if (origin.isBlank()) { phase = Phase.SignedOut; return@launch }
-            api = Eh3dApi(origin)
+            api = Eh3dApi(origin, settings = connection)
             val kept = sessions.load(origin)
             if (kept != null) {
                 val mine = api
                 api.token = kept.value
                 var wait = 5_000L
                 for (attempt in 0 until START_RETRIES) {
-                    try { login = api.session(); phase = Phase.SignedIn; poll(); return@launch } catch (error: ApiException) {
+                    try {
+                        login = api.session()
+                        try { api.refresh() } catch (_: ApiException) { }   // a session that is back from a start gets its life whole again, and the app learns how long it lasts
+                        phase = Phase.SignedIn; poll(); return@launch
+                    } catch (error: ApiException) {
                         // Only a refusal of the server deletes the kept session; with no link it stays and the start is tried again.
                         if (error.endsKeptSession) { sessions.clear(); api.token = ""; break }
                         message = tr("Sin conexión con el servidor.")
@@ -175,7 +199,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             busy = Busy.Connecting
             try {
-                val probe = Eh3dApi(endpoint.origin)
+                val probe = Eh3dApi(endpoint.origin, settings = connection)
                 val needed = probe.setupNeeded()
                 api = probe
                 origin = endpoint.origin
@@ -202,7 +226,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun doSignIn(address: String, name: String, password: String, remember: Boolean) {
-        if (api.token.isEmpty() && origin != address) { api = Eh3dApi(address); origin = address }
+        if (api.token.isEmpty() && origin != address) { api = Eh3dApi(address, settings = connection); origin = address }
         val result = api.login(name.trim(), password)
         api.token = result.token
         login = result
@@ -218,20 +242,64 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         poll()
     }
 
-    fun signOut() {
+    fun signOut(everywhere: Boolean = false) {
         poller?.cancel()
         FleetWatch.cancel(getApplication())
-        // the call that ends the session goes with the token that is being closed, not with the empty one set just below
-        val closing = Eh3dApi(origin, api.token)
-        viewModelScope.launch { closing.logout() }
+        stopSearch()
+        // the call that ends the session goes with the token that is being closed, not with the empty one set just below; a sign-out waits for nothing, so it is not tried again
+        val closing = Eh3dApi(origin, api.token, ConnectionSettings(connection.timeoutS, 0))
+        viewModelScope.launch { if (everywhere) runCatching { closing.logoutAll() } else closing.logout() }
         sessions.clear()
         rememberMe = false
         api.token = ""
         login = null
         fleet = Fleet.EMPTY
         job = null; head = null; jobs = emptyList()
+        sessionList = emptyList(); workMachines = emptyList()
         stack.clear(); stack.add(Page.Home)
         phase = Phase.SignedOut
+    }
+
+    // ---- the settings of the connection
+    private fun saveConnection(value: ConnectionSettings) {
+        connection = value
+        api.settings = value
+        preferences.edit().putInt(ConnectionSettings.KEY_TIMEOUT, value.timeoutS).putInt(ConnectionSettings.KEY_RETRIES, value.retries).putBoolean(ConnectionSettings.KEY_MDNS, value.mdns).apply()
+    }
+
+    fun chooseTimeout(seconds: Int) = saveConnection(connection.withTimeout(seconds))
+    fun chooseRetries(count: Int) = saveConnection(connection.withRetries(count))
+
+    /** The search for the server on the local network is off by default; turning it off also stops a search that is running and forgets what it found. */
+    fun chooseMdns(on: Boolean) { saveConnection(connection.withMdns(on)); if (!on) { stopSearch(); candidates = emptyList() } }
+
+    /** Looks for `_eh3d._tcp` on the local network for a few seconds (only when the person turned the search on); what is found is shown, never used by itself. */
+    fun searchNetwork() {
+        if (!connection.mdns || searching) return
+        candidates = emptyList()
+        searchEnded = false
+        searching = true
+        val found = ServerDiscovery(getApplication()) { host, port -> candidates = addCandidate(candidates, host, port) }
+        discovery = found
+        found.start()
+        viewModelScope.launch { delay(SEARCH_MS); if (discovery === found) stopSearch() }
+    }
+
+    fun stopSearch() { discovery?.stop(); discovery = null; if (searching) searchEnded = true; searching = false }
+
+    override fun onCleared() { discovery?.stop(); super.onCleared() }
+
+    // ---- the open logins
+    fun loadSessions() {
+        viewModelScope.launch {
+            try { sessionList = api.sessions() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else if (!error.forbidden) message = errorText(error) }
+        }
+    }
+
+    fun closeSession(id: String) {
+        viewModelScope.launch {
+            try { api.closeSession(id); sessionList = api.sessions() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else message = errorText(error) }
+        }
     }
 
     fun dismissMessage() { message = null }
@@ -298,6 +366,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 is Page.JobPage -> job = api.job(p.id)
                 Page.Jobs -> jobs = api.jobs()
+                Page.Home -> workMachines = try { api.workMachines() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workMachines else emptyList() }   // a server without plugins has none
                 else -> Unit
             }
             link = link.succeeded(clock())
@@ -580,6 +649,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
         ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty()
+        ServerErrors.text(error.code, Tr.language) != null -> ServerErrors.text(error.code, Tr.language).orEmpty()
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")
         else -> trf("El servidor respondió: %s", error.message ?: error.code)
     }

@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Selline kasutaja on juba olemas.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "See masin sellist tööd ei võta: sõlm võtab puurimist ja freesimist, GRBL-masin võtab G-koodi ning simulaator võtab kõiki kolme.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Valikuga „Jäta mind meelde“ salvestatakse selles telefonis ainult selle serveri seansitõend, krüptituna (mitte kunagi kasutajat ega parooli); see aegub 30 päeva pärast ja tühistatakse väljalogimisel.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefoni ei salvestata midagi: pärast rakenduse sulgemist tuleb uuesti sisse logida. Märgi „Jäta mind meelde“, et seansitõend krüptituna 30 päevaks alles jääks."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefoni ei salvestata midagi: pärast rakenduse sulgemist tuleb uuesti sisse logida. Märgi „Jäta mind meelde“, et seansitõend krüptituna 30 päevaks alles jääks.",
+ "Conexión con el servidor": "Ühendus serveriga",
+ "Tiempo de espera de cada intento: %d s": "Iga katse ajalimiit: %d s",
+ "Reintentos tras un fallo de red: %d": "Korduskatseid pärast võrguviga: %d",
+ "Buscar el servidor en la red local (mDNS)": "Otsi serverit kohalikust võrgust (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Vaikimisi välja lülitatud. Leitut ainult pakutakse: see ei ühendu kunagi ise ja iga võrgu seade võib vastata.",
+ "Buscar en la red": "Otsi võrgust",
+ "No se ha encontrado ningún servidor.": "Serverit ei leitud.",
+ "Sesiones abiertas": "Avatud seansid",
+ "Esta sesión": "See seanss",
+ "Cerrar la sesión en todos los aparatos": "Logi välja kõigis seadmetes",
+ "Otras máquinas": "Muud masinad",
+ "Bloqueada": "Lukustatud"
 }

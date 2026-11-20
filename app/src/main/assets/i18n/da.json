@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Den bruger findes allerede.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Denne maskine tager ikke denne slags job: en knude tager boring og fræsning, en GRBL-maskine tager G-kode, og simulatoren tager alle tre.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Med “Husk mig” gemmes kun sessionstokenet for denne server, krypteret på denne telefon (aldrig brugernavn eller adgangskode); det udløber efter 30 dage og tilbagekaldes, når du logger ud.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Der gemmes ikke noget på telefonen: du skal logge ind igen, når du har lukket appen. Sæt kryds ved “Husk mig” for at beholde sessionstokenet, krypteret, i 30 dage."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Der gemmes ikke noget på telefonen: du skal logge ind igen, når du har lukket appen. Sæt kryds ved “Husk mig” for at beholde sessionstokenet, krypteret, i 30 dage.",
+ "Conexión con el servidor": "Forbindelse til serveren",
+ "Tiempo de espera de cada intento: %d s": "Timeout for hvert forsøg: %d s",
+ "Reintentos tras un fallo de red: %d": "Nye forsøg efter en netværksfejl: %d",
+ "Buscar el servidor en la red local (mDNS)": "Søg efter serveren på det lokale netværk (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Slået fra som standard. Det fundne foreslås kun: det forbinder aldrig af sig selv, og enhver enhed på netværket kan svare.",
+ "Buscar en la red": "Søg på netværket",
+ "No se ha encontrado ningún servidor.": "Der blev ikke fundet nogen server.",
+ "Sesiones abiertas": "Åbne sessioner",
+ "Esta sesión": "Denne session",
+ "Cerrar la sesión en todos los aparatos": "Log ud på alle enheder",
+ "Otras máquinas": "Andre maskiner",
+ "Bloqueada": "Låst"
 }

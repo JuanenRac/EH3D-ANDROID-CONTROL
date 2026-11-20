@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Ai përdorues ekziston tashmë.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Kjo makinë nuk e pranon këtë lloj pune: një nyje pranon shpim dhe frezim, një makinë GRBL pranon G-kod dhe simulatori pranon të tria.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Me «Më kujto» ruhet vetëm shenja e sesionit të këtij serveri, e enkriptuar në këtë telefon (kurrë përdoruesi apo fjalëkalimi); skadon pas 30 ditësh dhe shfuqizohet kur del.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Në telefon nuk ruhet asgjë: pasi të mbyllësh aplikacionin do të duhet të hysh përsëri. Shëno «Më kujto» që shenja e sesionit, e enkriptuar, të ruhet për 30 ditë."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Në telefon nuk ruhet asgjë: pasi të mbyllësh aplikacionin do të duhet të hysh përsëri. Shëno «Më kujto» që shenja e sesionit, e enkriptuar, të ruhet për 30 ditë.",
+ "Conexión con el servidor": "Lidhja me serverin",
+ "Tiempo de espera de cada intento: %d s": "Koha e pritjes e çdo përpjekjeje: %d s",
+ "Reintentos tras un fallo de red: %d": "Përpjekje të reja pas një dështimi të rrjetit: %d",
+ "Buscar el servidor en la red local (mDNS)": "Kërko serverin në rrjetin vendor (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Çaktivizuar si parazgjedhje. Ajo që gjendet vetëm propozohet: nuk lidhet kurrë vetë dhe çdo pajisje e rrjetit mund të përgjigjet.",
+ "Buscar en la red": "Kërko në rrjet",
+ "No se ha encontrado ningún servidor.": "Nuk u gjet asnjë server.",
+ "Sesiones abiertas": "Seanca të hapura",
+ "Esta sesión": "Kjo seancë",
+ "Cerrar la sesión en todos los aparatos": "Dil nga të gjitha pajisjet",
+ "Otras máquinas": "Makina të tjera",
+ "Bloqueada": "E kyçur"
 }

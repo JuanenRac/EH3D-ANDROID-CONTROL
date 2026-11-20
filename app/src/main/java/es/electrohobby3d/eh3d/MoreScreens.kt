@@ -21,6 +21,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -38,6 +39,7 @@ import es.electrohobby3d.eh3d.update.AppUpdateViewModel
 fun MorePage(model: Eh3dViewModel) {
     val updates: AppUpdateViewModel = viewModel()
     val state by updates.state.collectAsState()
+    LaunchedEffect(Unit) { model.loadSessions() }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(tr("Más"), style = MaterialTheme.typography.headlineSmall, color = Forge.Text)
         Card {
@@ -45,6 +47,19 @@ fun MorePage(model: Eh3dViewModel) {
             Text(model.login?.let { "${it.name} · ${roleName(it.role)}" }.orEmpty(), color = Forge.Text)
             Text(model.origin, color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             OutlinedButton({ model.signOut() }) { Text(tr("Cerrar sesión")) }
+            OutlinedButton({ model.signOut(everywhere = true) }) { Text(tr("Cerrar la sesión en todos los aparatos")) }
+        }
+        if (model.sessionList.isNotEmpty()) Card {
+            Title(tr("Sesiones abiertas"))
+            model.sessionList.forEach { entry ->
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text(listOf(entry.app.ifBlank { "-" }, entry.ip).filter { it.isNotBlank() }.joinToString(" · "), color = Forge.Text)
+                        if (entry.current) Text(tr("Esta sesión"), color = Forge.Amber, style = MaterialTheme.typography.bodySmall)
+                    }
+                    if (!entry.current) TextButton({ model.closeSession(entry.id) }) { Text(tr("Cerrar")) }
+                }
+            }
         }
         Card {
             Title(tr("Actualización desde GitHub"))
@@ -66,6 +81,24 @@ fun MorePage(model: Eh3dViewModel) {
                 Switch(model.confirmStart, { model.chooseConfirmStart(it) })
             }
             Text(tr("Activado por defecto: qué hace el trabajo, cuánto tarda, hasta dónde llegan los ejes y qué parece mal, con un botón para empezar. Desactivado: Empezar solo pide una confirmación."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        }
+        Card {
+            Title(tr("Conexión con el servidor"))
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(trf("Tiempo de espera de cada intento: %d s", model.connection.timeoutS), Modifier.weight(1f), color = Forge.Text)
+                OutlinedButton({ model.chooseTimeout(model.connection.timeoutS - 5) }) { Text("-") }
+                OutlinedButton({ model.chooseTimeout(model.connection.timeoutS + 5) }) { Text("+") }
+            }
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(trf("Reintentos tras un fallo de red: %d", model.connection.retries), Modifier.weight(1f), color = Forge.Text)
+                OutlinedButton({ model.chooseRetries(model.connection.retries - 1) }) { Text("-") }
+                OutlinedButton({ model.chooseRetries(model.connection.retries + 1) }) { Text("+") }
+            }
+            Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(tr("Buscar el servidor en la red local (mDNS)"), Modifier.weight(1f), color = Forge.Text)
+                Switch(model.connection.mdns, { model.chooseMdns(it) })
+            }
+            Text(tr("Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
         Card {
             Row(Modifier.fillMaxWidth().clickable { model.open(Page.Help) }.padding(vertical = 6.dp)) { Text(tr("Ayuda"), color = Forge.Text) }

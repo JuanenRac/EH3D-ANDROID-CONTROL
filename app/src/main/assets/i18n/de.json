@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Diesen Benutzer gibt es schon.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Diese Maschine nimmt diese Art Auftrag nicht an: Ein Knoten nimmt Bohren und Fräsen, eine GRBL-Maschine G-Code und der Simulator alle drei.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Mit „Angemeldet bleiben“ wird nur der Sitzungsschlüssel dieses Servers verschlüsselt auf diesem Telefon gespeichert (nie der Benutzer oder das Passwort); er läuft nach 30 Tagen ab und wird beim Abmelden widerrufen.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Auf dem Telefon wird nichts gespeichert: Nach dem Schließen der App müssen Sie sich neu anmelden. Mit „Angemeldet bleiben“ bleibt der verschlüsselte Sitzungsschlüssel 30 Tage erhalten."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Auf dem Telefon wird nichts gespeichert: Nach dem Schließen der App müssen Sie sich neu anmelden. Mit „Angemeldet bleiben“ bleibt der verschlüsselte Sitzungsschlüssel 30 Tage erhalten.",
+ "Conexión con el servidor": "Verbindung zum Server",
+ "Tiempo de espera de cada intento: %d s": "Zeitlimit je Versuch: %d s",
+ "Reintentos tras un fallo de red: %d": "Wiederholungen nach einem Netzwerkfehler: %d",
+ "Buscar el servidor en la red local (mDNS)": "Server im lokalen Netz suchen (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Standardmäßig aus. Gefundenes wird nur vorgeschlagen: Es verbindet sich nie von selbst, und jedes Gerät im Netz kann antworten.",
+ "Buscar en la red": "Im Netz suchen",
+ "No se ha encontrado ningún servidor.": "Es wurde kein Server gefunden.",
+ "Sesiones abiertas": "Offene Sitzungen",
+ "Esta sesión": "Diese Sitzung",
+ "Cerrar la sesión en todos los aparatos": "Auf allen Geräten abmelden",
+ "Otras máquinas": "Weitere Maschinen",
+ "Bloqueada": "Gesperrt"
 }

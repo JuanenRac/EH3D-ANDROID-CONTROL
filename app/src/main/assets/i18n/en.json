@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "That user already exists.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "This machine does not take this kind of job: a node takes drilling and routing, a GRBL machine takes G-code, and the simulator takes all three.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "With “Remember me” only the session pass of this server is kept, encrypted on this phone (never the user or the password); it expires after 30 days and is revoked when you sign out.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nothing is kept on the phone: you will have to sign in again after closing the app. Tick “Remember me” to keep the session pass, encrypted, for 30 days."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nothing is kept on the phone: you will have to sign in again after closing the app. Tick “Remember me” to keep the session pass, encrypted, for 30 days.",
+ "Conexión con el servidor": "Connection to the server",
+ "Tiempo de espera de cada intento: %d s": "Time-out of each try: %d s",
+ "Reintentos tras un fallo de red: %d": "Retries after a network failure: %d",
+ "Buscar el servidor en la red local (mDNS)": "Look for the server on the local network (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Off by default. What is found is only proposed: it never connects by itself, and any device of the network can answer.",
+ "Buscar en la red": "Search the network",
+ "No se ha encontrado ningún servidor.": "No server was found.",
+ "Sesiones abiertas": "Open sessions",
+ "Esta sesión": "This session",
+ "Cerrar la sesión en todos los aparatos": "Sign out on all devices",
+ "Otras máquinas": "Other machines",
+ "Bloqueada": "Latched"
 }

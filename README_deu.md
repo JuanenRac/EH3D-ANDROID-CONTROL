@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.2` |
 | Reifegrad | Gerüst |
-| Tests | 251 Unit-Tests auf der JVM |
+| Tests | 300 Unit-Tests auf der JVM |
 | Technologie-Stack | Kotlin, Jetpack Compose |
 | Auf echter Hardware | Noch nicht: Die App wurde nicht auf einem Telefon, gegen einen echten Server oder mit einer Maschine ausgeführt; als Erstes ist die Anmeldung am EH3D-SERVER der Werkstatt zu versuchen. |
 
@@ -48,6 +48,7 @@ Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heut
 | Software | 🟠 | Die Bildschirme und die Regeln der App sind für Android geschrieben; die Regeln werden ohne Telefon gebaut und getestet. |
 | Tests | 🟡 | Unit-Tests auf der JVM: was der Server über Flotte, Aufträge und Kopf sagt, die Position des Kopfes, die 2D- und isometrische Geometrie, die Sprachen und die Adress- und Versionsprüfungen. |
 | Überwachung | 🟠 | Jede Maschine der Werkstatt mit Zustand, Auftrag, Fortschritt, erledigten Schritten und Restzeit, alle anderthalb Sekunden vom Server gelesen; eine Meldung, wenn eine Maschine auf den Bediener wartet oder stoppt. Geschrieben, nicht gegen einen echten Server ausgeführt. |
+| Verbindung | 🟠 | Die Anmeldung wird im letzten Viertel ihrer Laufzeit von selbst erneuert, die offenen Anmeldungen lassen sich auflisten und schließen, die Ablehnungen des Servers werden in acht Sprachen mit derselben Tabelle wie in Studio gemeldet, und Zeitlimit, Wiederholungen und eine optionale Suche nach dem Server im lokalen Netz (standardmäßig aus) sind Einstellungen. Geschrieben und gegen einen simulierten Server getestet; nicht gegen einen echten Server oder auf einem Telefon ausgeführt. |
 | Not-Halt | 🟠 | Ein roter Knopf, der zweimal fragt und den laufenden Auftrag über den Server abbricht (eine Maschine oder alle); die Bestätigung der Schritte, auf die ein Auftrag wartet. Nur Bediener und Administratoren. Er hat nie eine echte Maschine angehalten und ersetzt nicht deren physischen Stopp. |
 | Aufträge vorbereiten | 🟠 | Bohren, Fräsen, beides oder ein G-Code-Programm und die Datei vom Telefon wählen; die Werkzeuge der Datei mit Anzahl (und Durchmesser, wenn die Datei ihn angibt), Werkzeuge abschalten, bei einem Werkzeug beginnen; ein G-Code-Programm pausieren, fortsetzen, abbrechen und einen angehaltenen Auftrag (jeder Art) dort fortsetzen, wo er angehalten wurde, mit der vom Server gespeicherten Datei; den Schalter für die `$`-Zeilen von GRBL der Maschine lesen. Der Server hat keine Dateiliste, deshalb wird die Datei vom Telefon gesendet. Geschrieben, nie gegen einen echten Server oder eine echte Maschine gelaufen. |
 | 2D- und 3D-Ansicht | 🟠 | Platine, Löcher (ein Ring bis zum Bohren), Bahnen (blass bis zum Fräsen) und Kopf, in 2D und in einer isometrischen Ansicht, die sich mit dem Finger dreht; die Position des Kopfes ist eine Schätzung aus den erledigten Schritten. Als Geometrie getestet, nie auf einem Telefon gesehen. |

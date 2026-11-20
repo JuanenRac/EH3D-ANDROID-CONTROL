@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Acel utilizator există deja.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Această mașină nu primește acest fel de lucrare: un nod primește găurire și frezare, o mașină GRBL primește cod G, iar simulatorul le primește pe toate trei.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Cu „Ține-mă minte” se păstrează doar tokenul de sesiune al acestui server, criptat pe acest telefon (niciodată utilizatorul sau parola); expiră după 30 de zile și este revocat la deconectare.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nu se păstrează nimic pe telefon: după închiderea aplicației va trebui să vă conectați din nou. Bifați „Ține-mă minte” pentru a păstra tokenul de sesiune, criptat, 30 de zile."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Nu se păstrează nimic pe telefon: după închiderea aplicației va trebui să vă conectați din nou. Bifați „Ține-mă minte” pentru a păstra tokenul de sesiune, criptat, 30 de zile.",
+ "Conexión con el servidor": "Conexiunea cu serverul",
+ "Tiempo de espera de cada intento: %d s": "Timp limită pentru fiecare încercare: %d s",
+ "Reintentos tras un fallo de red: %d": "Reîncercări după o eroare de rețea: %d",
+ "Buscar el servidor en la red local (mDNS)": "Caută serverul în rețeaua locală (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Dezactivat implicit. Ce se găsește este doar propus: nu se conectează niciodată singur, iar orice dispozitiv din rețea poate răspunde.",
+ "Buscar en la red": "Caută în rețea",
+ "No se ha encontrado ningún servidor.": "Nu a fost găsit niciun server.",
+ "Sesiones abiertas": "Sesiuni deschise",
+ "Esta sesión": "Această sesiune",
+ "Cerrar la sesión en todos los aparatos": "Deconectare de pe toate dispozitivele",
+ "Otras máquinas": "Alte mașini",
+ "Bloqueada": "Blocată"
 }

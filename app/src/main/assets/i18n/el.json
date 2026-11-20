@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Αυτός ο χρήστης υπάρχει ήδη.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Αυτό το μηχάνημα δεν δέχεται αυτό το είδος εργασίας: ένας κόμβος δέχεται διάτρηση και φρεζάρισμα, ένα μηχάνημα GRBL δέχεται G-code και ο προσομοιωτής δέχεται και τα τρία.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Με το «Να με θυμάσαι» αποθηκεύεται μόνο το διακριτικό συνεδρίας αυτού του διακομιστή, κρυπτογραφημένο σε αυτό το τηλέφωνο (ποτέ ο χρήστης ή ο κωδικός)· λήγει μετά από 30 ημέρες και ανακαλείται με την αποσύνδεση.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Στο τηλέφωνο δεν αποθηκεύεται τίποτα: μετά το κλείσιμο της εφαρμογής θα πρέπει να συνδεθείτε ξανά. Επιλέξτε «Να με θυμάσαι» για να διατηρείται το διακριτικό συνεδρίας, κρυπτογραφημένο, για 30 ημέρες."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Στο τηλέφωνο δεν αποθηκεύεται τίποτα: μετά το κλείσιμο της εφαρμογής θα πρέπει να συνδεθείτε ξανά. Επιλέξτε «Να με θυμάσαι» για να διατηρείται το διακριτικό συνεδρίας, κρυπτογραφημένο, για 30 ημέρες.",
+ "Conexión con el servidor": "Σύνδεση με τον διακομιστή",
+ "Tiempo de espera de cada intento: %d s": "Χρονικό όριο κάθε προσπάθειας: %d δ",
+ "Reintentos tras un fallo de red: %d": "Επαναλήψεις μετά από σφάλμα δικτύου: %d",
+ "Buscar el servidor en la red local (mDNS)": "Αναζήτηση του διακομιστή στο τοπικό δίκτυο (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Απενεργοποιημένο από προεπιλογή. Ό,τι βρεθεί απλώς προτείνεται: δεν συνδέεται ποτέ μόνο του και οποιαδήποτε συσκευή του δικτύου μπορεί να απαντήσει.",
+ "Buscar en la red": "Αναζήτηση στο δίκτυο",
+ "No se ha encontrado ningún servidor.": "Δεν βρέθηκε κανένας διακομιστής.",
+ "Sesiones abiertas": "Ανοιχτές συνεδρίες",
+ "Esta sesión": "Αυτή η συνεδρία",
+ "Cerrar la sesión en todos los aparatos": "Αποσύνδεση από όλες τις συσκευές",
+ "Otras máquinas": "Άλλα μηχανήματα",
+ "Bloqueada": "Κλειδωμένο"
 }

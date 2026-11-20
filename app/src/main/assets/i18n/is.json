@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Þessi notandi er þegar til.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Þessi vél tekur ekki við þessari tegund verks: nóði tekur við borun og fræsingu, GRBL-vél tekur við G-kóða og hermirinn tekur við öllum þremur.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Með „Muna eftir mér“ er aðeins setulykill þessa netþjóns vistaður, dulkóðaður á þessum síma (aldrei notandi eða lykilorð); hann rennur út eftir 30 daga og er afturkallaður þegar þú skráir þig út.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ekkert er vistað í símanum: eftir að forritinu er lokað þarftu að skrá þig inn aftur. Hakaðu við „Muna eftir mér“ til að halda dulkóðuðum setulykli í 30 daga."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ekkert er vistað í símanum: eftir að forritinu er lokað þarftu að skrá þig inn aftur. Hakaðu við „Muna eftir mér“ til að halda dulkóðuðum setulykli í 30 daga.",
+ "Conexión con el servidor": "Tenging við þjóninn",
+ "Tiempo de espera de cada intento: %d s": "Tímamörk hverrar tilraunar: %d s",
+ "Reintentos tras un fallo de red: %d": "Endurtekningar eftir netvillu: %d",
+ "Buscar el servidor en la red local (mDNS)": "Leita að þjóninum á staðarnetinu (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Slökkt sjálfgefið. Það sem finnst er aðeins lagt til: það tengist aldrei sjálfkrafa og hvaða tæki sem er á netinu getur svarað.",
+ "Buscar en la red": "Leita á netinu",
+ "No se ha encontrado ningún servidor.": "Enginn þjónn fannst.",
+ "Sesiones abiertas": "Opnar lotur",
+ "Esta sesión": "Þessi lota",
+ "Cerrar la sesión en todos los aparatos": "Skrá út á öllum tækjum",
+ "Otras máquinas": "Aðrar vélar",
+ "Bloqueada": "Læst"
 }

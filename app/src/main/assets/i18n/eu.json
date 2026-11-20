@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Erabiltzaile hori badago dagoeneko.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Makina honek ez du onartzen lan mota hau: nodo batek zulaketa eta fresaketa onartzen ditu, GRBL makina batek G-code onartzen du eta simulagailuak hirurak onartzen ditu.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "«Gogoratu nazazu» aukerarekin zerbitzari honen saio-tokena bakarrik gordetzen da, zifratuta telefono honetan (inoiz ez erabiltzailea edo pasahitza); 30 egunera iraungitzen da eta saioa amaitzean baliogabetzen da.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ez da ezer gordetzen telefonoan: aplikazioa itxi ondoren berriz hasi beharko duzu saioa. Markatu «Gogoratu nazazu» saio-tokena zifratuta 30 egunez gordetzeko."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ez da ezer gordetzen telefonoan: aplikazioa itxi ondoren berriz hasi beharko duzu saioa. Markatu «Gogoratu nazazu» saio-tokena zifratuta 30 egunez gordetzeko.",
+ "Conexión con el servidor": "Zerbitzariarekiko konexioa",
+ "Tiempo de espera de cada intento: %d s": "Saiakera bakoitzaren denbora-muga: %d s",
+ "Reintentos tras un fallo de red: %d": "Saiakera berriak sareko akats baten ondoren: %d",
+ "Buscar el servidor en la red local (mDNS)": "Bilatu zerbitzaria sare lokalean (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Lehenespenez itzalita. Aurkitutakoa proposatu egiten da soilik: ez da inoiz bere kabuz konektatzen, eta sareko edozein gailuk erantzun dezake.",
+ "Buscar en la red": "Bilatu sarean",
+ "No se ha encontrado ningún servidor.": "Ez da zerbitzaririk aurkitu.",
+ "Sesiones abiertas": "Saio irekiak",
+ "Esta sesión": "Saio hau",
+ "Cerrar la sesión en todos los aparatos": "Amaitu saioa gailu guztietan",
+ "Otras máquinas": "Beste makina batzuk",
+ "Bloqueada": "Blokeatuta"
 }

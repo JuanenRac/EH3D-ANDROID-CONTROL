@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Този потребител вече съществува.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Тази машина не приема този вид задача: възел приема пробиване и фрезоване, GRBL машина приема G-код, а симулаторът приема и трите.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "С «Запомни ме» се пази само токенът на сесията за този сървър, шифрован на този телефон (никога потребителят или паролата); изтича след 30 дни и се отменя при изход.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефона не се пази нищо: след затваряне на приложението трябва да влезете отново. Отметнете «Запомни ме», за да се пази токенът на сесията, шифрован, 30 дни."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефона не се пази нищо: след затваряне на приложението трябва да влезете отново. Отметнете «Запомни ме», за да се пази токенът на сесията, шифрован, 30 дни.",
+ "Conexión con el servidor": "Връзка със сървъра",
+ "Tiempo de espera de cada intento: %d s": "Време за изчакване на всеки опит: %d с",
+ "Reintentos tras un fallo de red: %d": "Повторни опити след мрежова грешка: %d",
+ "Buscar el servidor en la red local (mDNS)": "Търсене на сървъра в локалната мрежа (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Изключено по подразбиране. Намереното само се предлага: никога не се свързва само, а всяко устройство в мрежата може да отговори.",
+ "Buscar en la red": "Търсене в мрежата",
+ "No se ha encontrado ningún servidor.": "Не е намерен сървър.",
+ "Sesiones abiertas": "Отворени сесии",
+ "Esta sesión": "Тази сесия",
+ "Cerrar la sesión en todos los aparatos": "Изход от всички устройства",
+ "Otras máquinas": "Други машини",
+ "Bloqueada": "Блокирана"
 }

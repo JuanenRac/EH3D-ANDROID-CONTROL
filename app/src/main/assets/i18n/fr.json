@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Cet utilisateur existe déjà.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Cette machine n'accepte pas ce type de travail : un nœud accepte perçage et défonçage, une machine GRBL du G-code et le simulateur les trois.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Avec « Se souvenir de moi », seul le jeton de session de ce serveur est conservé, chiffré sur ce téléphone (jamais l'utilisateur ni le mot de passe) ; il expire au bout de 30 jours et est révoqué à la déconnexion.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Rien n'est conservé sur le téléphone : vous devrez vous reconnecter après avoir fermé l'application. Cochez « Se souvenir de moi » pour garder le jeton de session, chiffré, pendant 30 jours."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Rien n'est conservé sur le téléphone : vous devrez vous reconnecter après avoir fermé l'application. Cochez « Se souvenir de moi » pour garder le jeton de session, chiffré, pendant 30 jours.",
+ "Conexión con el servidor": "Connexion au serveur",
+ "Tiempo de espera de cada intento: %d s": "Délai de chaque essai : %d s",
+ "Reintentos tras un fallo de red: %d": "Nouveaux essais après une panne réseau : %d",
+ "Buscar el servidor en la red local (mDNS)": "Chercher le serveur sur le réseau local (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Désactivé par défaut. Ce qui est trouvé est seulement proposé : rien ne se connecte tout seul, et n'importe quel appareil du réseau peut répondre.",
+ "Buscar en la red": "Chercher sur le réseau",
+ "No se ha encontrado ningún servidor.": "Aucun serveur n'a été trouvé.",
+ "Sesiones abiertas": "Sessions ouvertes",
+ "Esta sesión": "Cette session",
+ "Cerrar la sesión en todos los aparatos": "Se déconnecter de tous les appareils",
+ "Otras máquinas": "Autres machines",
+ "Bloqueada": "Verrouillée"
 }

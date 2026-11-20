@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Takový uživatel už existuje.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tento stroj tento druh úlohy nepřijímá: uzel přijímá vrtání a frézování, stroj GRBL přijímá G-kód a simulátor přijímá všechny tři.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "S volbou „Zapamatovat si mě“ se na tomto telefonu ukládá pouze šifrovaný token relace tohoto serveru (nikdy uživatel ani heslo); vyprší po 30 dnech a při odhlášení se zruší.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "V telefonu se neukládá nic: po zavření aplikace se budete muset přihlásit znovu. Zaškrtnutím „Zapamatovat si mě“ se šifrovaný token relace uchová 30 dní."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "V telefonu se neukládá nic: po zavření aplikace se budete muset přihlásit znovu. Zaškrtnutím „Zapamatovat si mě“ se šifrovaný token relace uchová 30 dní.",
+ "Conexión con el servidor": "Připojení k serveru",
+ "Tiempo de espera de cada intento: %d s": "Časový limit každého pokusu: %d s",
+ "Reintentos tras un fallo de red: %d": "Opakování po síťové chybě: %d",
+ "Buscar el servidor en la red local (mDNS)": "Hledat server v místní síti (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Ve výchozím stavu vypnuto. Nalezené se jen navrhne: nikdy se nepřipojí samo a odpovědět může kterékoli zařízení v síti.",
+ "Buscar en la red": "Hledat v síti",
+ "No se ha encontrado ningún servidor.": "Nebyl nalezen žádný server.",
+ "Sesiones abiertas": "Otevřené relace",
+ "Esta sesión": "Tato relace",
+ "Cerrar la sesión en todos los aparatos": "Odhlásit na všech zařízeních",
+ "Otras máquinas": "Další stroje",
+ "Bloqueada": "Zablokován"
 }

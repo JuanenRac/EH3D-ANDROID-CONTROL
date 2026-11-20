@@ -7,6 +7,7 @@ package es.electrohobby3d.eh3d
 
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
+import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.LinkFailure
 import es.electrohobby3d.eh3d.model.LinkPolicy
@@ -25,6 +26,7 @@ import es.electrohobby3d.eh3d.network.Eh3dApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
@@ -45,6 +47,12 @@ class SimulatedServerTest {
         private val tokens = CopyOnWriteArraySet<String>()
         private val issued = AtomicInteger(0)
         val logins = AtomicInteger(0)
+        val refreshes = AtomicInteger(0)
+        val hits = AtomicInteger(0)
+        /** The next requests are answered 503 (a server that is busy for a moment). */
+        @Volatile var failNext = 0
+        /** The ids of the logins that were closed from the list. */
+        val closedSessions = CopyOnWriteArraySet<String>()
         private val http: HttpServer = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
         val origin: String get() = "http://127.0.0.1:${http.address.port}"
 
@@ -89,16 +97,24 @@ class SimulatedServerTest {
                 Mode.Unavailable -> { reply(exchange, 503, """{"error":"unavailable"}"""); return }
                 Mode.Up -> {}
             }
+            hits.incrementAndGet()
+            if (failNext > 0) { failNext -= 1; reply(exchange, 503, """{"error":"unavailable"}"""); return }
             if (path == "/api/v1/auth/login") {
                 val token = "t" + issued.incrementAndGet()
                 tokens.add(token)
                 logins.incrementAndGet()
-                reply(exchange, 200, """{"token":"$token","name":"ana","role":"operator"}""")
+                reply(exchange, 200, """{"token":"$token","name":"ana","role":"operator","app":"android","session_id":"s$token","expires_s":3600}""")
                 return
             }
             val sent = exchange.requestHeaders.getFirst("Authorization").orEmpty().removePrefix("Bearer ")
             if (sent !in tokens) { reply(exchange, 401, """{"error":"unauthorized"}"""); return }
             when {
+                path == "/api/v1/auth/refresh" -> { refreshes.incrementAndGet(); reply(exchange, 200, """{"expires_s":3600}""") }
+                path == "/api/v1/auth/sessions" && exchange.requestMethod == "GET" ->
+                    reply(exchange, 200, """{"sessions":[{"id":"s1","name":"ana","role":"operator","app":"android","created":1,"expires":2,"ip":"10.0.0.2","current":true},{"id":"s2","name":"ana","role":"operator","app":"studio","created":1,"expires":2,"ip":"10.0.0.9","current":false}]}""")
+                path.startsWith("/api/v1/auth/sessions/") && exchange.requestMethod == "DELETE" -> { closedSessions.add(path.substringAfterLast('/')); reply(exchange, 200, """{"ok":true}""") }
+                path == "/api/v1/auth/logout-all" -> { tokens.clear(); reply(exchange, 200, """{"closed":1}""") }
+                path == "/api/v1/auth/logout" -> { tokens.remove(sent); reply(exchange, 200, """{"ok":true}""") }
                 path == "/api/v1/fleet" -> reply(exchange, 200, fleetJson())
                 path == "/api/v1/jobs/j1/cancel" -> { if (jobState != null) stopReads = 2; reply(exchange, 200, """{"ok":true}""") }
                 else -> reply(exchange, 404, """{"error":"not_found"}""")
@@ -108,7 +124,7 @@ class SimulatedServerTest {
 
     /** A phone: it looks at the fleet every 1.5 s of its own clock, signs in again once when the server says the session is gone, and keeps the link as the app does. */
     private class Phone(origin: String) {
-        val api = Eh3dApi(origin)
+        val api = Eh3dApi(origin, settings = ConnectionSettings(retries = 0))   // the looks of the phone are one try each: the retries have their own tests
         var link = ServerLink()
         var fleet: Fleet = Fleet.EMPTY
         var now = 0L
@@ -261,5 +277,126 @@ class SimulatedServerTest {
         server.jobState = null
         phone.look()
         assertEquals(listOf(Notice("m1", "Drill 1", NoticeKind.Ended)), fleetNotices(waiting, phone.fleet))
+    }
+
+    /** An API with a clock the test moves and a pause that is only written down, so nothing waits. */
+    private class Timed(origin: String, retries: Int = 2) {
+        var nowMs = 1_000_000L
+        val pauses = mutableListOf<Long>()
+        val api = Eh3dApi(origin, settings = ConnectionSettings(retries = retries), pause = { pauses += it }, clockMs = { nowMs })
+    }
+
+    @Test fun `the login says how long it lasts and a request in the last quarter renews it by itself, once`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        val login = runBlocking { timed.api.login("ana", "a long pass phrase") }
+        assertEquals(3600L, login.expiresS)
+        assertTrue(login.sessionId.startsWith("s"))
+        runBlocking { timed.api.fleet() }
+        assertEquals(0, server.refreshes.get())
+        timed.nowMs += 2_600_000   // 1000 s left of 3600: more than a quarter
+        runBlocking { timed.api.fleet() }
+        assertEquals(0, server.refreshes.get())
+        timed.nowMs += 200_000   // 800 s left: in the last quarter
+        runBlocking { timed.api.fleet() }
+        assertEquals(1, server.refreshes.get())
+        runBlocking { timed.api.fleet() }   // the life is whole again
+        assertEquals(1, server.refreshes.get())
+    }
+
+    @Test fun `a client that is told not to renew never asks for it`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        timed.api.autoRefresh = false
+        timed.nowMs += 3_000_000
+        runBlocking { timed.api.fleet() }
+        assertEquals(0, server.refreshes.get())
+    }
+
+    @Test fun `a refused token is forgotten and a login that is over is not renewed`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        server.restart()
+        val error = assertThrows(ApiException::class.java) { runBlocking { timed.api.fleet() } }
+        assertTrue(error.unauthorized)
+        assertEquals("", timed.api.token)
+        assertEquals(0, server.refreshes.get())
+    }
+
+    @Test fun `the open logins are listed and one is closed by its id`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        val list = runBlocking { timed.api.sessions() }
+        assertEquals(listOf("s1", "s2"), list.map { it.id })
+        assertTrue(list[0].current)
+        assertFalse(list[1].current)
+        assertEquals("studio", list[1].app)
+        runBlocking { timed.api.closeSession("s2") }
+        assertEquals(setOf("s2"), server.closedSessions.toSet())
+    }
+
+    @Test fun `ending every login of the person ends this one too`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        runBlocking { timed.api.logoutAll() }
+        val error = assertThrows(ApiException::class.java) { runBlocking { timed.api.fleet() } }
+        assertTrue(error.unauthorized)
+    }
+
+    @Test fun `signing out ends the login with the route of the single login`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        runBlocking { timed.api.logout() }
+        val error = assertThrows(ApiException::class.java) { runBlocking { timed.api.fleet() } }
+        assertTrue(error.unauthorized)
+    }
+
+    @Test fun `a read that gets a 503 is tried again with growing pauses and then succeeds`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        server.failNext = 2
+        val fleet = runBlocking { timed.api.fleet() }
+        assertEquals("m1", fleet.machines.single().id)
+        assertEquals(listOf(200L, 400L), timed.pauses)
+    }
+
+    @Test fun `the retries are the setting and no more`() = withSim { server, _ ->
+        val timed = Timed(server.origin, retries = 1)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        val before = server.hits.get()
+        server.failNext = 5
+        val error = assertThrows(ApiException::class.java) { runBlocking { timed.api.fleet() } }
+        assertEquals(503, error.status)
+        assertEquals(2, server.hits.get() - before)   // the try and one retry
+        assertEquals(listOf(200L), timed.pauses)
+    }
+
+    @Test fun `a post that got a 503 is never sent twice`() = withSim { server, _ ->
+        val timed = Timed(server.origin)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        val before = server.hits.get()
+        server.failNext = 1
+        assertThrows(ApiException::class.java) { runBlocking { timed.api.cancel("j1") } }
+        assertEquals(1, server.hits.get() - before)
+        assertTrue(timed.pauses.isEmpty())
+    }
+
+    @Test fun `a connection that cannot be made is tried again whatever the method`() {
+        val port = java.net.ServerSocket(0).use { it.localPort }   // nobody listens there
+        val timed = Timed("http://127.0.0.1:$port")
+        val error = assertThrows(ApiException::class.java) { runBlocking { timed.api.cancel("j1") } }
+        assertEquals("unreachable", error.code)
+        assertTrue(error.neverSent)
+        assertEquals(listOf(200L, 400L), timed.pauses)
+    }
+
+    @Test fun `a 503 on a read is tried again and on a post it is not`() = withSim { server, _ ->
+        val timed = Timed(server.origin, retries = 1)
+        runBlocking { timed.api.login("ana", "a long pass phrase") }
+        server.mode = Mode.Unavailable
+        assertThrows(ApiException::class.java) { runBlocking { timed.api.fleet() } }
+        assertEquals(listOf(200L), timed.pauses)
+        timed.pauses.clear()
+        assertThrows(ApiException::class.java) { runBlocking { timed.api.cancel("j1") } }
+        assertTrue(timed.pauses.isEmpty())
     }
 }

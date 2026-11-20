@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Tá an t-úsáideoir sin ann cheana.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ní ghlacann an meaisín seo leis an gcineál taisc seo: glacann nód le druileáil agus muileáil, glacann meaisín GRBL le G-code, agus glacann an insamhlóir leis na trí cinn.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Le “Cuimhnigh orm” ní stóráiltear ach comhartha seisiúin an fhreastalaí seo, criptithe ar an teileafón seo (gan úsáideoir ná pasfhocal go deo); rachaidh sé in éag tar éis 30 lá agus cuirtear ar ceal é nuair a shínítear amach.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ní stóráiltear aon rud ar an teileafón: beidh ort síniú isteach arís tar éis an aip a dhúnadh. Tic “Cuimhnigh orm” chun an comhartha seisiúin a choimeád, criptithe, ar feadh 30 lá."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ní stóráiltear aon rud ar an teileafón: beidh ort síniú isteach arís tar éis an aip a dhúnadh. Tic “Cuimhnigh orm” chun an comhartha seisiúin a choimeád, criptithe, ar feadh 30 lá.",
+ "Conexión con el servidor": "Ceangal leis an bhfreastalaí",
+ "Tiempo de espera de cada intento: %d s": "Teorainn ama gach iarrachta: %d s",
+ "Reintentos tras un fallo de red: %d": "Athiarrachtaí tar éis teipe líonra: %d",
+ "Buscar el servidor en la red local (mDNS)": "Cuardaigh an freastalaí ar an líonra áitiúil (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Díchumasaithe de réir réamhshocraithe. Ní mholtar ach an méid a aimsítear: ní cheanglaíonn sé leis féin riamh, agus is féidir le gléas ar bith den líonra freagra a thabhairt.",
+ "Buscar en la red": "Cuardaigh an líonra",
+ "No se ha encontrado ningún servidor.": "Níor aimsíodh aon fhreastalaí.",
+ "Sesiones abiertas": "Seisiúin oscailte",
+ "Esta sesión": "An seisiún seo",
+ "Cerrar la sesión en todos los aparatos": "Sínigh amach ar gach gléas",
+ "Otras máquinas": "Meaisíní eile",
+ "Bloqueada": "Faoi ghlas"
 }

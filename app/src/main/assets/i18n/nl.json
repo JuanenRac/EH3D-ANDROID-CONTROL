@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Die gebruiker bestaat al.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Deze machine neemt dit soort taak niet aan: een knooppunt neemt boren en frezen aan, een GRBL-machine neemt G-code aan en de simulator neemt alle drie aan.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Met “Onthoud mij” wordt alleen het sessietoken van deze server versleuteld op deze telefoon bewaard (nooit de gebruiker of het wachtwoord); het verloopt na 30 dagen en wordt ingetrokken bij het afmelden.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Er wordt niets op de telefoon bewaard: na het sluiten van de app moet je opnieuw inloggen. Vink “Onthoud mij” aan om het sessietoken versleuteld 30 dagen te bewaren."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Er wordt niets op de telefoon bewaard: na het sluiten van de app moet je opnieuw inloggen. Vink “Onthoud mij” aan om het sessietoken versleuteld 30 dagen te bewaren.",
+ "Conexión con el servidor": "Verbinding met de server",
+ "Tiempo de espera de cada intento: %d s": "Time-out van elke poging: %d s",
+ "Reintentos tras un fallo de red: %d": "Nieuwe pogingen na een netwerkfout: %d",
+ "Buscar el servidor en la red local (mDNS)": "De server zoeken op het lokale netwerk (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Standaard uit. Wat gevonden wordt, wordt alleen voorgesteld: er wordt nooit zelf verbinding gemaakt en elk apparaat in het netwerk kan antwoorden.",
+ "Buscar en la red": "Zoeken op het netwerk",
+ "No se ha encontrado ningún servidor.": "Er is geen server gevonden.",
+ "Sesiones abiertas": "Open sessies",
+ "Esta sesión": "Deze sessie",
+ "Cerrar la sesión en todos los aparatos": "Uitloggen op alle apparaten",
+ "Otras máquinas": "Andere machines",
+ "Bloqueada": "Vergrendeld"
 }

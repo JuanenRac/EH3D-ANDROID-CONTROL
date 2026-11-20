@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.2` |
 | Maturity | Scaffolding |
-| Tests | 251 unit tests on the JVM |
+| Tests | 300 unit tests on the JVM |
 | Stack | Kotlin, Jetpack Compose |
 | On real hardware | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 
@@ -48,6 +48,7 @@ Each line is one part of this repository and the light says how far it is today.
 | Software | 🟠 | The screens and the rules of the app are written for Android; the rules build and are tested without a phone. |
 | Tests | 🟡 | unit tests on the JVM: what the server says about the fleet, the jobs and the head, the position of the head, the 2D and isometric geometry, the languages and the address and version checks. |
 | Monitoring | 🟠 | Each machine of the workshop with its state, its job, the progress, the steps done and the time left, read from the server every second and a half; a notice when a machine waits for the operator or stops. Written, not run against a real server. |
+| Connection | 🟠 | The login is renewed by itself in the last quarter of its life, the open logins can be listed and closed, the refusals of the server are told in eight languages from the same table as Studio, and the time-out, the retries and an optional search for the server on the local network (off by default) are settings. Written and tested against a simulated server; not run against a real one or on a phone. |
 | Emergency stop | 🟠 | A red button that asks twice and cancels the running job through the server (one machine, or all of them); the confirmation of the steps a job waits for. Only operators and administrators. It has never stopped a real machine and does not replace its physical stop. |
 | Preparing jobs | 🟠 | Choose drilling, routing, both or a G-code program and the file from the phone; the tools of the file with their count (and diameter when the file declares it), tools switched off, start at one tool; pause, resume, cancel and continue a stopped job (any kind) from where it stopped, with the file kept by the server; read the switch of the `$` lines of GRBL of the machine. The server has no list of files, so the file is sent from the phone. Written, never run against a real server or machine. |
 | 2D and 3D viewer | 🟠 | The board, the holes (a ring until drilled), the paths (dim until cut) and the head, in 2D and in an isometric view that turns with a finger; the place of the head is an estimate from the steps done. Tested as geometry, never seen on a phone. |

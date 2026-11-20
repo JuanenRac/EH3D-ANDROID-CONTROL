@@ -13,6 +13,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import es.electrohobby3d.eh3d.model.fleetNotices
 import es.electrohobby3d.eh3d.model.fleetStates
+import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.network.Eh3dApi
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
@@ -40,7 +41,8 @@ class FleetWatchWorker(context: Context, params: WorkerParameters) : CoroutineWo
         val origin = preferences.getString("origin", "").orEmpty()
         if (origin.isBlank()) return Result.success()
         val session = SessionVault(PreferencesStore(preferences), KeystoreBox()).load(origin) ?: return Result.success()
-        val fleet = try { Eh3dApi(origin, session.value).fleet() } catch (_: Exception) { return Result.success() }
+        val settings = ConnectionSettings.read(preferences::getInt, preferences::getBoolean)
+        val fleet = try { Eh3dApi(origin, session.value, settings).fleet() } catch (_: Exception) { return Result.success() }
         Tr.init(applicationContext)
         val before = runCatching {
             val saved = JSONObject(preferences.getString("watch_states", "{}").orEmpty())

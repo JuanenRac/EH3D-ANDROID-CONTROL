@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import es.electrohobby3d.eh3d.model.FleetMachine
 import es.electrohobby3d.eh3d.model.LinkState
 import es.electrohobby3d.eh3d.model.StopOutcome
+import es.electrohobby3d.eh3d.model.WorkMachine
 import es.electrohobby3d.eh3d.model.formatDuration
 
 /** The colour and the word of the state of a machine: it works (amber), waits for the operator (orange) or is free (green). */
@@ -131,6 +132,10 @@ fun HomePage(model: Eh3dViewModel) {
         }
         if (fleet.machines.isEmpty()) item { Card { Text(if (model.offline) tr("Sin conexión con el servidor.") else tr("El servidor no tiene máquinas todavía. Se añaden desde EH3D-STUDIO."), color = Forge.Dim) } }
         items(fleet.machines, key = { it.id }) { m -> MachineCard(m) { model.open(Page.Machine(m.id)) } }
+        if (model.workMachines.isNotEmpty()) {
+            item { Title(tr("Otras máquinas")) }
+            items(model.workMachines, key = { "work-" + it.id }) { w -> WorkMachineCard(w) }
+        }
         item { Spacer(Modifier.padding(bottom = 8.dp)) }
     }
     if (askAll) StopDialog(tr("¿Parar todas las máquinas que trabajan?"), model.offline, onConfirm = { askAll = false; model.emergencyStopAll() }, onDismiss = { askAll = false })
@@ -156,6 +161,25 @@ fun MachineCard(m: FleetMachine, onOpen: () -> Unit) {
         } else if (m.ready > 0) {
             Text(trf("%d trabajo(s) listo(s) para empezar", m.ready), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
+    }
+}
+
+/** A machine of a plugin of the server (laser, pick-and-place, printer...): its state and what the plugin says of it in `detail`; a latched one is red. */
+@Composable
+fun WorkMachineCard(w: WorkMachine) {
+    val busy = w.state == "busy"
+    val color = if (w.latched) Forge.Danger else if (busy) Forge.Amber else Forge.Green
+    val word = if (w.latched) tr("Bloqueada") else if (busy) tr("Trabajando") else tr("Libre")
+    Card(accent = color) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Light(color, live = busy && !w.latched)
+            Column(Modifier.weight(1f)) {
+                Text(w.name, style = MaterialTheme.typography.titleMedium, color = Forge.Text)
+                Text(w.plugin, color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+            }
+            Pill(word, color)
+        }
+        w.detail.take(8).forEach { (key, value) -> Text("$key: $value", color = Forge.Dim, style = MaterialTheme.typography.bodySmall) }
     }
 }
 

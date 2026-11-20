@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Такий користувач уже існує.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Цей верстат не приймає такий вид завдання: вузол приймає свердління й фрезерування, верстат GRBL приймає G-код, а симулятор приймає всі три.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "З опцією «Запам’ятати мене» на цьому телефоні зберігається лише токен сеансу цього сервера в зашифрованому вигляді (ніколи ім’я користувача чи пароль); він спливає через 30 днів і відкликається під час виходу.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефоні нічого не зберігається: після закриття застосунку потрібно буде увійти знову. Позначте «Запам’ятати мене», щоб токен сеансу зберігався зашифрованим 30 днів."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефоні нічого не зберігається: після закриття застосунку потрібно буде увійти знову. Позначте «Запам’ятати мене», щоб токен сеансу зберігався зашифрованим 30 днів.",
+ "Conexión con el servidor": "З'єднання із сервером",
+ "Tiempo de espera de cada intento: %d s": "Тайм-аут кожної спроби: %d с",
+ "Reintentos tras un fallo de red: %d": "Повторні спроби після мережевої помилки: %d",
+ "Buscar el servidor en la red local (mDNS)": "Шукати сервер у локальній мережі (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "За замовчуванням вимкнено. Знайдене лише пропонується: воно ніколи не підключається саме, а відповісти може будь-який пристрій у мережі.",
+ "Buscar en la red": "Шукати в мережі",
+ "No se ha encontrado ningún servidor.": "Сервер не знайдено.",
+ "Sesiones abiertas": "Відкриті сеанси",
+ "Esta sesión": "Цей сеанс",
+ "Cerrar la sesión en todos los aparatos": "Вийти на всіх пристроях",
+ "Otras máquinas": "Інші машини",
+ "Bloqueada": "Заблоковано"
 }

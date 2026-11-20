@@ -278,4 +278,56 @@ class ApiClientTest {
             seen.map { "${it.method} ${it.path}" },
         )
     }
+
+    @Test fun `a login reads the id of the session and how long it lasts`() = withServer(ok("""{"token":"t_abc","name":"Ana","role":"admin","app":"android","session_id":"s9","expires_s":7200}""")) { origin, _ ->
+        val api = Eh3dApi(origin)
+        val login = runBlocking { api.login("ana", "secret phrase") }
+        assertEquals("s9", login.sessionId)
+        assertEquals(7200L, login.expiresS)
+        assertEquals("t_abc", api.token)
+    }
+
+    @Test fun `the routes of the single login are used to renew, list, close and end the logins`() = withServer(ok("""{"expires_s":100,"sessions":[],"ok":true,"closed":0}""")) { origin, seen ->
+        val api = Eh3dApi(origin, "t")
+        api.autoRefresh = false
+        runBlocking { api.refresh(); api.sessions(); api.closeSession("a b"); api.logoutAll(); api.logout() }
+        assertEquals(
+            listOf("POST /api/v1/auth/refresh", "GET /api/v1/auth/sessions", "DELETE /api/v1/auth/sessions/a+b", "POST /api/v1/auth/logout-all", "POST /api/v1/auth/logout"),
+            seen.map { "${it.method} ${it.path}" },
+        )
+    }
+
+    @Test fun `the machines of the plugins are asked for on the generic route`() = withServer(ok("""{"machines":[{"id":"l1","plugin":"laser","state":"idle"}]}""")) { origin, seen ->
+        val list = runBlocking { Eh3dApi(origin, "t").workMachines() }
+        assertEquals("/api/v1/work/machines", seen[0].path)
+        assertEquals("laser", list.single().plugin)
+    }
+
+    @Test fun `a forbidden answer keeps the token and an unauthorized one forgets it`() {
+        withServer({ 403 to """{"error":"forbidden"}""" }) { origin, _ ->
+            val api = Eh3dApi(origin, "t")
+            val error = assertThrows(ApiException::class.java) { runBlocking { api.fleet() } }
+            assertTrue(error.forbidden)
+            assertEquals("t", api.token)
+        }
+        withServer({ 401 to """{"error":"unauthorized"}""" }) { origin, _ ->
+            val api = Eh3dApi(origin, "t")
+            assertThrows(ApiException::class.java) { runBlocking { api.fleet() } }
+            assertEquals("", api.token)
+        }
+    }
+
+    @Test fun `a wrong password at the login does not touch the token held`() = withServer({ 401 to """{"error":"bad_credentials"}""" }) { origin, _ ->
+        val api = Eh3dApi(origin, "t_other")
+        val error = assertThrows(ApiException::class.java) { runBlocking { api.login("ana", "bad") } }
+        assertEquals("bad_credentials", error.code)
+        assertEquals("t_other", api.token)
+    }
+
+    @Test fun `the time-out of the settings is the one of the connection`() {
+        val api = Eh3dApi("http://127.0.0.1:1", settings = es.electrohobby3d.eh3d.model.ConnectionSettings(timeoutS = 3, retries = 0))
+        assertEquals(3, api.settings.timeoutS)
+        api.settings = api.settings.withRetries(4)
+        assertEquals(4, api.settings.retries)
+    }
 }

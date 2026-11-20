@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Šāds lietotājs jau pastāv.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šī iekārta nepieņem šāda veida darbu: mezgls pieņem urbšanu un frēzēšanu, GRBL iekārta pieņem G-kodu, un simulators pieņem visus trīs.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Ar „Atcerēties mani” šajā tālrunī tiek saglabāts tikai šī servera sesijas marķieris, šifrēts (nekad lietotājvārds vai parole); tas beidzas pēc 30 dienām un tiek atsaukts, izrakstoties.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Tālrunī netiek saglabāts nekas: pēc lietotnes aizvēršanas būs jāpierakstās no jauna. Atzīmējiet „Atcerēties mani”, lai šifrētais sesijas marķieris tiktu glabāts 30 dienas."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Tālrunī netiek saglabāts nekas: pēc lietotnes aizvēršanas būs jāpierakstās no jauna. Atzīmējiet „Atcerēties mani”, lai šifrētais sesijas marķieris tiktu glabāts 30 dienas.",
+ "Conexión con el servidor": "Savienojums ar serveri",
+ "Tiempo de espera de cada intento: %d s": "Katra mēģinājuma noildze: %d s",
+ "Reintentos tras un fallo de red: %d": "Atkārtoti mēģinājumi pēc tīkla kļūmes: %d",
+ "Buscar el servidor en la red local (mDNS)": "Meklēt serveri vietējā tīklā (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Pēc noklusējuma izslēgts. Atrastais tiek tikai piedāvāts: tas nekad nepieslēdzas pats, un atbildēt var jebkura tīkla ierīce.",
+ "Buscar en la red": "Meklēt tīklā",
+ "No se ha encontrado ningún servidor.": "Serveris netika atrasts.",
+ "Sesiones abiertas": "Atvērtās sesijas",
+ "Esta sesión": "Šī sesija",
+ "Cerrar la sesión en todos los aparatos": "Iziet visās ierīcēs",
+ "Otras máquinas": "Citas iekārtas",
+ "Bloqueada": "Bloķēta"
 }

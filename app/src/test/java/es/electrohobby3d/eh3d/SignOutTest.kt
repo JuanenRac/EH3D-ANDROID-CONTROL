@@ -31,7 +31,7 @@ class SignOutTest {
         }
         assertEquals(1, seen.size)
         assertEquals("POST", seen[0].method)
-        assertEquals("/api/v1/logout", seen[0].path)
+        assertEquals("/api/v1/auth/logout", seen[0].path)
         assertEquals("Bearer t_closing", seen[0].authorization)
     }
 

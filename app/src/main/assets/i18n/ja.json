@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "そのユーザーは既に存在します。",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "このマシンはこの種類のジョブを受け付けません。ノードは穴あけとルーティング、GRBL マシンは G コード、シミュレーターは三つとも受け付けます。",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "「ログイン状態を保持」を選ぶと、このサーバーのセッショントークンだけが暗号化してこの端末に保存されます（ユーザー名とパスワードは保存しません）。30日で期限切れになり、ログアウトすると失効します。",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "端末には何も保存されません。アプリを閉じると再度ログインが必要です。「ログイン状態を保持」にチェックすると、セッショントークンが暗号化されて30日間保持されます。"
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "端末には何も保存されません。アプリを閉じると再度ログインが必要です。「ログイン状態を保持」にチェックすると、セッショントークンが暗号化されて30日間保持されます。",
+ "Conexión con el servidor": "サーバーへの接続",
+ "Tiempo de espera de cada intento: %d s": "各試行のタイムアウト：%d 秒",
+ "Reintentos tras un fallo de red: %d": "ネットワーク障害後の再試行：%d 回",
+ "Buscar el servidor en la red local (mDNS)": "ローカルネットワークでサーバーを探す（mDNS）",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "初期設定ではオフです。見つかったものは候補として表示されるだけで、自動では接続しません。ネットワーク上のどの機器も応答できます。",
+ "Buscar en la red": "ネットワークを検索",
+ "No se ha encontrado ningún servidor.": "サーバーが見つかりませんでした。",
+ "Sesiones abiertas": "開いているセッション",
+ "Esta sesión": "このセッション",
+ "Cerrar la sesión en todos los aparatos": "すべての端末でサインアウト",
+ "Otras máquinas": "その他の機械",
+ "Bloqueada": "ロック中"
 }

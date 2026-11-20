@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "该用户已存在。",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "此机床不接受这种作业：节点接受钻孔和铣切，GRBL 机床接受 G 代码，模拟器三种都接受。",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "勾选“记住我”后，仅会在本手机上加密保存此服务器的会话令牌（绝不保存用户名和密码）；30 天后过期，退出登录时即被撤销。",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "手机上不会保存任何内容：关闭应用后需要重新登录。勾选“记住我”可将会话令牌加密保存 30 天。"
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "手机上不会保存任何内容：关闭应用后需要重新登录。勾选“记住我”可将会话令牌加密保存 30 天。",
+ "Conexión con el servidor": "连接服务器",
+ "Tiempo de espera de cada intento: %d s": "每次尝试的超时：%d 秒",
+ "Reintentos tras un fallo de red: %d": "网络故障后的重试次数：%d",
+ "Buscar el servidor en la red local (mDNS)": "在本地网络中查找服务器（mDNS）",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "默认关闭。找到的结果仅作建议：绝不会自动连接，而且网络中的任何设备都可能应答。",
+ "Buscar en la red": "搜索网络",
+ "No se ha encontrado ningún servidor.": "未找到服务器。",
+ "Sesiones abiertas": "已打开的会话",
+ "Esta sesión": "当前会话",
+ "Cerrar la sesión en todos los aparatos": "在所有设备上退出登录",
+ "Otras máquinas": "其他机器",
+ "Bloqueada": "已锁定"
 }

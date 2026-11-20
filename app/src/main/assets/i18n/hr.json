@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Taj korisnik već postoji.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ovaj stroj ne prima ovu vrstu posla: čvor prima bušenje i glodanje, GRBL stroj prima G-kod, a simulator prima sva tri.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "S „Zapamti me” na ovom se telefonu pohranjuje samo token sesije ovog poslužitelja, šifriran (nikada korisnik ni lozinka); istječe nakon 30 dana i opoziva se pri odjavi.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Na telefonu se ne pohranjuje ništa: nakon zatvaranja aplikacije morat ćete se ponovno prijaviti. Označite „Zapamti me” da se šifrirani token sesije čuva 30 dana."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Na telefonu se ne pohranjuje ništa: nakon zatvaranja aplikacije morat ćete se ponovno prijaviti. Označite „Zapamti me” da se šifrirani token sesije čuva 30 dana.",
+ "Conexión con el servidor": "Veza s poslužiteljem",
+ "Tiempo de espera de cada intento: %d s": "Vremensko ograničenje svakog pokušaja: %d s",
+ "Reintentos tras un fallo de red: %d": "Ponovni pokušaji nakon mrežne pogreške: %d",
+ "Buscar el servidor en la red local (mDNS)": "Traži poslužitelj u lokalnoj mreži (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Isključeno prema zadanim postavkama. Pronađeno se samo predlaže: nikad se ne povezuje samo, a svaki uređaj u mreži može odgovoriti.",
+ "Buscar en la red": "Traži u mreži",
+ "No se ha encontrado ningún servidor.": "Nije pronađen nijedan poslužitelj.",
+ "Sesiones abiertas": "Otvorene sesije",
+ "Esta sesión": "Ova sesija",
+ "Cerrar la sesión en todos los aparatos": "Odjava na svim uređajima",
+ "Otras máquinas": "Ostali strojevi",
+ "Bloqueada": "Blokiran"
 }

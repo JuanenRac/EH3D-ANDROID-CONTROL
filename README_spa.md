@@ -31,7 +31,7 @@
 |---|---|
 | Versión | `0.1.2` |
 | Madurez | Andamiaje |
-| Pruebas | 251 pruebas unitarias en la JVM |
+| Pruebas | 300 pruebas unitarias en la JVM |
 | Pila tecnológica | Kotlin, Jetpack Compose |
 | En hardware real | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
 
@@ -48,6 +48,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 | Software | 🟠 | Las pantallas y las reglas de la app están escritas para Android; las reglas compilan y se prueban sin teléfono. |
 | Pruebas | 🟡 | pruebas unitarias en la JVM: lo que dice el servidor de la flota, los trabajos y el cabezal, la posición del cabezal, la geometría 2D e isométrica, los idiomas y las comprobaciones de dirección y versión. |
 | Monitorización | 🟠 | Cada máquina del taller con su estado, su trabajo, el progreso, los pasos hechos y el tiempo que queda, leído del servidor cada segundo y medio; un aviso cuando una máquina espera al operario o se detiene. Escrito, no ejecutado contra un servidor real. |
+| Conexión | 🟠 | El inicio de sesión se renueva solo en el último cuarto de su vida, se pueden ver y cerrar las sesiones abiertas, las negativas del servidor se dicen en ocho idiomas con la misma tabla que Studio, y el tiempo de espera, los reintentos y una búsqueda opcional del servidor en la red local (apagada por defecto) son ajustes. Escrito y probado contra un servidor simulado; no se ha ejecutado contra uno real ni en un teléfono. |
 | Parada de emergencia | 🟠 | Un botón rojo que pregunta dos veces y cancela el trabajo en curso a través del servidor (una máquina o todas); la confirmación de los pasos que espera un trabajo. Solo operarios y administradores. Nunca ha parado una máquina real y no sustituye a su parada física. |
 | Preparar trabajos | 🟠 | Elegir taladrado, fresado, ambos o un programa de G-code y el archivo del teléfono; las herramientas del archivo con su recuento (y diámetro si el archivo lo declara), apagar herramientas, empezar por una; pausar, reanudar, cancelar y seguir un trabajo detenido (de cualquier tipo) desde donde se detuvo, con el archivo guardado por el servidor; leer el interruptor de las líneas `$` de GRBL de la máquina. El servidor no tiene lista de archivos, así que el archivo se envía desde el teléfono. Escrito, nunca ejecutado contra un servidor ni una máquina reales. |
 | Visor 2D y 3D | 🟠 | La placa, los agujeros (un anillo hasta taladrarlos), las trayectorias (tenues hasta cortarlas) y el cabezal, en 2D y en una vista isométrica que gira con el dedo; la posición del cabezal es una estimación a partir de los pasos hechos. Probado como geometría, nunca visto en un teléfono. |

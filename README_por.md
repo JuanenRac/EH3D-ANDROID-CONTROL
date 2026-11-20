@@ -31,7 +31,7 @@
 |---|---|
 | Versão | `0.1.2` |
 | Maturidade | Estrutura inicial |
-| Testes | 251 testes unitários na JVM |
+| Testes | 300 testes unitários na JVM |
 | Tecnologias | Kotlin, Jetpack Compose |
 | Em hardware real | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
 
@@ -48,6 +48,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Software | 🟠 | Os ecrãs e as regras da aplicação estão escritos para Android; as regras compilam-se e testam-se sem telemóvel. |
 | Testes | 🟡 | testes unitários na JVM: o que o servidor diz da frota, dos trabalhos e do cabeçote, a posição do cabeçote, a geometria 2D e isométrica, os idiomas e as verificações de endereço e versão. |
 | Monitorização | 🟠 | Cada máquina da oficina com o seu estado, trabalho, progresso, passos feitos e tempo que falta, lido do servidor a cada segundo e meio; um aviso quando uma máquina espera pelo operador ou para. Escrito, não executado contra um servidor real. |
+| Ligação | 🟠 | O início de sessão renova-se sozinho no último quarto da sua duração, as sessões abertas podem ser listadas e fechadas, as recusas do servidor são ditas em oito idiomas com a mesma tabela do Studio, e o tempo limite, as novas tentativas e uma pesquisa opcional do servidor na rede local (desligada por predefinição) são definições. Escrito e testado contra um servidor simulado; não executado contra um real nem num telemóvel. |
 | Paragem de emergência | 🟠 | Um botão vermelho que pergunta duas vezes e cancela o trabalho em curso através do servidor (uma máquina ou todas); a confirmação dos passos que um trabalho espera. Só operadores e administradores. Nunca parou uma máquina real e não substitui a sua paragem física. |
 | Preparar trabalhos | 🟠 | Escolher furação, fresagem, ambas ou um programa de G-code e o ficheiro do telemóvel; as ferramentas do ficheiro com a sua contagem (e o diâmetro, quando o ficheiro o declara), desligar ferramentas, começar por uma; pausar, retomar, cancelar e retomar um trabalho parado (de qualquer tipo) de onde parou, com o ficheiro guardado pelo servidor; ler o interruptor das linhas `$` do GRBL da máquina. O servidor não tem lista de ficheiros, por isso o ficheiro é enviado a partir do telemóvel. Escrito, nunca executado contra um servidor ou uma máquina reais. |
 | Visor 2D e 3D | 🟠 | A placa, os furos (um anel até serem furados), os trajetos (ténues até serem cortados) e o cabeçote, em 2D e numa vista isométrica que roda com o dedo; a posição do cabeçote é uma estimativa a partir dos passos feitos. Testado como geometria, nunca visto num telemóvel. |

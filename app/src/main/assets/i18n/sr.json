@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Тај корисник већ постоји.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Ова машина не прихвата ову врсту посла: чвор прихвата бушење и глодање, GRBL машина прихвата G-код, а симулатор прихвата сва три.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Са «Запамти ме» чува се само токен сесије овог сервера, шифрован на овом телефону (никад корисник или лозинка); истиче након 30 дана и опозива се при одјави.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефону се не чува ништа: након затварања апликације морате се поново пријавити. Означите «Запамти ме» да се шифровани токен сесије чува 30 дана."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "На телефону се не чува ништа: након затварања апликације морате се поново пријавити. Означите «Запамти ме» да се шифровани токен сесије чува 30 дана.",
+ "Conexión con el servidor": "Веза са сервером",
+ "Tiempo de espera de cada intento: %d s": "Временско ограничење сваког покушаја: %d с",
+ "Reintentos tras un fallo de red: %d": "Поновни покушаји после мрежне грешке: %d",
+ "Buscar el servidor en la red local (mDNS)": "Тражи сервер у локалној мрежи (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Подразумевано искључено. Пронађено се само предлаже: никада се не повезује само, а одговорити може сваки уређај у мрежи.",
+ "Buscar en la red": "Тражи у мрежи",
+ "No se ha encontrado ningún servidor.": "Сервер није пронађен.",
+ "Sesiones abiertas": "Отворене сесије",
+ "Esta sesión": "Ова сесија",
+ "Cerrar la sesión en todos los aparatos": "Одјава на свим уређајима",
+ "Otras máquinas": "Остале машине",
+ "Bloqueada": "Закључана"
 }

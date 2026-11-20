@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Toks naudotojas jau yra.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Šios staklės nepriima tokio darbo: mazgas priima gręžimą ir frezavimą, GRBL staklės priima G kodą, o simuliatorius priima visus tris.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Pasirinkus „Prisiminti mane“, šiame telefone saugomas tik šio serverio sesijos prieigos raktas, užšifruotas (niekada naudotojo vardas ar slaptažodis); jis baigia galioti po 30 dienų ir atšaukiamas atsijungus.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefone nesaugoma nieko: uždarę programėlę turėsite prisijungti iš naujo. Pažymėkite „Prisiminti mane“, kad užšifruotas sesijos raktas būtų saugomas 30 dienų."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Telefone nesaugoma nieko: uždarę programėlę turėsite prisijungti iš naujo. Pažymėkite „Prisiminti mane“, kad užšifruotas sesijos raktas būtų saugomas 30 dienų.",
+ "Conexión con el servidor": "Ryšys su serveriu",
+ "Tiempo de espera de cada intento: %d s": "Kiekvieno bandymo skirtasis laikas: %d s",
+ "Reintentos tras un fallo de red: %d": "Pakartotiniai bandymai po tinklo klaidos: %d",
+ "Buscar el servidor en la red local (mDNS)": "Ieškoti serverio vietiniame tinkle (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Pagal numatytuosius nustatymus išjungta. Rastas serveris tik siūlomas: jis niekada nesijungia pats, o atsakyti gali bet kuris tinklo įrenginys.",
+ "Buscar en la red": "Ieškoti tinkle",
+ "No se ha encontrado ningún servidor.": "Serveris nerastas.",
+ "Sesiones abiertas": "Atidaryti seansai",
+ "Esta sesión": "Šis seansas",
+ "Cerrar la sesión en todos los aparatos": "Atsijungti visuose įrenginiuose",
+ "Otras máquinas": "Kiti įrenginiai",
+ "Bloqueada": "Užrakinta"
 }

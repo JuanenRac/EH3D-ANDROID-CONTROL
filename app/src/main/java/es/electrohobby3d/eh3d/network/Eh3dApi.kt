@@ -3,6 +3,8 @@
 package es.electrohobby3d.eh3d.network
 
 import es.electrohobby3d.eh3d.BuildConfig
+import es.electrohobby3d.eh3d.model.AuthSession
+import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.HeadStatus
 import es.electrohobby3d.eh3d.model.Quality
@@ -21,8 +23,14 @@ import es.electrohobby3d.eh3d.model.parseJob
 import es.electrohobby3d.eh3d.model.parseJobs
 import es.electrohobby3d.eh3d.model.parseMeasure
 import es.electrohobby3d.eh3d.model.JobView
+import es.electrohobby3d.eh3d.model.RefreshRule
+import es.electrohobby3d.eh3d.model.RetryRules
+import es.electrohobby3d.eh3d.model.WorkMachine
 import es.electrohobby3d.eh3d.model.parsePreview
+import es.electrohobby3d.eh3d.model.parseSessions
+import es.electrohobby3d.eh3d.model.parseWorkMachines
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.IOException
@@ -33,16 +41,22 @@ import java.net.URLEncoder
 /** The application this app says it logs in for (`POST /auth/login`): the server keeps it with the login and in the audit. */
 const val LOGIN_APP = "android"
 
-/** The server refused, or could not be reached: [status] is the HTTP status (0 when there was no answer) and [code] the `error` code of the server, if it sent one. */
-class ApiException(val status: Int, val code: String, message: String) : IOException(message) {
+/**
+ * The server refused, or could not be reached: [status] is the HTTP status (0 when there was no answer) and [code] the `error` code of the server, if it sent one.
+ * [neverSent] is true when the connection could not even be made, so nothing of the request went out.
+ */
+class ApiException(val status: Int, val code: String, message: String, val neverSent: Boolean = false) : IOException(message) {
     val unauthorized get() = status == 401
+
+    /** The server knows who it is but the role does not allow it: the login is kept. */
+    val forbidden get() = status == 403
 
     /** At start-up the kept session is deleted only when the server itself refused it (401); a server out of reach, a 5xx or a page of another service keeps it. */
     val endsKeptSession get() = unauthorized
 }
 
-/** Who is signed in: the token (a login's or a program's), the name and the role (`viewer`, `operator` or `admin`). */
-data class Login(val token: String, val name: String, val role: String)
+/** Who is signed in: the token (a login's or a program's), the name and the role (`viewer`, `operator` or `admin`); the id of the login and the seconds it lasts, when the server says them. */
+data class Login(val token: String, val name: String, val role: String, val sessionId: String = "", val expiresS: Long = 0)
 
 /** What a role may do: an operator also plans, starts, confirms and cancels jobs; a viewer only watches. */
 object Roles {
@@ -65,37 +79,85 @@ fun describeError(status: Int, body: String): Pair<String, String> {
     return code to detail
 }
 
-open class Eh3dApi(private val origin: String, var token: String = "") {
-    private fun open(path: String, method: String, body: String?): HttpURLConnection {
-        val connection = URL(origin.trimEnd('/') + "/api/v1" + path).openConnection() as HttpURLConnection
+/**
+ * The client of the API. It follows the client of the suite (docs/SERVER_CLIENT.md of EH3D-COMMON): every try has [settings] `timeoutS` seconds; after a failure on the network it waits 200 ms, 400 ms... and tries
+ * again up to `retries` more times, and a POST is never sent twice (only a connection that could not be made is tried again for any method); a login that is in the last quarter of its life is renewed by itself
+ * before the next request; a 401 makes it forget the token. [pause] and [clockMs] are the waiting and the clock, so the tests do not wait.
+ */
+open class Eh3dApi(
+    private val origin: String, var token: String = "", var settings: ConnectionSettings = ConnectionSettings(),
+    private val pause: suspend (Long) -> Unit = { delay(it) }, private val clockMs: () -> Long = System::currentTimeMillis,
+) {
+    /** How long the login lasts and when it ends (milliseconds of [clockMs]); 0 while the app does not know. */
+    @Volatile private var lifeTotalS = 0L
+    @Volatile private var expiresAtMs = 0L
+    @Volatile private var renewing = false
+
+    /** Whether a request renews a login that is in the last quarter of its life; the tests turn it off. */
+    var autoRefresh = true
+
+    /** Takes the life of a login the server has just told (`expires_s`), counted from now. */
+    private fun adoptLife(expiresS: Long) {
+        if (expiresS <= 0) return
+        if (lifeTotalS <= 0 || expiresS > lifeTotalS) lifeTotalS = expiresS
+        expiresAtMs = clockMs() + expiresS * 1000
+    }
+
+    private fun forgetToken() { token = ""; lifeTotalS = 0; expiresAtMs = 0 }
+
+    private fun configure(connection: HttpURLConnection, method: String, body: String?) {
         connection.requestMethod = method
-        connection.connectTimeout = 6_000
-        connection.readTimeout = 12_000
+        connection.connectTimeout = settings.timeoutS * 1000
+        connection.readTimeout = settings.timeoutS * 1000
         connection.setRequestProperty("Accept", "application/json")
         connection.setRequestProperty("User-Agent", "EH3D-ANDROID-CONTROL/${BuildConfig.VERSION_NAME}")
         if (token.isNotEmpty()) connection.setRequestProperty("Authorization", "Bearer $token")
         if (body != null) {
             connection.doOutput = true
             connection.setRequestProperty("Content-Type", "application/json")
-            connection.outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) }
         }
-        return connection
     }
 
-    protected suspend fun call(path: String, method: String = "GET", body: String? = null): String = withContext(Dispatchers.IO) {
-        val connection = try { open(path, method, body) } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer") }
+    /** One try: the connection is made first, so a failure there is known to have sent nothing. */
+    private suspend fun once(path: String, method: String, body: String?): String = withContext(Dispatchers.IO) {
+        val connection = try { URL(origin.trimEnd('/') + "/api/v1" + path).openConnection() as HttpURLConnection } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer", neverSent = true) }
         try {
+            configure(connection, method, body)
+            try { connection.connect() } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer", neverSent = true) }
+            if (body != null) try { connection.outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) } } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer") }
             val status = try { connection.responseCode } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer") }
             val stream = if (status in 200..299) connection.inputStream else connection.errorStream
             val text = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }.orEmpty()
             if (status !in 200..299) {
                 val (code, detail) = describeError(status, text)
+                // the server refused the login: the token is forgotten here, and nothing else asks with it (the person signs in again)
+                if (status == 401 && token.isNotEmpty() && !path.endsWith("/login")) forgetToken()
                 throw ApiException(status, code, detail.ifBlank { code })
             }
             // another web service (a router, a proxy page) answers 200 with something that is not JSON: that is an error to show, not a crash
             if (!isJson(text)) throw ApiException(status, "bad_json", "the answer is not JSON")
             text
         } finally { connection.disconnect() }
+    }
+
+    /** Renews the login first when it is in the last quarter of its life; a failure here is left to the request itself to find out. */
+    private suspend fun renewIfDue(path: String) {
+        if (!autoRefresh || renewing || token.isEmpty() || path.startsWith("/auth/") || path.endsWith("/login")) return
+        if (!RefreshRule.due(lifeTotalS, (expiresAtMs - clockMs()) / 1000)) return
+        renewing = true
+        try { refresh() } catch (_: ApiException) { } finally { renewing = false }
+    }
+
+    protected suspend fun call(path: String, method: String = "GET", body: String? = null): String {
+        renewIfDue(path)
+        var retry = 0
+        while (true) {
+            try { return once(path, method, body) } catch (error: ApiException) {
+                if (retry >= settings.retries || !RetryRules.mayRepeat(method, error.status, error.neverSent)) throw error
+                pause(RetryRules.delayMs(retry))
+                retry += 1
+            }
+        }
     }
 
     private fun q(value: String) = URLEncoder.encode(value, "UTF-8")
@@ -110,15 +172,38 @@ open class Eh3dApi(private val origin: String, var token: String = "") {
     suspend fun login(name: String, password: String): Login {
         // The single login of the server: the application it is for is kept with the login and in the audit.
         val j = JSONObject(call("/auth/login", "POST", JSONObject().put("name", name).put("password", password).put("app", LOGIN_APP).toString()))
-        return Login(j.optString("token"), j.optString("name", name), j.optString("role", "viewer"))
+        val expires = j.optLong("expires_s", 0)
+        val result = Login(j.optString("token"), j.optString("name", name), j.optString("role", "viewer"), j.optString("session_id"), expires)
+        token = result.token
+        adoptLife(expires)
+        return result
     }
+
+    /** Makes the login last again (`POST /auth/refresh`): the token stays the same; answers the seconds that are left. */
+    suspend fun refresh(): Long {
+        val left = JSONObject(call("/auth/refresh", "POST", "{}")).optLong("expires_s", 0)
+        adoptLife(left)
+        return left
+    }
+
+    /** The open logins of the person who asks (`GET /auth/sessions`), the newest first. */
+    suspend fun sessions(): List<AuthSession> = parseSessions(call("/auth/sessions"))
+
+    /** Closes one login of the list (a phone that was lost): its token stops working at once. */
+    suspend fun closeSession(id: String) { call("/auth/sessions/${q(id)}", "DELETE") }
+
+    /** Ends every login of the person, this one too. */
+    suspend fun logoutAll() { call("/auth/logout-all", "POST", "{}") }
+
+    /** The machines of the plugins of the server (laser, pick-and-place, printer...) with what each says of itself in `detail`; the ones of the drilling and routing machines are in the fleet. */
+    suspend fun workMachines(): List<WorkMachine> = parseWorkMachines(call("/work/machines"))
 
     suspend fun session(): Login {
         val j = JSONObject(call("/session"))
         return Login(token, j.optString("name"), j.optString("role", "viewer"))
     }
 
-    suspend fun logout() { runCatching { call("/logout", "POST", "{}") } }
+    suspend fun logout() { runCatching { call("/auth/logout", "POST", "{}") } }
 
     suspend fun fleet(): Fleet = parseFleet(call("/fleet"))
     suspend fun jobs(machine: String? = null): List<JobSummary> = parseJobs(call("/jobs" + (machine?.let { "?machine=${q(it)}" } ?: "")))

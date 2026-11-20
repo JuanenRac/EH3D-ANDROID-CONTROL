@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Aquest usuari ja existeix.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Aquesta màquina no accepta aquest tipus de feina: un node accepta foradat i fresat, una màquina GRBL accepta G-code i el simulador accepta els tres.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Amb «Recorda’m» només es guarda, xifrat en aquest telèfon, el testimoni de sessió d’aquest servidor (mai l’usuari ni la contrasenya); caduca als 30 dies i es revoca en tancar la sessió.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "No es guarda res al telèfon: en tancar l’aplicació haureu de tornar a entrar. Marqueu «Recorda’m» per conservar el testimoni de sessió, xifrat, durant 30 dies."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "No es guarda res al telèfon: en tancar l’aplicació haureu de tornar a entrar. Marqueu «Recorda’m» per conservar el testimoni de sessió, xifrat, durant 30 dies.",
+ "Conexión con el servidor": "Connexió amb el servidor",
+ "Tiempo de espera de cada intento: %d s": "Temps d'espera de cada intent: %d s",
+ "Reintentos tras un fallo de red: %d": "Reintents després d'un error de xarxa: %d",
+ "Buscar el servidor en la red local (mDNS)": "Cerca el servidor a la xarxa local (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Desactivat per defecte. El que es troba només es proposa: no es connecta mai tot sol, i qualsevol dispositiu de la xarxa pot respondre.",
+ "Buscar en la red": "Cerca a la xarxa",
+ "No se ha encontrado ningún servidor.": "No s'ha trobat cap servidor.",
+ "Sesiones abiertas": "Sessions obertes",
+ "Esta sesión": "Aquesta sessió",
+ "Cerrar la sesión en todos los aparatos": "Tanca la sessió a tots els dispositius",
+ "Otras máquinas": "Altres màquines",
+ "Bloqueada": "Bloquejada"
 }

@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Tuo käyttäjä on jo olemassa.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Tämä kone ei ota vastaan tällaista työtä: noodi ottaa poraus- ja jyrsintätöitä, GRBL-kone G-koodia ja simulaattori kaikkia kolmea.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Valinnalla ”Muista minut” tallennetaan vain tämän palvelimen istuntotunniste salattuna tälle puhelimelle (ei koskaan käyttäjätunnusta tai salasanaa); se vanhenee 30 päivän kuluttua ja mitätöidään uloskirjautumisessa.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Puhelimeen ei tallenneta mitään: sovelluksen sulkemisen jälkeen sinun on kirjauduttava uudelleen. Valitse ”Muista minut”, niin salattu istuntotunniste säilyy 30 päivää."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Puhelimeen ei tallenneta mitään: sovelluksen sulkemisen jälkeen sinun on kirjauduttava uudelleen. Valitse ”Muista minut”, niin salattu istuntotunniste säilyy 30 päivää.",
+ "Conexión con el servidor": "Yhteys palvelimeen",
+ "Tiempo de espera de cada intento: %d s": "Kunkin yrityksen aikakatkaisu: %d s",
+ "Reintentos tras un fallo de red: %d": "Uudelleenyritykset verkkovian jälkeen: %d",
+ "Buscar el servidor en la red local (mDNS)": "Etsi palvelinta paikallisverkosta (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Oletuksena pois. Löydetty vain ehdotetaan: se ei koskaan yhdistä itsestään, ja mikä tahansa verkon laite voi vastata.",
+ "Buscar en la red": "Etsi verkosta",
+ "No se ha encontrado ningún servidor.": "Palvelinta ei löytynyt.",
+ "Sesiones abiertas": "Avoimet istunnot",
+ "Esta sesión": "Tämä istunto",
+ "Cerrar la sesión en todos los aparatos": "Kirjaudu ulos kaikilla laitteilla",
+ "Otras máquinas": "Muut koneet",
+ "Bloqueada": "Lukittu"
 }

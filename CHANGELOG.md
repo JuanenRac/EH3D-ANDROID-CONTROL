@@ -4,6 +4,22 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The login is renewed by itself:** the answer of the login now gives the id of the login and how long it lasts (`expires_s`); a request that finds the login in the last quarter of its life first renews it with `POST /auth/refresh` (once, and only for a person's login), a session kept from the last start is renewed when the app opens, and a refusal with 401 makes the client forget the token while a 403 keeps it. Signing out now uses `POST /auth/logout`.
+
+- **The open logins are listed and can be closed:** More shows the logins of the person with their application and address (this phone is marked), closes one with `DELETE /auth/sessions/{id}`, and has a button that ends the login on every device (`POST /auth/logout-all`).
+
+- **Every refusal of the server has a text in eight languages:** `app/src/main/assets/server-errors.json` holds the 143 codes of the catalog of the server in English, Spanish, Italian, German, French, European Portuguese, Chinese and Japanese. `tools/gen_server_errors.py` writes it from the catalog of the server and the `err_<code>` rows of Studio, so both say the same words; the 28 codes that Studio does not have yet (the laser, the pick-and-place machine, the 3D printer, the jog and the Gerber files) are in `tools/server_errors_extra.json`. The other 29 languages show the English text of a code that only this table has. A test fails when the table is not the catalog of the server (it is skipped when the server folder is not next to this one).
+
+- **Time-out, retries and an optional search on the network are settings of the connection:** More has the time-out of each try (1 to 120 s, 15 by default), the retries after a failure on the network (0 to 5, 2 by default) and a switch for the search of the server on the local network, off by default. After a failure the client waits 200 ms, 400 ms, 800 ms... up to 2 s; a connection that could not be made is tried again for any request, a time-out or a 502, 503 or 504 only for the requests that do no harm twice, and a POST (a job, a login) is never sent twice.
+
+- **The search for the server on the local network is optional:** with the switch on, the sign-in can look for `_eh3d._tcp` with the Network Service Discovery of Android for a few seconds and lists the IPv4 servers that answer; the person picks one, nothing connects by itself and the password is still asked for. It has not run on a phone.
+
+- **The machines of the plugins are shown with their detail:** the home page lists the machines of the other plugins of the server (`GET /work/machines`, such as the laser, the pick-and-place machine and the printer) under the drilling and routing ones, with what each says of itself in `detail` and a red mark when it is latched by an emergency stop or an alarm.
+
+- **42 more tests:** the simulated server of the app now renews and lists logins, ends them, is busy for a moment and can be told to fail a number of times, and the tests follow the renewal in the last quarter, the forgetting of a refused token, the retries and their pauses, the POST that is not sent twice and the connection that could not be made; the rules of the connection, the sessions, the machines of the plugins, the candidates found on the network and the table of refusals have tests of their own.
+
+- **The texts of the new settings are in the 37 languages:** 12 phrases (the settings of the connection, the open logins and the other machines) in every table.
+
 - **The login goes through the single login of the server:** the app signs in with `POST /auth/login` and says it is the `android` application, so the server keeps the application with the login and in its audit (it used the first, application-less route before).
 
 ## [0.1.2] - Newest improvements of the Android app

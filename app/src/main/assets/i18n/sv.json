@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Den användaren finns redan.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Den här maskinen tar inte emot den här sortens jobb: en nod tar emot borrning och fräsning, en GRBL-maskin tar emot G-kod och simulatorn tar emot alla tre.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Med ”Kom ihåg mig” sparas bara sessionstoken för den här servern, krypterad på den här telefonen (aldrig användare eller lösenord); den löper ut efter 30 dagar och återkallas när du loggar ut.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Inget sparas på telefonen: efter att du stängt appen måste du logga in igen. Bocka i ”Kom ihåg mig” för att behålla den krypterade sessionstoken i 30 dagar."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Inget sparas på telefonen: efter att du stängt appen måste du logga in igen. Bocka i ”Kom ihåg mig” för att behålla den krypterade sessionstoken i 30 dagar.",
+ "Conexión con el servidor": "Anslutning till servern",
+ "Tiempo de espera de cada intento: %d s": "Tidsgräns för varje försök: %d s",
+ "Reintentos tras un fallo de red: %d": "Nya försök efter ett nätverksfel: %d",
+ "Buscar el servidor en la red local (mDNS)": "Sök efter servern i det lokala nätverket (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Av som standard. Det som hittas föreslås bara: det ansluter aldrig av sig självt, och vilken enhet som helst i nätverket kan svara.",
+ "Buscar en la red": "Sök i nätverket",
+ "No se ha encontrado ningún servidor.": "Ingen server hittades.",
+ "Sesiones abiertas": "Öppna sessioner",
+ "Esta sesión": "Den här sessionen",
+ "Cerrar la sesión en todos los aparatos": "Logga ut på alla enheter",
+ "Otras máquinas": "Andra maskiner",
+ "Bloqueada": "Låst"
 }

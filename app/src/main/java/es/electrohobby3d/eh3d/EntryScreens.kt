@@ -141,6 +141,15 @@ fun EntryScreen(model: Eh3dViewModel) {
                     if (ServerEndpoint.needsSecureConnection(host)) {
                         Text(tr("Fuera de la red local solo se admite https://: la contraseña no viajará sin cifrar."), color = Forge.Orange, style = MaterialTheme.typography.bodySmall)
                     }
+                    if (model.connection.mdns) {
+                        TextButton(onClick = { model.searchNetwork() }, enabled = !model.searching && !working) {
+                            if (model.searching) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp, color = Forge.Amber)
+                            Spacer(Modifier.width(8.dp))
+                            Text(tr("Buscar en la red"))
+                        }
+                        model.candidates.forEach { found -> TextButton(onClick = { host = found.host; port = found.port.toString() }) { Text(found.label) } }
+                        if (model.searchEnded && model.candidates.isEmpty()) Text(tr("No se ha encontrado ningún servidor."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                    }
                     TextButton(onClick = { model.connect(host, port) {} }, enabled = host.isNotBlank() && !working, modifier = Modifier.align(Alignment.End)) {
                         if (model.busy == Busy.Connecting) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp, color = Forge.Amber)
                         Spacer(Modifier.width(8.dp))

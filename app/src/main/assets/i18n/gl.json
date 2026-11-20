@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Ese usuario xa existe.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Esta máquina non acepta este tipo de traballo: un nodo acepta furado e fresado, unha máquina GRBL acepta G-code e o simulador acepta os tres.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Con «Lembrarme» só se garda, cifrado neste teléfono, o testemuño de sesión deste servidor (nunca o usuario nin o contrasinal); caduca aos 30 días e revógase ao pechar a sesión.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Non se garda nada no teléfono: ao pechar a aplicación terás que entrar de novo. Marca «Lembrarme» para conservar o testemuño de sesión, cifrado, durante 30 días."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Non se garda nada no teléfono: ao pechar a aplicación terás que entrar de novo. Marca «Lembrarme» para conservar o testemuño de sesión, cifrado, durante 30 días.",
+ "Conexión con el servidor": "Conexión co servidor",
+ "Tiempo de espera de cada intento: %d s": "Tempo de espera de cada intento: %d s",
+ "Reintentos tras un fallo de red: %d": "Reintentos tras un fallo de rede: %d",
+ "Buscar el servidor en la red local (mDNS)": "Buscar o servidor na rede local (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Desactivado por defecto. O que se atopa só se propón: nunca se conecta soo, e calquera dispositivo da rede pode responder.",
+ "Buscar en la red": "Buscar na rede",
+ "No se ha encontrado ningún servidor.": "Non se atopou ningún servidor.",
+ "Sesiones abiertas": "Sesións abertas",
+ "Esta sesión": "Esta sesión",
+ "Cerrar la sesión en todos los aparatos": "Pechar a sesión en todos os dispositivos",
+ "Otras máquinas": "Outras máquinas",
+ "Bloqueada": "Bloqueada"
 }

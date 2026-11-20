@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Quell'utente esiste già.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Questa macchina non accetta questo tipo di lavoro: un nodo accetta foratura e fresatura, una macchina GRBL accetta G-code e il simulatore tutti e tre.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Con «Ricordami» viene conservato solo il token di sessione di questo server, cifrato su questo telefono (mai l'utente né la password); scade dopo 30 giorni e viene revocato all'uscita.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Sul telefono non viene conservato nulla: dovrai accedere di nuovo dopo aver chiuso l'app. Spunta «Ricordami» per conservare il token di sessione, cifrato, per 30 giorni."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Sul telefono non viene conservato nulla: dovrai accedere di nuovo dopo aver chiuso l'app. Spunta «Ricordami» per conservare il token di sessione, cifrato, per 30 giorni.",
+ "Conexión con el servidor": "Connessione al server",
+ "Tiempo de espera de cada intento: %d s": "Timeout di ogni tentativo: %d s",
+ "Reintentos tras un fallo de red: %d": "Nuovi tentativi dopo un errore di rete: %d",
+ "Buscar el servidor en la red local (mDNS)": "Cerca il server nella rete locale (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Disattivato per impostazione predefinita. Ciò che si trova viene solo proposto: non si collega mai da solo e qualsiasi dispositivo della rete può rispondere.",
+ "Buscar en la red": "Cerca nella rete",
+ "No se ha encontrado ningún servidor.": "Non è stato trovato nessun server.",
+ "Sesiones abiertas": "Sessioni aperte",
+ "Esta sesión": "Questa sessione",
+ "Cerrar la sesión en todos los aparatos": "Esci su tutti i dispositivi",
+ "Otras máquinas": "Altre macchine",
+ "Bloqueada": "Bloccata"
 }

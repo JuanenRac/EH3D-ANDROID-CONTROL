@@ -20,6 +20,7 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 | Notices with the app closed | A periodic job (WorkManager, every 15 minutes at best) | Only while the app is in sight |
 | An address with a path after the host (`http://192.168.0.5:8080/x`) | The path is dropped | The address is refused |
 | Two addresses for one installation (at home and away) | Not there | `DualEndpoint` |
+| The search for the server on the local network (`_eh3d._tcp`, off by default) | `NsdManager` (`ServerDiscovery.kt`), IPv4 addresses only; the person chooses what it found | Bonjour (`NWBrowser`) needs the permission of the local network (`NSLocalNetworkUsageDescription`) and is to be tried on an iPhone: not there until then |
 | Updates | Downloads the APK and hands it to the installer | Tells that a version exists and links to it |
 | Certificate of a secure server | Not pinned; the phrase is not in its tables | Pinned the first time it is seen; one extra phrase in the 37 tables says so |
 | The stream of the head camera | Also stops while the app is out of sight and can decode at a smaller size for the grid | Read with `URLSession` and stops with its screen |

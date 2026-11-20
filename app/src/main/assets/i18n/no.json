@@ -374,5 +374,17 @@
  "Ese usuario ya existe.": "Den brukeren finnes allerede.",
  "Esta máquina no admite este tipo de trabajo: un nodo admite taladrado y fresado, una máquina GRBL admite G-code y el simulador admite los tres.": "Denne maskinen tar ikke imot denne typen jobb: en node tar imot boring og fresing, en GRBL-maskin tar imot G-kode, og simulatoren tar imot alle tre.",
  "Con «Recordarme» solo se guarda, cifrado en este teléfono, el pase de sesión de este servidor (nunca el usuario ni la contraseña); caduca a los 30 días y se revoca al cerrar sesión.": "Med «Husk meg» lagres bare øktnøkkelen til denne serveren, kryptert på denne telefonen (aldri brukernavn eller passord); den utløper etter 30 dager og kalles tilbake når du logger ut.",
- "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ingenting lagres på telefonen: etter at du har lukket appen, må du logge inn på nytt. Merk av for «Husk meg» for å beholde den krypterte øktnøkkelen i 30 dager."
+ "No se guarda nada en el teléfono: al cerrar la app tendrás que entrar de nuevo. Marca «Recordarme» para conservar el pase de sesión, cifrado, durante 30 días.": "Ingenting lagres på telefonen: etter at du har lukket appen, må du logge inn på nytt. Merk av for «Husk meg» for å beholde den krypterte øktnøkkelen i 30 dager.",
+ "Conexión con el servidor": "Tilkobling til serveren",
+ "Tiempo de espera de cada intento: %d s": "Tidsavbrudd for hvert forsøk: %d s",
+ "Reintentos tras un fallo de red: %d": "Nye forsøk etter en nettverksfeil: %d",
+ "Buscar el servidor en la red local (mDNS)": "Søk etter serveren på det lokale nettverket (mDNS)",
+ "Apagado por defecto. Lo que se encuentra solo se propone: nunca se conecta solo, y cualquier aparato de la red puede responder.": "Av som standard. Det som blir funnet, foreslås bare: det kobler seg aldri til av seg selv, og alle enheter på nettverket kan svare.",
+ "Buscar en la red": "Søk på nettverket",
+ "No se ha encontrado ningún servidor.": "Fant ingen server.",
+ "Sesiones abiertas": "Åpne økter",
+ "Esta sesión": "Denne økten",
+ "Cerrar la sesión en todos los aparatos": "Logg ut på alle enheter",
+ "Otras máquinas": "Andre maskiner",
+ "Bloqueada": "Låst"
 }
