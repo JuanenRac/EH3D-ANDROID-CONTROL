@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.4] - Safety of the machines of the plugins with a simulator badge, interlocks and an emergency stop, and the newest refusal codes of the server in eight languages
+
 - **Every refusal code of the server has its text, 151 of them:** `app/src/main/assets/server-errors.json` now holds the 36 codes the server added for the laser, the pick-and-place machine, the board station, the CNC machine, the Gerber files, the CAM programs, the 3D printer, the slicer and the Moonraker and OctoPrint routes (an enclosure that is open, a latched machine, a heater that runs away, a printer that shows a certificate that is not the pinned one...), in English, Spanish, Italian, German, French, European Portuguese, Chinese and Japanese. `tools/gen_server_errors.py` writes the table, and `tools/server_errors_extra.json` keeps the rows of the eight newest codes for a checkout where Studio does not have them yet. New tests keep the table equal to the catalog of the server (they are skipped when the server folder is not next to this one) and keep the codes added after the copy of the catalog in the tests.
 
 - **The machines of the plugins say they are a simulator:** the laser, pick-and-place, board, CNC, Gerber, CAM, 3D printer, vision and CAD machines of the server have only run against simulators, and the server says so in `detail` (`simulator_only`, `evidence`) and in the capabilities. The home page now shows a SIMULATOR ONLY badge on each of them and a line that says there is no proof on a real machine yet; nothing is shown in green for them.
