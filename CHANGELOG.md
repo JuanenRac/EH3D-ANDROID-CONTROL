@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.3] - Login that renews itself, sessions, retries, connection settings and every refusal code in eight languages
+
 - **The login is renewed by itself:** the answer of the login now gives the id of the login and how long it lasts (`expires_s`); a request that finds the login in the last quarter of its life first renews it with `POST /auth/refresh` (once, and only for a person's login), a session kept from the last start is renewed when the app opens, and a refusal with 401 makes the client forget the token while a 403 keeps it. Signing out now uses `POST /auth/logout`.
 
 - **The open logins are listed and can be closed:** More shows the logins of the person with their application and address (this phone is marked), closes one with `DELETE /auth/sessions/{id}`, and has a button that ends the login on every device (`POST /auth/logout-all`).
