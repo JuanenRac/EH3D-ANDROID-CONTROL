@@ -1,5 +1,6 @@
 # EH3D phone apps - tools/test_check_shared_cases.py: the comparison of the shared case files, with small folders made for the test.   python -I tools/test_check_shared_cases.py
 import importlib.util
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -50,6 +51,19 @@ class Compare(unittest.TestCase):
     def test_only_json_files_are_read(self):
         a = self.folder("a", {"x.json": b"{}", "notes.txt": b"hi"})
         self.assertEqual(list(C.digests(a)), ["x.json"])
+
+    def test_the_branch_to_compare_with_is_the_one_named_or_main(self):
+        old = os.environ.pop("EH3D_PARITY_REF", None)
+        try:
+            self.assertEqual(C.parity_ref(), "main")
+            os.environ["EH3D_PARITY_REF"] = "  "
+            self.assertEqual(C.parity_ref(), "main")
+            os.environ["EH3D_PARITY_REF"] = "tests/mobile-r4"
+            self.assertEqual(C.parity_ref(), "tests/mobile-r4")
+        finally:
+            os.environ.pop("EH3D_PARITY_REF", None)
+            if old is not None:
+                os.environ["EH3D_PARITY_REF"] = old
 
     def test_the_side_is_told_from_the_folder(self):
         android = self.root / "android"
