@@ -6,19 +6,24 @@
 # =============================================================================
 """Keeps the copy of the settings contract of the server that the app draws its page of settings from, and the table of texts of that page.
 
-    python tools/sync_settings_contract.py --check     # exit 1 when the copy is not the file of the server (next to this repository) or is not a valid contract
-    python tools/sync_settings_contract.py --write     # copies docs/settings-contract.json of the sibling EH3D-SERVER into the app
+    python tools/sync_settings_contract.py --check     # exit 1 when the copy is not the file of the server (next to this repository), is not a valid contract or its hash file is stale
+    python tools/sync_settings_contract.py --write     # copies docs/settings-contract.json of the sibling EH3D-SERVER into the app and writes the hash of the copy
 
 The server writes `docs/settings-contract.json` (document `eh3d.settings.contract/1`) from its own code. The app keeps a copy (Android: `app/src/main/assets/settings-contract.json`; iPhone:
 `Sources/Eh3dCore/Resources/settings-contract.json`), used when the live contract (`GET /api/v1/settings/contract`) cannot be read. With the sibling next to this repository the check compares
 the two files; without it (a checkout of this repository alone, the CI) it validates the copy against the schema the app understands: the eight languages, the types, the ranges, the groups and
 the keys, which are unique. The table `settings-texts.json` next to it (the sentences of the page itself, in the same eight languages) is checked too: the same keys in every language, no blank
 text and the same `{holes}` in every language. No network is used.
+
+The server also gives the SHA-256 of that file (with LF line ends) as `contract_hash` in the full contract and in the light view of the values (`GET /api/v1/settings/values`). The app keeps the
+hash of its copy in a source file (Android: `model/ContractHash.kt`; iPhone: `Sources/Eh3dCore/ContractHash.swift`), written by --write and checked against the copy by --check even without the
+server, and compares the two, so it can say when the server has another list of settings than the copy the app carries.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -29,6 +34,9 @@ FOLDERS = (ROOT / "app" / "src" / "main" / "assets", ROOT / "Sources" / "Eh3dCor
 FOLDER = next((f for f in FOLDERS if f.is_dir()), FOLDERS[0])
 COPY = FOLDER / "settings-contract.json"
 TEXTS = FOLDER / "settings-texts.json"
+ANDROID_HASH = ROOT / "app" / "src" / "main" / "java" / "es" / "electrohobby3d" / "eh3d" / "model" / "ContractHash.kt"
+IOS_HASH = ROOT / "Sources" / "Eh3dCore" / "ContractHash.swift"
+HASH_FILE = ANDROID_HASH if FOLDER == FOLDERS[0] else IOS_HASH
 SIBLING = ROOT.parent / "EH3D-SERVER" / "docs" / "settings-contract.json"
 
 SCHEMA = "eh3d.settings.contract/1"
@@ -48,6 +56,32 @@ def read_json(path: Path) -> object:
 def normalised(path: Path) -> str:
     """The text of a file with line ends as LF, so a checkout with CRLF compares equal to the one with LF."""
     return path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+
+
+def contract_hash(path: Path) -> str:
+    """The SHA-256 (lower-case hexadecimal) of a file with its line ends as LF: the `contract_hash` the server gives for the same document."""
+    return hashlib.sha256(normalised(path).encode("utf-8")).hexdigest()
+
+
+def hash_file_text(digest: str, swift: bool | None = None) -> str:
+    """The text of the source file that holds the hash of the copy, for a digest (Swift for the iPhone app, Kotlin for the Android one)."""
+    if swift is None:
+        swift = HASH_FILE == IOS_HASH
+    head = (
+        "// The SHA-256 of the copy of the settings contract kept in the app (settings-contract.json, line ends as LF): the `contract_hash` that the server gives when its contract is this\n"
+        "// document. Written by tools/sync_settings_contract.py --write and checked by --check and by the tests; do not edit by hand. GPL-3.0-or-later.\n"
+    )
+    if swift:
+        return head + "\npublic let contractCopyHash = \"" + digest + "\"\n"
+    return head + "package es.electrohobby3d.eh3d.model\n\nconst val CONTRACT_COPY_HASH = \"" + digest + "\"\n"
+
+
+def hash_problem() -> str | None:
+    """What is wrong with the file that holds the hash of the copy, or None when it is the hash of the copy."""
+    wanted = hash_file_text(contract_hash(COPY))
+    if not HASH_FILE.is_file() or HASH_FILE.read_bytes().decode("utf-8").replace("\r\n", "\n") != wanted:
+        return f"{HASH_FILE.relative_to(ROOT).as_posix()} is not the hash of the copy (python tools/sync_settings_contract.py --write)"
+    return None
 
 
 def _texts(entry: dict, field: str, where: str) -> list[str]:
@@ -160,6 +194,10 @@ def check() -> int:
         mode = "against the server"
         if normalised(COPY) != normalised(SIBLING):
             problems.append("the copy differs from docs/settings-contract.json of EH3D-SERVER (python tools/sync_settings_contract.py --write)")
+    if not problems:
+        stale = hash_problem()
+        if stale:
+            problems.append(stale)
     if not TEXTS.is_file():
         problems.append(f"{TEXTS.relative_to(ROOT).as_posix()} is missing")
     else:
@@ -173,7 +211,7 @@ def check() -> int:
         print(f"SETTINGS_CONTRACT=FAIL ({len(problems)} problem(s))")
         return 1
     count = len(doc["settings"]) if isinstance(doc, dict) else 0
-    print(f"SETTINGS_CONTRACT=PASS ({count} settings, {mode})")
+    print(f"SETTINGS_CONTRACT=PASS ({count} settings, {mode}, hash {contract_hash(COPY)[:12]})")
     return 0
 
 
@@ -190,7 +228,9 @@ def write() -> int:
         return 1
     COPY.parent.mkdir(parents=True, exist_ok=True)
     COPY.write_bytes(normalised(SIBLING).encode("utf-8"))
-    print(f"copied {SIBLING.name} to {COPY.relative_to(ROOT).as_posix()}")
+    HASH_FILE.parent.mkdir(parents=True, exist_ok=True)
+    HASH_FILE.write_bytes(hash_file_text(contract_hash(COPY)).encode("utf-8"))
+    print(f"copied {SIBLING.name} to {COPY.relative_to(ROOT).as_posix()} and wrote {HASH_FILE.relative_to(ROOT).as_posix()}")
     return check()
 
 

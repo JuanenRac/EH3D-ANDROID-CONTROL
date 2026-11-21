@@ -115,6 +115,53 @@ class TextsTests(unittest.TestCase):
         self.assertEqual(S.texts_problems(copy.deepcopy([])), ["settings-texts.json is not a table of texts"])
 
 
+class HashTests(unittest.TestCase):
+    def test_the_hash_is_the_sha256_of_the_copy_with_lf_line_ends(self):
+        import hashlib
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as folder:
+            lf = Path(folder) / "lf.json"
+            crlf = Path(folder) / "crlf.json"
+            lf.write_bytes(b'{"a": 1}\n{"b": 2}\n')
+            crlf.write_bytes(b'{"a": 1}\r\n{"b": 2}\r\n')
+            self.assertEqual(S.contract_hash(lf), hashlib.sha256(b'{"a": 1}\n{"b": 2}\n').hexdigest())
+            self.assertEqual(S.contract_hash(crlf), S.contract_hash(lf))
+
+    def test_the_hash_of_the_real_copy_is_64_lower_case_hexadecimal_characters(self):
+        self.assertRegex(S.contract_hash(S.COPY), r"^[0-9a-f]{64}$")
+
+    def test_the_source_file_holds_that_hash_in_kotlin_or_in_swift(self):
+        digest = "ab" * 32
+        kotlin = S.hash_file_text(digest, swift=False)
+        swift = S.hash_file_text(digest, swift=True)
+        self.assertIn(f'const val CONTRACT_COPY_HASH = "{digest}"', kotlin)
+        self.assertIn("package es.electrohobby3d.eh3d.model", kotlin)
+        self.assertIn(f'public let contractCopyHash = "{digest}"', swift)
+        self.assertNotIn("package ", swift)
+        self.assertTrue(kotlin.endswith('"\n') and swift.endswith('"\n'))
+
+    def test_the_real_hash_file_is_the_hash_of_the_copy(self):
+        self.assertIsNone(S.hash_problem())
+        self.assertIn(S.contract_hash(S.COPY), S.HASH_FILE.read_text(encoding="utf-8"))
+
+    def test_a_stale_or_missing_hash_file_is_found(self):
+        import tempfile
+
+        original, root = S.HASH_FILE, S.ROOT
+        try:
+            with tempfile.TemporaryDirectory() as folder:
+                S.ROOT = Path(folder)
+                S.HASH_FILE = Path(folder) / "ContractHash.txt"
+                self.assertIn("is not the hash of the copy", S.hash_problem() or "")
+                S.HASH_FILE.write_text(S.hash_file_text("0" * 64), encoding="utf-8")
+                self.assertIn("is not the hash of the copy", S.hash_problem() or "")
+                S.HASH_FILE.write_text(S.hash_file_text(S.contract_hash(S.COPY)).replace("\n", "\r\n"), encoding="utf-8", newline="")
+                self.assertIsNone(S.hash_problem())
+        finally:
+            S.HASH_FILE, S.ROOT = original, root
+
+
 class FilesTests(unittest.TestCase):
     def test_the_check_passes_on_this_repository(self):
         self.assertEqual(S.check(), 0)

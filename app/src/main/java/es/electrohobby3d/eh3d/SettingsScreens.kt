@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import es.electrohobby3d.eh3d.model.ControlKind
 import es.electrohobby3d.eh3d.model.EmbeddedContract
+import es.electrohobby3d.eh3d.model.HashState
 import es.electrohobby3d.eh3d.model.LoadedContract
 import es.electrohobby3d.eh3d.model.Problem
 import es.electrohobby3d.eh3d.model.Setting
@@ -100,7 +101,9 @@ fun ServerSettingsPage(model: Eh3dViewModel) {
                 Text(st("ssc_help"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (view == null) Text(st("ssc_loading"), color = Forge.Dim)
                 else if (view.live) Text(st("ssc_live", mapOf("v" to (view.serverVersion ?: "-"))), color = Forge.Green, style = MaterialTheme.typography.bodySmall)
-                else Text(st("ssc_embedded", mapOf("why" to view.why.orEmpty())), color = Forge.Orange, style = MaterialTheme.typography.bodySmall)
+                else if (view.light) Text(st("ssc_light", mapOf("v" to (view.serverVersion ?: "-"))), color = Forge.Green, style = MaterialTheme.typography.bodySmall)
+                else Text(st(if (role == "admin") "ssc_embedded" else "ssc_embedded_values", mapOf("why" to view.why.orEmpty())), color = Forge.Orange, style = MaterialTheme.typography.bodySmall)
+                if (view != null && view.light && view.hash == HashState.Differs) Text(st("ssc_hash_differs"), color = Forge.Orange, style = MaterialTheme.typography.bodySmall)
                 if (view != null && (!view.live || role != "admin")) Text(st("ssc_readonly_role"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             }
         }
@@ -109,7 +112,7 @@ fun ServerSettingsPage(model: Eh3dViewModel) {
                 item(key = "group-" + group.id) { Title(contractText(group.label, Tr.language).ifEmpty { group.id }) }
                 items(group.settings, key = { "setting-" + it.key }) { s -> SettingCard(model, view, s, view.live && s.key !in known, drafts[s.key], { v -> drafts.setDraft(s.key, v) }, ask) }
             }
-            val unlisted = if (view.live) unlistedSettings(view.contract, view.values) else emptyList()
+            val unlisted = if (view.live || view.light) unlistedSettings(view.contract, view.values, view.secretKeys + view.hiddenKeys) else emptyList()
             if (unlisted.isNotEmpty()) {
                 item(key = "group-other") { Title(st("ssc_other")) }
                 items(unlisted, key = { "unlisted-" + it.key }) { s -> SettingCard(model, view, s, false, null, { }, ask) }
@@ -140,6 +143,9 @@ private fun SettingCard(model: Eh3dViewModel, view: LoadedContract, s: Setting, 
     val kind = controlKind(s)
     val editable = view.live && canWriteSetting(role, s)
     val busy = model.settingsBusy == s.key
+    val serverSecret = s.key in view.secretKeys
+    val keptBack = s.key in view.hiddenKeys
+    val cut = s.key in view.truncatedKeys
     val typed = draft?.let { parseTyped(s, it) }
     val note = model.settingsNotes[s.key]
     val warning = contractText(s.warning, language)
@@ -161,10 +167,12 @@ private fun SettingCard(model: Eh3dViewModel, view: LoadedContract, s: Setting, 
         if (notInCopy) Pill(st("ssc_unknown"), Forge.Dim)
         if (kind == ControlKind.Number && s.min != null && s.max != null) Text(s.min.toString() + "–" + s.max + (if (unit.isEmpty()) "" else " " + unit), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         if (kind == ControlKind.ListOf) Text(st("ssc_list_hint"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
-        if (s.secret) {
+        if (s.secret || serverSecret) {
             Text("●●●  " + st("ssc_secret"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        } else if (keptBack) {
+            Text(st("ssc_hidden"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         } else {
-            Text(st("ssc_in_force") + ": " + (if (current == null) "-" else saidValue(current)), color = Forge.Text, style = MaterialTheme.typography.bodyMedium)
+            Text(st("ssc_in_force") + ": " + (if (current == null) "-" else saidValue(current) + (if (cut) "…" else "")), color = Forge.Text, style = MaterialTheme.typography.bodyMedium)
             if (s.default != null) Text(st("ssc_default") + ": " + saidValue(s.default), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             if (!editable) {
                 if (s.write.via == "file") Text(st("ssc_in_file"), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)

@@ -99,6 +99,26 @@
   "zh": "服务器未提供其契约（{why}），因此显示的是应用中保存的副本，只读：不显示当前生效的值。",
   "pt": "O servidor não deu o seu contrato ({why}); esta é a cópia guardada na aplicação, só de leitura: os valores em vigor não são mostrados."
  },
+ "ssc_embedded_values": {
+  "en": "The values in force could not be read from the server ({why}), so this is the copy kept in the app, read-only: the values in force are not shown.",
+  "es": "No se pudieron leer los valores en vigor del servidor ({why}), así que esta es la copia guardada en la app, en modo de solo lectura: no se muestran los valores en vigor.",
+  "de": "Die gültigen Werte konnten nicht vom Server gelesen werden ({why}); daher wird die in der App gespeicherte Kopie schreibgeschützt angezeigt, ohne die gültigen Werte.",
+  "fr": "Les valeurs en vigueur n'ont pas pu être lues sur le serveur ({why}) ; voici donc la copie conservée dans l'application, en lecture seule : les valeurs en vigueur ne sont pas affichées.",
+  "it": "Non è stato possibile leggere i valori in vigore dal server ({why}); questa è quindi la copia conservata nell'app, in sola lettura: i valori in vigore non vengono mostrati.",
+  "ja": "サーバーから現在有効な値を読み取れませんでした（{why}）。アプリに保存されているコピーを読み取り専用で表示しており、現在の値は表示されません。",
+  "zh": "无法从服务器读取当前生效的值（{why}），因此显示的是应用中保存的副本（只读），不显示当前生效的值。",
+  "pt": "Não foi possível ler do servidor os valores em vigor ({why}); esta é, por isso, a cópia guardada na aplicação, só de leitura: os valores em vigor não são mostrados."
+ },
+ "ssc_hash_differs": {
+  "en": "The list of settings of the server is not the copy of this screen: some labels may be missing or out of date.",
+  "es": "La lista de ajustes del servidor no es la copia de esta pantalla: puede faltar alguna etiqueta o estar desactualizada.",
+  "de": "Die Einstellungsliste des Servers ist nicht die Kopie dieses Bildschirms: Manche Bezeichnungen fehlen oder sind veraltet.",
+  "fr": "La liste des réglages du serveur n'est pas la copie de cet écran : certains libellés peuvent manquer ou être périmés.",
+  "it": "L'elenco delle impostazioni del server non è la copia di questa schermata: alcune etichette potrebbero mancare o essere superate.",
+  "ja": "サーバーの設定一覧はこの画面のコピーと一致しません。ラベルが不足していたり古かったりする場合があります。",
+  "zh": "服务器的设置列表与此屏幕的副本不一致：部分标签可能缺失或已过期。",
+  "pt": "A lista de definições do servidor não é a cópia deste ecrã: algumas etiquetas podem faltar ou estar desatualizadas."
+ },
  "ssc_help": {
   "en": "Every setting and switch of the server, drawn from its contract. The ones the server changes while it runs have a control here; the others are set in server.cfg and read when the server starts.",
   "es": "Todos los ajustes e interruptores del servidor, dibujados desde su contrato. Los que el servidor cambia con él en marcha tienen aquí un control; los demás se fijan en server.cfg y se leen al arrancar el servidor.",
@@ -108,6 +128,16 @@
   "ja": "サーバーのすべての設定とスイッチを、その契約から表示します。サーバーが動作中に変更できるものにはここにコントロールがあり、それ以外は server.cfg で設定され、サーバーの起動時に読み込まれます。",
   "zh": "服务器的所有设置和开关，均由其契约生成。服务器运行时可更改的项目在此有控件；其余项目在 server.cfg 中设置，并在服务器启动时读取。",
   "pt": "Todas as definições e interruptores do servidor, desenhados a partir do seu contrato. As que o servidor altera com ele a funcionar têm aqui um controlo; as outras definem-se em server.cfg e leem-se quando o servidor arranca."
+ },
+ "ssc_hidden": {
+  "en": "The server does not show it.",
+  "es": "El servidor no lo muestra.",
+  "de": "Der Server zeigt diesen Wert nicht an.",
+  "fr": "Le serveur ne l'affiche pas.",
+  "it": "Il server non lo mostra.",
+  "ja": "サーバーは表示しません。",
+  "zh": "服务器不显示此项。",
+  "pt": "O servidor não o mostra."
  },
  "ssc_in_file": {
   "en": "Set in server.cfg and read when the server starts.",
@@ -128,6 +158,16 @@
   "ja": "現在有効",
   "zh": "当前生效",
   "pt": "Em vigor agora"
+ },
+ "ssc_light": {
+  "en": "Values in force read from the server {v}. The labels and help are the ones of the copy kept in the app; the page is read-only.",
+  "es": "Valores en vigor leídos del servidor {v}. Las etiquetas y la ayuda son las de la copia guardada en la app; la página es de solo lectura.",
+  "de": "Gültige Werte vom Server {v} gelesen. Bezeichnungen und Hilfe stammen aus der in der App gespeicherten Kopie; die Seite ist schreibgeschützt.",
+  "fr": "Valeurs en vigueur lues sur le serveur {v}. Les libellés et l'aide sont ceux de la copie conservée dans l'application ; la page est en lecture seule.",
+  "it": "Valori in vigore letti dal server {v}. Le etichette e la guida sono quelle della copia conservata nell'app; la pagina è di sola lettura.",
+  "ja": "サーバー {v} から現在有効な値を読み取りました。ラベルとヘルプはアプリに保存されているコピーのもので、このページは読み取り専用です。",
+  "zh": "已从服务器 {v} 读取当前生效的值。标签和帮助来自应用中保存的副本；此页面为只读。",
+  "pt": "Valores em vigor lidos do servidor {v}. As etiquetas e a ajuda são as da cópia guardada na aplicação; a página é só de leitura."
  },
  "ssc_list_hint": {
   "en": "Separate the items with commas.",

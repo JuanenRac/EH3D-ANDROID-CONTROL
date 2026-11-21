@@ -15,12 +15,14 @@ import es.electrohobby3d.eh3d.model.Candidate
 import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.EmbeddedContract
+import es.electrohobby3d.eh3d.model.LightCache
 import es.electrohobby3d.eh3d.model.LoadedContract
 import es.electrohobby3d.eh3d.model.SaveResult
 import es.electrohobby3d.eh3d.model.ServerErrors
 import es.electrohobby3d.eh3d.model.Setting
+import es.electrohobby3d.eh3d.model.SettingsReaders
 import es.electrohobby3d.eh3d.model.SettingsTexts
-import es.electrohobby3d.eh3d.model.loadContract
+import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.PolicySwitch
 import es.electrohobby3d.eh3d.model.WorkJob
@@ -119,6 +121,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var switches by mutableStateOf(emptyList<PolicySwitch>()); private set
     /** The page of the settings: the contract (the live one, or the copy of the app read-only), what became of each change and the key that is being saved. */
     var settingsView by mutableStateOf<LoadedContract?>(null); private set
+    /** The tag and the answer of the last light view of the settings (`GET /settings/values`), and the token they were read with: another login forgets them. */
+    private val lightCache = LightCache()
+    private var lightOwner = ""
     var settingsNotes by mutableStateOf(emptyMap<String, SettingNote>()); private set
     var settingsBusy by mutableStateOf<String?>(null); private set
 
@@ -353,10 +358,18 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /** Reads the contract of the settings of the server: the live one for an administrator; when the server does not give it, the copy of the app, read-only, with the reason. */
+    /**
+     * Reads the settings of the server: the full contract for an administrator; for any other login (or an administrator whose token cannot read the contract) the values in force of the light view
+     * with the labels of the copy of the app, read-only, asking again with the ETag of the last answer; when neither can be read, the copy alone with the reason.
+     */
     fun loadSettings() {
         viewModelScope.launch {
-            settingsView = loadContract({ try { api.settingsContract() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly(); throw error } }, EmbeddedContract.get())
+            if (lightOwner != api.token) { lightCache.clear(); lightOwner = api.token }
+            val readers = SettingsReaders(
+                full = { try { api.settingsContract() } catch (error: ApiException) { if (error.unauthorized) signOutQuietly(); throw error } },
+                light = { tag -> try { api.settingsValues(tag) } catch (error: ApiException) { if (error.unauthorized) signOutQuietly(); throw error } },
+            )
+            settingsView = readSettings(login?.role, readers, EmbeddedContract.get(), lightCache).loaded
         }
     }
 

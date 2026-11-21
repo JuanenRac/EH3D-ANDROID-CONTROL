@@ -32,8 +32,16 @@ data class ContractGroup(val id: String, val label: Map<String, String>)
 
 data class SettingsContract(val schema: String, val languages: List<String>, val groups: List<ContractGroup>, val settings: List<Setting>)
 
-/** The contract as the page holds it: where it came from, the values in force (none for the copy) and why the live one was not used (a code of the server, `unreachable`, `shape`); null for a live one. */
-data class LoadedContract(val contract: SettingsContract, val live: Boolean, val values: Map<String, Any?>, val serverVersion: String?, val why: String?)
+/**
+ * The contract as the page holds it: where it came from, the values in force (none for the copy) and why the live one was not used (a code of the server, `unreachable`, `shape`, `newer`); null for a live one.
+ * [live] is the full contract of an administrator; [light] is the copy of the app with the values of `GET /settings/values` (any login, read only); neither is the copy alone. For a light answer [hash] says
+ * whether the list of settings of the server is the copy of the app, and the lists name the keys the server marks secret (never any value), keeps back, cut or changed through the security page.
+ */
+data class LoadedContract(
+    val contract: SettingsContract, val live: Boolean, val values: Map<String, Any?>, val serverVersion: String?, val why: String?,
+    val light: Boolean = false, val hash: HashState? = null, val secretKeys: List<String> = emptyList(), val hiddenKeys: List<String> = emptyList(),
+    val truncatedKeys: List<String> = emptyList(), val overriddenKeys: List<String> = emptyList(),
+)
 
 /** One group of the page: its id, its label and its settings in the order of the contract. */
 data class SettingsGroup(val id: String, val label: Map<String, String>, val settings: List<Setting>)
@@ -154,10 +162,10 @@ fun genericSetting(key: String, value: Any?): Setting = Setting(
     min = null, max = null, unit = null, maxLength = null, format = null, choices = emptyList(), label = mapOf("en" to key), help = emptyMap(), warning = emptyMap(),
 )
 
-/** The keys the server reports a value for and the contract does not list (a key newer than both the contract and the copy of the app): drawn read-only, so nothing the server holds is hidden. */
-fun unlistedSettings(contract: SettingsContract, values: Map<String, Any?>): List<Setting> {
+/** The keys the server reports a value for (or marks secret or keeps back, [kept]) and the contract does not list (a key newer than both the contract and the copy of the app): drawn read-only, so nothing the server holds is hidden. */
+fun unlistedSettings(contract: SettingsContract, values: Map<String, Any?>, kept: List<String> = emptyList()): List<Setting> {
     val known = contract.settings.map { it.key }.toSet()
-    return values.keys.filter { it !in known }.sorted().map { genericSetting(it, values[it]) }
+    return (values.keys + kept).toSet().filter { it !in known }.sorted().map { genericSetting(it, values[it]) }
 }
 
 fun controlKind(s: Setting): ControlKind = when (s.type) {

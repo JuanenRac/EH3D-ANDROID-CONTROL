@@ -7,6 +7,9 @@ import es.electrohobby3d.eh3d.model.AuthSession
 import es.electrohobby3d.eh3d.model.ConnectionSettings
 import es.electrohobby3d.eh3d.model.Fleet
 import es.electrohobby3d.eh3d.model.HeadStatus
+import es.electrohobby3d.eh3d.model.LIGHT_MAX_BYTES
+import es.electrohobby3d.eh3d.model.LIGHT_PATH
+import es.electrohobby3d.eh3d.model.LightReply
 import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.RingLight
 import es.electrohobby3d.eh3d.model.SpindleInfo
@@ -34,6 +37,7 @@ import es.electrohobby3d.eh3d.model.parseWorkJobs
 import es.electrohobby3d.eh3d.model.parsePreview
 import es.electrohobby3d.eh3d.model.parseSessions
 import es.electrohobby3d.eh3d.model.parseWorkMachines
+import es.electrohobby3d.eh3d.model.readCapped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -145,6 +149,31 @@ open class Eh3dApi(
         } finally { connection.disconnect() }
     }
 
+    /**
+     * One try of the light view of the settings: `If-None-Match` carries the ETag of the last answer, a `304` is [LightReply.NotModified], and an answer longer than [LIGHT_MAX_BYTES] is never read to the end
+     * (it ends as the error `download_too_big`). The text is not checked here: the model reads it whole or refuses it.
+     */
+    private suspend fun onceLight(etag: String?): LightReply = withContext(Dispatchers.IO) {
+        val connection = try { URL(origin.trimEnd('/') + "/api/v1" + LIGHT_PATH).openConnection() as HttpURLConnection } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer", neverSent = true) }
+        try {
+            configure(connection, "GET", null)
+            if (etag != null) connection.setRequestProperty("If-None-Match", etag)
+            try { connection.connect() } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer", neverSent = true) }
+            val status = try { connection.responseCode } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer") }
+            if (status == 304) return@withContext LightReply.NotModified
+            if (status !in 200..299) {
+                val text = connection.errorStream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }.orEmpty()
+                val (code, detail) = describeError(status, text)
+                if (status == 401 && token.isNotEmpty()) forgetToken()
+                throw ApiException(status, code, detail.ifBlank { code })
+            }
+            val declared = connection.getHeaderField("Content-Length")?.toLongOrNull() ?: 0L
+            val bytes = try { if (declared > LIGHT_MAX_BYTES) null else connection.inputStream.use { readCapped(it, LIGHT_MAX_BYTES) } } catch (error: IOException) { throw ApiException(0, "unreachable", error.message ?: "no answer") }
+            if (bytes == null) throw ApiException(status, "download_too_big", "the answer is longer than $LIGHT_MAX_BYTES bytes")
+            LightReply.Fresh(bytes.toString(Charsets.UTF_8), connection.getHeaderField("ETag"))
+        } finally { connection.disconnect() }
+    }
+
     /** Renews the login first when it is in the last quarter of its life; a failure here is left to the request itself to find out. */
     private suspend fun renewIfDue(path: String) {
         if (!autoRefresh || renewing || token.isEmpty() || path.startsWith("/auth/") || path.endsWith("/login")) return
@@ -233,6 +262,22 @@ open class Eh3dApi(
 
     /** The contract of the settings of the server with the values in force (`GET /settings/contract`): administrators only, any other role is refused with 403. Answers the text of the reply. */
     suspend fun settingsContract(): String = call("/settings/contract")
+
+    /**
+     * The values in force of the settings, light and read only (`GET /settings/values`): any login. [etag] is the tag of the last answer; the server answers `304` when nothing changed. The text of a new
+     * answer is read by the model (`parseLight`), which refuses what it does not trust.
+     */
+    suspend fun settingsValues(etag: String?): LightReply {
+        renewIfDue(LIGHT_PATH)
+        var retry = 0
+        while (true) {
+            try { return onceLight(etag) } catch (error: ApiException) {
+                if (retry >= settings.retries || !RetryRules.mayRepeat("GET", error.status, error.neverSent)) throw error
+                pause(RetryRules.delayMs(retry))
+                retry += 1
+            }
+        }
+    }
 
     /** Writes one setting by the method and the route its entry of the contract names (path without `/api/v1`). Answers the text of the reply: the new policy and, in `changed`, what the server did. */
     suspend fun writeSetting(method: String, path: String, body: String): String = call(path, method, body)
