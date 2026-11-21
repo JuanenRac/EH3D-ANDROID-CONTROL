@@ -3,6 +3,7 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **The address typed with `HTTP://` capitals is read like `http://`, a port is plain digits, an address with a path is refused, and a damaged tool number no longer stops the reading of a drill file (security):** `HTTPS://eh3d.example` made the host `HTTPS` (the prefix was taken off with the case kept), the digits of other scripts counted as a port, a path after the host was dropped without a word where the iPhone app refuses it, and a tool number too big for an integer in the header of a drill file (`T99999999999C0.8`) raised an exception; the name of a job could be cut in the middle of a picture. The case files of the address, shared with the iPhone app, grow by 51 cases, and 30 new tests cover the address, the tools of a file, the requests, the lines of a program and the versions of a release.
 
 ## [0.1.7] - Authorization of a job by the hash of its toolpath, the eight official languages only and a parity check that follows the branch
 
