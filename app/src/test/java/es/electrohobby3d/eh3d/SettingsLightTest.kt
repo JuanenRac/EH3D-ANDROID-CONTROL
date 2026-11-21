@@ -87,7 +87,7 @@ class SettingsLightTest {
         val light = read(good())
         assertEquals("0.2.1", light.serverVersion)
         assertEquals(CONTRACT_COPY_HASH, light.contractHash)
-        assertEquals(listOf("session_hours", "password_min_len", "allow_remote"), light.entries.keys.toList())
+        assertEquals(setOf("session_hours", "password_min_len", "allow_remote"), light.entries.keys)
         val hours = light.entries.getValue("session_hours")
         assertEquals(12L, hours.value); assertFalse(hours.overridden); assertFalse(hours.editable)
         val minimum = light.entries.getValue("password_min_len")
