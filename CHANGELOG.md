@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.6] - The values in force of the settings of the server for any login, with a hash that tells when the list of the app is out of date
+
 - **Anyone who signs in sees the values in force of the settings of the server:** the page of the settings used to show every login but an administrator with the policy scope only the copy kept in the app, with no values. It now asks `GET /settings/values` (the light, read-only view that a viewer, an operator or an administrator whose token cannot read the contract may read) and draws the labels, help and warnings of the copy with the value in force of each key, read-only. An administrator who can read the full contract still gets the full page. A key marked secret shows no value, a key the server keeps back (a path of its computer) says that the server does not show it, a long value that the server cut ends with "…", and a key that neither the contract nor the copy lists is drawn as a read-only line.
 
 - **The answer is kept and asked again with its ETag:** the tag of the last answer is sent back in `If-None-Match`, a `304` keeps the page as it is, and the tag is forgotten when the login changes or a read fails. Only a tag of printable characters, at most 96 of them, is kept or sent back.
