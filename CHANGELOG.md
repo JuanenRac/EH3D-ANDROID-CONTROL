@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.7] - Authorization of a job by the hash of its toolpath, the eight official languages only and a parity check that follows the branch
+
 - **A job of a machine shows the hash of what it will do and where its authorization stands:** each job of the queue of a machine shows the first twelve characters of its `toolpath_sha256` and a badge: *not authorized* (nobody authorized it), *authorized* (the authorized hash is the present one) or *expired* (the authorized hash is not the present one). A job read from an older server, which says no hash, shows neither the code nor the badge.
 
 - **The button *Authorize* asks twice and the start names the hash that was shown:** for an operator and a job that waits whose present hash is not authorized, *Authorize* asks a second time with the short code and then sends `POST /work/jobs/{id}/authorize` with the hash that was on the screen (the scope `jobs:authorize` is checked by the server). The start, also asked twice, sends the same hash, so a job that changed after it was shown is refused instead of started. A start of a job with no hash keeps the empty body.
