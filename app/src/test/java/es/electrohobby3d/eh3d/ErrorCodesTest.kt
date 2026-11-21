@@ -1,5 +1,6 @@
 package es.electrohobby3d.eh3d
 
+import es.electrohobby3d.eh3d.model.ServerErrors
 import org.json.JSONArray
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -28,12 +29,24 @@ class ErrorCodesTest {
         "bad_app", "bad_catalog", "bad_container", "bad_design_request", "bad_filename", "bad_plugin_request", "catalog_readonly", "design_run_unavailable", "file_too_big", "locked", "not_locked", "precondition_failed", "precondition_required", "project_quota", "unknown_catalog", "unknown_file", "unknown_item", "unknown_plugin", "unknown_session", "unknown_version",
     )
 
+    /** The codes the server added after the first copy of the catalog: the app tells them from the table of eight languages (assets/server-errors.json), which ServerErrorsContractTest checks against the server. */
+    private val toldByTheTable = setOf(
+        "air_assist_off", "bad_axis", "bad_feed", "bad_gerber", "bad_heater", "bad_mesh",
+        "bad_operation", "bad_placement_list", "bad_rules", "compat_off", "compat_write_off", "enclosure_open",
+        "farm_no_free_printer", "focus_not_checked", "heater_timeout", "input_too_large", "jog_while_running", "laser_estop_latched",
+        "laser_feed_limit", "laser_power_limit", "machine_alarm", "missing_layer", "out_of_travel", "pnp_feeder_short",
+        "printer_disconnected", "printer_latched", "printer_untrusted", "program_over_limit", "sensor_fault", "slice_failed",
+        "slice_limit", "slice_off", "temperature_over_limit", "test_fire_refused", "thermal_runaway", "unit_unknown",
+        "authorization_required", "bad_bgcode", "bad_pnp_node", "bambu_lan_off", "bgcode_unsupported", "pnp_node_disabled",
+        "pnp_node_exists", "pnp_node_not_ready", "pnp_nodes_full", "pnp_nodes_off", "stale_authorization", "unknown_pnp_node",
+    )
+
     private fun handledByTheModel(): Set<String> =
         Regex("""error\.code == "([a-z0-9_]+)"""").findAll(File("src/main/java/es/electrohobby3d/eh3d/Eh3dViewModel.kt").readText(Charsets.UTF_8)).map { it.groupValues[1] }.toSet()
 
     @Test fun everyCodeOfTheCatalogHasATextOrAReason() {
         val handled = handledByTheModel()
-        val left = catalog.filter { ErrorTexts.phrase(it) == null && it !in handled && it !in showsTheMessage && it !in neverAskedByThePhone }
+        val left = catalog.filter { ErrorTexts.phrase(it) == null && it !in handled && it !in showsTheMessage && it !in neverAskedByThePhone && it !in toldByTheTable }
         assertEquals("a code of the server without a text in the app: add it to ErrorTexts or list it with its reason", emptyList<String>(), left)
     }
 
@@ -47,13 +60,18 @@ class ErrorCodesTest {
     }
 
     @Test fun theReasonsListOnlyCodesThatExist() {
-        val stale = (showsTheMessage + neverAskedByThePhone).filter { it !in catalog }
+        val stale = (showsTheMessage + neverAskedByThePhone + toldByTheTable).filter { it !in catalog }
         assertEquals(emptyList<String>(), stale)
     }
 
     @Test fun aCodeHasOneKindOfAnswerOnly() {
-        val both = catalog.filter { ErrorTexts.phrase(it) != null && (it in handledByTheModel() || it in showsTheMessage || it in neverAskedByThePhone) }
+        val both = catalog.filter { ErrorTexts.phrase(it) != null && (it in handledByTheModel() || it in showsTheMessage || it in neverAskedByThePhone || it in toldByTheTable) }
         assertEquals(emptyList<String>(), both)
+    }
+
+    @Test fun theCodesToldByTheTableAreInTheTableWithTheirEightTexts() {
+        val table = ServerErrors.parse(File("src/main/assets/server-errors.json").readText(Charsets.UTF_8))
+        assertEquals(emptyList<String>(), toldByTheTable.filter { it !in table })
     }
 
     @Test fun aCodeThatIsNotKnownHasNoText() {

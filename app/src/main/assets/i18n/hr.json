@@ -418,5 +418,10 @@
  "Encendido": "Uključeno",
  "Apagado": "Isključeno",
  "En cola": "U redu",
- "En pausa": "Na pauzi"
+ "En pausa": "Na pauzi",
+ "Nodos de las máquinas pick-and-place": "Nodes of the pick-and-place machines",
+ "Se registran y se cambian en EH3D-STUDIO.": "They are registered and changed in EH3D-STUDIO.",
+ "Cabezal": "Head",
+ "Alimentador": "Feeder",
+ "No listo": "Not ready"
 }

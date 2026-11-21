@@ -16,12 +16,14 @@ class ServerErrorsContractTest {
     private val serverCatalog = File("../../EH3D-SERVER/docs/error-codes.json")
     private val table = File("src/main/assets/server-errors.json")
 
-    /** The codes that the server added after the copy of the catalog in src/test/resources: the phone has to tell every one of them. */
+    /** The codes that the server added after the first copy of the catalog (the copy in src/test/resources has them all now): the phone has to tell every one of them. */
     private val addedLater = listOf(
         "air_assist_off", "bad_axis", "bad_feed", "bad_gerber", "bad_heater", "bad_mesh", "bad_operation", "bad_placement_list", "bad_rules", "compat_off", "compat_write_off", "enclosure_open",
         "farm_no_free_printer", "focus_not_checked", "heater_timeout", "input_too_large", "jog_while_running", "laser_estop_latched", "laser_feed_limit", "laser_power_limit", "machine_alarm",
         "missing_layer", "out_of_travel", "pnp_feeder_short", "printer_disconnected", "printer_latched", "printer_untrusted", "program_over_limit", "sensor_fault", "slice_failed", "slice_limit",
         "slice_off", "temperature_over_limit", "test_fire_refused", "thermal_runaway", "unit_unknown",
+        "authorization_required", "bad_bgcode", "bad_pnp_node", "bambu_lan_off", "bgcode_unsupported", "pnp_node_disabled", "pnp_node_exists", "pnp_node_not_ready", "pnp_nodes_full", "pnp_nodes_off",
+        "stale_authorization", "unknown_pnp_node",
     )
 
     private fun load() { ServerErrors.install(table.readText(Charsets.UTF_8)) }
@@ -45,7 +47,7 @@ class ServerErrorsContractTest {
         load()
         val without = addedLater.filter { code -> ServerErrors.LANGUAGES.any { language -> ServerErrors.text(code, language) == null } }
         assertEquals(emptyList<String>(), without)
-        assertEquals(36, addedLater.size)
+        assertEquals(48, addedLater.size)
         assertEquals(addedLater.size, addedLater.toSet().size)
     }
 
@@ -53,7 +55,8 @@ class ServerErrorsContractTest {
         load()
         val kept = JSONArray(File("src/test/resources/error-codes.json").readText(Charsets.UTF_8)).let { list -> (0 until list.length()).map { list.getJSONObject(it).getString("code") } }
         assertTrue((kept + addedLater).all { it in ServerErrors.codes() })
-        assertTrue(ServerErrors.codes().size >= kept.size + addedLater.size)
+        assertTrue(addedLater.all { it in kept })
+        assertEquals(kept.toSet(), ServerErrors.codes())
     }
 
     @Test fun `the new codes are told in each language and not in English alone`() {

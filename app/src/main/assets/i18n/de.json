@@ -418,5 +418,10 @@
  "Encendido": "An",
  "Apagado": "Aus",
  "En cola": "Wartet",
- "En pausa": "Angehalten"
+ "En pausa": "Angehalten",
+ "Nodos de las máquinas pick-and-place": "Knoten der Pick-and-Place-Maschinen",
+ "Se registran y se cambian en EH3D-STUDIO.": "Sie werden in EH3D-STUDIO eingetragen und geändert.",
+ "Cabezal": "Kopf",
+ "Alimentador": "Zuführung",
+ "No listo": "Nicht bereit"
 }

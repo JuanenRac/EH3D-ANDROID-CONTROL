@@ -64,10 +64,10 @@ class SettingsContractTest {
 
     // ---- the copy of the app
 
-    @Test fun theCopyIsTheContractOfTheServerWith89SettingsInFifteenGroups() {
+    @Test fun theCopyIsTheContractOfTheServerWith95SettingsInSixteenGroups() {
         assertEquals("eh3d.settings.contract/1", copy.schema)
-        assertEquals(89, copy.settings.size)
-        assertEquals(15, copy.groups.size)
+        assertEquals(95, copy.settings.size)
+        assertEquals(16, copy.groups.size)
         assertEquals(CONTRACT_LANGS, copy.languages)
         assertEquals(copy.settings.size, copy.settings.map { it.key }.toSet().size)
     }
@@ -83,7 +83,7 @@ class SettingsContractTest {
         val policy = copy.settings.filter { it.write.via == "policy" }
         val file = copy.settings.filter { it.write.via == "file" }
         assertEquals(19, policy.size)
-        assertEquals(70, file.size)
+        assertEquals(76, file.size)
         assertTrue(policy.all { it.write.method == "PUT" && writePath(it) == "/auth/policy" && it.role == "admin" })
         assertTrue(file.all { it.write.path == null && it.write.file == "server.cfg" })
     }
@@ -92,7 +92,7 @@ class SettingsContractTest {
         for (s in copy.settings) assertEquals(s.key, s.write.via == "policy", canWriteSetting("admin", s))
     }
 
-    @Test fun theCopyIsDrawnInItsFifteenGroupsInOrder() {
+    @Test fun theCopyIsDrawnInItsSixteenGroupsInOrder() {
         val groups = groupSettings(copy)
         assertEquals(copy.groups.map { it.id }, groups.map { it.id })
         assertEquals(copy.settings.size, groups.sumOf { it.settings.size })

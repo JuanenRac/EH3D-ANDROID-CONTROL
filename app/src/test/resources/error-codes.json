@@ -1,7 +1,17 @@
 [
   {
+    "code": "air_assist_off",
+    "description": "The air assist input of the laser machine says off and the machine requires it on.",
+    "status": 409
+  },
+  {
     "code": "artifact_in_use",
     "description": "A task still works on this artifact or made it: remove the task first.",
+    "status": 409
+  },
+  {
+    "code": "authorization_required",
+    "description": "The server asks for the authorization of a job of this plugin before it starts (work_require_authorization) and the job has none for its present hash.",
     "status": 409
   },
   {
@@ -17,6 +27,16 @@
   {
     "code": "bad_artifact",
     "description": "The description of an artifact does not fit (name, format, result_type, inputs or params).",
+    "status": 422
+  },
+  {
+    "code": "bad_axis",
+    "description": "The axis of a jog is not one of x, y or z.",
+    "status": 422
+  },
+  {
+    "code": "bad_bgcode",
+    "description": "A binary G-code file (.bgcode) cannot be read or written: it is cut, its checksum is wrong, a block is out of order, of a type or a compression the format does not have, or it is bigger than the limit.",
     "status": 422
   },
   {
@@ -60,6 +80,11 @@
     "status": 422
   },
   {
+    "code": "bad_feed",
+    "description": "The feed of a jog is not a number above 0 and up to jog_max_feed of the machine.",
+    "status": 422
+  },
+  {
     "code": "bad_filename",
     "description": "The name of a file is not safe: empty, absolute, with .. or a drive, with control characters, a reserved name of Windows, too long, or the same as another in other letter case.",
     "status": 422
@@ -67,6 +92,16 @@
   {
     "code": "bad_gcode",
     "description": "A line of the G-code program cannot be sent (control characters, a $ line that is not allowed, a line too long).",
+    "status": 422
+  },
+  {
+    "code": "bad_gerber",
+    "description": "A Gerber or Excellon file cannot be read: the format, a coordinate or a command is wrong, or the file holds no data.",
+    "status": 422
+  },
+  {
+    "code": "bad_heater",
+    "description": "The heater is not hotend, bed or chamber.",
     "status": 422
   },
   {
@@ -85,6 +120,11 @@
     "status": 422
   },
   {
+    "code": "bad_mesh",
+    "description": "The mesh to slice is not a closed STL or 3MF the slicer can read, or has no closed outline.",
+    "status": 422
+  },
+  {
     "code": "bad_name",
     "description": "A name is empty, too long or has characters that are not allowed.",
     "status": 422
@@ -92,6 +132,11 @@
   {
     "code": "bad_ncd",
     "description": "The drilling file does not read.",
+    "status": 422
+  },
+  {
+    "code": "bad_operation",
+    "description": "An operation of a vector job for a laser is not valid: its layer, its mode (cut or engrave), its power, its speed or its passes.",
     "status": 422
   },
   {
@@ -110,8 +155,18 @@
     "status": 502
   },
   {
+    "code": "bad_placement_list",
+    "description": "A list of placements that came as an artifact cannot be read as JSON or as CSV with the columns ref, part, x and y.",
+    "status": 422
+  },
+  {
     "code": "bad_plugin_request",
     "description": "The request does not fit what the plugin of the machine takes, or the settings of a machine of a plugin are not valid.",
+    "status": 422
+  },
+  {
+    "code": "bad_pnp_node",
+    "description": "A node of a pick-and-place machine does not fit: its kind (feeder or head), its id, its name, its address (host:port), its token (no spaces or control characters) or its machine (a machine of the plugin pnp).",
     "status": 422
   },
   {
@@ -133,6 +188,11 @@
     "code": "bad_request",
     "description": "The body of the request does not read as the request needs.",
     "status": 400
+  },
+  {
+    "code": "bad_rules",
+    "description": "The rules of a check are not an object of known rules with values inside their ranges.",
+    "status": 422
   },
   {
     "code": "bad_samples",
@@ -185,6 +245,16 @@
     "status": 422
   },
   {
+    "code": "bambu_lan_off",
+    "description": "The LAN link to a real Bambu Lab printer is off on this server (the switch bambu_lan_enabled of server.cfg), so only the simulated printer (host sim) is reached.",
+    "status": 409
+  },
+  {
+    "code": "bgcode_unsupported",
+    "description": "A binary G-code file uses something the server does not read: another version of the format, or G-code packed with MeatPack.",
+    "status": 422
+  },
+  {
     "code": "blob_damaged",
     "description": "The bytes of an artifact are missing or are not what their hash says.",
     "status": 500
@@ -200,9 +270,24 @@
     "status": 409
   },
   {
+    "code": "compat_off",
+    "description": "The routes of Moonraker and OctoPrint at the root of the address are off: the switch compat_api of the security page is not on.",
+    "status": 404
+  },
+  {
+    "code": "compat_write_off",
+    "description": "The write routes of Moonraker and OctoPrint are off: the switch compat_write of the security page is not on.",
+    "status": 404
+  },
+  {
     "code": "design_run_unavailable",
     "description": "The server is not set up to run the design program: design_run is off or design_program is not set.",
     "status": 501
+  },
+  {
+    "code": "enclosure_open",
+    "description": "The enclosure input of the laser machine says open and the machine requires it closed.",
+    "status": 409
   },
   {
     "code": "engine_missing",
@@ -210,9 +295,19 @@
     "status": 422
   },
   {
+    "code": "farm_no_free_printer",
+    "description": "No printer of the list is free, unlatched and able to take the job.",
+    "status": 409
+  },
+  {
     "code": "file_too_big",
     "description": "The file is bigger than project_max_file_mb.",
     "status": 413
+  },
+  {
+    "code": "focus_not_checked",
+    "description": "The focus input of the laser machine says the head is not focused and the machine requires it to be.",
+    "status": 409
   },
   {
     "code": "forbidden",
@@ -240,9 +335,19 @@
     "status": 502
   },
   {
+    "code": "heater_timeout",
+    "description": "A heater did not get to its target in heat_timeout_s: the job stops and the heaters go off.",
+    "status": 409
+  },
+  {
     "code": "idempotency_conflict",
     "description": "The idempotency key was already used by this caller for a request with another body.",
     "status": 409
+  },
+  {
+    "code": "input_too_large",
+    "description": "The files of a job are bigger than max_input_mib of the worker.",
+    "status": 413
   },
   {
     "code": "internal",
@@ -253,6 +358,26 @@
     "code": "job_active",
     "description": "The job is running: stop it first.",
     "status": 409
+  },
+  {
+    "code": "jog_while_running",
+    "description": "A job is running or held on the machine: stop it before a jog.",
+    "status": 409
+  },
+  {
+    "code": "laser_estop_latched",
+    "description": "An emergency stop latched the laser machine: nothing is prepared or started on it until an administrator releases it.",
+    "status": 409
+  },
+  {
+    "code": "laser_feed_limit",
+    "description": "A line of the G-code program asks for a cutting feed over max_feed_mm_min of the laser machine.",
+    "status": 422
+  },
+  {
+    "code": "laser_power_limit",
+    "description": "The job asks for more power (S) than the limit of the laser machine (power_limit_pct of max_s) and the machine is set to reject it.",
+    "status": 422
   },
   {
     "code": "last_admin",
@@ -270,6 +395,11 @@
     "status": 423
   },
   {
+    "code": "machine_alarm",
+    "description": "The machine is latched by an emergency stop (or in alarm): nothing is prepared, started or jogged until an administrator releases it.",
+    "status": 409
+  },
+  {
     "code": "machine_busy",
     "description": "A job is running on the machine.",
     "status": 409
@@ -283,6 +413,11 @@
     "code": "machines_busy",
     "description": "A job is running: the update would restart the server and stop it.",
     "status": 409
+  },
+  {
+    "code": "missing_layer",
+    "description": "The job brings no file, or the check needs a copper layer and none of the files is one.",
+    "status": 422
   },
   {
     "code": "no_head",
@@ -355,6 +490,11 @@
     "status": 422
   },
   {
+    "code": "out_of_travel",
+    "description": "A move of the program or of a jog goes outside the travel of the machine (the machine's switch is on reject).",
+    "status": 422
+  },
+  {
     "code": "outside_course",
     "description": "The work goes past the course of an axis (the machine's switch is on reject).",
     "status": 422
@@ -365,6 +505,36 @@
     "status": 502
   },
   {
+    "code": "pnp_feeder_short",
+    "description": "A part of the placement job is in no feeder of the pick-and-place machine, or the feeders hold fewer than the job needs while the machine requires the stock.",
+    "status": 409
+  },
+  {
+    "code": "pnp_node_disabled",
+    "description": "The node of the pick-and-place machine is switched off, so it is not asked.",
+    "status": 409
+  },
+  {
+    "code": "pnp_node_exists",
+    "description": "A node with this id or this address is already registered.",
+    "status": 409
+  },
+  {
+    "code": "pnp_node_not_ready",
+    "description": "A node of this pick-and-place machine is silent, refuses the token, says it is safe or fails its own check, so the job does not start.",
+    "status": 409
+  },
+  {
+    "code": "pnp_nodes_full",
+    "description": "The list of the nodes of the pick-and-place machines is full (pnp_nodes_max).",
+    "status": 409
+  },
+  {
+    "code": "pnp_nodes_off",
+    "description": "The nodes of the pick-and-place machines are switched off on this server (pnp_nodes_enabled).",
+    "status": 501
+  },
+  {
     "code": "precondition_failed",
     "description": "The If-Match tag is not the one of the current version: read the file again before writing.",
     "status": 412
@@ -373,6 +543,26 @@
     "code": "precondition_required",
     "description": "A write over an existing file needs If-Match with the tag (SHA-256) of the version it was made from.",
     "status": 428
+  },
+  {
+    "code": "printer_disconnected",
+    "description": "The printer does not answer.",
+    "status": 502
+  },
+  {
+    "code": "printer_latched",
+    "description": "An emergency stop or a fault of a heater latched the printer: nothing is prepared, started or heated on it until an administrator releases it.",
+    "status": 409
+  },
+  {
+    "code": "printer_untrusted",
+    "description": "The certificate of the printer is not the pinned one, or none is pinned: the connection is refused.",
+    "status": 502
+  },
+  {
+    "code": "program_over_limit",
+    "description": "A program for a 3D printer asks for a temperature or a feed over a limit of the machine, so the whole program is refused.",
+    "status": 422
   },
   {
     "code": "project_quota",
@@ -390,14 +580,39 @@
     "status": 429
   },
   {
+    "code": "sensor_fault",
+    "description": "A heater reads below min_temp_c, which is a broken sensor: the printer was stopped and the machine is latched until an administrator releases it.",
+    "status": 409
+  },
+  {
     "code": "shares_off",
     "description": "Sharing is switched off on this server (shares_enabled).",
     "status": 501
   },
   {
+    "code": "slice_failed",
+    "description": "The program that slices did not give a result.",
+    "status": 502
+  },
+  {
+    "code": "slice_limit",
+    "description": "The object or the profile goes past a limit of the printer or of the slicer; nothing is cut down to fit.",
+    "status": 422
+  },
+  {
+    "code": "slice_off",
+    "description": "Slicing on the server is off: the switch slice of the security page is not on.",
+    "status": 404
+  },
+  {
     "code": "spindle_limit",
     "description": "The job asks for more than the spindle of the machine gives (the machine's switch is on reject).",
     "status": 422
+  },
+  {
+    "code": "stale_authorization",
+    "description": "The hash a person authorised, or the one a start names, is not the hash of the job as it is now, so nothing starts.",
+    "status": 409
   },
   {
     "code": "stale_parent",
@@ -430,6 +645,21 @@
     "status": 501
   },
   {
+    "code": "temperature_over_limit",
+    "description": "A target of temperature is over the limit of the heater (the profile of the model of the printer, or the limit set for the machine).",
+    "status": 422
+  },
+  {
+    "code": "test_fire_refused",
+    "description": "A test fire asks for more power than test_fire_max_pct of the laser machine.",
+    "status": 422
+  },
+  {
+    "code": "thermal_runaway",
+    "description": "A heater is far from its target for too long or is past its limit: the printer was stopped and the machine is latched until an administrator releases it.",
+    "status": 409
+  },
+  {
     "code": "throttled",
     "description": "Too many wrong passwords, or too many tickets waiting: try again later.",
     "status": 429
@@ -453,6 +683,11 @@
     "code": "unauthorized",
     "description": "The token is missing, not valid or has expired.",
     "status": 401
+  },
+  {
+    "code": "unit_unknown",
+    "description": "A Gerber or Excellon file uses coordinates before it says its units.",
+    "status": 422
   },
   {
     "code": "unknown_artifact",
@@ -493,6 +728,11 @@
     "code": "unknown_plugin",
     "description": "There is no plugin of this kind.",
     "status": 422
+  },
+  {
+    "code": "unknown_pnp_node",
+    "description": "There is no node of a pick-and-place machine with this id.",
+    "status": 404
   },
   {
     "code": "unknown_project",

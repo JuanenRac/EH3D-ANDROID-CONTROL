@@ -418,5 +418,10 @@
  "Encendido": "オン",
  "Apagado": "オフ",
  "En cola": "待機中",
- "En pausa": "一時停止中"
+ "En pausa": "一時停止中",
+ "Nodos de las máquinas pick-and-place": "ピックアンドプレース機のノード",
+ "Se registran y se cambian en EH3D-STUDIO.": "ノードの登録と変更は EH3D-STUDIO で行います。",
+ "Cabezal": "ヘッド",
+ "Alimentador": "フィーダー",
+ "No listo": "未準備"
 }

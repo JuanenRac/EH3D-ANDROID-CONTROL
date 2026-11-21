@@ -29,9 +29,11 @@ import es.electrohobby3d.eh3d.model.JobView
 import es.electrohobby3d.eh3d.model.RefreshRule
 import es.electrohobby3d.eh3d.model.RetryRules
 import es.electrohobby3d.eh3d.model.MachineSafety
+import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.PolicySwitch
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
+import es.electrohobby3d.eh3d.model.parsePnpNodes
 import es.electrohobby3d.eh3d.model.parsePolicySwitches
 import es.electrohobby3d.eh3d.model.parseWorkJobs
 import es.electrohobby3d.eh3d.model.parsePreview
@@ -231,6 +233,9 @@ open class Eh3dApi(
 
     /** The machines of the plugins of the server (laser, pick-and-place, printer...) with what each says of itself in `detail`; the ones of the drilling and routing machines are in the fleet. */
     suspend fun workMachines(): List<WorkMachine> = parseWorkMachines(call("/work/machines"))
+
+    /** The feeder and head nodes of the pick-and-place machines, with their health as the server last saw it (read only; a server where the nodes are switched off answers 501). */
+    suspend fun pnpNodes(): List<PnpNode> = parsePnpNodes(call("/pnp/nodes"))
 
     /** The jobs of the generic queue of the server (the newest first, at most 100): the ones that wait, run or are held are the ones the app shows. */
     suspend fun workJobs(): List<WorkJob> = parseWorkJobs(call("/work/jobs?limit=100"))

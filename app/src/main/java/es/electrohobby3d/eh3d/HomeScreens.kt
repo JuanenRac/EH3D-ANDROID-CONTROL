@@ -136,6 +136,11 @@ fun HomePage(model: Eh3dViewModel) {
             item { Title(tr("Otras máquinas")) }
             items(model.workMachines, key = { "work-" + it.id }) { w -> WorkMachineCard(w, model) }
         }
+        if (model.pnpNodes.isNotEmpty()) {
+            item { Title(tr("Nodos de las máquinas pick-and-place")) }
+            items(model.pnpNodes, key = { "pnp-" + it.id }) { n -> PnpNodeCard(n) }
+            item { Text(tr("Se registran y se cambian en EH3D-STUDIO."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall) }
+        }
         item { Spacer(Modifier.padding(bottom = 8.dp)) }
     }
     if (askAll) StopDialog(tr("¿Parar todas las máquinas que trabajan?"), model.offline, onConfirm = { askAll = false; model.emergencyStopAll() }, onDismiss = { askAll = false })

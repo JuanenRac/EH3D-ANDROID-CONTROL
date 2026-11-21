@@ -19,6 +19,16 @@
 "仍有任务在使用该产物或由它生成：请先删除该任务。",
 "このアーティファクトを使用中、または作成したタスクがあります。先にそのタスクを削除してください。"
 ],
+"authorization_required":[
+"This server asks for the authorization of the job before it starts, and the job has none for its present content.",
+"Este servidor exige la autorización del trabajo antes de arrancarlo, y el trabajo no tiene ninguna para su contenido actual.",
+"Questo server richiede l'autorizzazione del lavoro prima dell'avvio e il lavoro non ne ha per il suo contenuto attuale.",
+"Dieser Server verlangt die Freigabe des Auftrags vor dem Start, und der Auftrag hat keine für seinen jetzigen Inhalt.",
+"Ce serveur exige l'autorisation du travail avant son démarrage, et le travail n'en a aucune pour son contenu actuel.",
+"Este servidor exige a autorização do trabalho antes de arrancar, e o trabalho não tem nenhuma para o seu conteúdo atual.",
+"此服务器要求作业在启动前获得授权，而该作业的当前内容尚未获得授权。",
+"このサーバーはジョブの開始前に承認を求めますが、現在の内容に対する承認がありません。"
+],
 "bad_address":[
 "A node needs its address (host:port).",
 "Un nodo necesita su dirección (host:puerto).",
@@ -58,6 +68,16 @@
 "O eixo do movimento manual tem de ser x, y ou z.",
 "手动移动的轴必须是 x、y 或 z。",
 "ジョグの軸は x、y、z のいずれかにしてください。"
+],
+"bad_bgcode":[
+"The binary G-code file (.bgcode) cannot be read: it is cut, its checksum is wrong or it is too big.",
+"El archivo de G-code binario (.bgcode) no se puede leer: está cortado, su suma de comprobación es errónea o es demasiado grande.",
+"Il file G-code binario (.bgcode) non si può leggere: è troncato, il checksum è errato o è troppo grande.",
+"Die binäre G-Code-Datei (.bgcode) lässt sich nicht lesen: Sie ist abgeschnitten, ihre Prüfsumme stimmt nicht oder sie ist zu groß.",
+"Le fichier G-code binaire (.bgcode) est illisible : il est tronqué, sa somme de contrôle est fausse ou il est trop gros.",
+"O ficheiro de G-code binário (.bgcode) não se consegue ler: está cortado, a soma de verificação está errada ou é demasiado grande.",
+"无法读取二进制 G-code 文件（.bgcode）：文件被截断、校验和错误或文件过大。",
+"バイナリG-codeファイル（.bgcode）を読み取れません。途切れている、チェックサムが誤っている、または大きすぎます。"
 ],
 "bad_board":[
 "The board margin must be from 0 to 50 mm.",
@@ -309,6 +329,16 @@
 "请求不符合机床插件的要求。",
 "リクエストが機械プラグインの受け付ける内容と合いません。"
 ],
+"bad_pnp_node":[
+"The node does not fit: check its kind (feeder or head), id, name, address (host:port), token and machine.",
+"El nodo no es válido: revisa su tipo (alimentador o cabezal), id, nombre, dirección (host:puerto), token y máquina.",
+"Il nodo non è valido: controlla tipo (alimentatore o testa), id, nome, indirizzo (host:porta), token e macchina.",
+"Der Knoten ist ungültig: Prüfen Sie Art (Zuführung oder Kopf), ID, Name, Adresse (Host:Port), Token und Maschine.",
+"Le nœud n'est pas valide : vérifiez son type (alimentateur ou tête), son id, son nom, son adresse (hôte:port), son jeton et sa machine.",
+"O nó não é válido: verifique o tipo (alimentador ou cabeça), o id, o nome, o endereço (anfitrião:porta), o token e a máquina.",
+"该节点无效：请检查其类型（送料器或贴装头）、ID、名称、地址（主机:端口）、令牌和机床。",
+"ノードが正しくありません。種類（フィーダーまたはヘッド）、ID、名前、アドレス（ホスト:ポート）、トークン、マシンを確認してください。"
+],
 "bad_policy":[
 "That switch cannot be changed while the server runs, or the value is not valid.",
 "Ese interruptor no se puede cambiar con el servidor en marcha, o el valor no es válido.",
@@ -458,6 +488,26 @@
 "A declaração do carregamento ou de uma das suas partes não é válida (hash, parte vazia ou parte acima do tamanho declarado).",
 "上传或其某一部分的声明无效（哈希、空分片或超出声明大小的分片）。",
 "アップロードまたはその部分の宣言が正しくありません（ハッシュ、空の部分、宣言サイズを超える部分）。"
+],
+"bambu_lan_off":[
+"The LAN link to Bambu Lab printers is off on this server: only the simulated printer is reached.",
+"El enlace LAN con impresoras Bambu Lab está apagado en este servidor: solo se llega a la impresora simulada.",
+"Il collegamento LAN alle stampanti Bambu Lab è spento su questo server: si raggiunge solo la stampante simulata.",
+"Die LAN-Verbindung zu Bambu-Lab-Druckern ist auf diesem Server ausgeschaltet: Erreichbar ist nur der simulierte Drucker.",
+"La liaison LAN avec les imprimantes Bambu Lab est désactivée sur ce serveur : seule l'imprimante simulée est joignable.",
+"A ligação LAN às impressoras Bambu Lab está desligada neste servidor: só se alcança a impressora simulada.",
+"此服务器上已关闭与 Bambu Lab 打印机的局域网连接：只能连接模拟打印机。",
+"このサーバーではBambu Lab プリンターとのLAN接続がオフです。シミュレーションのプリンターにのみ接続できます。"
+],
+"bgcode_unsupported":[
+"The binary G-code file uses something the server does not read: another version of the format or MeatPack.",
+"El G-code binario usa algo que el servidor no lee: otra versión del formato o MeatPack.",
+"Il G-code binario usa qualcosa che il server non legge: un'altra versione del formato o MeatPack.",
+"Die binäre G-Code-Datei nutzt etwas, das der Server nicht liest: eine andere Formatversion oder MeatPack.",
+"Le G-code binaire utilise quelque chose que le serveur ne lit pas : une autre version du format ou MeatPack.",
+"O G-code binário usa algo que o servidor não lê: outra versão do formato ou MeatPack.",
+"该二进制 G-code 使用了服务器无法读取的内容：其他版本的格式或 MeatPack。",
+"このバイナリG-codeはサーバーが読めない形式（別バージョンのフォーマットまたはMeatPack）を使っています。"
 ],
 "blob_damaged":[
 "The bytes of the artifact are missing or are not what their hash says.",
@@ -969,6 +1019,56 @@
 "贴装作业中有元件不在任何供料器中，或供料器中的数量少于作业所需。",
 "配置ジョブの部品がどのフィーダーにもないか、フィーダーの在庫がジョブに必要な数より少ないです。"
 ],
+"pnp_node_disabled":[
+"The node is switched off, so it is not asked.",
+"El nodo está desactivado, por eso no se le consulta.",
+"Il nodo è disattivato, quindi non viene interrogato.",
+"Der Knoten ist ausgeschaltet und wird daher nicht abgefragt.",
+"Le nœud est désactivé, il n'est donc pas interrogé.",
+"O nó está desativado, por isso não é consultado.",
+"该节点已停用，因此不会被查询。",
+"このノードは無効のため、問い合わせされません。"
+],
+"pnp_node_exists":[
+"A node with this id or this address is already registered.",
+"Ya hay un nodo registrado con este id o esta dirección.",
+"Esiste già un nodo registrato con questo id o questo indirizzo.",
+"Ein Knoten mit dieser ID oder dieser Adresse ist bereits eingetragen.",
+"Un nœud avec cet id ou cette adresse est déjà enregistré.",
+"Já existe um nó registado com este id ou este endereço.",
+"已登记了使用此 ID 或此地址的节点。",
+"このIDまたはアドレスのノードはすでに登録されています。"
+],
+"pnp_node_not_ready":[
+"A node of this machine is silent, refuses the token, says it is unsafe or fails its own check: the job does not start.",
+"Un nodo de esta máquina no responde, rechaza el token, dice que no es seguro o falla su propia comprobación: el trabajo no arranca.",
+"Un nodo di questa macchina non risponde, rifiuta il token, dichiara di non essere sicuro o fallisce il proprio controllo: il lavoro non parte.",
+"Ein Knoten dieser Maschine schweigt, lehnt das Token ab, meldet sich als nicht sicher oder besteht seine eigene Prüfung nicht: Der Auftrag startet nicht.",
+"Un nœud de cette machine ne répond pas, refuse le jeton, se déclare non sûr ou échoue à son propre contrôle : le travail ne démarre pas.",
+"Um nó desta máquina não responde, recusa o token, diz que não é seguro ou falha a sua própria verificação: o trabalho não arranca.",
+"此机床的某个节点无响应、拒绝令牌、报告不安全或自检失败：作业不会启动。",
+"このマシンのノードが応答しない、トークンを拒否する、安全でないと報告する、または自己診断に失敗したため、ジョブは開始されません。"
+],
+"pnp_nodes_full":[
+"The list of pick-and-place nodes is full.",
+"La lista de nodos pick-and-place está llena.",
+"L'elenco dei nodi pick-and-place è pieno.",
+"Die Liste der Pick-and-Place-Knoten ist voll.",
+"La liste des nœuds pick-and-place est pleine.",
+"A lista de nós pick-and-place está cheia.",
+"贴片机节点列表已满。",
+"ピックアンドプレースのノード一覧がいっぱいです。"
+],
+"pnp_nodes_off":[
+"The nodes of the pick-and-place machines are switched off on this server.",
+"Los nodos de las máquinas pick-and-place están apagados en este servidor.",
+"I nodi delle macchine pick-and-place sono spenti su questo server.",
+"Die Knoten der Pick-and-Place-Maschinen sind auf diesem Server ausgeschaltet.",
+"Les nœuds des machines pick-and-place sont désactivés sur ce serveur.",
+"Os nós das máquinas pick-and-place estão desligados neste servidor.",
+"此服务器上已关闭贴片机节点。",
+"このサーバーではピックアンドプレース機のノードがオフになっています。"
+],
 "precondition_failed":[
 "Somebody changed the file since you read it: read it again before writing.",
 "Alguien cambió el fichero desde que lo leíste: léelo de nuevo antes de escribir.",
@@ -1118,6 +1218,16 @@
 "O trabalho pede mais do que o fuso da máquina dá. Baixe as rotações ou os avanços, ou mude o fuso da máquina.",
 "作业要求超出了机床主轴的能力。请降低转速或进给，或更换机床的主轴。",
 "ジョブが機械のスピンドルの能力を超えています。回転数や送りを下げるか、機械のスピンドルを変更してください。"
+],
+"stale_authorization":[
+"The job changed after it was authorised: look at it again and authorise it again.",
+"El trabajo cambió después de autorizarse: revísalo y autorízalo de nuevo.",
+"Il lavoro è cambiato dopo l'autorizzazione: controllalo e autorizzalo di nuovo.",
+"Der Auftrag hat sich nach der Freigabe geändert: Prüfen Sie ihn und geben Sie ihn erneut frei.",
+"Le travail a changé après son autorisation : vérifiez-le et autorisez-le de nouveau.",
+"O trabalho mudou depois de autorizado: reveja-o e autorize-o de novo.",
+"作业在授权之后发生了变化：请重新检查并再次授权。",
+"ジョブは承認後に変更されました。内容を確認して、もう一度承認してください。"
 ],
 "stale_parent":[
 "The revision does not follow the last one of the project: look at what changed first.",
@@ -1348,6 +1458,16 @@
 "Não existe nenhum módulo de máquina deste tipo.",
 "没有此类型的机床插件。",
 "この種類の機械プラグインはありません。"
+],
+"unknown_pnp_node":[
+"That pick-and-place node does not exist.",
+"Ese nodo pick-and-place no existe.",
+"Quel nodo pick-and-place non esiste.",
+"Diesen Pick-and-Place-Knoten gibt es nicht.",
+"Ce nœud pick-and-place n'existe pas.",
+"Esse nó pick-and-place não existe.",
+"该贴片机节点不存在。",
+"そのピックアンドプレースのノードは存在しません。"
 ],
 "unknown_project":[
 "There is no project with this id, or it belongs to somebody else.",

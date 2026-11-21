@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import es.electrohobby3d.eh3d.model.Interlock
 import es.electrohobby3d.eh3d.model.MachineSafety
+import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
 
@@ -133,6 +134,31 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
                 onConfirm = { pending = null; if (job != null) model.cancelWorkJob(job.id) }, onDismiss = { pending = null },
             )
         }
+    }
+}
+
+/** The word of the kind of a node of a pick-and-place machine. */
+fun pnpKindWord(kind: String): String = if (kind == "head") tr("Cabezal") else tr("Alimentador")
+
+/**
+ * A node of a pick-and-place machine, read only: its kind, address and machine, whether the server counts it ready (green) or not (red; a node that is switched off is grey), its health as the server says it,
+ * the last error of its poll and the numbers it said last. The token is never shown (the phone never reads it). The nodes are registered and changed in EH3D-STUDIO.
+ */
+@Composable
+fun PnpNodeCard(n: PnpNode) {
+    val color = if (!n.enabled) Forge.Dim else if (n.ready) Forge.Green else Forge.Danger
+    Card(accent = color) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Light(color, live = n.ready)
+            Column(Modifier.weight(1f)) {
+                Text(n.name, style = MaterialTheme.typography.titleMedium, color = Forge.Text)
+                Text(pnpKindWord(n.kind) + " · " + n.address + (if (n.machine.isNotEmpty()) " · " + n.machine else ""), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+            }
+            Pill(if (n.ready) tr("Listo") else tr("No listo"), color)
+        }
+        if (n.simulatorOnly) Pill(tr("SOLO SIMULADOR"), Forge.Orange)
+        Text("health: " + n.health + (if (n.lastError.isNotEmpty()) " · " + n.lastError else ""), color = Forge.Text, style = MaterialTheme.typography.bodySmall)
+        n.facts.forEach { (key, value) -> Text("$key: $value", color = Forge.Dim, style = MaterialTheme.typography.bodySmall) }
     }
 }
 

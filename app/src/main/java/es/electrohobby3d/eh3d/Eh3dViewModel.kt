@@ -24,6 +24,7 @@ import es.electrohobby3d.eh3d.model.SettingsReaders
 import es.electrohobby3d.eh3d.model.SettingsTexts
 import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
+import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.PolicySwitch
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
@@ -116,6 +117,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** The open logins of the person (this phone, Studio, the others) and the machines of the plugins of the server. */
     var sessionList by mutableStateOf(emptyList<AuthSession>()); private set
     var workMachines by mutableStateOf(emptyList<WorkMachine>()); private set
+    /** The feeder and head nodes of the pick-and-place machines, read only; empty while the server has none or has the nodes switched off. */
+    var pnpNodes by mutableStateOf(emptyList<PnpNode>()); private set
     /** The jobs of the generic queue of the server (the ones of the machines of the plugins) and, for an administrator, the switches of security of the server that the app explains. */
     var workJobs by mutableStateOf(emptyList<WorkJob>()); private set
     var switches by mutableStateOf(emptyList<PolicySwitch>()); private set
@@ -281,7 +284,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         login = null
         fleet = Fleet.EMPTY
         job = null; head = null; jobs = emptyList()
-        sessionList = emptyList(); workMachines = emptyList(); workJobs = emptyList(); switches = emptyList()
+        sessionList = emptyList(); workMachines = emptyList(); pnpNodes = emptyList(); workJobs = emptyList(); switches = emptyList()
         stack.clear(); stack.add(Page.Home)
         phase = Phase.SignedOut
     }
@@ -465,6 +468,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                 Page.Jobs -> jobs = api.jobs()
                 Page.Home -> {
                     workMachines = try { api.workMachines() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workMachines else emptyList() }   // a server without plugins has none
+                    pnpNodes = if (workMachines.any { it.plugin == "pnp" }) (try { api.pnpNodes() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) pnpNodes else emptyList() }) else emptyList()   // 501 while the nodes are off
                     if (workMachines.isNotEmpty()) workJobs = try { api.workJobs() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workJobs else emptyList() }
                 }
                 else -> Unit

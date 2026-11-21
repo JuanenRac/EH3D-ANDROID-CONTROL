@@ -418,5 +418,10 @@
  "Encendido": "开",
  "Apagado": "关",
  "En cola": "排队中",
- "En pausa": "已暂停"
+ "En pausa": "已暂停",
+ "Nodos de las máquinas pick-and-place": "贴片机节点",
+ "Se registran y se cambian en EH3D-STUDIO.": "节点在 EH3D-STUDIO 中登记和修改。",
+ "Cabezal": "贴装头",
+ "Alimentador": "送料器",
+ "No listo": "未就绪"
 }

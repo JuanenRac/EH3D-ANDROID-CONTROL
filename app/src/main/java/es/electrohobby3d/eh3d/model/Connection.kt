@@ -98,6 +98,33 @@ fun parseWorkMachines(text: String): List<WorkMachine> {
     }
 }
 
+/**
+ * A feeder or head node of a pick-and-place machine as `GET /pnp/nodes` lists it. The phone only reads them (EH3D-STUDIO registers, changes and removes them). [ready] is the verdict of the server:
+ * only the healths `ok` and `warn` are ready and every other one is not, so an answer that does not say is not ready. The token of a node never comes in the answer (the server sends `********`) and is
+ * not read here. [facts] are the few numbers the node said last, as lines of text.
+ */
+data class PnpNode(
+    val id: String, val kind: String, val name: String, val address: String, val machine: String, val enabled: Boolean,
+    val health: String, val ready: Boolean, val lastError: String, val simulatorOnly: Boolean, val facts: List<Pair<String, String>>,
+)
+
+/** The keys of what a node said last that the phone lists, in this order. */
+private val PNP_FACT_KEYS = listOf("safe", "selfcheck", "online", "slots", "low", "empty", "faulted", "nozzle_count", "pump")
+
+/** The nodes of the answer `{"nodes": [...]}`; an item without an id is left out, and anything that is not a list is an empty list. */
+fun parsePnpNodes(text: String): List<PnpNode> {
+    val list = JSONObject(text).optJSONArray("nodes") ?: JSONArray()
+    return (0 until list.length()).mapNotNull { list.optJSONObject(it) }.filter { it.str("id").isNotEmpty() }.map { n ->
+        val status = n.optJSONObject("status")
+        val facts = ArrayList<Pair<String, String>>()
+        if (status != null) for (key in PNP_FACT_KEYS) if (status.has(key) && !status.isNull(key)) facts.add(key to status.opt(key).toString())
+        PnpNode(
+            n.str("id"), n.str("kind"), n.str("name", n.str("id")), n.str("address"), n.str("machine"), n.optBoolean("enabled", true),
+            n.str("health", "unknown"), n.optBoolean("ready", false), n.str("last_error"), n.str("evidence") == "simulator" || n.optBoolean("simulator_only", false), facts,
+        )
+    }
+}
+
 private fun flatten(prefix: String, json: JSONObject, out: MutableList<Pair<String, String>>, depth: Int) {
     val keys = json.keys().asSequence().sorted().toList()
     for (key in keys) {

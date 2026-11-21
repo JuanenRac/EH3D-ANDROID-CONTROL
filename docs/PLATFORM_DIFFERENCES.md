@@ -28,6 +28,8 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 
 ## Not there in either app yet
 
+* The authorization of a job of the generic queue (its `toolpath_sha256`, the button that authorizes it with `POST /work/jobs/{id}/authorize` and the hash sent with the start): only EH3D-STUDIO has it. The apps start a job with an empty body and tell `authorization_required` and `stale_authorization` with the words of the table of refusals when the server refuses.
+* Registering, changing and removing the nodes of the pick-and-place machines, asking a node now, and the update of the list by the `pnp_node` event of the websocket: the apps only read `GET /pnp/nodes` (read only, no token) each time the home page is refreshed, and show nothing while the server has the nodes switched off.
 * A stop of a machine of a plugin that the server refused because the session had ended is not sent again after signing in (the stops of the drilling and routing machines are): the person is told at once that it did not arrive and to use the physical stop.
 * Jog (moving an axis by hand) and a live progress stream of a job: the server has no route for jog and sends progress only in the job (`percent`, `items_done`, `holes_done`, `estimate_s`), which both apps already show; they will follow when the server offers the route.
 
