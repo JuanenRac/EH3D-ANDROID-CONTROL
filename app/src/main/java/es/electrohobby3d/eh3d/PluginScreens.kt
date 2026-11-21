@@ -113,7 +113,7 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
                         Text(workJobWord(job), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                         if (job.toolpathSha256.isNotEmpty()) {
                             Text(trf("Código del trabajo: %s", MachineSafety.shortHash(job.toolpathSha256)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
-                            authBadge(MachineSafety.authOf(job))
+                            AuthBadge(MachineSafety.authOf(job))
                         }
                     }
                     if (MachineSafety.canAuthorize(model.canOperate, job)) TextButton({ pending = Pending(Ask.Authorize, job) }) { Text(tr("Autorizar")) }
@@ -151,7 +151,7 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
 
 /** The badge of the authorization of a job: green when the present hash is authorized, orange when nobody has authorized it or the authorization is for another hash. */
 @Composable
-private fun authBadge(auth: JobAuth) {
+private fun AuthBadge(auth: JobAuth) {
     when (auth) {
         JobAuth.Authorized -> Pill(tr("Autorizado"), Forge.Green)
         JobAuth.Stale -> Pill(tr("Caducado"), Forge.Danger)
