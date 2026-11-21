@@ -1,8 +1,8 @@
-// EH3D-ANDROID-CONTROL - the languages of the app: 37, the eight of the EH3D programs (English, Spanish, Italian, German, French, Portuguese of Portugal, Chinese, Japanese) and 29 more, the same list and the same order as the programs on the computer.
+// EH3D-ANDROID-CONTROL - the languages of the app: the eight of the EH3D programs (English, Spanish, Italian, German, French, Portuguese of Portugal, Chinese, Japanese), the same list and the same order as the programs on the computer.
 // The source text of the app is Spanish and each phrase is looked up by it in a table per language (assets/i18n/<code>.json, one JSON object: Spanish phrase -> translation). A phrase with
-// a hole is written with %s (or %d) and filled with `trf`. A variant (Brazilian Portuguese, Canadian French) holds only the phrases that differ from its main language and takes the rest from it.
+// a hole is written with %s (or %d) and filled with `trf`. A variant of a language, if one is ever added, holds only the phrases that differ from its main language and takes the rest from it (none exists now).
 // A phrase that a language does not have is shown in English, and in Spanish only if the English table does not have it either; a unit test keeps every phrase in every table.
-// The 29 added languages are translated by the model and wait for a review by native speakers. None of the 37 is written right to left.
+// None of the eight is written right to left.
 // Copyright (C) 2026 JuanenRac (Electro Hobby 3D). GPL-3.0-or-later.
 package es.electrohobby3d.eh3d
 
@@ -20,14 +20,10 @@ object Tr {
     /** The languages, in the order of the picker: code and its name in itself. */
     val languages: List<Pair<String, String>> = listOf(
         "en" to "English", "es" to "Español", "it" to "Italiano", "de" to "Deutsch", "fr" to "Français", "pt" to "Português", "zh" to "中文", "ja" to "日本語",
-        "bg" to "Български", "hr" to "Hrvatski", "cs" to "Čeština", "da" to "Dansk", "nl" to "Nederlands", "et" to "Eesti", "fi" to "Suomi", "el" to "Ελληνικά",
-        "hu" to "Magyar", "ga" to "Gaeilge", "lv" to "Latviešu", "lt" to "Lietuvių", "mt" to "Malti", "pl" to "Polski", "ro" to "Română", "sk" to "Slovenčina",
-        "sl" to "Slovenščina", "sv" to "Svenska", "no" to "Norsk", "is" to "Íslenska", "uk" to "Українська", "ru" to "Русский", "sr" to "Српски", "sq" to "Shqip",
-        "ca" to "Català", "gl" to "Galego", "eu" to "Euskara", "pt-br" to "Português (Brasil)", "fr-ca" to "Français (Canada)",
     )
 
-    /** A variant takes the phrases it does not change from its main language. */
-    val fallbacks: Map<String, String> = mapOf("pt-br" to "pt", "fr-ca" to "fr")
+    /** A variant takes the phrases it does not change from its main language; the eight languages are all main languages, so the map is empty. */
+    val fallbacks: Map<String, String> = emptyMap()
 
     /** The languages the voice assistant of the server knows (the first eight of the list). */
     private val voiceLanguages = setOf("en", "es", "de", "fr", "it", "ja", "zh", "pt")
@@ -39,7 +35,7 @@ object Tr {
         private set
     private val tables = java.util.concurrent.ConcurrentHashMap<String, Map<String, String>>()   // read by the screens and by the background service
 
-    /** The language the person chose, else the one of the phone when it is one of the 37, else English. Called at the start of the app and of every service that shows text. */
+    /** The language the person chose, else the one of the phone when it is one of the eight, else English. Called at the start of the app and of every service that shows text. */
     fun init(context: Context) {
         val app = context.applicationContext
         val saved = app.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).getString(KEY, null)
@@ -60,13 +56,13 @@ object Tr {
         language = chosen
     }
 
-    /** The one to use: a saved code that is one of the 37, else the phone's if it is, else English. */
+    /** The one to use: a saved code that is one of the eight, else the phone's if it is, else English. */
     fun pick(saved: String?, phone: String): String =
         languages.firstOrNull { it.first == saved }?.first ?: languages.firstOrNull { it.first == phone }?.first ?: "en"
 
-    /** The code of the language of the phone: the language and the region when the pair is a variant of the list (`pt-BR`, `fr-CA`), else the language alone (`es-MX` is `es`; Android's `nb` and `nn` are `no`). */
+    /** The code of the language of the phone: the language and the region when the pair is a variant of the list (there is none now), else the language alone (`es-MX` is `es`, `pt-BR` is `pt`). */
     fun phoneCode(language: String, country: String): String {
-        val lang = when (language.lowercase(Locale.ROOT)) { "nb", "nn" -> "no"; else -> language.lowercase(Locale.ROOT) }
+        val lang = language.lowercase(Locale.ROOT)
         val full = if (country.isEmpty()) lang else "$lang-${country.lowercase(Locale.ROOT)}"
         return if (languages.any { it.first == full }) full else lang
     }

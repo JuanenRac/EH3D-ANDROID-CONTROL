@@ -423,5 +423,16 @@
  "Se registran y se cambian en EH3D-STUDIO.": "Si registrano e si modificano in EH3D-STUDIO.",
  "Cabezal": "Testa",
  "Alimentador": "Alimentatore",
- "No listo": "Non pronto"
+ "No listo": "Non pronto",
+ "Se ha autorizado el trabajo.": "Il lavoro è stato autorizzato.",
+ "Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo.": "Il lavoro è stato riletto: controlli il suo codice e lo autorizzi di nuovo.",
+ "Código del trabajo: %s": "Codice del lavoro: %s",
+ "Autorizar": "Autorizza",
+ "¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.": "Autorizzare questo lavoro con il codice %s? Verifichi che sia quello mostrato quando è stato preparato.",
+ "Autorizar el trabajo": "Autorizza il lavoro",
+ "AUTORIZAR": "AUTORIZZA",
+ "No autorizar": "Non autorizzare",
+ "Autorizado": "Autorizzato",
+ "Caducado": "Scaduto",
+ "Sin autorizar": "Non autorizzato"
 }

@@ -9,15 +9,12 @@ import org.junit.Test
 import java.io.File
 
 /**
- * The app is in 37 languages: every phrase of the source has its text in the 34 complete tables (all but Spanish, which is the source, and the two variants), with the same holes;
- * the variants (Brazilian Portuguese, Canadian French) hold only what differs and take the rest from their main language; and the choice of language falls back to English.
+ * The app is in eight languages: every phrase of the source has its text in the seven complete tables (all but Spanish, which is the source), with the same holes;
+ * a variant, if one is ever added, holds only what differs and takes the rest from its main language; and the choice of language falls back to English.
  */
 class TrTest {
-    private val codes = listOf(
-        "en", "it", "de", "fr", "pt", "zh", "ja",
-        "bg", "hr", "cs", "da", "nl", "et", "fi", "el", "hu", "ga", "lv", "lt", "mt", "pl", "ro", "sk", "sl", "sv", "no", "is", "uk", "ru", "sr", "sq", "ca", "gl", "eu",
-    )
-    private val variants = listOf("pt-br", "fr-ca")
+    private val codes = listOf("en", "it", "de", "fr", "pt", "zh", "ja")
+    private val variants = emptyList<String>()
     private fun load(code: String) = JSONObject(File("src/main/assets/i18n/$code.json").readText(Charsets.UTF_8))
     private fun tables(): Map<String, JSONObject> = codes.associateWith { load(it) }
     private val call = Regex("""\btrf?\(\s*"((?:[^"\\]|\\.)*)"""")
@@ -42,14 +39,14 @@ class TrTest {
         return out
     }
 
-    @Test fun theListHasThe37LanguagesOfThePrograms() {
+    @Test fun theListHasTheEightLanguagesOfThePrograms() {
         val listed = Tr.languages.map { it.first }
-        assertEquals(37, listed.size)
+        assertEquals(8, listed.size)
         assertEquals(listed.size, listed.toSet().size)
         assertEquals(listOf("en", "es", "it", "de", "fr", "pt", "zh", "ja"), listed.take(8))
         assertTrue(Tr.languages.all { it.second.isNotBlank() })
         assertEquals(listed.toSet() - "es", (codes + variants).toSet())
-        assertEquals(mapOf("pt-br" to "pt", "fr-ca" to "fr"), Tr.fallbacks)
+        assertTrue(Tr.fallbacks.isEmpty())
         for (code in codes + variants) assertTrue("table of $code", File("src/main/assets/i18n/$code.json").isFile)
         assertEquals(codes.size + variants.size, File("src/main/assets/i18n").listFiles { f -> f.extension == "json" }!!.size)
     }
@@ -90,7 +87,7 @@ class TrTest {
         for ((code, table) in all) assertEquals(code, first, table.keys().asSequence().toSet())
     }
 
-    @Test fun aVariantHoldsOnlyPhrasesOfTheSourceAndNoBlankText() {
+    @Test fun aVariantIfAnyHoldsOnlyPhrasesOfTheSourceAndNoBlankText() {
         val known = load("en").keys().asSequence().toSet()
         for (code in variants) {
             val table = load(code)
@@ -115,22 +112,20 @@ class TrTest {
         assertEquals("de", Tr.pick("de", "fr"))
         assertEquals("fr", Tr.pick(null, "fr"))
         assertEquals("pt", Tr.pick(null, "pt"))
-        assertEquals("pt-br", Tr.pick(null, "pt-br"))
-        assertEquals("fr-ca", Tr.pick("fr-ca", "de"))
-        assertEquals("pl", Tr.pick(null, "pl"))
+        assertEquals("en", Tr.pick(null, "pt-br"))
+        assertEquals("de", Tr.pick("fr-ca", "de"))
+        assertEquals("en", Tr.pick(null, "pl"))
         assertEquals("en", Tr.pick(null, "ar"))
         assertEquals("en", Tr.pick("xx", "ar"))
     }
 
-    @Test fun thePhoneAsksForAVariantOnlyWhenTheRegionIsOne() {
-        assertEquals("pt-br", Tr.phoneCode("pt", "BR"))
+    @Test fun theRegionOfThePhoneNeverMakesAnotherLanguage() {
+        assertEquals("pt", Tr.phoneCode("pt", "BR"))
         assertEquals("pt", Tr.phoneCode("pt", "PT"))
-        assertEquals("fr-ca", Tr.phoneCode("fr", "CA"))
+        assertEquals("fr", Tr.phoneCode("fr", "CA"))
         assertEquals("fr", Tr.phoneCode("fr", "BE"))
         assertEquals("es", Tr.phoneCode("es", "MX"))
-        assertEquals("no", Tr.phoneCode("nb", "NO"))
-        assertEquals("no", Tr.phoneCode("nn", ""))
-        assertEquals("sr", Tr.phoneCode("sr", ""))
+        assertEquals("nb", Tr.phoneCode("nb", "NO"))
     }
 
     @Test fun aPhraseIsSpokenInTheLanguageOfTheAppAndFallsBackToSpanish() {
@@ -143,11 +138,10 @@ class TrTest {
         assertEquals("3 máquinas", trf("%s máquinas", 3))
     }
 
-    @Test fun aVariantTakesTheRestFromItsMainLanguageAndEverythingFromEnglishAtTheEnd() {
+    @Test fun aLanguageTakesWhatItLacksFromEnglishAndThenFromSpanish() {
         Tr.useTable("en", mapOf("c" to "C-en", "a" to "A-en"))
         Tr.useTable("pt", mapOf("a" to "A-pt", "b" to "B-pt"))
-        Tr.useTable("pt-br", mapOf("a" to "A-br"))
-        assertEquals("A-br", tr("a"))
+        assertEquals("A-pt", tr("a"))
         assertEquals("B-pt", tr("b"))
         assertEquals("C-en", tr("c"))
         assertEquals("d", tr("d"))
@@ -157,9 +151,9 @@ class TrTest {
     }
 
     @Test fun theVoiceOfTheServerKnowsTheEightOrEnglish() {
-        Tr.useTable("pt-br", emptyMap())
+        Tr.useTable("pt", emptyMap())
         assertEquals("pt", Tr.voiceLanguage())
-        Tr.useTable("fr-ca", emptyMap())
+        Tr.useTable("fr", emptyMap())
         assertEquals("fr", Tr.voiceLanguage())
         Tr.useTable("ja", emptyMap())
         assertEquals("ja", Tr.voiceLanguage())

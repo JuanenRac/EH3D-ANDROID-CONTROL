@@ -27,11 +27,12 @@ import androidx.compose.ui.unit.dp
 import es.electrohobby3d.eh3d.model.Interlock
 import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.PnpNode
+import es.electrohobby3d.eh3d.model.JobAuth
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
 
 /** What a button of the card asks a second time before it does anything. */
-private enum class Ask { Release, Start, Cancel }
+private enum class Ask { Release, Start, Cancel, Authorize }
 
 /** The question that waits for the second touch: what is asked and, for a job, which one. */
 private data class Pending(val ask: Ask, val job: WorkJob? = null)
@@ -110,7 +111,12 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
                     Column(Modifier.weight(1f)) {
                         Text(job.name.ifBlank { job.id }, color = Forge.Text)
                         Text(workJobWord(job), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                        if (job.toolpathSha256.isNotEmpty()) {
+                            Text(trf("Código del trabajo: %s", MachineSafety.shortHash(job.toolpathSha256)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                            authBadge(MachineSafety.authOf(job))
+                        }
                     }
+                    if (MachineSafety.canAuthorize(model.canOperate, job)) TextButton({ pending = Pending(Ask.Authorize, job) }) { Text(tr("Autorizar")) }
                     if (!w.latched && MachineSafety.canStartJob(model.canOperate, job)) TextButton({ pending = Pending(Ask.Start, job) }) { Text(tr("Empezar")) }
                     if (MachineSafety.canCancelJob(model.canOperate, job)) TextButton({ pending = Pending(Ask.Cancel, job) }) { Text(tr("Cancelar")) }
                 }
@@ -126,14 +132,30 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
                 onConfirm = { pending = null; model.releaseWork(w) }, onDismiss = { pending = null },
             )
             Ask.Start -> AskAgain(
-                tr("Empezar el trabajo"), tr("¿Iniciar este trabajo? Compruebe que la máquina está lista y que nadie está en la zona de trabajo."), tr("INICIAR"), tr("No iniciar"), false,
-                onConfirm = { pending = null; if (job != null) model.startWorkJob(job.id) }, onDismiss = { pending = null },
+                tr("Empezar el trabajo"),
+                tr("¿Iniciar este trabajo? Compruebe que la máquina está lista y que nadie está en la zona de trabajo.") + (job?.takeIf { it.toolpathSha256.isNotEmpty() }?.let { j -> "\n\n" + trf("Código del trabajo: %s", MachineSafety.shortHash(j.toolpathSha256)) } ?: ""),
+                tr("INICIAR"), tr("No iniciar"), false,
+                onConfirm = { pending = null; if (job != null) model.startWorkJob(job) }, onDismiss = { pending = null },
+            )
+            Ask.Authorize -> AskAgain(
+                tr("Autorizar el trabajo"), trf("¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.", MachineSafety.shortHash(job?.toolpathSha256.orEmpty())), tr("AUTORIZAR"), tr("No autorizar"), false,
+                onConfirm = { pending = null; if (job != null) model.authorizeWorkJob(job) }, onDismiss = { pending = null },
             )
             Ask.Cancel -> AskAgain(
                 tr("Cancelar"), tr("¿Cancelar este trabajo?") + (job?.let { j -> "\n\n" + j.name.ifBlank { j.id } } ?: ""), tr("Cancelar"), tr("No cancelar"), true,
                 onConfirm = { pending = null; if (job != null) model.cancelWorkJob(job.id) }, onDismiss = { pending = null },
             )
         }
+    }
+}
+
+/** The badge of the authorization of a job: green when the present hash is authorized, orange when nobody has authorized it or the authorization is for another hash. */
+@Composable
+private fun authBadge(auth: JobAuth) {
+    when (auth) {
+        JobAuth.Authorized -> Pill(tr("Autorizado"), Forge.Green)
+        JobAuth.Stale -> Pill(tr("Caducado"), Forge.Danger)
+        JobAuth.None -> Pill(tr("Sin autorizar"), Forge.Orange)
     }
 }
 

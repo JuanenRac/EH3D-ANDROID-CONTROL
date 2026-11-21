@@ -388,4 +388,25 @@ class ApiClientTest {
         api.settings = api.settings.withRetries(4)
         assertEquals(4, api.settings.retries)
     }
+
+    @Test fun `a start names the hash that was shown and an authorization sends it in its own route`() = withServer(ok("""{"ok":true}""")) { origin, seen ->
+        val api = Eh3dApi(origin, "t")
+        runBlocking { api.authorizeWorkJob("w-2", "H1"); api.startWorkJob("w-2", "H1"); api.startWorkJob("w-3") }
+        assertEquals(listOf("POST /api/v1/work/jobs/w-2/authorize", "POST /api/v1/work/jobs/w-2/start", "POST /api/v1/work/jobs/w-3/start"), seen.map { "${it.method} ${it.path}" })
+        assertEquals("H1", JSONObject(seen[0].body).getString("toolpath_sha256"))
+        assertEquals("H1", JSONObject(seen[1].body).getString("toolpath_sha256"))
+        assertEquals("a start with no hash keeps the empty body", "{}", seen[2].body)
+    }
+
+    @Test fun `the refusals of the authorization are told apart and nothing is retried`() {
+        for (code in listOf("stale_authorization", "authorization_required")) {
+            withServer({ _: Seen -> 409 to """{"error":"$code","detail":"x"}""" }) { origin, seen ->
+                val error = assertThrows(ApiException::class.java) { runBlocking { Eh3dApi(origin, "t").startWorkJob("w-2", "H1") } }
+                assertEquals(409, error.status)
+                assertEquals(code, error.code)
+                assertTrue(es.electrohobby3d.eh3d.model.MachineSafety.needsReview(error.code))
+                assertEquals("a refused start is sent once", 1, seen.size)
+            }
+        }
+    }
 }

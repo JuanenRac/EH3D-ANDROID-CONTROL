@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
-  <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
+  <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
   <img src="https://img.shields.io/badge/Version-0.1.6-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
@@ -54,11 +54,11 @@
 | 2D 和 3D 查看器 | 🟠 | 板子、孔（钻孔前为圆环）、路径（切削前为淡色）和钻头，以 2D 和可用手指旋转的等距视图显示；钻头位置是根据已完成步数得出的估计。作为几何已测试，从未在手机上看过。 |
 | 钻头摄像头 | 🟠 | 钻孔头（EH3D-NODE-BUNGARD-AUX）的摄像头通过服务器以 MJPEG 显示，并显示转速、温度、保护输出，以及用激光测量一次工作台。已编写，从未与真实节点一起运行。 |
 | 更新 | 🟠 | 它查看本项目在 GitHub 上的最新发布，下载 APK，检查包名、版本和签名，然后交给 Android 安装程序；它绝不会自行安装。已编写并测试；从未在手机上对 GitHub 运行过。 |
-| 插件机器 | 🟠 | 主页列出服务器的激光、贴片、电路板、CNC、Gerber、CAM、3D 打印机、视觉和 CAD 机器，带有“仅模拟器”徽章（不会显示为已在硬件上验证）、红色的锁定标记、一键且无需确认的急停、仅限管理员的解除锁定（需确认两次）、每台机器的队列（作业由人启动，需确认两次，绝不会自动开始）、打印机的温度上限，并向管理员显示默认关闭的服务器开关。已针对模拟服务器编写并测试；从未在手机上或真实机器上运行。 |
+| 插件机器 | 🟠 | 主页列出服务器的激光、贴片、电路板、CNC、Gerber、CAM、3D 打印机、视觉和 CAD 机器，带有“仅模拟器”徽章（不会显示为已在硬件上验证）、红色的锁定标记、一键且无需确认的急停、仅限管理员的解除锁定（需确认两次）、每台机器的队列（每个作业以徽章显示其哈希的短码——未授权、已授权或已过期；由人第二次触摸授权，并在确认两次后连同所示短码启动，绝不会自动开始）、打印机的温度上限，并向管理员显示默认关闭的服务器开关。已针对模拟服务器编写并测试；从未在手机上或真实机器上运行。 |
 | 服务器设置 | 🟠 | “更多”中的一个页面根据服务器的契约绘制其每一项设置和开关（16 个分组共 95 个键；从服务器读取，读取不到时使用应用中保存的副本，只读）：八种语言的标签、帮助和警告，当前生效的值，带恢复按钮的默认值，更改是立即生效还是需要重启，以及对应其类型的控件。其他登录（查看者、操作员）读取当前生效值的轻量视图（`GET /settings/values`，带 ETag，页面未变化时只需几个字节），配合副本中的标签，只读；当服务器的设置列表与应用中的副本不一致时会收到提示；服务器不显示的键会被标明。管理员可更改服务器运行时可改的 19 个键，有风险的会再确认一次；其余 76 个只显示，并注明它们在 server.cfg 中设置；机密永远不显示。已编写并针对模拟服务器测试；从未对真实服务器运行。 |
 | 贴片机节点 | 🟠 | 主页以只读方式列出服务器保存的贴片机送料器节点和贴装头节点：类型、地址和机床，按服务器判定的就绪（绿）或未就绪（红）、其报告的状态、最近一次查询的错误以及它最后报告的数值；令牌从不读取也不显示，节点在 EH3D-STUDIO 中登记和修改。已针对模拟服务器编写并测试；从未在真实的送料器、贴装头或服务器上运行。 |
 | 实际使用 | 🔴 | 还没有：应用从未在 手机 上、对真实服务器或与机器一起运行；首先要试的是登录车间的 EH3D-SERVER。 |
-| 文档 | 🟡 | 八种语言的 README、应用内 37 种语言的帮助，以及所用服务器 API 的说明。 |
+| 文档 | 🟡 | 八种语言的 README、应用内 8 种语言的帮助，以及所用服务器 API 的说明。 |
 
 ## 🎯 概述
 
@@ -146,7 +146,7 @@ python -I tools/ci_validate.py
 
 ## 🧪 测试
 
-`./gradlew test` 在 JVM 上运行单元测试：服务器 JSON 的读取（机器群、作业、钻头、测量）、钻头位置和两个视图的几何、地址检查、会话的加密保存、更新的版本与发布检查，以及语言（源码中的每个短语都在七张表中，占位符相同）。测试还会读取服务器测试生成的响应示例，因此响应发生变化而应用未跟进时，这里会失败。两个手机应用还会遍历相同的用例文件（摘要、连接、停止、通知、地址以及读取的字段），因此一方与另一方不一致时测试会失败。`python -I tools/check_app_parity.py` 会检查两个手机应用中的响应示例、拒绝码目录和 37 种语言的表是否相同（固定证书的那一句是唯一允许的差异），CI 还会输出这些测试覆盖了多少包含规则的代码。 `python -I tools/sync_settings_contract.py --check` 检查服务器设置契约的副本（及其页面的语句表）是否有效，并且在 EH3D-SERVER 位于本仓库旁时，检查它是否与服务器的文件相同；`check_app_parity.py` 还检查两个应用是否携带相同的副本和相同的表。同一项检查会把副本的 SHA-256 写入 `ContractHash.kt` 并加以验证，应用将其与服务器给出的 `contract_hash` 比较，从而在服务器的设置列表不是其副本时给出提示。
+`./gradlew test` 在 JVM 上运行单元测试：服务器 JSON 的读取（机器群、作业、钻头、测量）、钻头位置和两个视图的几何、地址检查、会话的加密保存、更新的版本与发布检查，以及语言（源码中的每个短语都在七张表中，占位符相同）。测试还会读取服务器测试生成的响应示例，因此响应发生变化而应用未跟进时，这里会失败。两个手机应用还会遍历相同的用例文件（摘要、连接、停止、通知、地址以及读取的字段），因此一方与另一方不一致时测试会失败。`python -I tools/check_app_parity.py` 会检查两个手机应用中的响应示例、拒绝码目录和 8 种语言的表是否相同（固定证书的那一句是唯一允许的差异），CI 还会输出这些测试覆盖了多少包含规则的代码。 `python -I tools/sync_settings_contract.py --check` 检查服务器设置契约的副本（及其页面的语句表）是否有效，并且在 EH3D-SERVER 位于本仓库旁时，检查它是否与服务器的文件相同；`check_app_parity.py` 还检查两个应用是否携带相同的副本和相同的表。同一项检查会把副本的 SHA-256 写入 `ContractHash.kt` 并加以验证，应用将其与服务器给出的 `contract_hash` 比较，从而在服务器的设置列表不是其副本时给出提示。
 
 ## 🏗️ 构建与发布
 
@@ -166,7 +166,7 @@ EH3D-ANDROID-CONTROL/
 ├── app/
 │   ├── build.gradle.kts proguard-rules.pro      构建与压缩规则
 │   ├── src/main/AndroidManifest.xml             权限和唯一的活动
-│   ├── src/main/assets/i18n/                    37 种语言的文本
+│   ├── src/main/assets/i18n/                    8 种语言的文本
 │   ├── src/main/assets/settings-contract.json   设置契约的副本
 │   ├── src/main/java/es/electrohobby3d/eh3d/    应用代码
 │   └── src/test/java/es/electrohobby3d/eh3d/    JVM 上的测试
@@ -212,20 +212,12 @@ EH3D-ANDROID-CONTROL/
 
 ## 🌍 语言
 
-README 提供英语、西班牙语、法语、意大利语、德语、汉语、日语和欧洲葡萄牙语版本。应用本身支持 37 种语言（前八种与电脑上的 EH3D 程序相同）；其余 29 种由模型翻译，等待母语者审校。巴西葡萄牙语和加拿大法语只保存与欧洲葡萄牙语和法语不同的语句；某种语言缺少的语句以英语显示。
+README 提供英语、西班牙语、法语、意大利语、德语、汉语、日语和欧洲葡萄牙语版本。应用本身支持同样的八种语言（与电脑上的 EH3D 程序相同）；某种语言缺少的语句以英语显示。
 
 | 代码 | 语言 | 代码 | 语言 | 代码 | 语言 | 代码 | 语言 |
 |---|---|---|---|---|---|---|---|
 | `en` | English | `es` | Español | `it` | Italiano | `de` | Deutsch |
 | `fr` | Français | `pt` | Português | `zh` | 中文 | `ja` | 日本語 |
-| `bg` | Български | `hr` | Hrvatski | `cs` | Čeština | `da` | Dansk |
-| `nl` | Nederlands | `et` | Eesti | `fi` | Suomi | `el` | Ελληνικά |
-| `hu` | Magyar | `ga` | Gaeilge | `lv` | Latviešu | `lt` | Lietuvių |
-| `mt` | Malti | `pl` | Polski | `ro` | Română | `sk` | Slovenčina |
-| `sl` | Slovenščina | `sv` | Svenska | `no` | Norsk | `is` | Íslenska |
-| `uk` | Українська | `ru` | Русский | `sr` | Српски | `sq` | Shqip |
-| `ca` | Català | `gl` | Galego | `eu` | Euskara | `pt-br` | Português (Brasil) |
-| `fr-ca` | Français (Canada) |  |  |  |  |  |  |
 
 ## 🔗 相关项目
 
@@ -244,7 +236,7 @@ README 提供英语、西班牙语、法语、意大利语、德语、汉语、�
 ## 🤝 参与贡献与社区
 
 * 提交拉取请求之前请运行 `./gradlew test` 和 `python -I tools/ci_validate.py`：两者都必须通过。参见 [CONTRIBUTING.md](CONTRIBUTING.md) 和[行为准则](CODE_OF_CONDUCT.md)。
-* 应用显示的每段文字都在 `app/src/main/assets/i18n` 的表中，包含 37 种语言；测试保证其完整。
+* 应用显示的每段文字都在 `app/src/main/assets/i18n` 的表中，包含 8 种语言；测试保证其完整。
 * 请私下报告漏洞：[SECURITY.md](SECURITY.md)。问题、想法和报告：electrohobby3d@gmail.com（[SUPPORT.md](SUPPORT.md)）。
 
 ## 👤 作者

@@ -423,5 +423,16 @@
  "Se registran y se cambian en EH3D-STUDIO.": "ノードの登録と変更は EH3D-STUDIO で行います。",
  "Cabezal": "ヘッド",
  "Alimentador": "フィーダー",
- "No listo": "未準備"
+ "No listo": "未準備",
+ "Se ha autorizado el trabajo.": "ジョブを承認しました。",
+ "Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo.": "ジョブを再読み込みしました。コードを確認し、もう一度承認してください。",
+ "Código del trabajo: %s": "ジョブコード：%s",
+ "Autorizar": "承認",
+ "¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.": "コード %s でこのジョブを承認しますか？準備時に表示されたものか確認してください。",
+ "Autorizar el trabajo": "ジョブを承認",
+ "AUTORIZAR": "承認する",
+ "No autorizar": "承認しない",
+ "Autorizado": "承認済み",
+ "Caducado": "期限切れ",
+ "Sin autorizar": "未承認"
 }

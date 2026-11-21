@@ -21,6 +21,22 @@ def side(examples=None, catalog=None, i18n=None, assets=None):
             "assets": assets if assets is not None else {"settings-texts.json": {"k": {"en": "x"}}}}
 
 
+class Reference(unittest.TestCase):
+    def test_the_other_app_is_read_from_main_unless_a_branch_is_named(self):
+        import os
+        saved = os.environ.pop("EH3D_PARITY_REF", None)
+        try:
+            self.assertEqual(P.parity_ref(), "main")
+            os.environ["EH3D_PARITY_REF"] = "  "
+            self.assertEqual(P.parity_ref(), "main")
+            os.environ["EH3D_PARITY_REF"] = "tmp/paired-change"
+            self.assertEqual(P.parity_ref(), "tmp/paired-change")
+        finally:
+            os.environ.pop("EH3D_PARITY_REF", None)
+            if saved is not None:
+                os.environ["EH3D_PARITY_REF"] = saved
+
+
 class Documents(unittest.TestCase):
     def test_equal_documents_have_no_problems(self):
         self.assertEqual(P.compare_documents("examples", {"a.json": {"x": [1, 2]}}, {"a.json": {"x": [1, 2]}}), [])
@@ -156,9 +172,10 @@ class TheTwoApps(unittest.TestCase):
         found = P.read_side(HERE.parent, P.which_side(HERE.parent))["assets"]
         self.assertEqual(sorted(found), sorted(P.ASSET_FILES))
 
-    def test_the_tables_are_thirty_six_files_of_phrases_and_spanish_is_the_source(self):
+    def test_the_tables_are_seven_files_of_phrases_and_spanish_is_the_source(self):
         tables = P.load_folder(HERE.parent / P.APPS[P.which_side(HERE.parent)]["i18n"])
-        self.assertEqual(len(tables), 36)
+        self.assertEqual(len(tables), 7)
+        self.assertEqual(sorted(tables), [f"{c}.json" for c in sorted(['en', 'it', 'de', 'fr', 'pt', 'zh', 'ja'])])
         self.assertNotIn("es.json", tables)
         self.assertIn("pt.json", tables)
         self.assertIn("en.json", tables)

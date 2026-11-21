@@ -240,8 +240,14 @@ open class Eh3dApi(
     /** The jobs of the generic queue of the server (the newest first, at most 100): the ones that wait, run or are held are the ones the app shows. */
     suspend fun workJobs(): List<WorkJob> = parseWorkJobs(call("/work/jobs?limit=100"))
 
-    /** Starts a job that waits in the queue. Only ever called from a button that a person pressed twice: nothing in the app starts a job by itself. */
-    suspend fun startWorkJob(id: String) { call("/work/jobs/${q(id)}/start", "POST", "{}") }
+    /**
+     * Starts a job that waits in the queue. Only ever called from a button that a person pressed twice: nothing in the app starts a job by itself. With [hash] the start names the hash the person was
+     * shown, so a job that changed since is refused (`stale_authorization`) and nothing starts; without it the body is empty, as before.
+     */
+    suspend fun startWorkJob(id: String, hash: String = "") { call("/work/jobs/${q(id)}/start", "POST", if (hash.isEmpty()) "{}" else JSONObject().put("toolpath_sha256", hash).toString()) }
+
+    /** Authorizes the hash of a job that waits (scope `jobs:authorize`): the server records who authorised which hash. Only ever called from the second touch of a button. */
+    suspend fun authorizeWorkJob(id: String, hash: String) { call("/work/jobs/${q(id)}/authorize", "POST", JSONObject().put("toolpath_sha256", hash).toString()) }
 
     /** Cancels a job of the queue that waits or is held. */
     suspend fun cancelWorkJob(id: String) { call("/work/jobs/${q(id)}/cancel", "POST", "{}") }

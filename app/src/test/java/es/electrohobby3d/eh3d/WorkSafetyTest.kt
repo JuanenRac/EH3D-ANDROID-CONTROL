@@ -5,6 +5,7 @@ package es.electrohobby3d.eh3d
 
 import es.electrohobby3d.eh3d.model.Heater
 import es.electrohobby3d.eh3d.model.Interlock
+import es.electrohobby3d.eh3d.model.JobAuth
 import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.TempLimits
 import es.electrohobby3d.eh3d.model.WorkJob
@@ -160,5 +161,42 @@ class WorkSafetyTest {
         assertFalse(list.single().latched)
         assertFalse(list.single().simulatorOnly)
         assertEquals("", list.single().job)
+    }
+
+    private fun hashed(hash: String, authorized: String = "", state: String = "queued") = WorkJob("w-9", "l1", "laser", "Badge", "ana", state, 0, 0, hash, authorized, if (authorized.isEmpty()) "" else "ana")
+
+    @Test fun `the hash and the authorization of a job are read from the queue`() {
+        val text = """{"items":[{"id":"w-1","machine":"l1","state":"queued","toolpath_sha256":"HASH","authorization":{"by":"ana","at":5,"toolpath_sha256":"HASH"}},{"id":"w-2","machine":"l1","state":"queued","toolpath_sha256":"HASH","authorization":null},{"id":"w-3","machine":"l1","state":"queued"}]}""".replace("HASH", "H0")
+        val jobs = parseWorkJobs(text)
+        assertEquals(listOf("H0", "H0", ""), jobs.map { it.toolpathSha256 })
+        assertEquals(listOf("H0", "", ""), jobs.map { it.authorizedHash })
+        assertEquals("ana", jobs[0].authorizedBy)
+        assertEquals(listOf(JobAuth.Authorized, JobAuth.None, JobAuth.None), jobs.map { MachineSafety.authOf(it) })
+    }
+
+    @Test fun `an authorization of another hash is expired and the badge says so`() {
+        assertEquals(JobAuth.None, MachineSafety.authOf(hashed("aa")))
+        assertEquals(JobAuth.Authorized, MachineSafety.authOf(hashed("aa", "aa")))
+        assertEquals(JobAuth.Stale, MachineSafety.authOf(hashed("bb", "aa")))
+        assertEquals("a job with no hash cannot be told authorized", JobAuth.Stale, MachineSafety.authOf(hashed("", "aa")))
+    }
+
+    @Test fun `the button to authorize is offered to an operator for a queued job whose present hash is not authorized`() {
+        assertTrue(MachineSafety.canAuthorize(true, hashed("aa")))
+        assertTrue("an expired authorization can be given again", MachineSafety.canAuthorize(true, hashed("bb", "aa")))
+        assertFalse("already authorized", MachineSafety.canAuthorize(true, hashed("aa", "aa")))
+        assertFalse("a viewer", MachineSafety.canAuthorize(false, hashed("aa")))
+        assertFalse("no hash to authorize", MachineSafety.canAuthorize(true, hashed("")))
+        for (state in listOf("running", "paused", "done", "failed", "cancelled")) assertFalse(state, MachineSafety.canAuthorize(true, hashed("aa", state = state)))
+    }
+
+    @Test fun `the short hash is the first twelve characters and the refusals that ask for a new look are the two of the authorization`() {
+        assertEquals("a3f9c2d1e4b7", MachineSafety.shortHash("a3f9c2d1e4b7a3f9c2d1"))
+        assertEquals("abc", MachineSafety.shortHash("abc"))
+        assertEquals("-", MachineSafety.shortHash(""))
+        assertTrue(MachineSafety.needsReview("stale_authorization"))
+        assertTrue(MachineSafety.needsReview("authorization_required"))
+        assertFalse(MachineSafety.needsReview("machine_busy"))
+        assertFalse(MachineSafety.needsReview("forbidden_scope"))
     }
 }

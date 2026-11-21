@@ -1,14 +1,16 @@
 # EH3D phone apps - tools/check_app_parity.py: what the Android app and the iPhone app must hold the same, besides the case files (tools/check_shared_cases.py):
-# the examples of the answers of the server, the catalog of the refusal codes, the tables of the 37 languages and the files of the settings page (the copy of the settings contract of the server and the
+# the examples of the answers of the server, the catalog of the refusal codes, the tables of the 8 languages and the files of the settings page (the copy of the settings contract of the server and the
 # table of its sentences in eight languages). The only phrase that may be in the iPhone tables and not in the Android ones is the
 # one of the certificate that is pinned (docs/PLATFORM_DIFFERENCES.md says why).
 #   python -I tools/check_app_parity.py [--other FOLDER_OF_THE_OTHER_REPOSITORY]
-# Without --other it looks for the sibling folder of the other app and, when there is none, asks GitHub (the public repository, main branch).
+# Without --other it looks for the sibling folder of the other app and, when there is none, asks GitHub (the public repository, main branch; or the branch named by EH3D_PARITY_REF when the other app has it,
+# so that the two pull requests of a change that touches both apps are compared with each other).
 # Exit code: 0 they agree, 1 they differ or a folder is missing, 2 the other side could not be read (a check that cannot run is a failure).
 import json
 import os
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -77,10 +79,22 @@ def _get(url: str) -> bytes:
         return response.read()
 
 
-def github_folder(repo: str, rel: str, only=()) -> dict:
-    """The JSON files of a folder of the public repository (main branch); with `only` (a name or a list of names), just those files."""
+def parity_ref() -> str:
+    """The branch of the other app to compare with: the one named by EH3D_PARITY_REF (the branch of a pull request), else main."""
+    ref = os.environ.get("EH3D_PARITY_REF", "").strip()
+    return ref if ref else "main"
+
+
+def github_folder(repo: str, rel: str, only=(), ref: str = "") -> dict:
+    """The JSON files of a folder of the public repository (the branch `ref`, main by default, and main again when the other app has no such branch); with `only` (a name or a list of names), just those files."""
     wanted = {only} if isinstance(only, str) else set(only)
-    listing = json.loads(_get(f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref=main"))
+    ref = ref or parity_ref()
+    try:
+        listing = json.loads(_get(f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref={urllib.parse.quote(ref, safe='')}"))
+    except urllib.error.HTTPError as why:
+        if why.code != 404 or ref == "main":
+            raise
+        listing = json.loads(_get(f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref=main"))
     out = {}
     for item in listing:
         if item.get("type") == "file" and item["name"].endswith(".json") and (not wanted or item["name"] in wanted):
@@ -90,8 +104,16 @@ def github_folder(repo: str, rel: str, only=()) -> dict:
 
 def read_github(app: str) -> dict:
     where = APPS[app]
-    return {"examples": github_folder(where["repo"], where["examples"]), "catalog": github_folder(where["repo"], where["catalog"], CATALOG_FILE), "i18n": github_folder(where["repo"], where["i18n"]),
-            "assets": github_folder(where["repo"], where["assets"], ASSET_FILES)}
+    ref = parity_ref()
+    if ref != "main":
+        try:
+            _get(f"https://api.github.com/repos/{OWNER}/{where['repo']}/branches/{urllib.parse.quote(ref, safe='')}")
+        except urllib.error.HTTPError as why:
+            if why.code != 404:
+                raise
+            ref = "main"  # the other app has no branch of that name: its main is what this change must agree with
+    return {"examples": github_folder(where["repo"], where["examples"], ref=ref), "catalog": github_folder(where["repo"], where["catalog"], CATALOG_FILE, ref=ref), "i18n": github_folder(where["repo"], where["i18n"], ref=ref),
+            "assets": github_folder(where["repo"], where["assets"], ASSET_FILES, ref=ref)}
 
 
 def which_side(root: Path):

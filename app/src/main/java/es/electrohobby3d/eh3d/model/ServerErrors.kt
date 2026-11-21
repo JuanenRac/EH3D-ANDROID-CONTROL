@@ -1,6 +1,6 @@
 // EH3D-ANDROID-CONTROL - the text of every refusal code of the server in the eight languages of the suite (English, Spanish, Italian, German, French, European Portuguese, Chinese, Japanese).
 // The table is assets/server-errors.json, written by tools/gen_server_errors.py from the catalog of EH3D-SERVER and the rows `err_<code>` of Studio, so the app says what Studio says. A language the
-// table does not have (the other 29 of the app) shows the English text; a code a newer server has and this table does not is not hidden: the caller shows the message of the server.
+// table does not have (a language of the app that is not one of the eight) shows the English text; a code a newer server has and this table does not is not hidden: the caller shows the message of the server.
 // Copyright (C) 2026 JuanenRac (Electro Hobby 3D). GPL-3.0-or-later.
 package es.electrohobby3d.eh3d.model
 
@@ -39,7 +39,7 @@ object ServerErrors {
     /** The codes of the table. */
     fun codes(): Set<String> = table.keys
 
-    /** The index of the text for a language of the app: the language, its main language for a variant (`pt-br`, `fr-ca`), else English. */
+    /** The index of the text for a language of the app: the language, its main language for a variant (`pt-br` is `pt`), else English. */
     fun indexOf(language: String): Int = LANGUAGES.indexOf(language.lowercase().substringBefore('-')).takeIf { it >= 0 } ?: 0
 
     /** The text of a code in the language of the app, or null when the table does not have the code or a blank text. */

@@ -423,5 +423,16 @@
  "Se registran y se cambian en EH3D-STUDIO.": "They are registered and changed in EH3D-STUDIO.",
  "Cabezal": "Head",
  "Alimentador": "Feeder",
- "No listo": "Not ready"
+ "No listo": "Not ready",
+ "Se ha autorizado el trabajo.": "The job has been authorized.",
+ "Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo.": "The job has been read again: check its code and authorize it again.",
+ "Código del trabajo: %s": "Job code: %s",
+ "Autorizar": "Authorize",
+ "¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.": "Authorize this job with code %s? Check that it is the one shown when it was prepared.",
+ "Autorizar el trabajo": "Authorize the job",
+ "AUTORIZAR": "AUTHORIZE",
+ "No autorizar": "Do not authorize",
+ "Autorizado": "Authorized",
+ "Caducado": "Expired",
+ "Sin autorizar": "Not authorized"
 }

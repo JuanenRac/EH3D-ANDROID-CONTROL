@@ -423,5 +423,16 @@
  "Se registran y se cambian en EH3D-STUDIO.": "节点在 EH3D-STUDIO 中登记和修改。",
  "Cabezal": "贴装头",
  "Alimentador": "送料器",
- "No listo": "未就绪"
+ "No listo": "未就绪",
+ "Se ha autorizado el trabajo.": "已授权该作业。",
+ "Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo.": "已重新读取该作业：请核对其代码并再次授权。",
+ "Código del trabajo: %s": "作业代码：%s",
+ "Autorizar": "授权",
+ "¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.": "用代码 %s 授权此作业？请确认它就是准备作业时显示的代码。",
+ "Autorizar el trabajo": "授权作业",
+ "AUTORIZAR": "授权",
+ "No autorizar": "不授权",
+ "Autorizado": "已授权",
+ "Caducado": "已过期",
+ "Sin autorizar": "未授权"
 }

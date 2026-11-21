@@ -18,8 +18,17 @@ data class Heater(val name: String, val currentC: Double, val targetC: Double)
 /** The hottest each heater of a 3D printer may be asked, in degrees Celsius; 0 is a heater that the printer does not have. */
 data class TempLimits(val hotendC: Double, val bedC: Double, val chamberC: Double)
 
-/** A job of the generic queue of the server (`GET /work/jobs`), as much of it as the phone shows. */
-data class WorkJob(val id: String, val machine: String, val plugin: String, val name: String, val owner: String, val state: String, val percent: Int, val position: Int)
+/**
+ * A job of the generic queue of the server (`GET /work/jobs`), as much of it as the phone shows. [toolpathSha256] is the hash of what the job will do (made when it was prepared); [authorizedHash] and
+ * [authorizedBy] are what a person authorised (empty when nobody has).
+ */
+data class WorkJob(
+    val id: String, val machine: String, val plugin: String, val name: String, val owner: String, val state: String, val percent: Int, val position: Int,
+    val toolpathSha256: String = "", val authorizedHash: String = "", val authorizedBy: String = "",
+)
+
+/** Where the authorization of a job stands: nobody authorised it, a person authorised the hash it has now, or the hash that was authorised is not the one it has now. */
+enum class JobAuth { None, Authorized, Stale }
 
 /** A switch of security of the server (`GET /auth/policy`, administrators only): its key, whether it is on and whether the value is as strict as recommended. */
 data class PolicySwitch(val key: String, val on: Boolean, val safe: Boolean)
@@ -109,6 +118,22 @@ object MachineSafety {
     /** Whether a person may start this job from the phone: an operator, and only a job that waits in the queue. */
     fun canStartJob(operator: Boolean, job: WorkJob): Boolean = operator && job.state == "queued"
 
+    /** Where the authorization of the job stands (the server decides in the end; this only tells the badge). */
+    fun authOf(job: WorkJob): JobAuth = when {
+        job.authorizedHash.isEmpty() -> JobAuth.None
+        job.toolpathSha256.isNotEmpty() && job.authorizedHash == job.toolpathSha256 -> JobAuth.Authorized
+        else -> JobAuth.Stale
+    }
+
+    /** The first characters of a hash, enough for a person to compare it with the one on the other screen. */
+    fun shortHash(hash: String): String = if (hash.isEmpty()) "-" else hash.take(12)
+
+    /** Whether the button to authorize is offered: an operator, a job that waits, that has a hash and whose present hash is not authorized yet. The scope `jobs:authorize` is the server's to check. */
+    fun canAuthorize(operator: Boolean, job: WorkJob): Boolean = operator && job.state == "queued" && job.toolpathSha256.isNotEmpty() && authOf(job) != JobAuth.Authorized
+
+    /** The refusals that say the hash the person saw is not the one the server has (or that none was authorised): the job is read again and shown with its present hash. */
+    fun needsReview(code: String): Boolean = code == "stale_authorization" || code == "authorization_required"
+
     /** Whether a person may cancel this job from the phone: an operator, and only a job that has not finished. */
     fun canCancelJob(operator: Boolean, job: WorkJob): Boolean = operator && (job.state == "queued" || job.state == "paused")
 
@@ -124,7 +149,13 @@ object MachineSafety {
 fun parseWorkJobs(text: String): List<WorkJob> {
     val list = JSONObject(text).optJSONArray("items") ?: JSONArray()
     return (0 until list.length()).mapNotNull { list.optJSONObject(it) }.filter { it.str("id").isNotEmpty() }
-        .map { WorkJob(it.str("id"), it.str("machine"), it.str("plugin"), it.str("name"), it.str("owner"), it.str("state", "queued"), it.optInt("percent", 0), it.optInt("position", 0)) }
+        .map {
+            val authorization = it.optJSONObject("authorization")
+            WorkJob(
+                it.str("id"), it.str("machine"), it.str("plugin"), it.str("name"), it.str("owner"), it.str("state", "queued"), it.optInt("percent", 0), it.optInt("position", 0),
+                it.str("toolpath_sha256"), authorization?.str("toolpath_sha256").orEmpty(), authorization?.str("by").orEmpty(),
+            )
+        }
 }
 
 /** The switches of the answer `{"switches": [...]}` of `GET /auth/policy` that the phone explains ([MachineSafety.SWITCH_KEYS]), in the order of that list. */

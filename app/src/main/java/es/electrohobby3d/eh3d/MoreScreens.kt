@@ -138,7 +138,7 @@ private fun UpdateBlock(state: AppUpdateState, updates: AppUpdateViewModel) {
 @Composable
 fun LanguagePage(model: Eh3dViewModel) {
     val context = LocalContext.current
-    // 37 languages do not fit on a phone screen: the list scrolls.
+    // the list scrolls on a small phone screen.
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         TextButton({ model.back() }) { Text("‹ " + tr("Volver")) }
         Text(tr("Idioma"), style = MaterialTheme.typography.headlineSmall, color = Forge.Text)

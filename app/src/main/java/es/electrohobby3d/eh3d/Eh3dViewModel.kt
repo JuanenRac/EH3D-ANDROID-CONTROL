@@ -26,6 +26,7 @@ import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.PolicySwitch
+import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
 import es.electrohobby3d.eh3d.model.addCandidate
@@ -348,8 +349,22 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** Releases the latch of a machine of a plugin (an administrator; the screen has asked twice). */
     fun releaseWork(machine: WorkMachine) = act { if (api.releaseWork(machine)) message = tr("Se ha soltado el enclavamiento.") }
 
-    /** Starts a job of the queue. Only a person's second touch calls this: nothing in the app starts a job by itself. */
-    fun startWorkJob(id: String) = act { api.startWorkJob(id) }
+    /** Starts a job of the queue naming the hash that was shown. Only a person's second touch calls this: nothing in the app starts a job by itself. */
+    fun startWorkJob(job: WorkJob) = review { api.startWorkJob(job.id, job.toolpathSha256) }
+
+    /** Authorizes the hash that was shown for a job of the queue (a person's second touch). */
+    fun authorizeWorkJob(job: WorkJob) = review { api.authorizeWorkJob(job.id, job.toolpathSha256); message = tr("Se ha autorizado el trabajo.") }
+
+    /** An action on a job with a hash: when the server says the hash is not the one of the job now (or that none was authorised) the queue is read again, so the job shows its present hash. */
+    private fun review(work: suspend () -> Unit) {
+        viewModelScope.launch {
+            try { work(); refresh() } catch (error: ApiException) {
+                if (error.unauthorized) signOutQuietly()
+                else if (MachineSafety.needsReview(error.code)) { message = errorText(error) + " " + tr("Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo."); refresh() }
+                else message = errorText(error)
+            }
+        }
+    }
 
     fun cancelWorkJob(id: String) = act { api.cancelWorkJob(id) }
 

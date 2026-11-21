@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Copyright (C) 2026 JuanenRac (Electro Hobby 3D). GPL-3.0-or-later.
-"""Checks the tables of the 37 languages of the app without a build: the list of languages, one JSON table per language, the same phrases in every complete table,
+"""Checks the tables of the 8 languages of the app without a build: the list of languages, one JSON table per language, the same phrases in every complete table,
 the same holes (%s, %d, %.1f) as the Spanish phrase that is the key, no blank text and no table that is only English.
 
 The list is read from the source (Tr.kt here, Tr.swift in the iPhone app), so a language added there without its table, or a table without its language, fails.
@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FIRST_EIGHT = ["en", "es", "it", "de", "fr", "pt", "zh", "ja"]
-VARIANTS = {"pt-br": "pt", "fr-ca": "fr"}  # a variant holds only what differs from its main language
+VARIANTS: dict[str, str] = {}  # a variant would hold only what differs from its main language; the eight languages are all main languages
 MAX_ENGLISH = 30  # a table with more texts equal to the English ones is not translated
 HOLE = re.compile(r"%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z]")
 
@@ -41,8 +41,8 @@ def listed_codes(source: Path) -> list[str]:
 def problems_of(source: Path, tables: Path) -> list[str]:
     problems: list[str] = []
     codes = listed_codes(source)
-    if len(codes) != 37 or len(set(codes)) != 37:
-        problems.append(f"{source.name} lists {len(codes)} languages ({len(set(codes))} different), it must list 37")
+    if len(codes) != 8 or len(set(codes)) != 8:
+        problems.append(f"{source.name} lists {len(codes)} languages ({len(set(codes))} different), it must list 8")
     if codes[:8] != FIRST_EIGHT:
         problems.append(f"the first eight languages are {codes[:8]}, they must be {FIRST_EIGHT}")
     files = {p.stem: p for p in tables.glob("*.json")}
@@ -95,7 +95,7 @@ def main() -> int:
     if problems:
         print("I18N_CHECK=FAIL")
         return 1
-    print(f"I18N_CHECK=PASS languages=37 tables={len(list(tables.glob('*.json')))}")
+    print(f"I18N_CHECK=PASS languages=8 tables={len(list(tables.glob('*.json')))}")
     return 0
 
 

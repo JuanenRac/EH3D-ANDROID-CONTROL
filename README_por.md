@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
-  <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
+  <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
   <img src="https://img.shields.io/badge/Version-0.1.6-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
@@ -54,11 +54,11 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Visor 2D e 3D | 🟠 | A placa, os furos (um anel até serem furados), os trajetos (ténues até serem cortados) e o cabeçote, em 2D e numa vista isométrica que roda com o dedo; a posição do cabeçote é uma estimativa a partir dos passos feitos. Testado como geometria, nunca visto num telemóvel. |
 | Câmara do cabeçote | 🟠 | A câmara do cabeçote de furação (EH3D-NODE-BUNGARD-AUX) em MJPEG através do servidor, as suas rotações, temperatura e saída de proteção, e uma medição da mesa com o laser. Escrito, nunca executado com um nó real. |
 | Atualizações | 🟠 | Consulta a última release deste projeto no GitHub, descarrega o APK, verifica o pacote, a versão e a assinatura e entrega-o ao instalador do Android; nunca instala sozinha. Escrito e testado; nunca executado contra o GitHub a partir de um telemóvel. |
-| Máquinas dos plugins | 🟠 | A página inicial lista as máquinas de laser, pick-and-place, placas, CNC, Gerber, CAM, impressora 3D, visão e CAD do servidor com um distintivo APENAS SIMULADOR (nada é mostrado como provado em hardware), os seus bloqueios a vermelho, uma paragem de emergência com um toque e sem perguntas, a libertação de um bloqueio apenas para administradores (confirmada duas vezes), a fila de cada máquina (um trabalho é iniciado por uma pessoa, confirmado duas vezes, e nunca sozinho), os limites de temperatura de uma impressora e, para um administrador, os interruptores do servidor desligados por predefinição. Escrito e testado contra um servidor simulado; nunca executado num telemóvel nem com uma máquina real. |
+| Máquinas dos plugins | 🟠 | A página inicial lista as máquinas de laser, pick-and-place, placas, CNC, Gerber, CAM, impressora 3D, visão e CAD do servidor com um distintivo APENAS SIMULADOR (nada é mostrado como provado em hardware), os seus bloqueios a vermelho, uma paragem de emergência com um toque e sem perguntas, a libertação de um bloqueio apenas para administradores (confirmada duas vezes), a fila de cada máquina (cada trabalho mostra um código curto do seu hash com um distintivo - não autorizado, autorizado ou caducado; uma pessoa autoriza-o com um segundo toque e inicia-o, confirmado duas vezes, enviando o código mostrado; nunca sozinho), os limites de temperatura de uma impressora e, para um administrador, os interruptores do servidor desligados por predefinição. Escrito e testado contra um servidor simulado; nunca executado num telemóvel nem com uma máquina real. |
 | Definições do servidor | 🟠 | Uma página em Mais desenha cada definição e interruptor do servidor a partir do seu contrato (95 chaves em 16 grupos; lidas do servidor e, quando não é possível, da cópia guardada na aplicação, só de leitura): etiqueta, ajuda e aviso em oito idiomas, o valor em vigor, o valor por omissão com um botão para o repor, se a alteração se aplica já ou precisa de reinício e o controlo do seu tipo. Qualquer outro utilizador (leitor, operador) lê a vista leve dos valores em vigor (`GET /settings/values`, com ETag para que uma página sem alterações custe poucos bytes) com as etiquetas da cópia, só de leitura, e é avisado quando a lista de definições do servidor não é a cópia da aplicação; uma chave que o servidor não mostra é marcada como tal. Um administrador altera as 19 chaves que o servidor altera em funcionamento e é-lhe perguntado uma segunda vez nas de risco; as outras 76 são mostradas com a nota de que se definem em server.cfg; um segredo nunca é mostrado. Escrita e testada contra um servidor simulado; nunca executada contra um real. |
 | Nós pick-and-place | 🟠 | A página inicial lista, só de leitura, os nós de alimentadores e de cabeça das máquinas pick-and-place que o servidor guarda: tipo, endereço e máquina, pronto (verde) ou não (vermelho) como o servidor o conta, o estado que comunica, o último erro da sua consulta e os números que disse por último; o token nunca é lido nem mostrado, e os nós registam-se e alteram-se no EH3D-STUDIO. Escrito e testado contra um servidor simulado; nunca executado com um alimentador, uma cabeça nem um servidor reais. |
 | Uso real | 🔴 | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
-| Documentação | 🟡 | README em oito idiomas, a ajuda da aplicação em 37 idiomas e as notas da API do servidor que usa. |
+| Documentação | 🟡 | README em oito idiomas, a ajuda da aplicação em 8 idiomas e as notas da API do servidor que usa. |
 
 ## 🎯 Visão geral
 
@@ -146,7 +146,7 @@ Abra a aplicação, escreva o endereço do servidor (e a porta 18200), prima Lig
 
 ## 🧪 Testes
 
-`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste. `python -I tools/check_app_parity.py` verifica que os exemplos das respostas, o catálogo das recusas e as tabelas das 37 línguas são os mesmos nas duas aplicações móveis (a única frase do certificado fixado é a única diferença permitida), e a CI imprime quanto do código que guarda regras estes testes cobrem. `python -I tools/sync_settings_contract.py --check` verifica que a cópia do contrato de definições do servidor (e a tabela das frases da sua página) é válida e, com o EH3D-SERVER ao lado deste repositório, que é o mesmo ficheiro que o do servidor; `check_app_parity.py` verifica ainda que as duas aplicações levam a mesma cópia e a mesma tabela. A mesma verificação escreve em `ContractHash.kt` o SHA-256 da cópia e verifica-o, e a aplicação compara-o com o `contract_hash` que o servidor dá, para poder avisar quando a lista de definições do servidor não é a sua cópia.
+`./gradlew test` executa os testes unitários na JVM: os leitores do JSON do servidor (frota, trabalhos, cabeçote, medição), a posição do cabeçote e a geometria das duas vistas, a verificação do endereço, a conservação cifrada da sessão, a versão e a porta da release da atualização, e os idiomas (cada frase do código nas sete tabelas, com os mesmos espaços). Também leem os exemplos de respostas que os testes do servidor produzem, de modo que uma resposta que muda sem que a app a acompanhe falha aqui. As duas apps de telemóvel percorrem também os mesmos ficheiros de casos (o resumo, a ligação, a paragem, os avisos, os endereços e os campos que leem), pelo que uma não pode diferir da outra sem que falhe um teste. `python -I tools/check_app_parity.py` verifica que os exemplos das respostas, o catálogo das recusas e as tabelas das 8 línguas são os mesmos nas duas aplicações móveis (a única frase do certificado fixado é a única diferença permitida), e a CI imprime quanto do código que guarda regras estes testes cobrem. `python -I tools/sync_settings_contract.py --check` verifica que a cópia do contrato de definições do servidor (e a tabela das frases da sua página) é válida e, com o EH3D-SERVER ao lado deste repositório, que é o mesmo ficheiro que o do servidor; `check_app_parity.py` verifica ainda que as duas aplicações levam a mesma cópia e a mesma tabela. A mesma verificação escreve em `ContractHash.kt` o SHA-256 da cópia e verifica-o, e a aplicação compara-o com o `contract_hash` que o servidor dá, para poder avisar quando a lista de definições do servidor não é a sua cópia.
 
 ## 🏗️ Compilação e publicação
 
@@ -166,7 +166,7 @@ EH3D-ANDROID-CONTROL/
 ├── app/
 │   ├── build.gradle.kts proguard-rules.pro      a compilação e as regras de redução
 │   ├── src/main/AndroidManifest.xml             permissões e a única atividade
-│   ├── src/main/assets/i18n/                    os textos em 37 idiomas
+│   ├── src/main/assets/i18n/                    os textos em 8 idiomas
 │   ├── src/main/assets/settings-contract.json   a cópia do contrato de definições
 │   ├── src/main/java/es/electrohobby3d/eh3d/    o código da aplicação
 │   └── src/test/java/es/electrohobby3d/eh3d/    os testes na JVM
@@ -212,20 +212,12 @@ EH3D-ANDROID-CONTROL/
 
 ## 🌍 Idiomas
 
-O README existe em inglês, espanhol, francês, italiano, alemão, chinês, japonês e português europeu. A própria aplicação fala 37 idiomas (os oito primeiros são os dos programas EH3D no computador); os outros 29 foram traduzidos pelo modelo e aguardam a revisão de falantes nativos. O português do Brasil e o francês do Canadá guardam apenas as frases que diferem do português europeu e do francês; uma frase que um idioma não tem é mostrada em inglês.
+O README existe em inglês, espanhol, francês, italiano, alemão, chinês, japonês e português europeu. A própria aplicação fala esses mesmos oito idiomas (os dos programas EH3D no computador); uma frase que um idioma não tem é mostrada em inglês.
 
 | Código | Idioma | Código | Idioma | Código | Idioma | Código | Idioma |
 |---|---|---|---|---|---|---|---|
 | `en` | English | `es` | Español | `it` | Italiano | `de` | Deutsch |
 | `fr` | Français | `pt` | Português | `zh` | 中文 | `ja` | 日本語 |
-| `bg` | Български | `hr` | Hrvatski | `cs` | Čeština | `da` | Dansk |
-| `nl` | Nederlands | `et` | Eesti | `fi` | Suomi | `el` | Ελληνικά |
-| `hu` | Magyar | `ga` | Gaeilge | `lv` | Latviešu | `lt` | Lietuvių |
-| `mt` | Malti | `pl` | Polski | `ro` | Română | `sk` | Slovenčina |
-| `sl` | Slovenščina | `sv` | Svenska | `no` | Norsk | `is` | Íslenska |
-| `uk` | Українська | `ru` | Русский | `sr` | Српски | `sq` | Shqip |
-| `ca` | Català | `gl` | Galego | `eu` | Euskara | `pt-br` | Português (Brasil) |
-| `fr-ca` | Français (Canada) |  |  |  |  |  |  |
 
 ## 🔗 Projetos relacionados
 
@@ -244,7 +236,7 @@ O README existe em inglês, espanhol, francês, italiano, alemão, chinês, japo
 ## 🤝 Contribuir e comunidade
 
 * Antes de um pull request execute `./gradlew test` e `python -I tools/ci_validate.py`: ambos têm de passar. Veja [CONTRIBUTING.md](CONTRIBUTING.md) e o [código de conduta](CODE_OF_CONDUCT.md).
-* Cada texto que a aplicação mostra está nas tabelas de `app/src/main/assets/i18n` nos 37 idiomas; um teste mantém-nas completas.
+* Cada texto que a aplicação mostra está nas tabelas de `app/src/main/assets/i18n` nos 8 idiomas; um teste mantém-nas completas.
 * Comunique uma vulnerabilidade em privado: [SECURITY.md](SECURITY.md). Perguntas, ideias e relatórios: electrohobby3d@gmail.com ([SUPPORT.md](SUPPORT.md)).
 
 ## 👤 AUTOR

@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Kotlin%20%2B%20Jetpack%20Compose-7F52FF.svg" alt="Kotlin, Jetpack Compose">
-  <img src="https://img.shields.io/badge/Languages-37-00E5FF.svg" alt="Languages">
+  <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
   <img src="https://img.shields.io/badge/Version-0.1.6-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-FFB020.svg" alt="Maturity">
 </p>
@@ -54,11 +54,11 @@ Each line is one part of this repository and the light says how far it is today.
 | 2D and 3D viewer | 🟠 | The board, the holes (a ring until drilled), the paths (dim until cut) and the head, in 2D and in an isometric view that turns with a finger; the place of the head is an estimate from the steps done. Tested as geometry, never seen on a phone. |
 | Camera of the head | 🟠 | The camera of the drill head (EH3D-NODE-BUNGARD-AUX) as MJPEG through the server, its turns, temperature and protect output, and one measure of the table with the laser. Written, never run with a real node. |
 | Updates | 🟠 | It looks at the newest release of this project on GitHub, downloads the APK, checks the package, the version and the signature, and hands it to Android's installer; it never installs by itself. Written and tested; never run against GitHub from a phone. |
-| Machines of the plugins | 🟠 | The home page lists the laser, pick-and-place, board, CNC, Gerber, CAM, 3D printer, vision and CAD machines of the server with a SIMULATOR ONLY badge (nothing is shown as proven on hardware), their interlocks in red, an emergency stop with one touch and no question, the release of a latch for administrators only (asked twice), the queue of each machine (a job is started by a person, asked twice, and never by itself), the temperature limits of a printer and, for an administrator, the switches of the server that are off by default. Written and tested against a simulated server; never run on a phone or with a real machine. |
+| Machines of the plugins | 🟠 | The home page lists the laser, pick-and-place, board, CNC, Gerber, CAM, 3D printer, vision and CAD machines of the server with a SIMULATOR ONLY badge (nothing is shown as proven on hardware), their interlocks in red, an emergency stop with one touch and no question, the release of a latch for administrators only (asked twice), the queue of each machine (a job shows a short code of its hash with a badge - not authorized, authorized or expired; a person authorizes it with a second touch and starts it, asked twice, sending the code that was shown; never by itself), the temperature limits of a printer and, for an administrator, the switches of the server that are off by default. Written and tested against a simulated server; never run on a phone or with a real machine. |
 | Settings of the server | 🟠 | A page in More draws every setting and switch of the server from its contract (95 keys in 16 groups; read from the server and, when that cannot be read, from the copy kept in the app, read-only): label, help and warning in eight languages, the value in force, the default with a button to restore it, whether a change applies at once or needs a restart, and the control of its type. Any other login (viewer, operator) reads the light view of the values in force (`GET /settings/values`, with an ETag so an unchanged page costs a few bytes) with the labels of the copy, read-only, and is told when the list of settings of the server is not the copy of the app; a key the server keeps back is marked as such. An administrator changes the 19 keys the server changes while it runs and is asked a second time for a risky one; the other 76 are shown with the note that they are set in server.cfg; a secret is never shown. Written and tested against a simulated server; never run against a real one. |
 | Pick-and-place nodes | 🟠 | The home page lists the feeder and head nodes of the pick-and-place machines that the server keeps, read only: kind, address and machine, ready (green) or not (red) as the server counts it, the health it reports, the last error of its poll and the numbers it said last; the token is never read or shown, and the nodes are registered and changed in EH3D-STUDIO. Written and tested against a simulated server; never run against a real feeder, head or server. |
 | Real use | 🔴 | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
-| Documentation | 🟡 | README in eight languages, the help of the app in 37 languages and the notes of the server API it uses. |
+| Documentation | 🟡 | README in eight languages, the help of the app in 8 languages and the notes of the server API it uses. |
 
 ## 🎯 Overview
 
@@ -146,7 +146,7 @@ Open the app, type the address of the server (and port 18200), press Connect and
 
 ## 🧪 Testing
 
-`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes). They also read the examples of the answers that the tests of the server make, so an answer that changes without the app following fails here. Both phone apps also walk the same files of cases (the summary, the link, the stop, the notices, the addresses and the fields they read), so one cannot differ from the other without a test failing. `python -I tools/check_app_parity.py` checks that the examples of the answers, the catalog of the refusals and the tables of the 37 languages are the same in both phone apps (the one phrase of the pinned certificate is the only difference allowed), and the CI prints how much of the code that holds rules these tests cover. `python -I tools/sync_settings_contract.py --check` checks that the copy of the settings contract of the server (and the table of the sentences of its page) is valid and, with EH3D-SERVER next to this repository, the same file as the server's; `check_app_parity.py` also checks that both apps carry the same copy and the same table. The same check writes the SHA-256 of the copy into `ContractHash.kt` and verifies it, and the app compares it with the `contract_hash` that the server gives, so it can say when the settings list of the server is not its copy.
+`./gradlew test` runs the unit tests on the JVM: the readers of the server's JSON (fleet, jobs, head, measure), the position of the head and the geometry of the two views, the check of the address, the sealed keeping of the session, the version and the release gate of the update, and the languages (every phrase of the source in the seven tables, with the same holes). They also read the examples of the answers that the tests of the server make, so an answer that changes without the app following fails here. Both phone apps also walk the same files of cases (the summary, the link, the stop, the notices, the addresses and the fields they read), so one cannot differ from the other without a test failing. `python -I tools/check_app_parity.py` checks that the examples of the answers, the catalog of the refusals and the tables of the 8 languages are the same in both phone apps (the one phrase of the pinned certificate is the only difference allowed), and the CI prints how much of the code that holds rules these tests cover. `python -I tools/sync_settings_contract.py --check` checks that the copy of the settings contract of the server (and the table of the sentences of its page) is valid and, with EH3D-SERVER next to this repository, the same file as the server's; `check_app_parity.py` also checks that both apps carry the same copy and the same table. The same check writes the SHA-256 of the copy into `ContractHash.kt` and verifies it, and the app compares it with the `contract_hash` that the server gives, so it can say when the settings list of the server is not its copy.
 
 ## 🏗️ Build & Release
 
@@ -166,7 +166,7 @@ EH3D-ANDROID-CONTROL/
 ├── app/
 │   ├── build.gradle.kts proguard-rules.pro      the build and the shrinking rules
 │   ├── src/main/AndroidManifest.xml             permissions and the one activity
-│   ├── src/main/assets/i18n/                    the texts in 37 languages
+│   ├── src/main/assets/i18n/                    the texts in 8 languages
 │   ├── src/main/assets/settings-contract.json   the copy of the settings contract
 │   ├── src/main/java/es/electrohobby3d/eh3d/    the code of the app
 │   └── src/test/java/es/electrohobby3d/eh3d/    the tests on the JVM
@@ -212,20 +212,12 @@ EH3D-ANDROID-CONTROL/
 
 ## 🌍 Languages
 
-The README exists in English, Spanish, French, Italian, German, Chinese, Japanese and European Portuguese. The app itself speaks 37 languages (the first eight are the ones of the EH3D programs on the computer); the 29 beyond them are translated by the model and wait for a review by native speakers. Brazilian Portuguese and Canadian French hold only the phrases that differ from European Portuguese and French; a phrase that a language does not have is shown in English.
+The README exists in English, Spanish, French, Italian, German, Chinese, Japanese and European Portuguese. The app itself speaks the same eight languages (the ones of the EH3D programs on the computer); a phrase that a language does not have is shown in English.
 
 | Code | Language | Code | Language | Code | Language | Code | Language |
 |---|---|---|---|---|---|---|---|
 | `en` | English | `es` | Español | `it` | Italiano | `de` | Deutsch |
 | `fr` | Français | `pt` | Português | `zh` | 中文 | `ja` | 日本語 |
-| `bg` | Български | `hr` | Hrvatski | `cs` | Čeština | `da` | Dansk |
-| `nl` | Nederlands | `et` | Eesti | `fi` | Suomi | `el` | Ελληνικά |
-| `hu` | Magyar | `ga` | Gaeilge | `lv` | Latviešu | `lt` | Lietuvių |
-| `mt` | Malti | `pl` | Polski | `ro` | Română | `sk` | Slovenčina |
-| `sl` | Slovenščina | `sv` | Svenska | `no` | Norsk | `is` | Íslenska |
-| `uk` | Українська | `ru` | Русский | `sr` | Српски | `sq` | Shqip |
-| `ca` | Català | `gl` | Galego | `eu` | Euskara | `pt-br` | Português (Brasil) |
-| `fr-ca` | Français (Canada) |  |  |  |  |  |  |
 
 ## 🔗 Related Projects
 
@@ -244,7 +236,7 @@ The README exists in English, Spanish, French, Italian, German, Chinese, Japanes
 ## 🤝 Contributing & Community
 
 * Before a pull request run `./gradlew test` and `python -I tools/ci_validate.py`: both must pass. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md).
-* Every text the app shows is in the tables of `app/src/main/assets/i18n` in all 37 languages; a test keeps them complete.
+* Every text the app shows is in the tables of `app/src/main/assets/i18n` in all 8 languages; a test keeps them complete.
 * Report a vulnerability privately: [SECURITY.md](SECURITY.md). Questions, ideas and reports: electrohobby3d@gmail.com ([SUPPORT.md](SUPPORT.md)).
 
 ## 👤 AUTHOR

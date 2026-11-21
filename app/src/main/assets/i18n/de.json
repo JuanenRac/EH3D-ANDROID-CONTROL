@@ -423,5 +423,16 @@
  "Se registran y se cambian en EH3D-STUDIO.": "Sie werden in EH3D-STUDIO eingetragen und geändert.",
  "Cabezal": "Kopf",
  "Alimentador": "Zuführung",
- "No listo": "Nicht bereit"
+ "No listo": "Nicht bereit",
+ "Se ha autorizado el trabajo.": "Der Auftrag wurde autorisiert.",
+ "Se ha vuelto a leer el trabajo: compruebe su código y autorícelo de nuevo.": "Der Auftrag wurde erneut gelesen: Prüfen Sie seinen Code und autorisieren Sie ihn erneut.",
+ "Código del trabajo: %s": "Auftragscode: %s",
+ "Autorizar": "Autorisieren",
+ "¿Autorizar este trabajo con el código %s? Compruebe que es el que se le mostró al prepararlo.": "Diesen Auftrag mit dem Code %s autorisieren? Prüfen Sie, dass es der Code ist, der beim Vorbereiten angezeigt wurde.",
+ "Autorizar el trabajo": "Auftrag autorisieren",
+ "AUTORIZAR": "AUTORISIEREN",
+ "No autorizar": "Nicht autorisieren",
+ "Autorizado": "Autorisiert",
+ "Caducado": "Abgelaufen",
+ "Sin autorizar": "Nicht autorisiert"
 }
