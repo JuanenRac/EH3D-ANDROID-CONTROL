@@ -66,7 +66,9 @@ object Prepare {
         val re = Regex("""(?m)^\s*T(\d+)\s*C(\d*\.?\d+)""")
         for (m in re.findAll(ncd.take(20_000))) {
             val d = m.groupValues[2].toDoubleOrNull() ?: continue
-            out.putIfAbsent(m.groupValues[1].toInt(), d)
+            // a tool number too big for an Int is a damaged file, not a reason to stop (toInt() raised)
+            val tool = m.groupValues[1].toIntOrNull() ?: continue
+            out.putIfAbsent(tool, d)
         }
         return out
     }
@@ -90,7 +92,11 @@ object Prepare {
     }
 
     /** The name of the job: the file without its extension. */
-    fun jobName(fileName: String): String = fileName.substringBeforeLast('.', fileName).take(60)
+    fun jobName(fileName: String): String {
+        val base = fileName.substringBeforeLast('.', fileName)
+        // 60 characters, never half of a picture or of a rare letter that takes two units
+        return if (base.codePointCount(0, base.length) <= 60) base else base.substring(0, base.offsetByCodePoints(0, 60))
+    }
 
     /** The number of lines of a program (counting blank and comment lines, as `skip` does). */
     fun lineCount(text: String): Int = if (text.isEmpty()) 0 else text.count { it == '\n' } + if (text.endsWith("\n")) 0 else 1

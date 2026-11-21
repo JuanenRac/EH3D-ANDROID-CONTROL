@@ -52,6 +52,7 @@ jobs:
       - name: Case files shared with the iPhone app
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          EH3D_PARITY_REF: ${{ github.head_ref }}
         run: |
           python -I tools/test_check_shared_cases.py
           python -I tools/check_shared_cases.py

@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -37,9 +38,26 @@ def which_side(root: Path):
     return None
 
 
-def from_github(repo: str, rel: str) -> dict:
-    """Digest of each case file of the other repository, read from the raw files of its main branch."""
-    base = f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref=main"
+def parity_ref() -> str:
+    """The branch of the other app to compare with: the one named by EH3D_PARITY_REF (the branch of a pull request), else main."""
+    ref = os.environ.get("EH3D_PARITY_REF", "").strip()
+    return ref if ref else "main"
+
+
+def from_github(repo: str, rel: str, ref: str = "") -> dict:
+    """Digest of each case file of the other repository, read from the raw files of the branch `ref` (EH3D_PARITY_REF, main by default; main again when the other app has no such branch),
+    so that the two pull requests of a change that touches both apps are compared with each other."""
+    ref = ref or parity_ref()
+    try:
+        return _from_github_ref(repo, rel, ref)
+    except urllib.error.HTTPError as why:
+        if why.code != 404 or ref == "main":
+            raise
+        return _from_github_ref(repo, rel, "main")
+
+
+def _from_github_ref(repo: str, rel: str, ref: str) -> dict:
+    base = f"https://api.github.com/repos/{OWNER}/{repo}/contents/{rel}?ref={urllib.parse.quote(ref, safe='')}"
     headers = {"Accept": "application/vnd.github+json", "User-Agent": "eh3d-check-shared-cases"}
     if os.environ.get("GITHUB_TOKEN"):
         headers["Authorization"] = "Bearer " + os.environ["GITHUB_TOKEN"]  # the token of the run lifts the limit of anonymous requests

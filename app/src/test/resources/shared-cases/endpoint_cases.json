@@ -49,6 +49,66 @@
    "host": "010.0.0.1",
    "port": "8080",
    "origin": null
+  },
+  {
+   "host": "HTTP://192.168.0.80",
+   "port": "8080",
+   "origin": "http://192.168.0.80:8080"
+  },
+  {
+   "host": "HTTPS://eh3d.example",
+   "port": "8443",
+   "origin": "https://eh3d.example:8443"
+  },
+  {
+   "host": "Http://10.0.0.5",
+   "port": "80",
+   "origin": "http://10.0.0.5:80"
+  },
+  {
+   "host": "192.168.0.80@evil.example",
+   "port": "8080",
+   "origin": null
+  },
+  {
+   "host": "user:pw@192.168.0.80",
+   "port": "8080",
+   "origin": null
+  },
+  {
+   "host": "192.168.0.80",
+   "port": "８０８０",
+   "origin": null
+  },
+  {
+   "host": "192.168.0.80",
+   "port": "+8080",
+   "origin": null
+  },
+  {
+   "host": "192.168.0.80",
+   "port": "0",
+   "origin": null
+  },
+  {
+   "host": "192.168.0.80",
+   "port": "65535",
+   "origin": "http://192.168.0.80:65535"
+  },
+  {
+   "host": "192.168.0.80",
+   "port": " 8080 ",
+   "origin": "http://192.168.0.80:8080"
+  },
+  {
+   "host": "192.168.0.80",
+   "port": "",
+   "origin": null
+  },
+  {
+   "host": "192.168.0.80\n",
+   "port": "8080",
+   "origin": "http://192.168.0.80:8080"
   }
  ],
  "parse": [
@@ -90,6 +150,46 @@
   },
   {
    "value": "",
+   "origin": null
+  },
+  {
+   "value": "http://192.168.0.5:8080/api",
+   "origin": null
+  },
+  {
+   "value": "https://eh3d.example/a/b",
+   "origin": null
+  },
+  {
+   "value": "http://192.168.0.5:8080\n",
+   "origin": "http://192.168.0.5:8080"
+  },
+  {
+   "value": "http://192.168.0.5:0",
+   "origin": null
+  },
+  {
+   "value": "http://192.168.0.5:65536",
+   "origin": null
+  },
+  {
+   "value": "http://192.168.0.5:65535",
+   "origin": "http://192.168.0.5:65535"
+  },
+  {
+   "value": "http://[::1]:8080",
+   "origin": null
+  },
+  {
+   "value": "https://[fe80::1]:8443",
+   "origin": "https://[fe80::1]:8443"
+  },
+  {
+   "value": "http://192.168.0.5.:8080",
+   "origin": null
+  },
+  {
+   "value": "https://user:pw@eh3d.example",
    "origin": null
   }
  ],
@@ -185,6 +285,34 @@
   {
    "host": "0177.0.0.1",
    "private": false
+  },
+  {
+   "host": "10.0.0.1\n",
+   "private": false
+  },
+  {
+   "host": "１０.0.0.1",
+   "private": false
+  },
+  {
+   "host": "0.0.0.0",
+   "private": false
+  },
+  {
+   "host": "255.255.255.255",
+   "private": false
+  },
+  {
+   "host": "172.16.0.0",
+   "private": true
+  },
+  {
+   "host": "172.32.0.0",
+   "private": false
+  },
+  {
+   "host": " 10.0.0.1",
+   "private": false
   }
  ],
  "needs_secure": [
@@ -211,6 +339,30 @@
   {
    "host": "10.attacker.example",
    "value": true
+  },
+  {
+   "host": "HTTP://192.168.0.5",
+   "value": false
+  },
+  {
+   "host": "HTTPS://example.com",
+   "value": false
+  },
+  {
+   "host": "HTTP://example.com",
+   "value": true
+  },
+  {
+   "host": "192.168.0.5@evil.example",
+   "value": true
+  },
+  {
+   "host": "localhost",
+   "value": false
+  },
+  {
+   "host": "\n192.168.0.5\n",
+   "value": false
   }
  ],
  "public_ip": [
@@ -240,6 +392,30 @@
   },
   {
    "host": "  ",
+   "value": false
+  },
+  {
+   "host": "HTTP://203.0.113.9",
+   "value": true
+  },
+  {
+   "host": "HTTPS://203.0.113.9:8443/",
+   "value": true
+  },
+  {
+   "host": "203.0.113.9@evil.example",
+   "value": false
+  },
+  {
+   "host": "203.000.113.9",
+   "value": false
+  },
+  {
+   "host": "256.1.1.1",
+   "value": false
+  },
+  {
+   "host": "10.0.0.1",
    "value": false
   }
  ]

@@ -10,8 +10,9 @@ data class ServerEndpoint(val origin: String) {
         fun fromHostAndPort(hostInput: String, portInput: String): ServerEndpoint? {
             val source = hostInput.trim()
             val scheme = if (source.startsWith("https://", ignoreCase = true)) "https" else "http"
-            val host = source.removePrefix("http://").removePrefix("https://").substringBefore('/').substringBefore(':')
-            val port = portInput.trim().toIntOrNull()?.takeIf { it in 1..65535 } ?: return null
+            val host = withoutScheme(source).substringBefore('/').substringBefore(':')
+            // only plain digits are a port: toIntOrNull also reads the digits of other scripts (the iPhone app does not)
+            val port = portInput.trim().takeIf { text -> text.isNotEmpty() && text.all { it in '0'..'9' } }?.toIntOrNull()?.takeIf { it in 1..65535 } ?: return null
             return parse("${scheme}://${host}:${port}")
         }
 
@@ -22,7 +23,7 @@ data class ServerEndpoint(val origin: String) {
         fun needsSecureConnection(hostInput: String): Boolean {
             val source = hostInput.trim()
             if (source.isEmpty() || source.startsWith("https://", ignoreCase = true)) return false
-            val host = source.removePrefix("http://").substringBefore('/').substringBefore(':')
+            val host = withoutScheme(source).substringBefore('/').substringBefore(':')
             return host.isNotEmpty() && !isPrivateLanHost(host)
         }
 
@@ -33,9 +34,14 @@ data class ServerEndpoint(val origin: String) {
         fun usesPublicIpAddress(hostInput: String): Boolean {
             val source = hostInput.trim()
             if (source.isEmpty()) return false
-            val host = source.removePrefix("http://").removePrefix("https://").substringBefore('/').substringBefore(':')
+            val host = withoutScheme(source).substringBefore('/').substringBefore(':')
             return IPV4.matches(host) && !isPrivateLanHost(host)
         }
+
+        /** What was typed without its `http://` or `https://`, whatever the case (`HTTP://` is the same scheme; the iPhone app reads it so too). */
+        private fun withoutScheme(source: String): String = source.replaceFirst(SCHEME, "")
+
+        private val SCHEME = Regex("^https?://", RegexOption.IGNORE_CASE)
 
         // No leading zeros: some resolvers read "010.0.0.1" as octal, i.e. the public address 8.0.0.1.
         private val IPV4 = Regex("""^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$""")
@@ -58,7 +64,9 @@ data class ServerEndpoint(val origin: String) {
             // a port that does not exist is not an address (java.net.URI reads any number)
             if (uri.port != -1 && uri.port !in 1..65535) return null
             val accepted = uri.scheme == "https" || (uri.scheme == "http" && isPrivateLanHost(host))
-            if (!accepted || uri.userInfo != null || uri.query != null || uri.fragment != null) null
+            // an address is an origin: a path after it (other than the slash) is not part of it, and the iPhone app refuses it
+            val bare = uri.rawPath.isNullOrEmpty() || uri.rawPath == "/"
+            if (!accepted || !bare || uri.userInfo != null || uri.query != null || uri.fragment != null) null
             else ServerEndpoint("${uri.scheme}://${host}" + if (uri.port == -1) "" else ":${uri.port}")
         } catch (_: Exception) { null }
     }
