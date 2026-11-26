@@ -101,26 +101,42 @@ fun parseWorkMachines(text: String): List<WorkMachine> {
 /**
  * A feeder or head node of a pick-and-place machine as `GET /pnp/nodes` lists it. The phone only reads them (EH3D-STUDIO registers, changes and removes them). [ready] is the verdict of the server:
  * only the healths `ok` and `warn` are ready and every other one is not, so an answer that does not say is not ready. The token of a node never comes in the answer (the server sends `********`) and is
- * not read here. [facts] are the few numbers the node said last, as lines of text.
+ * not read here. [facts] are the few numbers the node said last, as lines of text. [slow] is the warning of the server when it asks the node too slowly to keep it out of its safe state.
  */
 data class PnpNode(
     val id: String, val kind: String, val name: String, val address: String, val machine: String, val enabled: Boolean,
-    val health: String, val ready: Boolean, val lastError: String, val simulatorOnly: Boolean, val facts: List<Pair<String, String>>,
+    val health: String, val ready: Boolean, val lastError: String, val simulatorOnly: Boolean, val facts: List<Pair<String, String>>, val slow: PnpSlow? = null,
 )
+
+/** The server asks a node every [pollS] seconds and the node goes to its safe state after [linkLostMs] without being asked; [declared] is false when that time is the default of its contract. */
+data class PnpSlow(val pollS: Long, val linkLostMs: Long, val declared: Boolean)
+
+/** The warnings `poll_too_slow` of the answer, by node; a warning of another kind or without its numbers is left out. */
+private fun slowWarnings(root: JSONObject): Map<String, PnpSlow> {
+    val list = root.optJSONArray("warnings") ?: return emptyMap()
+    return (0 until list.length()).mapNotNull { list.optJSONObject(it) }.mapNotNull { w ->
+        val poll = w.opt("poll_s") as? Number
+        val lost = w.opt("link_lost_ms") as? Number
+        if (w.str("code") != "poll_too_slow" || w.str("node").isEmpty() || poll == null || lost == null) null
+        else w.str("node") to PnpSlow(poll.toLong(), lost.toLong(), w.optBoolean("link_lost_declared", false))
+    }.toMap()
+}
 
 /** The keys of what a node said last that the phone lists, in this order. */
 private val PNP_FACT_KEYS = listOf("safe", "selfcheck", "online", "slots", "low", "empty", "faulted", "nozzle_count", "pump")
 
 /** The nodes of the answer `{"nodes": [...]}`; an item without an id is left out, and anything that is not a list is an empty list. */
 fun parsePnpNodes(text: String): List<PnpNode> {
-    val list = JSONObject(text).optJSONArray("nodes") ?: JSONArray()
+    val root = JSONObject(text)
+    val list = root.optJSONArray("nodes") ?: JSONArray()
+    val slow = slowWarnings(root)
     return (0 until list.length()).mapNotNull { list.optJSONObject(it) }.filter { it.str("id").isNotEmpty() }.map { n ->
         val status = n.optJSONObject("status")
         val facts = ArrayList<Pair<String, String>>()
         if (status != null) for (key in PNP_FACT_KEYS) if (status.has(key) && !status.isNull(key)) facts.add(key to status.opt(key).toString())
         PnpNode(
             n.str("id"), n.str("kind"), n.str("name", n.str("id")), n.str("address"), n.str("machine"), n.optBoolean("enabled", true),
-            n.str("health", "unknown"), n.optBoolean("ready", false), n.str("last_error"), n.str("evidence") == "simulator" || n.optBoolean("simulator_only", false), facts,
+            n.str("health", "unknown"), n.optBoolean("ready", false), n.str("last_error"), n.str("evidence") == "simulator" || n.optBoolean("simulator_only", false), facts, slow[n.str("id")],
         )
     }
 }

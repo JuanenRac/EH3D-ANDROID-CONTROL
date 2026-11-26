@@ -31,7 +31,7 @@
 |---|---|
 | Versione | `0.1.7` |
 | Maturità | Impalcatura |
-| Test | 479 test unitari sulla JVM |
+| Test | 481 test unitari sulla JVM |
 | Stack tecnologico | Kotlin, Jetpack Compose |
 | Su hardware reale | Non ancora: l'app non è stata eseguita su un telefono, contro un server reale né con una macchina; la prima cosa da provare è accedere all'EH3D-SERVER dell'officina. |
 

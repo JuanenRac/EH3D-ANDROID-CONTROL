@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.7` |
 | Maturity | Scaffolding |
-| Tests | 479 unit tests on the JVM |
+| Tests | 481 unit tests on the JVM |
 | Stack | Kotlin, Jetpack Compose |
 | On real hardware | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 

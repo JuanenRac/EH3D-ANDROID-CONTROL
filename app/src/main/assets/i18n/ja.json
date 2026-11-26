@@ -475,5 +475,8 @@
  "Sin alertas": "アラートなし",
  "Información": "情報",
  "Impresoras 3D": "3Dプリンター",
- "La página de inicio muestra, solo para leer, las impresoras 3D que vigila el servidor: estado, temperaturas, progreso, tiempo restante, capa y alertas. Lo que una impresora no dice aparece como desconocido. Desde el teléfono no se les puede enviar nada. Si el servidor tiene la lista apagada, no aparece nada.": "ホーム画面には、サーバーが監視する3Dプリンターが読み取り専用で表示されます：状態、温度、進捗、残り時間、レイヤー、アラート。プリンターが伝えない項目は不明と表示されます。スマートフォンからプリンターには何も送れません。サーバーで一覧がオフの場合は何も表示されません。"
+ "La página de inicio muestra, solo para leer, las impresoras 3D que vigila el servidor: estado, temperaturas, progreso, tiempo restante, capa y alertas. Lo que una impresora no dice aparece como desconocido. Desde el teléfono no se les puede enviar nada. Si el servidor tiene la lista apagada, no aparece nada.": "ホーム画面には、サーバーが監視する3Dプリンターが読み取り専用で表示されます：状態、温度、進捗、残り時間、レイヤー、アラート。プリンターが伝えない項目は不明と表示されます。スマートフォンからプリンターには何も送れません。サーバーで一覧がオフの場合は何も表示されません。",
+ "Consultado demasiado despacio: el servidor lo consulta cada %d s y pasa a su estado seguro tras %d ms sin consultas.": "問い合わせが遅すぎます: サーバーは %d 秒ごとに問い合わせていますが、%d ms 問い合わせがないと安全状態に入ります。",
+ "El nodo no ha dicho su tiempo: se usa el valor por defecto de su contrato.": "ノードが時間を通知していないため、仕様の既定値を使っています。",
+ "Baje pnp_node_poll_s en server.cfg (1 por defecto) y reinicie el servidor. Un nodo ajustado a menos de 1000 ms no se puede mantener atendido con este ajuste.": "server.cfg の pnp_node_poll_s を下げて（既定 1）サーバーを再起動してください。1000 ms 未満に設定されたノードは、この設定では接続を保てません。"
 }

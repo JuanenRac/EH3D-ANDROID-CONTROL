@@ -640,14 +640,14 @@
 "あなたのロールではできません。"
 ],
 "forbidden_scope":[
-"The token is not allowed this scope.",
-"El token no tiene permiso para este ámbito.",
-"Il token non ha il permesso per questo ambito.",
-"Das Token hat für diesen Bereich keine Berechtigung.",
-"Le jeton n'a pas le droit d'utiliser cette portée.",
-"O token não tem permissão para este âmbito.",
-"该令牌无权使用此权限范围。",
-"このトークンにはこのスコープの権限がありません。"
+"The token does not have the scope this needs, or the request would give more than the token has (or outlive it).",
+"El token no tiene el ámbito que hace falta, o la petición daría más de lo que el token tiene (o duraría más que él).",
+"Il token non ha l'ambito necessario, oppure la richiesta darebbe più di quanto il token possiede (o durerebbe più di lui).",
+"Dem Token fehlt der nötige Bereich, oder die Anfrage gäbe mehr, als das Token hat (oder würde es überdauern).",
+"Le jeton n'a pas la portée nécessaire, ou la demande donnerait plus que ce que le jeton possède (ou lui survivrait).",
+"O token não tem o âmbito necessário, ou o pedido daria mais do que o token tem (ou duraria mais do que ele).",
+"该令牌缺少所需的权限范围，或该请求授予的内容超出令牌本身（或有效期更长）。",
+"トークンに必要なスコープがないか、この要求はトークンが持つ以上の権限を与える（またはトークンより長く有効になる）ものです。"
 ],
 "hash_mismatch":[
 "The bytes of the upload do not have the declared SHA-256: the upload was discarded.",

@@ -31,7 +31,7 @@
 |---|---|
 | Versión | `0.1.7` |
 | Madurez | Andamiaje |
-| Pruebas | 479 pruebas unitarias en la JVM |
+| Pruebas | 481 pruebas unitarias en la JVM |
 | Pila tecnológica | Kotlin, Jetpack Compose |
 | En hardware real | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
 
