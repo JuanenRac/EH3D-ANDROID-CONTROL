@@ -475,5 +475,8 @@
  "Sin alertas": "无警报",
  "Información": "信息",
  "Impresoras 3D": "3D 打印机",
- "La página de inicio muestra, solo para leer, las impresoras 3D que vigila el servidor: estado, temperaturas, progreso, tiempo restante, capa y alertas. Lo que una impresora no dice aparece como desconocido. Desde el teléfono no se les puede enviar nada. Si el servidor tiene la lista apagada, no aparece nada.": "首页以只读方式显示服务器监视的 3D 打印机：状态、温度、进度、剩余时间、层数和警报。打印机未报告的内容显示为未知。手机无法向打印机发送任何内容。如果服务器关闭了该列表，则什么也不显示。"
+ "La página de inicio muestra, solo para leer, las impresoras 3D que vigila el servidor: estado, temperaturas, progreso, tiempo restante, capa y alertas. Lo que una impresora no dice aparece como desconocido. Desde el teléfono no se les puede enviar nada. Si el servidor tiene la lista apagada, no aparece nada.": "首页以只读方式显示服务器监视的 3D 打印机：状态、温度、进度、剩余时间、层数和警报。打印机未报告的内容显示为未知。手机无法向打印机发送任何内容。如果服务器关闭了该列表，则什么也不显示。",
+ "Consultado demasiado despacio: el servidor lo consulta cada %d s y pasa a su estado seguro tras %d ms sin consultas.": "查询过慢：服务器每 %d 秒查询一次，而节点超过 %d 毫秒未被查询就会进入安全状态。",
+ "El nodo no ha dicho su tiempo: se usa el valor por defecto de su contrato.": "节点未报告其时间：使用其约定的默认值。",
+ "Baje pnp_node_poll_s en server.cfg (1 por defecto) y reinicie el servidor. Un nodo ajustado a menos de 1000 ms no se puede mantener atendido con este ajuste.": "请在 server.cfg 中调低 pnp_node_poll_s（默认 1）并重启服务器。设定值低于 1000 毫秒的节点无法靠此设置保持连接。"
 }

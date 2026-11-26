@@ -180,6 +180,11 @@ fun PnpNodeCard(n: PnpNode) {
         }
         if (n.simulatorOnly) Pill(tr("SOLO SIMULADOR"), Forge.Orange)
         Text("health: " + n.health + (if (n.lastError.isNotEmpty()) " · " + n.lastError else ""), color = Forge.Text, style = MaterialTheme.typography.bodySmall)
+        n.slow?.let { slow ->
+            Text(trf("Consultado demasiado despacio: el servidor lo consulta cada %d s y pasa a su estado seguro tras %d ms sin consultas.", slow.pollS, slow.linkLostMs), color = Forge.Danger, style = MaterialTheme.typography.bodySmall)
+            if (!slow.declared) Text(tr("El nodo no ha dicho su tiempo: se usa el valor por defecto de su contrato."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+            Text(tr("Baje pnp_node_poll_s en server.cfg (1 por defecto) y reinicie el servidor. Un nodo ajustado a menos de 1000 ms no se puede mantener atendido con este ajuste."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        }
         n.facts.forEach { (key, value) -> Text("$key: $value", color = Forge.Dim, style = MaterialTheme.typography.bodySmall) }
     }
 }

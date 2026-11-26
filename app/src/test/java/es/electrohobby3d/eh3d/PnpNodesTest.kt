@@ -4,6 +4,7 @@
 package es.electrohobby3d.eh3d
 
 import com.sun.net.httpserver.HttpServer
+import es.electrohobby3d.eh3d.model.PnpSlow
 import es.electrohobby3d.eh3d.model.parsePnpNodes
 import es.electrohobby3d.eh3d.network.ApiException
 import es.electrohobby3d.eh3d.network.Eh3dApi
@@ -124,5 +125,26 @@ class PnpNodesTest {
         assertEquals(501, error.status)
         assertEquals("pnp_nodes_off", error.code)
         assertFalse(error.unauthorized)
+    }
+
+    @Test fun `the warning of a node that is asked too slowly goes to its node, and only to it`() {
+        val nodes = parsePnpNodes(
+            """{"nodes":[{"id":"h","kind":"head","link_lost_ms":2000,"link_lost_declared":false,"poll_too_slow":true},{"id":"f","kind":"feeder"}],
+                "warnings":[{"code":"poll_too_slow","node":"h","poll_s":5,"link_lost_ms":2000,"link_lost_declared":false}]}""",
+        )
+        assertEquals(PnpSlow(5, 2000, false), nodes[0].slow)
+        assertEquals(null, nodes[1].slow)
+    }
+
+    @Test fun `a warning of another kind, without its numbers or in a list that is not one is not a warning`() {
+        val answers = listOf(
+            """{"nodes":[{"id":"h"}]}""",
+            """{"nodes":[{"id":"h"}],"warnings":"x"}""",
+            """{"nodes":[{"id":"h"}],"warnings":[5,{"code":"another","node":"h","poll_s":5,"link_lost_ms":2000}]}""",
+            """{"nodes":[{"id":"h"}],"warnings":[{"code":"poll_too_slow","node":"h","poll_s":"5","link_lost_ms":2000},{"code":"poll_too_slow","node":"h","poll_s":5}]}""",
+        )
+        for (answer in answers) assertEquals(answer, null, parsePnpNodes(answer).single().slow)
+        val declared = parsePnpNodes("""{"nodes":[{"id":"h"}],"warnings":[{"code":"poll_too_slow","node":"h","poll_s":20,"link_lost_ms":15000,"link_lost_declared":true}]}""")
+        assertEquals(PnpSlow(20, 15000, true), declared.single().slow)
     }
 }
