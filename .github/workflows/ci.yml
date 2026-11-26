@@ -69,6 +69,10 @@ jobs:
           python -I tools/sync_settings_contract.py --check
       - name: The check of the floor of coverage
         run: python -I tools/test_check_coverage_floor.py
+      - name: The eight languages and no other
+        run: |
+          python -I tools/test_check_languages.py
+          python -I tools/check_languages.py
 
   tests:
     name: Tests, lint and the debug APK
@@ -90,6 +94,12 @@ jobs:
         run: python3 tools/check_coverage_floor.py app/build/reports/coverage --floor 70 --all-floor 20
       - name: The release keeps what the libraries make by reflection
         run: python3 tools/check_release_build.py
+      - name: The release carries the eight languages and no other
+        run: |
+          set -euo pipefail
+          tools="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)"
+          "${tools}aapt2" dump badging app/build/outputs/apk/release/app-release-unsigned.apk > badging.txt
+          python3 tools/check_languages.py badging.txt
       - name: Keep the debug APK
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

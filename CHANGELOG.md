@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The APK carries the eight languages and no other:** the build kept the texts of the Android libraries in every language they have, so the package declared many more languages than the app speaks. `androidResources.localeFilters` now keeps English, Spanish, German, French, Italian, Japanese, Chinese and European Portuguese. The new `tools/check_languages.py` fails on a language too many or one missing in that list, on a resource folder of another language and on the built APK.
+
 ## [0.1.8] - Live status of 3D printers, warnings of pick-and-place nodes and the new permissions of the server
 
 - **A node of a pick-and-place machine that is asked too slowly says so:** its card shows the warning of the server (`poll_too_slow`): how often the server asks it, after how long without being asked it goes to its safe state, whether that time is the one the node says or the default of its contract, and what to change (`pnp_node_poll_s`). Eight languages. Seen against a simulator only.
