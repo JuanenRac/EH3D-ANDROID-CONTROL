@@ -26,6 +26,9 @@ import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.PolicySwitch
+import es.electrohobby3d.eh3d.model.PrinterListing
+import es.electrohobby3d.eh3d.model.PrinterView
+import es.electrohobby3d.eh3d.model.printersAfterFailure
 import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
@@ -120,6 +123,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var workMachines by mutableStateOf(emptyList<WorkMachine>()); private set
     /** The feeder and head nodes of the pick-and-place machines, read only; empty while the server has none or has the nodes switched off. */
     var pnpNodes by mutableStateOf(emptyList<PnpNode>()); private set
+    /** The 3D printers the server watches, read only; hidden while the server has the list switched off or does not have it. */
+    var printers by mutableStateOf(PrinterListing.HIDDEN); private set
     /** The jobs of the generic queue of the server (the ones of the machines of the plugins) and, for an administrator, the switches of security of the server that the app explains. */
     var workJobs by mutableStateOf(emptyList<WorkJob>()); private set
     var switches by mutableStateOf(emptyList<PolicySwitch>()); private set
@@ -285,7 +290,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         login = null
         fleet = Fleet.EMPTY
         job = null; head = null; jobs = emptyList()
-        sessionList = emptyList(); workMachines = emptyList(); pnpNodes = emptyList(); workJobs = emptyList(); switches = emptyList()
+        sessionList = emptyList(); workMachines = emptyList(); pnpNodes = emptyList(); workJobs = emptyList(); switches = emptyList(); printers = PrinterListing.HIDDEN
         stack.clear(); stack.add(Page.Home)
         phase = Phase.SignedOut
     }
@@ -485,6 +490,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                     workMachines = try { api.workMachines() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workMachines else emptyList() }   // a server without plugins has none
                     pnpNodes = if (workMachines.any { it.plugin == "pnp" }) (try { api.pnpNodes() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) pnpNodes else emptyList() }) else emptyList()   // 501 while the nodes are off
                     if (workMachines.isNotEmpty()) workJobs = try { api.workJobs() } catch (error: ApiException) { if (error.unauthorized) throw error else if (error.status == 0) workJobs else emptyList() }
+                    printers = try { PrinterListing(PrinterView.Listed, api.printers()) } catch (error: ApiException) { if (error.unauthorized) throw error else printersAfterFailure(printers, error.status, error.code) }
                 }
                 else -> Unit
             }
@@ -495,7 +501,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun signOutQuietly() { FleetWatch.cancel(getApplication()); api.token = ""; login = null; phase = Phase.SignedOut; poller?.cancel() }
+    private fun signOutQuietly() { FleetWatch.cancel(getApplication()); api.token = ""; login = null; printers = PrinterListing.HIDDEN; phase = Phase.SignedOut; poller?.cancel() }
 
     /** A machine that stops, finishes or waits for the operator is told in a notice, once. */
     private fun raise(now: Fleet) {

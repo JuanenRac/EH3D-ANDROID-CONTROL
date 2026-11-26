@@ -349,6 +349,16 @@
 "服务器运行时无法更改该开关，或者值无效。",
 "このスイッチはサーバーの稼働中は変更できないか、値が無効です。"
 ],
+"bad_printer":[
+"The printer does not fit: check its family, link, id, name, address, serial, fingerprint and access code.",
+"La impresora no es válida: revisa su familia, enlace, id, nombre, dirección, número de serie, huella y código de acceso.",
+"La stampante non è valida: controlla famiglia, collegamento, id, nome, indirizzo, numero di serie, impronta e codice di accesso.",
+"Der Drucker ist ungültig: Prüfen Sie Familie, Verbindung, ID, Name, Adresse, Seriennummer, Fingerabdruck und Zugangscode.",
+"L'imprimante n'est pas valide : vérifiez sa famille, sa liaison, son id, son nom, son adresse, son numéro de série, son empreinte et son code d'accès.",
+"A impressora não é válida: verifique a família, a ligação, o id, o nome, o endereço, o número de série, a impressão digital e o código de acesso.",
+"该打印机无效：请检查协议系列、连接方式、ID、名称、地址、序列号、指纹和访问码。",
+"プリンターが正しくありません。系統、接続方式、ID、名前、アドレス、シリアル番号、指紋、アクセスコードを確認してください。"
+],
 "bad_profile":[
 "The inspection profile is not valid.",
 "El perfil de inspección no es válido.",
@@ -1099,6 +1109,16 @@
 "打印机没有响应。",
 "プリンターが応答しません。"
 ],
+"printer_exists":[
+"A printer with this id, address or serial is already registered.",
+"Ya hay una impresora registrada con este id, dirección o número de serie.",
+"Esiste già una stampante con questo id, indirizzo o numero di serie.",
+"Ein Drucker mit dieser ID, Adresse oder Seriennummer ist bereits eingetragen.",
+"Une imprimante avec cet id, cette adresse ou ce numéro de série est déjà enregistrée.",
+"Já existe uma impressora registada com este id, endereço ou número de série.",
+"已登记了使用此 ID、地址或序列号的打印机。",
+"このID、アドレス、またはシリアル番号のプリンターはすでに登録されています。"
+],
 "printer_latched":[
 "An emergency stop or a heater fault latched the printer: nothing starts or heats until an administrator releases it.",
 "Una parada de emergencia o un fallo de un calentador bloqueó la impresora: nada arranca ni se calienta hasta que un administrador la libere.",
@@ -1118,6 +1138,26 @@
 "O certificado da impressora não é o fixado, ou não há nenhum fixado: a ligação é recusada.",
 "打印机的证书不是已固定的证书，或尚未固定任何证书：连接被拒绝。",
 "プリンターの証明書が固定したものと一致しないか、固定されていないため、接続を拒否しました。"
+],
+"printers_full":[
+"The list of printers is full.",
+"La lista de impresoras está llena.",
+"L'elenco delle stampanti è pieno.",
+"Die Druckerliste ist voll.",
+"La liste des imprimantes est pleine.",
+"A lista de impressoras está cheia.",
+"打印机列表已满。",
+"プリンター一覧がいっぱいです。"
+],
+"printers_off":[
+"The list of printers is switched off on this server.",
+"La lista de impresoras está apagada en este servidor.",
+"L'elenco delle stampanti è spento su questo server.",
+"Die Druckerliste ist auf diesem Server ausgeschaltet.",
+"La liste des imprimantes est désactivée sur ce serveur.",
+"A lista de impressoras está desligada neste servidor.",
+"此服务器上已关闭打印机列表。",
+"このサーバーではプリンター一覧がオフになっています。"
 ],
 "program_over_limit":[
 "The program asks for a temperature or a feed above a limit of the machine, so all of it is refused.",
@@ -1468,6 +1508,16 @@
 "Esse nó pick-and-place não existe.",
 "该贴片机节点不存在。",
 "そのピックアンドプレースのノードは存在しません。"
+],
+"unknown_printer":[
+"That printer does not exist.",
+"Esa impresora no existe.",
+"Quella stampante non esiste.",
+"Diesen Drucker gibt es nicht.",
+"Cette imprimante n'existe pas.",
+"Essa impressora não existe.",
+"该打印机不存在。",
+"そのプリンターは存在しません。"
 ],
 "unknown_project":[
 "There is no project with this id, or it belongs to somebody else.",

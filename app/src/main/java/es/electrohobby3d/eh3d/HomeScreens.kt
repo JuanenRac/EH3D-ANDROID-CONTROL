@@ -141,6 +141,7 @@ fun HomePage(model: Eh3dViewModel) {
             items(model.pnpNodes, key = { "pnp-" + it.id }) { n -> PnpNodeCard(n) }
             item { Text(tr("Se registran y se cambian en EH3D-STUDIO."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall) }
         }
+        printerItems(model.printers)
         item { Spacer(Modifier.padding(bottom = 8.dp)) }
     }
     if (askAll) StopDialog(tr("¿Parar todas las máquinas que trabajan?"), model.offline, onConfirm = { askAll = false; model.emergencyStopAll() }, onDismiss = { askAll = false })
