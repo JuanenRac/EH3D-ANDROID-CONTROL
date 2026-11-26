@@ -39,6 +39,7 @@ class ErrorCodesTest {
         "slice_limit", "slice_off", "temperature_over_limit", "test_fire_refused", "thermal_runaway", "unit_unknown",
         "authorization_required", "bad_bgcode", "bad_pnp_node", "bambu_lan_off", "bgcode_unsupported", "pnp_node_disabled",
         "pnp_node_exists", "pnp_node_not_ready", "pnp_nodes_full", "pnp_nodes_off", "stale_authorization", "unknown_pnp_node",
+        "bad_printer", "printer_exists", "printers_full", "printers_off", "unknown_printer",
     )
 
     private fun handledByTheModel(): Set<String> =

@@ -31,12 +31,14 @@ import es.electrohobby3d.eh3d.model.RetryRules
 import es.electrohobby3d.eh3d.model.MachineSafety
 import es.electrohobby3d.eh3d.model.PnpNode
 import es.electrohobby3d.eh3d.model.PolicySwitch
+import es.electrohobby3d.eh3d.model.Printer
 import es.electrohobby3d.eh3d.model.WorkJob
 import es.electrohobby3d.eh3d.model.WorkMachine
 import es.electrohobby3d.eh3d.model.parsePnpNodes
 import es.electrohobby3d.eh3d.model.parsePolicySwitches
 import es.electrohobby3d.eh3d.model.parseWorkJobs
 import es.electrohobby3d.eh3d.model.parsePreview
+import es.electrohobby3d.eh3d.model.parsePrinters
 import es.electrohobby3d.eh3d.model.parseSessions
 import es.electrohobby3d.eh3d.model.parseWorkMachines
 import es.electrohobby3d.eh3d.model.readCapped
@@ -236,6 +238,12 @@ open class Eh3dApi(
 
     /** The feeder and head nodes of the pick-and-place machines, with their health as the server last saw it (read only; a server where the nodes are switched off answers 501). */
     suspend fun pnpNodes(): List<PnpNode> = parsePnpNodes(call("/pnp/nodes"))
+
+    /**
+     * The 3D printers the server watches, read only: this GET is the only thing the phone asks about them (a server with the list switched off answers 501). An answer that is not the contract
+     * is `bad_json`, never an empty list.
+     */
+    suspend fun printers(): List<Printer> = parsePrinters(call("/printers")) ?: throw ApiException(200, "bad_json", "the answer is not the list of printers")
 
     /** The jobs of the generic queue of the server (the newest first, at most 100): the ones that wait, run or are held are the ones the app shows. */
     suspend fun workJobs(): List<WorkJob> = parseWorkJobs(call("/work/jobs?limit=100"))
