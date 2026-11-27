@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Third-party notices:** the APK carries the asset `THIRD_PARTY_NOTICES` with the libraries it is built with, their licences and the Apache License (`docs/THIRD_PARTY_NOTICES`, made by `tools/third_party_notices.py` from the dependency graph of Gradle). The CI fails when a library of the graph is not listed.
+
 ## [0.2.0] - Answer the new questions of the server when a job resumes, and the spindle and drill settings
 
 - **Before the tool goes down into the work:** when a job that goes on after a stop waits with `pause.plunge`, the app says that the head is over the point and that confirming takes the tool down, in the eight languages. Needs the server that asks it; not tried on a machine.
