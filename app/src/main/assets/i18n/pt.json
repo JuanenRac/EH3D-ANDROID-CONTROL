@@ -263,6 +263,7 @@
  "G-code": "G-code",
  "Trabajo en pausa: pulse Reanudar para que siga.": "Trabalho em pausa: prima Retomar para que continue.",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "O trabalho continua depois de uma paragem: verifique a máquina, o zero de trabalho e a ferramenta, e afaste-se. Ao tocar em Retomar, a máquina volta sozinha ao ponto onde parou e arranca o fuso se o programa o tinha ligado.",
+ "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "Confirme antes de o fuso ou o laser voltar a ser ligado: olhe para a cabeça e para a peça, e afaste-se. Ao premir Retomar, liga-se e o trabalho continua.",
  "Reanudar": "Retomar",
  "Pausar": "Pausar",
  "Preparar trabajo": "Preparar trabalho",

@@ -1,7 +1,7 @@
 plugins { id("com.android.application"); id("org.jetbrains.kotlin.plugin.compose") }
 
 android { namespace = "es.electrohobby3d.eh3d"; compileSdk = 37
-    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 18; versionName = "0.1.8" }
+    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 19; versionName = "0.1.9" }
     buildFeatures { compose = true; buildConfig = true }
     // The eight languages of the app and no other: without this the APK also carries the texts of the libraries in every language they have, and the phone offers those.
     // The default (English) texts are always kept. tools/check_languages.py holds this list, the resource folders and the languages of the built APK.

@@ -74,7 +74,7 @@ fun jobKindText(kind: String): String = when (kind) {
 /** What the machine waits for, in a sentence. */
 fun pauseText(p: Pause): String = when (p.kind) {
     "hold" -> tr("Trabajo en pausa: pulse Reanudar para que siga.")
-    "resume" -> tr("El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.")
+    "resume" -> if (p.powerOn) tr("Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.") else tr("El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.")
     "tool_change" -> trf("Ponga la herramienta %d y confirme.", p.tool ?: 0)
     "spindle_start" -> tr("Compruebe que el husillo gira y confirme.")
     else -> tr("La máquina espera una confirmación.")
