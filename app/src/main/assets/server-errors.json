@@ -186,7 +186,7 @@
 "Der Server nimmt das Programm nicht an: Eine Zeile kann nicht an die Maschine gesendet oder nicht sicher beurteilt werden. Korrigieren Sie diese Zeile im Programm.",
 "Le serveur n'accepte pas le programme : une ligne ne peut pas être envoyée à la machine ou ne peut pas être jugée avec certitude. Corrigez cette ligne dans le programme.",
 "O servidor não aceita o programa: uma linha não pode ser enviada para a máquina ou não pode ser avaliada com certeza. Corrija essa linha no programa.",
-"服务器不接受该程序：某一行无法发送给机器，或无法可靠判断。请在程序中修改该行。",
+"服务器不接受该程序：某一行无法发送给机器，或无法确定地判断。请在程序中修改该行。",
 "サーバーはこのプログラムを受け付けません。機械に送れない行、または確実に判定できない行があります。プログラムのその行を直してください。"
 ],
 "bad_gerber":[
@@ -1186,8 +1186,8 @@
 "Der Auftrag stellt diese Frage nicht mehr: Es wurde nichts beantwortet. Lesen Sie, was er jetzt fragt.",
 "Le travail ne pose plus cette question : rien n'a été répondu. Lisez ce qu'il demande maintenant.",
 "O trabalho já não faz essa pergunta: nada foi respondido. Leia o que pergunta agora.",
-"该作业已不再提出这个问题，没有作出任何回答。请查看它现在询问的内容。",
-"ジョブはもうその質問をしていません。何も回答されていません。いま何を尋ねているか確認してください。"
+"该作业已不再提出这个提问，没有作出任何回答。请查看它现在询问的内容。",
+"ジョブはもうその質問をしていません。何も回答されていません。いまの内容を確認してください。"
 ],
 "question_required":[
 "The server asks every answer to say which question it answers: read the job again, or update this program.",
@@ -1196,7 +1196,7 @@
 "Der Server verlangt, dass jede Antwort die Frage nennt: Lesen Sie den Auftrag erneut oder aktualisieren Sie dieses Programm.",
 "Le serveur exige que chaque réponse indique la question visée : relisez le travail ou mettez ce programme à jour.",
 "O servidor exige que cada resposta diga a que pergunta responde: volte a ler o trabalho ou atualize este programa.",
-"服务器要求每个回答都指明所回答的问题：请重新读取作业，或更新本程序。",
+"服务器要求每个回答都指明所回答的提问：请重新读取作业，或更新本程序。",
 "サーバーは回答ごとにどの質問への回答かを求めています。ジョブを読み直すか、このプログラムを更新してください。"
 ],
 "queue_full":[
