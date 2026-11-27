@@ -54,6 +54,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.12.0")
     implementation("com.google.firebase:firebase-messaging:26.0.2")
+    // Firebase brings a fragment library older than the one androidx.activity asks for (lint InvalidFragmentVersionForActivityResult)
+    implementation("androidx.fragment:fragment:1.8.9")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")
