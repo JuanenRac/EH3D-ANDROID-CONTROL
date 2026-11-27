@@ -1,4 +1,6 @@
 {
+ "El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.": "Il server non accetta il programma: una riga non può essere inviata alla macchina o non può essere valutata con certezza. Correggere quella riga nel programma.",
+ "El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.": "Il server non ha risposto: l'ordine può essere arrivato e la macchina può essere in movimento. Guardare la macchina prima di ripeterlo.",
  "La dirección del servidor no es válida (use una dirección de la red local o https://).": "L'indirizzo del server non è valido (usare un indirizzo della rete locale o https://).",
  "Espera al operario: confirme el paso en la máquina.": "Attende l'operatore: confermare il passo alla macchina.",
  "El trabajo ha terminado o se ha detenido.": "Il lavoro è terminato o si è fermato.",
@@ -251,7 +253,6 @@
  "El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.": "Il primo lavoro è in corso. Il secondo resta pronto: avviatelo dalla scheda Lavori quando il primo è finito.",
  "Lo que ya se creó queda listo en la pestaña Trabajos.": "Quanto già creato resta pronto nella scheda Lavori.",
  "El archivo es demasiado grande.": "Il file è troppo grande.",
- "Hay una línea que no es G-code válido: %s": "Una riga non è G-code valido: %s",
  "El archivo de taladrado no se entiende.": "Il file di foratura non è comprensibile.",
  "Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s": "Un utensile del file non è nella tabella utensili della macchina: %s",
  "Herramienta no válida: %s": "Utensile non valido: %s",
@@ -345,7 +346,6 @@
  "Un nodo necesita su dirección (host:puerto).": "Un nodo richiede il suo indirizzo (host:porta).",
  "La configuración tiene una clave que no existe o un valor fuera de rango.": "La configurazione ha una chiave inesistente o un valore fuori intervallo.",
  "Los días deben ser un número de 1 a 3650.": "I giorni devono essere un numero da 1 a 3650.",
- "El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador ($, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.": "Il programma ha una riga che non è G-code: le impostazioni e i comandi in tempo reale del controller ($, !, ~, ?), i caratteri di controllo e le righe oltre 200 caratteri vengono rifiutati.",
  "El id debe ser letras minúsculas, dígitos y guiones, hasta 32 caracteres.": "L'id deve essere lettere minuscole, cifre e trattini, fino a 32 caratteri.",
  "Al anillo de LEDs se le pidió algo que el nodo no usa (un nivel, un tono o sectores que no conoce).": "All'anello di LED è stato chiesto qualcosa che il nodo non usa (un livello, un tono o dei settori che non conosce).",
  "El servidor no aceptó lo enviado.": "Il server non ha accettato ciò che è stato inviato.",

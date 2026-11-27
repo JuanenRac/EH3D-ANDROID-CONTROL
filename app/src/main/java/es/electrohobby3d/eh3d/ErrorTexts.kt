@@ -9,7 +9,7 @@ object ErrorTexts {
         "bad_address" -> tr("Un nodo necesita su dirección (host:puerto).")
         "bad_cfg" -> tr("La configuración tiene una clave que no existe o un valor fuera de rango.")
         "bad_days" -> tr("Los días deben ser un número de 1 a 3650.")
-        "bad_gcode" -> tr("El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador (\$, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.")
+        "bad_gcode" -> tr("El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.")
         "bad_id" -> tr("El id debe ser letras minúsculas, dígitos y guiones, hasta 32 caracteres.")
         "bad_light" -> tr("Al anillo de LEDs se le pidió algo que el nodo no usa (un nivel, un tono o sectores que no conoce).")
         "bad_request" -> tr("El servidor no aceptó lo enviado.")

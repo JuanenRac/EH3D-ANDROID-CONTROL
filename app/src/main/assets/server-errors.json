@@ -180,14 +180,14 @@
 "ファイル名が安全ではありません（空、絶対パス、.. やドライブを含む、予約名、長すぎるなど）。"
 ],
 "bad_gcode":[
-"The program has a line that is not G-code: the settings and real-time commands of the controller ($, !, ~, ?), control characters and lines of over 200 characters are refused.",
-"El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador ($, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.",
-"Il programma ha una riga che non è G-code: le impostazioni e i comandi in tempo reale del controller ($, !, ~, ?), i caratteri di controllo e le righe oltre 200 caratteri vengono rifiutati.",
-"Das Programm hat eine Zeile, die kein G-Code ist: Einstellungen und Echtzeitbefehle der Steuerung ($, !, ~, ?), Steuerzeichen und Zeilen über 200 Zeichen werden abgelehnt.",
-"Le programme a une ligne qui n'est pas du G-code : les réglages et commandes temps réel du contrôleur ($, !, ~, ?), les caractères de contrôle et les lignes de plus de 200 caractères sont refusés.",
-"O programa tem uma linha que não é G-code: as definições e os comandos em tempo real do controlador ($, !, ~, ?), os carateres de controlo e as linhas com mais de 200 carateres são recusados.",
-"程序中有一行不是 G 代码：控制器的设置和实时命令（$、!、~、?）、控制字符以及超过 200 个字符的行都会被拒绝。",
-"プログラムに G コードではない行があります。コントローラーの設定とリアルタイムコマンド（$、!、~、?）、制御文字、200 文字を超える行は拒否されます。"
+"The server does not accept the program: a line cannot be sent to the machine or cannot be judged for certain. Correct that line in the program.",
+"El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.",
+"Il server non accetta il programma: una riga non può essere inviata alla macchina o non può essere valutata con certezza. Correggere quella riga nel programma.",
+"Der Server nimmt das Programm nicht an: Eine Zeile kann nicht an die Maschine gesendet oder nicht sicher beurteilt werden. Korrigieren Sie diese Zeile im Programm.",
+"Le serveur n'accepte pas le programme : une ligne ne peut pas être envoyée à la machine ou ne peut pas être jugée avec certitude. Corrigez cette ligne dans le programme.",
+"O servidor não aceita o programa: uma linha não pode ser enviada para a máquina ou não pode ser avaliada com certeza. Corrija essa linha no programa.",
+"服务器不接受该程序：某一行无法发送给机器，或无法可靠判断。请在程序中修改该行。",
+"サーバーはこのプログラムを受け付けません。機械に送れない行、または確実に判定できない行があります。プログラムのその行を直してください。"
 ],
 "bad_gerber":[
 "A Gerber or Excellon file cannot be read: its format, a coordinate or a command is wrong, or it holds no data.",

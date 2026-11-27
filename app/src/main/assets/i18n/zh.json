@@ -1,4 +1,6 @@
 {
+ "El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.": "服务器不接受该程序：某一行无法发送给机器，或无法可靠判断。请在程序中修改该行。",
+ "El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.": "服务器没有响应：指令可能已经到达，机器可能正在运动。重复发送前请先查看机器。",
  "La dirección del servidor no es válida (use una dirección de la red local o https://).": "服务器地址无效（请使用本地网络地址或 https://）。",
  "Espera al operario: confirme el paso en la máquina.": "等待操作员：请在机器上确认该步骤。",
  "El trabajo ha terminado o se ha detenido.": "作业已结束或已停止。",
@@ -251,7 +253,6 @@
  "El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.": "第一个作业正在运行。第二个作业保持就绪：第一个完成后请在“作业”页中启动。",
  "Lo que ya se creó queda listo en la pestaña Trabajos.": "已创建的作业会保持就绪，显示在“作业”页中。",
  "El archivo es demasiado grande.": "文件太大。",
- "Hay una línea que no es G-code válido: %s": "有一行不是有效的 G 代码：%s",
  "El archivo de taladrado no se entiende.": "无法理解该钻孔文件。",
  "Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s": "文件中的某把刀具不在机器的刀具表中：%s",
  "Herramienta no válida: %s": "刀具无效：%s",
@@ -345,7 +346,6 @@
  "Un nodo necesita su dirección (host:puerto).": "节点需要地址（主机:端口）。",
  "La configuración tiene una clave que no existe o un valor fuera de rango.": "配置中有不存在的键或超出范围的值。",
  "Los días deben ser un número de 1 a 3650.": "天数必须是 1 到 3650 之间的数字。",
- "El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador ($, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.": "程序中有一行不是 G 代码：控制器的设置和实时命令（$、!、~、?）、控制字符以及超过 200 个字符的行都会被拒绝。",
  "El id debe ser letras minúsculas, dígitos y guiones, hasta 32 caracteres.": "ID 必须是小写字母、数字和连字符，最多 32 个字符。",
  "Al anillo de LEDs se le pidió algo que el nodo no usa (un nivel, un tono o sectores que no conoce).": "向 LED 环提出的要求节点不支持（不认识的亮度、色调或扇区）。",
  "El servidor no aceptó lo enviado.": "服务器不接受所发送的内容。",

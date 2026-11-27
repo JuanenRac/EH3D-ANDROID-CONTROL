@@ -91,6 +91,9 @@ object Prepare {
         return body.toString()
     }
 
+    /** True while a side still holds the files a plan was asked for: a plan that comes back after another file was chosen is thrown away. */
+    fun samePlanInput(asked: SideState, now: SideState): Boolean = asked.text == now.text && asked.tableText == now.tableText
+
     /** The name of the job: the file without its extension. */
     fun jobName(fileName: String): String {
         val base = fileName.substringBeforeLast('.', fileName)
