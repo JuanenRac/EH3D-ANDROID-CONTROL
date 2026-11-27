@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.9] - Orders are sent once, buttons rest without a connection and the new stop and resume of the server
+
 - **An order that sets a machine going is sent once (safety):** a double touch on Confirm could answer the next question of the machine (the spindle start after a tool change) before anybody had read it, and a double touch on "go on" made two jobs. Start, confirm, resume and "go on" are not sent again while on their way and for a second after the server takes them.
 - **Nothing is started or let go from old data (safety):** while the server does not answer, Start, Confirm, Resume and "go on" are off. The stop stays at hand.
 - **An order with no answer is not told as one that did not happen:** it says that it may have arrived and the machine may be moving; a start with no answer no longer says that the job stays ready.
