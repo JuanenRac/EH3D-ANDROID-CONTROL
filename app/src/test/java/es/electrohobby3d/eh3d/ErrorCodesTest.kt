@@ -31,7 +31,7 @@ class ErrorCodesTest {
 
     /** The codes the server added after the first copy of the catalog: the app tells them from the table of eight languages (assets/server-errors.json), which ServerErrorsContractTest checks against the server. */
     private val toldByTheTable = setOf(
-        "air_assist_off", "bad_axis", "bad_feed", "bad_gerber", "bad_heater", "bad_mesh",
+        "air_assist_off", "question_changed", "question_required", "bad_axis", "bad_feed", "bad_gerber", "bad_heater", "bad_mesh",
         "bad_operation", "bad_placement_list", "bad_rules", "compat_off", "compat_write_off", "enclosure_open",
         "farm_no_free_printer", "focus_not_checked", "heater_timeout", "input_too_large", "jog_while_running", "laser_estop_latched",
         "laser_feed_limit", "laser_power_limit", "machine_alarm", "missing_layer", "out_of_travel", "pnp_feeder_short",

@@ -315,12 +315,14 @@ open class Eh3dApi(
     suspend fun jobs(machine: String? = null): List<JobSummary> = parseJobs(call("/jobs" + (machine?.let { "?machine=${q(it)}" } ?: "")))
     suspend fun job(id: String): Job = parseJob(call("/jobs/${q(id)}"))
     suspend fun start(id: String) { call("/jobs/${q(id)}/start", "POST", "{}") }
-    suspend fun confirm(id: String) { call("/jobs/${q(id)}/confirm", "POST", "{}") }
+    /** [question] is the one on the screen (`pause.question`): the server refuses the answer when the job asks something else by then. A server of an earlier version gives none. */
+    suspend fun confirm(id: String, question: String? = null) { call("/jobs/${q(id)}/confirm", "POST", answerBody(question)) }
     suspend fun cancel(id: String) { call("/jobs/${q(id)}/cancel", "POST", "{}") }
     suspend fun delete(id: String) { call("/jobs/${q(id)}", "DELETE") }
     /** Holds a running G-code job, and lets a held one (or one that goes on after a stop) go on. */
     suspend fun pause(id: String) { call("/jobs/${q(id)}/pause", "POST", "{}") }
-    suspend fun resume(id: String) { call("/jobs/${q(id)}/resume", "POST", "{}") }
+    suspend fun resume(id: String, question: String? = null) { call("/jobs/${q(id)}/resume", "POST", answerBody(question)) }
+    private fun answerBody(question: String?): String = question?.let { org.json.JSONObject().put("question", it).toString() } ?: "{}"
 
     /** Makes a new job, ready and not started, from the request the server kept for a cancelled or failed one, with the work already done left out: the file is not asked for again. */
     suspend fun resumeFrom(id: String): Job = parseJob(call("/jobs/${q(id)}/resume-from", "POST", "{}"))
