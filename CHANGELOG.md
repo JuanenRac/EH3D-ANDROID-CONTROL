@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Notices with the app closed (off by default):** in a build that carries the owner's Firebase project, a switch registers the phone with the server, which sends through Google only which of three things happened (a job waits, failed or ended); the app writes the notice in its language. Needs a server with `push_enabled`. The licence carries an additional permission for the Google libraries (`LICENSE-EXCEPTION.md`). Not tried on a phone.
+
 ## [0.2.1] - The current settings contract of the server
 
 - **The contract of the settings of the server is the current one:** `answer_needs_question` is now on by default there (an answer to a job names its question, as this program already sends it). No other change.

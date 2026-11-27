@@ -416,6 +416,20 @@
           },
           "name": "LICENSE",
           "tree_name": "LICENSE"
+        },
+        {
+          "desc": {
+            "en": "the additional permission for the Google libraries",
+            "es": "el permiso adicional para las librerías de Google",
+            "it": "il permesso aggiuntivo per le librerie Google",
+            "de": "die zusätzliche Erlaubnis für die Google-Bibliotheken",
+            "fr": "la permission supplémentaire pour les bibliothèques Google",
+            "pt": "a permissão adicional para as bibliotecas da Google",
+            "zh": "对 Google 库的附加许可",
+            "ja": "Google ライブラリ向けの追加許諾"
+          },
+          "name": "LICENSE-EXCEPTION.md",
+          "tree_name": "LICENSE-EXCEPTION.md"
         }
       ]
     }

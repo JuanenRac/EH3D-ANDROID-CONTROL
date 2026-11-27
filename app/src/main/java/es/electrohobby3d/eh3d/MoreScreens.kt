@@ -100,6 +100,13 @@ fun MorePage(model: Eh3dViewModel) {
                 OutlinedButton({ model.chooseRetries(model.connection.retries - 1) }) { Text("-") }
                 OutlinedButton({ model.chooseRetries(model.connection.retries + 1) }) { Text("+") }
             }
+            if (Push.available()) {
+                Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(tr("Avisos aunque la app esté cerrada (Firebase)"), Modifier.weight(1f), color = Forge.Text)
+                    Switch(model.push, { model.choosePush(it) })
+                }
+                Text(tr("Apagado por defecto. El servidor envía a través de Google solo qué ha pasado, sin nombres; hay que activarlo también en el servidor."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+            }
             Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(tr("Buscar el servidor en la red local (mDNS)"), Modifier.weight(1f), color = Forge.Text)
                 Switch(model.connection.mdns, { model.chooseMdns(it) })

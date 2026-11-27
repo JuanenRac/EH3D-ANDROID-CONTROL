@@ -284,6 +284,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         message = null
         phase = Phase.SignedIn
         FleetWatch.schedule(getApplication())
+        registerForPush()
         val again = stopsToResend(pendingStops, clock())
         pendingStops = emptyList()
         again.forEach { id -> stopping(id) { api.stopMachine(id) } }
@@ -319,6 +320,24 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun chooseRetries(count: Int) = saveConnection(connection.withRetries(count))
 
     /** The search for the server on the local network is off by default; turning it off also stops a search that is running and forgets what it found. */
+    var push by mutableStateOf(preferences.getBoolean(Push.SWITCH, false)); private set
+
+    /** Switches the notices through Firebase: the server learns or forgets this phone. A server without them answers an error that changes nothing here. */
+    fun choosePush(on: Boolean) {
+        push = on
+        preferences.edit().putBoolean(Push.SWITCH, on).apply()
+        if (on) registerForPush() else {
+            val server = api
+            Push.withToken { token -> viewModelScope.launch { runCatching { server.forgetPhone(token) }; Push.stop() } }
+        }
+    }
+
+    private fun registerForPush() {
+        if (!push || !Push.available()) return
+        val server = api
+        Push.withToken { token -> viewModelScope.launch { runCatching { server.registerPhone(token) } } }
+    }
+
     fun chooseMdns(on: Boolean) { saveConnection(connection.withMdns(on)); if (!on) { stopSearch(); candidates = emptyList() } }
 
     /** Looks for `_eh3d._tcp` on the local network for a few seconds (only when the person turned the search on); what is found is shown, never used by itself. */

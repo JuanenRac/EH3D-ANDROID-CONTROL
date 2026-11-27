@@ -193,7 +193,8 @@ EH3D-ANDROID-CONTROL/
 ├── SECURITY.md SUPPORT.md                       Schwachstelle melden, fragen
 ├── CONTRIBUTING.md                              wie man beiträgt
 ├── CODE_OF_CONDUCT.md                           der Verhaltenskodex
-└── LICENSE                                      die Lizenz
+├── LICENSE                                      die Lizenz
+└── LICENSE-EXCEPTION.md                         die zusätzliche Erlaubnis für die Google-Bibliotheken
 ```
 
 </details>
@@ -250,3 +251,5 @@ Das README gibt es auf Englisch, Spanisch, Französisch, Italienisch, Deutsch, C
 ## 📜 LIZENZ
 
 Software: GPL-3.0-or-later. Siehe [LICENSE](LICENSE). Die Hardware-Entwürfe der Suite verwenden die CERN OHL-S.
+
+Die App trägt eine zusätzliche Erlaubnis für die Google-Bibliotheken der Hinweise: siehe [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md).

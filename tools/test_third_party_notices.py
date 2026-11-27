@@ -29,6 +29,14 @@ class Notices(unittest.TestCase):
         with self.assertRaises(SystemExit):
             notices.graph("BUILD FAILED")
 
+    def test_other_terms_are_accepted_by_family_only(self) -> None:
+        accepted, terms = notices.accepted, notices.SDK_TERMS
+        self.assertEqual(accepted("com.google.android.gms", "com.google.android.gms:play-services-base", [terms]), terms)
+        self.assertIsNone(accepted("org.example", "org.example:thing", [terms]))
+        self.assertEqual(accepted("androidx.datastore", "androidx.datastore:datastore-preferences-external-protobuf", ["BSD-3-Clause"]), "BSD-3-Clause")
+        self.assertIsNone(accepted("org.example", "org.example:thing", ["BSD-3-Clause"]))
+        self.assertIsNone(accepted("org.example", "org.example:thing", ["GPL-2.0"]))
+
     def test_a_library_that_is_not_listed_fails_the_check(self) -> None:
         with tempfile.TemporaryDirectory() as folder:
             deps = Path(folder) / "deps.txt"
