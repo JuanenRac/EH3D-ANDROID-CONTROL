@@ -4,6 +4,9 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Safety text corrected: the spindle is started when a G-code job goes on.** The server now starts the spindle the program had on, after the operator confirms the resume. The switch of Prepare is for the coolant only and its name and warning say so, and the wait before the first move of a resumed job and the help say that the machine goes back on its own and starts the spindle.
+- **The reason of a resume the server does not do stays on the page:** when "go on" is refused (`422 bad_request` of `resume-from`), the page of the job keeps the reason of the server and says what to do.
+- **The settings page has the five settings of the stop and the resume:** the copy of the contract holds 105 keys (`grbl_stop_wait_s`, `resume_safe_z_mm`, `resume_spindle_wait_s`, `resume_plunge_feed_mm_min` and `resume_position_tolerance_um`, with their texts in the eight languages), and the units millimetres and micrometres are written as `mm` and `µm`.
 - **The APK carries the eight languages and no other:** the build kept the texts of the Android libraries in every language they have, so the package declared many more languages than the app speaks. `androidResources.localeFilters` now keeps English, Spanish, German, French, Italian, Japanese, Chinese and European Portuguese. The new `tools/check_languages.py` fails on a language too many or one missing in that list, on a resource folder of another language and on the built APK.
 
 ## [0.1.8] - Live status of 3D printers, warnings of pick-and-place nodes and the new permissions of the server

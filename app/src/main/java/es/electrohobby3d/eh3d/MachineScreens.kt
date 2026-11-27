@@ -74,7 +74,7 @@ fun jobKindText(kind: String): String = when (kind) {
 /** What the machine waits for, in a sentence. */
 fun pauseText(p: Pause): String = when (p.kind) {
     "hold" -> tr("Trabajo en pausa: pulse Reanudar para que siga.")
-    "resume" -> tr("El trabajo sigue tras una parada: compruebe la máquina y pulse Reanudar antes del primer movimiento.")
+    "resume" -> tr("El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.")
     "tool_change" -> trf("Ponga la herramienta %d y confirme.", p.tool ?: 0)
     "spindle_start" -> tr("Compruebe que el husillo gira y confirme.")
     else -> tr("La máquina espera una confirmación.")
@@ -298,6 +298,7 @@ fun JobPage(model: Eh3dViewModel, id: String) {
                     if (!JobStates.active(s.state)) OutlinedButton({ askDelete = true }, enabled = model.canOperate) { Text(tr("Borrar")) }
                 }
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }
+                model.resumeRefused?.let { (id, reason) -> if (id == s.id) Text(trf("El servidor no continúa este trabajo por sí solo: %s. Deje la máquina en condiciones, prepare de nuevo el trabajo e indique por dónde empezar.", reason), color = Forge.Danger) }
                 if (JobStates.canGoOn(s.state)) Text(tr("El servidor guardó lo que se pidió: se crea un trabajo nuevo que deja fuera lo ya hecho, sin elegir el archivo otra vez. Espera a que lo empiece y nada se mueve solo."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.resumedFrom.isNotBlank()) Text(trf("Continúa el trabajo %s", s.resumedFrom), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 if (s.startedBy.isNotBlank()) Text(trf("Lanzado por %s", s.startedBy), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)

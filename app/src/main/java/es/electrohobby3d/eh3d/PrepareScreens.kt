@@ -173,8 +173,8 @@ private fun GcodeCard(model: Eh3dViewModel, machineId: String, p: PrepareUi) {
             Text(trf("El programa tiene %d líneas. Con una línea mayor que 0 la máquina espera su confirmación antes del primer movimiento.", Prepare.lineCount(p.gcode)), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Column(Modifier.weight(1f)) {
-                    Text(tr("Volver a poner en marcha el husillo y el refrigerante"), color = Forge.Text)
-                    Text(tr("Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+                    Text(tr("Volver a activar el refrigerante"), color = Forge.Text)
+                    Text(tr("Este interruptor es solo para el refrigerante. El husillo no depende de él: si el programa lo tenía encendido, cuente con que ARRANCA de nuevo al confirmar la reanudación. Apártese de la máquina y compruebe que gira antes de que la herramienta llegue a la pieza."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
                 }
                 Switch(p.restoreOutputs, { model.setRestoreOutputs(it) }, enabled = model.canOperate)
             }

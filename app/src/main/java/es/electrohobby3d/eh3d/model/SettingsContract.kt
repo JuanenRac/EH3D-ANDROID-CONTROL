@@ -307,3 +307,10 @@ object EmbeddedContract {
     /** The copy, or an empty contract when it could not be read: the page then shows nothing but says why. */
     fun get(): SettingsContract = copy ?: SettingsContract(CONTRACT_SCHEMA, CONTRACT_LANGS, emptyList(), emptyList())
 }
+
+/** The unit of a setting as it is written next to a number: a length is shown with its international symbol; any other unit as the contract writes it. */
+fun unitText(unit: String?): String = when (unit) {
+    "millimetres" -> "mm"
+    "micrometres" -> "\u00b5m"
+    else -> unit.orEmpty()
+}

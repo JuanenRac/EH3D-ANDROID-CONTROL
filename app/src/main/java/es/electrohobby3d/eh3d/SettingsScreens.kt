@@ -52,6 +52,7 @@ import es.electrohobby3d.eh3d.model.isHighRisk
 import es.electrohobby3d.eh3d.model.parseTyped
 import es.electrohobby3d.eh3d.model.sameValue
 import es.electrohobby3d.eh3d.model.shownValue
+import es.electrohobby3d.eh3d.model.unitText
 import es.electrohobby3d.eh3d.model.unlistedSettings
 import es.electrohobby3d.eh3d.model.valueOf
 
@@ -149,7 +150,7 @@ private fun SettingCard(model: Eh3dViewModel, view: LoadedContract, s: Setting, 
     val typed = draft?.let { parseTyped(s, it) }
     val note = model.settingsNotes[s.key]
     val warning = contractText(s.warning, language)
-    val unit = s.unit.orEmpty()
+    val unit = unitText(s.unit)
     val unitLabel: (@Composable () -> Unit)? = if (unit.isEmpty()) null else { { Text(unit) } }
     LaunchedEffect(note) { if (note != null && note.ok) onDraft(null) }
     Card(accent = if (isHighRisk(s)) Forge.Orange else Forge.Amber) {
