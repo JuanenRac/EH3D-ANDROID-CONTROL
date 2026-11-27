@@ -264,6 +264,7 @@
  "Trabajo en pausa: pulse Reanudar para que siga.": "作业已暂停：点按“继续”使其继续。",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "作业在停止后继续：请检查机床、工件零点和刀具，并远离机床。按下继续后，机床会自行回到停止处，如果程序原先开着主轴，还会启动主轴。",
  "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "重新开启主轴或激光前请确认：查看加工头和工件，并远离机床。按“继续”后即开启，作业继续。",
+ "Antes de que la herramienta baje a la pieza, confírmelo: el cabezal está sobre el punto; compruebe que el husillo gira, mire la pieza y apártese. Al pulsar Reanudar, baja y el trabajo continúa.": "刀具下到工件前请确认：加工头已在该点上方；确认主轴在转、查看工件并远离机床。按“继续”后下刀，作业继续。",
  "Reanudar": "继续",
  "Pausar": "暂停",
  "Preparar trabajo": "准备作业",

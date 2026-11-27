@@ -4,6 +4,7 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Before the tool goes down into the work:** when a job that goes on after a stop waits with `pause.plunge`, the app says that the head is over the point and that confirming takes the tool down, in the eight languages. Needs the server that asks it; not tried on a machine.
 - **Preparing a drilling job asks for the number format of a file that does not declare it:** the card of the drilling file offers the formats, with nothing chosen at first and the choice kept on the phone, and sends `drill_format` to the server. A refusal for the format is said in the eight languages with what to choose, and the warning of a file read this way says it was read with the chosen format. 2 new tests; checked by tests, not on a phone against a machine.
 
 - **The settings of the server have the new `grbl_spindle_stop_on_pause`** (off: a pause of a GRBL machine also stops the spindle and the coolant), with its label and help from the contract of the server. Not tried on a machine.
