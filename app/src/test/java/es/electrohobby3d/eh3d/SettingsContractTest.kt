@@ -66,9 +66,9 @@ class SettingsContractTest {
 
     // ---- the copy of the app
 
-    @Test fun theCopyIsTheContractOfTheServerWith106SettingsInSeventeenGroups() {
+    @Test fun theCopyIsTheContractOfTheServerWith109SettingsInSeventeenGroups() {
         assertEquals("eh3d.settings.contract/1", copy.schema)
-        assertEquals(107, copy.settings.size)
+        assertEquals(109, copy.settings.size)
         assertEquals(17, copy.groups.size)
         assertEquals(CONTRACT_LANGS, copy.languages)
         assertEquals(copy.settings.size, copy.settings.map { it.key }.toSet().size)
@@ -99,11 +99,11 @@ class SettingsContractTest {
         for (g in copy.groups) for (lang in CONTRACT_LANGS) assertTrue("group ${g.id} $lang", !g.label[lang].isNullOrBlank())
     }
 
-    @Test fun theNineteenKeysOfThePolicyHaveTheirRouteAndTheOthersAreSetInTheFile() {
+    @Test fun theTwentyKeysOfThePolicyHaveTheirRouteAndTheOthersAreSetInTheFile() {
         val policy = copy.settings.filter { it.write.via == "policy" }
         val file = copy.settings.filter { it.write.via == "file" }
-        assertEquals(19, policy.size)
-        assertEquals(88, file.size)
+        assertEquals(20, policy.size)
+        assertEquals(89, file.size)
         assertTrue(policy.all { it.write.method == "PUT" && writePath(it) == "/auth/policy" && it.role == "admin" })
         assertTrue(file.all { it.write.path == null && it.write.file == "server.cfg" })
     }

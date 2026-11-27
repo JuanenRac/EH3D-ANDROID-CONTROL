@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The contract of the settings of the server is the current one:** it has `push_enabled` (notices on a phone, off by default) and `push_service_account_file`. No other change.
+
 - **Notices with the app closed (off by default):** in a build that carries the owner's Firebase project, a switch registers the phone with the server, which sends through Google only which of three things happened (a job waits, failed or ended); the app writes the notice in its language. Needs a server with `push_enabled`. The licence carries an additional permission for the Google libraries (`LICENSE-EXCEPTION.md`). Not tried on a phone.
 
 ## [0.2.1] - The current settings contract of the server
