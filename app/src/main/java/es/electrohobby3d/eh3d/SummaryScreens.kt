@@ -34,7 +34,7 @@ fun warningText(w: WorkWarning): String {
         "far" -> trf("El trabajo empieza a %s mm de la esquina de la mesa: revise el desplazamiento y la unidad", *a)
         "scale" -> trf("El archivo de la máquina estira el trabajo (escala %s x %s, no 1)", *a)
         "out_of_course" -> trf("El plan lleva el eje %s %s mm más allá de su recorrido", *a)
-        "units_supposed" -> tr("El archivo no indica su unidad; los números se leen como milésimas de pulgada")
+        "units_supposed" -> tr("El archivo no declara cómo están escritos sus números; se leyeron con el formato elegido")
         else -> trf("Aviso del servidor: %s", *a)
     }
 }

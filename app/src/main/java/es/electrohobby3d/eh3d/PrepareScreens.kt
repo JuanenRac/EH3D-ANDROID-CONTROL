@@ -118,9 +118,24 @@ private fun SideCard(model: Eh3dViewModel, machineId: String, side: Side, st: Si
             OutlinedButton({ tablePicker.launch(arrayOf("*/*")) }, enabled = model.canOperate) { Text(tr("Tabla de herramientas")) }
         }
         if (st.tableName.isNotBlank()) Text(trf("Tabla: %s", st.tableName), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+        if (side == Side.Drill && st.hasFile) DrillFormatChoice(model, machineId)
         if (st.error.isNotEmpty()) Text(st.error, color = Forge.Orange)
         val view = st.view
         if (view != null) ToolsList(model, side, st, view)
+    }
+}
+
+/** The number format of a drilling file that does not declare one: nothing is chosen until the person taps one. */
+@Composable
+private fun DrillFormatChoice(model: Eh3dViewModel, machineId: String) {
+    Text(tr("Formato numérico del archivo de taladrado"), color = Forge.Text, style = MaterialTheme.typography.bodyMedium)
+    Text(tr("Solo para un archivo que no lo declara: lo que declara el archivo manda."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
+    (listOf("") + Prepare.DRILL_FORMATS).chunked(2).forEach { row ->
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            row.forEach { format ->
+                FilterChip(model.drillFormat == format, { model.chooseDrillFormat(machineId, format) }, { Text(format.ifEmpty { tr("Sin elegir") }) }, enabled = model.canOperate)
+            }
+        }
     }
 }
 

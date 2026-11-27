@@ -74,15 +74,23 @@ object Prepare {
     }
 
     /** The request that plans a drilling or routing job from the text of the files. */
-    fun fileBody(side: Side, name: String, text: String, tableText: String, skipTools: List<Int>): String {
+    fun fileBody(side: Side, name: String, text: String, tableText: String, skipTools: List<Int>, drillFormat: String = ""): String {
         val files = JSONObject()
         if (side == Side.Drill) { files.put("ncd", text); if (tableText.isNotBlank()) files.put("dtd", tableText) }
         else { files.put("plt", text); if (tableText.isNotBlank()) files.put("rtd", tableText) }
         val body = JSONObject().put("kind", side.kind).put("files", files)
+        // the format of a drilling file that does not declare one goes only when a person chose it
+        if (side == Side.Drill && drillFormat in DRILL_FORMATS) body.put("drill_format", drillFormat)
         if (name.isNotBlank()) body.put("name", name)
         if (skipTools.isNotEmpty()) body.put("skip_tools", JSONArray(skipTools))
         return body.toString()
     }
+
+    /** The number formats the server takes for a drilling file that does not declare one. None is chosen unless a person chooses it. */
+    val DRILL_FORMATS = listOf("mils", "inch-2.4-tz", "inch-2.4-lz", "metric-3.3-tz", "metric-3.3-lz")
+
+    /** True when the server refused a drilling file because it does not declare how its numbers are written (or the chosen format does not fit it). */
+    fun needsDrillFormat(code: String, detail: String): Boolean = code == "bad_ncd" && "EH3D-FORMATS-014" in detail
 
     /** The request that plans a free G-code program: [skip] lines already done; [restoreOutputs] (off by default) turns the coolant on again. The spindle does not depend on it: the server starts the one the program had on, after the operator confirms. */
     fun gcodeBody(name: String, gcode: String, skip: Int, restoreOutputs: Boolean): String {

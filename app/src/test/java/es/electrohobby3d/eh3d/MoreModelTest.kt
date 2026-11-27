@@ -400,7 +400,7 @@ class MoreModelTest {
 
     @Test fun `a file whose unit was supposed has its own phrase and not the generic one`() {
         val text = warningText(WorkWarning("units_supposed", "", emptyList()))
-        assertTrue(text, "pulgada" in text && "Aviso del servidor" !in text)
+        assertTrue(text, "formato elegido" in text && "Aviso del servidor" !in text)
     }
 
     @Test fun `every warning gives the numbers of its phrase in order and an unknown one gives its code`() {
