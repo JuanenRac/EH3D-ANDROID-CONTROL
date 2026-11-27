@@ -43,6 +43,7 @@ import es.electrohobby3d.eh3d.model.classifyFailure
 import es.electrohobby3d.eh3d.model.followStops
 import es.electrohobby3d.eh3d.model.fleetNotices
 import es.electrohobby3d.eh3d.model.fleetStates
+import es.electrohobby3d.eh3d.model.resumeRefusal
 import es.electrohobby3d.eh3d.model.HeadStatus
 import es.electrohobby3d.eh3d.model.Quality
 import es.electrohobby3d.eh3d.model.Job
@@ -153,6 +154,9 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** Whether the summary of a job is shown before it starts (on by default; the person can turn it off in the settings). */
     var confirmStart by mutableStateOf(preferences.getBoolean("confirm_start", true)); private set
     var message: String? by mutableStateOf(null); private set
+
+    /** The job the server did not go on with by itself, and its reason: the page of that job keeps it, a message that goes away is not enough. */
+    var resumeRefused: Pair<String, String>? by mutableStateOf(null); private set
     var rememberMe by mutableStateOf(sessions.has()); private set
     var jobs: List<JobSummary> by mutableStateOf(emptyList()); private set
     var job: Job? by mutableStateOf(null); private set
@@ -551,13 +555,18 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Goes on from a job that failed or was cancelled: the server made a new job from the request it kept (no file is asked for again), and it waits ready for a person to start it. */
     fun goOn(summary: JobSummary) {
+        resumeRefused = null
         viewModelScope.launch {
             try {
                 val next = api.resumeFrom(summary.id)
                 message = tr("Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.")
                 refresh()
                 open(Page.JobPage(next.summary.id))
-            } catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else message = errorText(error) }
+            } catch (error: ApiException) {
+                val reason = resumeRefusal(error.status, error.code, error.message)
+                if (reason != null) resumeRefused = summary.id to reason
+                if (error.unauthorized) signOutQuietly() else message = reason?.let { trf("El servidor no continúa este trabajo por sí solo: %s. Deje la máquina en condiciones, prepare de nuevo el trabajo e indique por dónde empezar.", it) } ?: errorText(error)
+            }
         }
     }
 

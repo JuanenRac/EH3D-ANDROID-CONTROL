@@ -18,6 +18,10 @@ data class Pause(val kind: String, val tool: Int?)
 
 private fun pauseOf(json: JSONObject?): Pause? = json?.let { Pause(it.str("kind"), if (it.has("tool") && !it.isNull("tool")) it.optInt("tool") else null) }
 
+/** The reason of the server when it does not go on with a stopped job by itself (`422 bad_request` of `resume-from`), or null for any other refusal. */
+fun resumeRefusal(status: Int, code: String, detail: String?): String? =
+    detail?.trim()?.takeIf { status == 422 && code == "bad_request" && it.isNotEmpty() && it != code }
+
 /** The states a job passes through: ready, connecting, running, waiting_operator, done, cancelled, failed. */
 object JobStates {
     /** A job that stopped before the end (cancelled or failed): a new one can go on from it, with the work done left out. */

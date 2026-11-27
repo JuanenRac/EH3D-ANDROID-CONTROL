@@ -261,7 +261,7 @@
  "El trabajo ya no está en un estado que permita eso.": "ジョブはもうその操作ができる状態ではありません。",
  "G-code": "Gコード",
  "Trabajo en pausa: pulse Reanudar para que siga.": "ジョブは一時停止中です。続けるには「再開」を押してください。",
- "El trabajo sigue tras una parada: compruebe la máquina y pulse Reanudar antes del primer movimiento.": "ジョブは停止後に続行します。最初の動作の前にマシンを確認し、「再開」を押してください。",
+ "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "停止後にジョブを続行します：マシン、ワークのゼロ点、工具を確認し、離れてください。再開を押すと、マシンは自動で停止位置に戻り、プログラムがスピンドルを回していた場合はスピンドルを始動します。",
  "Reanudar": "再開",
  "Pausar": "一時停止",
  "Preparar trabajo": "ジョブを準備",
@@ -270,7 +270,7 @@
  "Se vuelve a preparar el mismo programa desde esa línea; la máquina espera su confirmación antes de moverse.": "同じプログラムをその行から準備し直します。マシンは動く前に確認を待ちます。",
  "Se pedirá el mismo archivo de G-code otra vez; el trabajo seguirá desde esa línea y la máquina esperará su confirmación antes de moverse.": "同じGコードファイルをもう一度選びます。ジョブはその行から続行し、マシンは動く前に確認を待ちます。",
  "Preparar un trabajo": "ジョブの準備",
- "En una máquina libre pulse Preparar trabajo. Elija qué se hace (taladrado, fresado, ambos o un programa de G-code) y el archivo del teléfono; el servidor lo planea y la app muestra las herramientas con su recuento. Apague las que no quiera hacer, o pulse Empezar aquí en una herramienta para omitir las anteriores en el orden del trabajo. Con Ambos se crean dos trabajos: el primero arranca y el segundo queda listo. Un programa de G-code se puede pausar, reanudar, cancelar y continuar desde la línea donde falló; al continuar, el husillo y el refrigerante no se vuelven a encender salvo que active esa opción.": "空いているマシンで「ジョブを準備」を押します。実行する内容（穴あけ、切削、両方、またはGコードプログラム）とスマートフォン内のファイルを選ぶと、サーバーが計画し、アプリが工具を数と一緒に表示します。実行しない工具はオフにするか、工具の「ここから開始」を押すと、ジョブの順序でそれより前の工具を省きます。「両方」では2つのジョブが作られ、最初が開始し、2つ目は待機します。Gコードプログラムは一時停止・再開・キャンセルができ、失敗した行から続行できます。続行時、このオプションをオンにしない限りスピンドルとクーラントは再び入りません。",
+ "En una máquina libre pulse Preparar trabajo. Elija qué se hace (taladrado, fresado, ambos o un programa de G-code) y el archivo del teléfono; el servidor lo planea y la app muestra las herramientas con su recuento. Apague las que no quiera hacer, o pulse Empezar aquí en una herramienta para omitir las anteriores en el orden del trabajo. Con Ambos se crean dos trabajos: el primero arranca y el segundo queda listo. Un programa de G-code se puede pausar, reanudar, cancelar y continuar desde la línea donde falló; al continuar, tras su confirmación la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido; el refrigerante solo vuelve si activa esa opción.": "空いているマシンで「ジョブを準備」を押します。実行する内容（穴あけ、切削、両方、またはGコードプログラム）とスマートフォン内のファイルを選ぶと、サーバーが計画し、アプリが工具を数と一緒に表示します。実行しない工具はオフにするか、工具の「ここから開始」を押すと、ジョブの順序でそれより前の工具を省きます。「両方」では2つのジョブが作られ、最初が開始し、2つ目は待機します。Gコードプログラムは一時停止・再開・キャンセルができ、失敗した行から続行できます。再開時は、確認するとマシンが自動で停止位置に戻り、プログラムがスピンドルを回していた場合はスピンドルを始動します。クーラントはその設定をオンにした場合だけ戻ります。",
  "Ambos": "両方",
  "Qué se hace": "実行する内容",
  "Son dos trabajos, uno detrás de otro: el taladrado se pone en marcha y el fresado queda listo para arrancarlo cuando termine.": "2つのジョブを順に行います。穴あけが開始し、切削はそれが終わってから開始できるよう待機します。",
@@ -296,8 +296,8 @@
  "Programa G-code": "Gコードプログラム",
  "Empezar desde la línea": "開始する行",
  "El programa tiene %d líneas. Con una línea mayor que 0 la máquina espera su confirmación antes del primer movimiento.": "プログラムは%d行です。0より大きい行から始める場合、マシンは最初の動作の前に確認を待ちます。",
- "Volver a poner en marcha el husillo y el refrigerante": "スピンドルとクーラントを再び入れる",
- "Desactivado por seguridad: el husillo y el refrigerante no se encienden al continuar.": "安全のためオフ：続行時にスピンドルとクーラントは入りません。",
+ "Volver a activar el refrigerante": "クーラントを再びオンにする",
+ "Este interruptor es solo para el refrigerante. El husillo no depende de él: si el programa lo tenía encendido, cuente con que ARRANCA de nuevo al confirmar la reanudación. Apártese de la máquina y compruebe que gira antes de que la herramienta llegue a la pieza.": "このスイッチはクーラントだけのものです。スピンドルはこれに左右されません。プログラムがスピンドルを回していた場合、再開を確認するとスピンドルは再び始動します。機械から離れ、工具がワークに届く前に回っていることを確認してください。",
  "%d líneas se enviarán · estimado %s": "%d行を送信 · 推定 %s",
  "Zona: X %.1f a %.1f · Y %.1f a %.1f mm": "範囲：X %.1f〜%.1f · Y %.1f〜%.1f mm",
  "Seguir desde donde se detuvo": "止まったところから続ける",
@@ -478,5 +478,6 @@
  "La página de inicio muestra, solo para leer, las impresoras 3D que vigila el servidor: estado, temperaturas, progreso, tiempo restante, capa y alertas. Lo que una impresora no dice aparece como desconocido. Desde el teléfono no se les puede enviar nada. Si el servidor tiene la lista apagada, no aparece nada.": "ホーム画面には、サーバーが監視する3Dプリンターが読み取り専用で表示されます：状態、温度、進捗、残り時間、レイヤー、アラート。プリンターが伝えない項目は不明と表示されます。スマートフォンからプリンターには何も送れません。サーバーで一覧がオフの場合は何も表示されません。",
  "Consultado demasiado despacio: el servidor lo consulta cada %d s y pasa a su estado seguro tras %d ms sin consultas.": "問い合わせが遅すぎます: サーバーは %d 秒ごとに問い合わせていますが、%d ms 問い合わせがないと安全状態に入ります。",
  "El nodo no ha dicho su tiempo: se usa el valor por defecto de su contrato.": "ノードが時間を通知していないため、仕様の既定値を使っています。",
- "Baje pnp_node_poll_s en server.cfg (1 por defecto) y reinicie el servidor. Un nodo ajustado a menos de 1000 ms no se puede mantener atendido con este ajuste.": "server.cfg の pnp_node_poll_s を下げて（既定 1）サーバーを再起動してください。1000 ms 未満に設定されたノードは、この設定では接続を保てません。"
+ "Baje pnp_node_poll_s en server.cfg (1 por defecto) y reinicie el servidor. Un nodo ajustado a menos de 1000 ms no se puede mantener atendido con este ajuste.": "server.cfg の pnp_node_poll_s を下げて（既定 1）サーバーを再起動してください。1000 ms 未満に設定されたノードは、この設定では接続を保てません。",
+ "El servidor no continúa este trabajo por sí solo: %s. Deje la máquina en condiciones, prepare de nuevo el trabajo e indique por dónde empezar.": "サーバーはこのジョブを自動では続行しません：%s。マシンを正しい状態にしてから、ジョブを準備し直し、開始位置を指定してください。"
 }

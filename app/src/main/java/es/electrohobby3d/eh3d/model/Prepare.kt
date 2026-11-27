@@ -84,7 +84,7 @@ object Prepare {
         return body.toString()
     }
 
-    /** The request that plans a free G-code program: [skip] lines already done; the spindle and the coolant are started again only with [restoreOutputs] (off by default). */
+    /** The request that plans a free G-code program: [skip] lines already done; [restoreOutputs] (off by default) turns the coolant on again. The spindle does not depend on it: the server starts the one the program had on, after the operator confirms. */
     fun gcodeBody(name: String, gcode: String, skip: Int, restoreOutputs: Boolean): String {
         val body = JSONObject().put("kind", "gcode").put("gcode", gcode).put("skip", skip.coerceAtLeast(0)).put("restore_outputs", restoreOutputs)
         if (name.isNotBlank()) body.put("name", name)

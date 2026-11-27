@@ -25,6 +25,8 @@ import es.electrohobby3d.eh3d.model.parseContract
 import es.electrohobby3d.eh3d.model.parseLiveContract
 import es.electrohobby3d.eh3d.model.parseTyped
 import es.electrohobby3d.eh3d.model.restartRequired
+import es.electrohobby3d.eh3d.model.resumeRefusal
+import es.electrohobby3d.eh3d.model.unitText
 import es.electrohobby3d.eh3d.model.roleAtLeast
 import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.shownValue
@@ -64,12 +66,30 @@ class SettingsContractTest {
 
     // ---- the copy of the app
 
-    @Test fun theCopyIsTheContractOfTheServerWith100SettingsInSeventeenGroups() {
+    @Test fun theCopyIsTheContractOfTheServerWith105SettingsInSeventeenGroups() {
         assertEquals("eh3d.settings.contract/1", copy.schema)
-        assertEquals(100, copy.settings.size)
+        assertEquals(105, copy.settings.size)
         assertEquals(17, copy.groups.size)
         assertEquals(CONTRACT_LANGS, copy.languages)
         assertEquals(copy.settings.size, copy.settings.map { it.key }.toSet().size)
+    }
+
+    @Test fun theSettingsOfTheStopAndTheResumeAreInTheCopyAndEveryUnitCanBeWritten() {
+        val keys = copy.settings.map { it.key }.toSet()
+        listOf("grbl_stop_wait_s", "resume_safe_z_mm", "resume_spindle_wait_s", "resume_plunge_feed_mm_min", "resume_position_tolerance_um").forEach { assertTrue(it, it in keys) }
+        val written = setOf("", "days", "gigabytes", "hours", "kilobytes", "lines", "megabytes", "mm", "\u00b5m", "mm/min", "places", "seconds")
+        copy.settings.forEach { assertTrue(it.key + " " + it.unit, unitText(it.unit) in written) }
+        assertEquals("mm", unitText("millimetres"))
+        assertEquals("\u00b5m", unitText("micrometres"))
+        assertEquals("", unitText(null))
+    }
+
+    @Test fun onlyAResumeTheServerDoesNotDoByItselfKeepsItsReason() {
+        assertEquals("the stop was not confirmed", resumeRefusal(422, "bad_request", " the stop was not confirmed "))
+        assertNull(resumeRefusal(422, "bad_request", "  "))
+        assertNull(resumeRefusal(422, "bad_request", "bad_request"))
+        assertNull(resumeRefusal(422, "no_work", "every hole is done"))
+        assertNull(resumeRefusal(409, "not_stopped", "the job is running"))
     }
 
     @Test fun everyTextOfTheCopyIsInTheEightLanguages() {
@@ -83,7 +103,7 @@ class SettingsContractTest {
         val policy = copy.settings.filter { it.write.via == "policy" }
         val file = copy.settings.filter { it.write.via == "file" }
         assertEquals(19, policy.size)
-        assertEquals(81, file.size)
+        assertEquals(86, file.size)
         assertTrue(policy.all { it.write.method == "PUT" && writePath(it) == "/auth/policy" && it.role == "admin" })
         assertTrue(file.all { it.write.path == null && it.write.file == "server.cfg" })
     }
