@@ -26,6 +26,7 @@ import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
 import es.electrohobby3d.eh3d.model.OrderGate
 import es.electrohobby3d.eh3d.model.PnpNode
+import es.electrohobby3d.eh3d.model.keepsDetail
 import es.electrohobby3d.eh3d.model.mayHaveArrived
 import es.electrohobby3d.eh3d.model.mayOrder
 import es.electrohobby3d.eh3d.model.withDetail
@@ -820,9 +821,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "not_stopped" -> tr("Solo se puede seguir desde un trabajo cancelado o fallido.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
-        error.code == "bad_gcode" -> withDetail(ErrorTexts.phrase(error.code).orEmpty(), error.code, error.message)
         error.code == "bad_policy" || error.code == "weak_confirm_required" || error.code == "forbidden_scope" -> policyErrorText(error)
-        ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty()
+        ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty().let { if (keepsDetail(error.code)) withDetail(it, error.code, error.message) else it }
         ServerErrors.text(error.code, Tr.language) != null -> ServerErrors.text(error.code, Tr.language).orEmpty()
         error.status == 403 -> tr("Su usuario solo puede ver: no puede hacer esto.")
         else -> trf("El servidor respondió: %s", error.message ?: error.code)

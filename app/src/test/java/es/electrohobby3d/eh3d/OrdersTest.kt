@@ -6,6 +6,7 @@ import es.electrohobby3d.eh3d.model.LinkState
 import es.electrohobby3d.eh3d.model.OrderGate
 import es.electrohobby3d.eh3d.model.Prepare
 import es.electrohobby3d.eh3d.model.SideState
+import es.electrohobby3d.eh3d.model.keepsDetail
 import es.electrohobby3d.eh3d.model.mayHaveArrived
 import es.electrohobby3d.eh3d.model.mayOrder
 import es.electrohobby3d.eh3d.model.withDetail
@@ -54,6 +55,8 @@ class OrdersTest {
     }
 
     @Test fun `a refused program keeps the line and the reason of the server`() {
+        assertTrue(keepsDetail("bad_gcode"))
+        assertFalse(keepsDetail("machine_busy"))
         assertEquals("No (line 3: a canned cycle)", withDetail("No", "bad_gcode", " line 3: a canned cycle "))
         assertEquals("No", withDetail("No", "bad_gcode", "bad_gcode"))
         assertEquals("No", withDetail("No", "bad_gcode", ""))

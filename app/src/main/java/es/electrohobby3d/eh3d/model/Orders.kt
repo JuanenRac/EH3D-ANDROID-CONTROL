@@ -27,5 +27,8 @@ fun mayHaveArrived(status: Int, neverSent: Boolean): Boolean = (status == 0 && !
 /** Whether a machine may be set going (started, confirmed, let go): an operator, and only while what is on the screen is what the server says now. A stop never asks this. */
 fun mayOrder(operator: Boolean, link: LinkState): Boolean = operator && link == LinkState.Connected
 
+/** The refusals whose detail names the line and the reason: the sentence of the code alone does not say where to look. */
+fun keepsDetail(code: String): Boolean = code == "bad_gcode"
+
 /** The sentence of a refusal with what the server added (the line and the reason of a refused program), when it added something. */
 fun withDetail(words: String, code: String, detail: String?): String = detail?.trim()?.takeIf { it.isNotEmpty() && it != code }?.let { "$words ($it)" } ?: words
