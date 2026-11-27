@@ -6,6 +6,8 @@ All notable changes to this project are documented here.
 
 - **Third-party notices:** the APK carries the asset `THIRD_PARTY_NOTICES` with the libraries it is built with, their licences and the Apache License (`docs/THIRD_PARTY_NOTICES`, made by `tools/third_party_notices.py` from the dependency graph of Gradle). The CI fails when a library of the graph is not listed.
 
+## [0.2.0] - Answer the new questions of the server when a job resumes, and the spindle and drill settings
+
 - **Before the tool goes down into the work:** when a job that goes on after a stop waits with `pause.plunge`, the app says that the head is over the point and that confirming takes the tool down, in the eight languages. Needs the server that asks it; not tried on a machine.
 - **Preparing a drilling job asks for the number format of a file that does not declare it:** the card of the drilling file offers the formats, with nothing chosen at first and the choice kept on the phone, and sends `drill_format` to the server. A refusal for the format is said in the eight languages with what to choose, and the warning of a file read this way says it was read with the chosen format. 2 new tests; checked by tests, not on a phone against a machine.
 
