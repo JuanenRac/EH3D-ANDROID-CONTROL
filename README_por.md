@@ -31,7 +31,7 @@
 |---|---|
 | Versão | `0.1.9` |
 | Maturidade | Estrutura inicial |
-| Testes | 490 testes unitários na JVM |
+| Testes | 492 testes unitários na JVM |
 | Tecnologias | Kotlin, Jetpack Compose |
 | Em hardware real | Ainda não: a aplicação não foi executada num telemóvel, contra um servidor real nem com uma máquina; o primeiro a experimentar é entrar no EH3D-SERVER da oficina. |
 
@@ -68,7 +68,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 * Iniciar um trabalho a partir da sua página pede mais uma confirmação (verifique que a máquina está preparada e desimpedida), tal como a partir de Preparar, para que um toque por engano não ponha a máquina em marcha.
 * Antes de iniciar um trabalho, um resumo mostra o que faz, quanto demora, até onde vai cada eixo (a simulação em seco do plano exato feito pelo servidor) e o que parece errado, com Começar e Cancelar; uma definição desliga-o (ativado por defeito). Escrito, nunca executado com um servidor real.
 * A ligação é indicada com honestidade: ligado, dados que envelhecem (com a idade), sem ligação após duas falhas seguidas, ou um endereço que responde a outro serviço, com um botão para tentar de novo; ao carregar em PARAR sem ligação, avisa que a ordem pode não chegar e que se deve usar a paragem física da máquina, e depois de uma paragem a app diz se a máquina a confirmou. Escrito, nunca executado com um servidor real.
-* Escolher furação, fresagem, ambas ou um programa de G-code e o ficheiro do telemóvel; as ferramentas do ficheiro com a sua contagem (e o diâmetro, quando o ficheiro o declara), desligar ferramentas, começar por uma; pausar, retomar, cancelar e retomar um trabalho parado (de qualquer tipo) de onde parou, com o ficheiro guardado pelo servidor; ler o interruptor das linhas `$` do GRBL da máquina. O servidor não tem lista de ficheiros, por isso o ficheiro é enviado a partir do telemóvel. Escrito, nunca executado contra um servidor ou uma máquina reais.
+* Escolher furação, fresagem, ambas ou um programa de G-code e o ficheiro do telemóvel; as ferramentas do ficheiro com a sua contagem (e o diâmetro, quando o ficheiro o declara), desligar ferramentas, começar por uma; pausar, retomar, cancelar e retomar um trabalho parado (de qualquer tipo) de onde parou, com o ficheiro guardado pelo servidor; ler o interruptor das linhas `$` do GRBL da máquina. O servidor não tem lista de ficheiros, por isso o ficheiro é enviado a partir do telemóvel. Escrito, nunca executado contra um servidor ou uma máquina reais. Um ficheiro de furação que não declara como estão escritos os números não é adivinhado: escolha o formato no seu cartão (guardado no telemóvel); a recusa diz o que escolher.
 * A placa, os furos (um anel até serem furados), os trajetos (ténues até serem cortados) e o cabeçote, em 2D e numa vista isométrica que roda com o dedo; a posição do cabeçote é uma estimativa a partir dos passos feitos. Testado como geometria, nunca visto num telemóvel.
 * A câmara do cabeçote de furação (EH3D-NODE-BUNGARD-AUX) em MJPEG através do servidor, as suas rotações, temperatura e saída de proteção, e uma medição da mesa com o laser. Escrito, nunca executado com um nó real.
 * Consulta a última release deste projeto no GitHub, descarrega o APK, verifica o pacote, a versão e a assinatura e entrega-o ao instalador do Android; nunca instala sozinha. Escrito e testado; nunca executado contra o GitHub a partir de um telemóvel.

@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.9` |
 | Maturity | Scaffolding |
-| Tests | 490 unit tests on the JVM |
+| Tests | 492 unit tests on the JVM |
 | Stack | Kotlin, Jetpack Compose |
 | On real hardware | Not yet: the app has not been run on a phone, against a real server or with a machine; the first thing to try is signing in to the EH3D-SERVER of the workshop. |
 
@@ -68,7 +68,7 @@ Each line is one part of this repository and the light says how far it is today.
 * Starting a job from its page asks once more (check that the machine is prepared and clear), as it does from Prepare, so a touch by mistake does not set the machine going.
 * Before a job starts, a summary shows what it does, how long it takes, how far each axis goes (the dry run of the exact plan the server made) and what looks wrong, with Start and Cancel; a setting turns it off (on by default). Written, never run against a real server.
 * The connection is told honestly: connected, data that is getting old (with its age), no connection after two failures in a row, or an address that answers another service, with a button to try again; pressing the stop without a connection warns that the order may not arrive and to use the physical stop of the machine, and after a stop the app says whether the machine confirmed it. Written, never run against a real server.
-* Choose drilling, routing, both or a G-code program and the file from the phone; the tools of the file with their count (and diameter when the file declares it), tools switched off, start at one tool; pause, resume, cancel and continue a stopped job (any kind) from where it stopped, with the file kept by the server; read the switch of the `$` lines of GRBL of the machine. The server has no list of files, so the file is sent from the phone. Written, never run against a real server or machine.
+* Choose drilling, routing, both or a G-code program and the file from the phone; the tools of the file with their count (and diameter when the file declares it), tools switched off, start at one tool; pause, resume, cancel and continue a stopped job (any kind) from where it stopped, with the file kept by the server; read the switch of the `$` lines of GRBL of the machine. The server has no list of files, so the file is sent from the phone. Written, never run against a real server or machine. A drilling file that does not declare how its numbers are written is not guessed: choose its number format on its card (kept on the phone); a refusal says what to choose.
 * The board, the holes (a ring until drilled), the paths (dim until cut) and the head, in 2D and in an isometric view that turns with a finger; the place of the head is an estimate from the steps done. Tested as geometry, never seen on a phone.
 * The camera of the drill head (EH3D-NODE-BUNGARD-AUX) as MJPEG through the server, its turns, temperature and protect output, and one measure of the table with the laser. Written, never run with a real node.
 * It looks at the newest release of this project on GitHub, downloads the APK, checks the package, the version and the signature, and hands it to Android's installer; it never installs by itself. Written and tested; never run against GitHub from a phone.

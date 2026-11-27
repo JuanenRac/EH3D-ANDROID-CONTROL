@@ -179,6 +179,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     var dollarAllowed: Boolean? by mutableStateOf(null); private set
     /** The job being prepared, and the text of the G-code programs started from here (to go on from the line where one stopped without choosing the file again). */
     var prepare by mutableStateOf(PrepareUi()); private set
+    /** The number format a person chose for the drilling files that declare none; empty while none is chosen. Kept on the phone. */
+    var drillFormat by mutableStateOf(preferences.getString("drill_format", "").orEmpty().takeIf { it in Prepare.DRILL_FORMATS }.orEmpty()); private set
     private val gcodeSources = HashMap<String, Pair<String, String>>()
     private var previewing: Task? = null
     val stack = mutableStateListOf<Page>(Page.Home)
@@ -683,14 +685,31 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /** Chooses the format, remembers it and plans the drilling file again with it. */
+    fun chooseDrillFormat(machineId: String, chosen: String) {
+        val next = chosen.takeIf { it in Prepare.DRILL_FORMATS }.orEmpty()
+        if (next == drillFormat) return
+        drillFormat = next
+        preferences.edit().putString("drill_format", next).apply()
+        val st = prepare.drill
+        if (!st.hasFile) return
+        // the plan on screen was read with another format: Start stays off until the new one arrives
+        prepare = prepare.with(Side.Drill, st.copy(view = null, error = ""))
+        viewModelScope.launch {
+            prepare = prepare.copy(loading = true)
+            try { planSide(machineId, Side.Drill) } finally { prepare = prepare.copy(loading = false) }
+        }
+    }
+
     private suspend fun planSide(machineId: String, side: Side) {
         val st = prepare.side(side)
+        val format = drillFormat
         try {
-            val view = api.preview(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, emptyList()))
-            if (Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = view, error = ""))
+            val view = api.preview(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, emptyList(), format))
+            if (format == drillFormat && Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = view, error = ""))
         } catch (error: ApiException) {
             if (error.unauthorized) signOutQuietly()
-            if (Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = null, error = prepareError(error)))
+            if (format == drillFormat && Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = null, error = prepareError(error)))
         }
     }
 
@@ -744,7 +763,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                     for (side in sides) {
                         val st = p.side(side)
                         val skipTools = Prepare.skipTools(st.view?.let { Prepare.toolOrder(it) }.orEmpty(), st.off, st.startAt)
-                        jobs += api.createJob(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, skipTools))
+                        jobs += api.createJob(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, skipTools, drillFormat))
                         made++
                     }
                 }
@@ -763,7 +782,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun prepareError(error: ApiException): String = when (error.code) {
         "too_big" -> tr("El archivo es demasiado grande.")
-        "bad_ncd" -> tr("El archivo de taladrado no se entiende.")
+        "bad_ncd" -> if (Prepare.needsDrillFormat(error.code, error.message.orEmpty())) tr("El archivo de taladrado no declara cómo están escritos sus números, o el formato elegido no le sirve, y la escala no se adivina. Elija el formato: mils (milésimas de pulgada enteras), inch-2.4-tz, inch-2.4-lz, metric-3.3-tz o metric-3.3-lz (tz: se omiten los ceros de delante; lz: se omiten los ceros del final).") else tr("El archivo de taladrado no se entiende.")
         "unknown_tool" -> trf("Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s", error.message ?: "")
         "bad_tool" -> trf("Herramienta no válida: %s", error.message ?: "")
         "out_of_table" -> tr("Un agujero o un punto queda fuera del recorrido de la máquina.")

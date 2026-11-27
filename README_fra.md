@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.9` |
 | Maturité | Échafaudage |
-| Tests | 490 tests unitaires sur la JVM |
+| Tests | 492 tests unitaires sur la JVM |
 | Pile technique | Kotlin, Jetpack Compose |
 | Sur du matériel réel | Pas encore : l'application n'a pas été exécutée sur un téléphone, contre un vrai serveur ni avec une machine ; la première chose à essayer est de se connecter au EH3D-SERVER de l'atelier. |
 
@@ -68,7 +68,7 @@ Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'
 * Démarrer un travail depuis sa page demande une confirmation de plus (vérifier que la machine est prête et dégagée), comme depuis Préparer, pour qu'un toucher par erreur ne mette pas la machine en marche.
 * Avant le démarrage d'un travail, un résumé montre ce qu'il fait, sa durée, jusqu'où va chaque axe (l'essai à blanc du plan exact fait par le serveur) et ce qui semble faux, avec Démarrer et Annuler ; un réglage le désactive (activé par défaut). Écrit, jamais exécuté avec un vrai serveur.
 * La connexion est annoncée honnêtement : connecté, données qui vieillissent (avec leur âge), pas de connexion après deux échecs de suite, ou une adresse qui répond à un autre service, avec un bouton pour réessayer ; en appuyant sur ARRÊTER sans connexion, l'app avertit que l'ordre peut ne pas arriver et qu'il faut utiliser l'arrêt physique de la machine, et après un arrêt elle dit si la machine l'a confirmé. Écrit, jamais exécuté avec un vrai serveur.
-* Choisir perçage, fraisage, les deux ou un programme G-code et le fichier du téléphone ; les outils du fichier avec leur nombre (et leur diamètre quand le fichier le déclare), désactiver des outils, commencer par l'un d'eux ; mettre en pause, reprendre, annuler et reprendre un travail arrêté (de tout type) là où il s'est arrêté, avec le fichier gardé par le serveur ; lire l'interrupteur des lignes `$` de GRBL de la machine. Le serveur n'a pas de liste de fichiers : le fichier est envoyé depuis le téléphone. Écrit, jamais exécuté contre un vrai serveur ni une vraie machine.
+* Choisir perçage, fraisage, les deux ou un programme G-code et le fichier du téléphone ; les outils du fichier avec leur nombre (et leur diamètre quand le fichier le déclare), désactiver des outils, commencer par l'un d'eux ; mettre en pause, reprendre, annuler et reprendre un travail arrêté (de tout type) là où il s'est arrêté, avec le fichier gardé par le serveur ; lire l'interrupteur des lignes `$` de GRBL de la machine. Le serveur n'a pas de liste de fichiers : le fichier est envoyé depuis le téléphone. Écrit, jamais exécuté contre un vrai serveur ni une vraie machine. Un fichier de perçage qui ne déclare pas l'écriture de ses nombres n'est pas deviné : choisissez son format sur sa carte (gardé sur le téléphone) ; le refus dit quoi choisir.
 * La carte, les trous (un anneau jusqu'au perçage), les trajets (pâles jusqu'à la coupe) et la tête, en 2D et dans une vue isométrique qui tourne au doigt ; la position de la tête est une estimation à partir des étapes faites. Testé comme géométrie, jamais vu sur un téléphone.
 * La caméra de la tête de perçage (EH3D-NODE-BUNGARD-AUX) en MJPEG via le serveur, sa vitesse, sa température et sa sortie de protection, et une mesure de la table au laser. Écrit, jamais exécuté avec un vrai nœud.
 * Elle regarde la dernière release de ce projet sur GitHub, télécharge l'APK, vérifie le paquet, la version et la signature et le remet à l'installateur d'Android ; elle n'installe jamais seule. Écrit et testé ; jamais exécuté contre GitHub depuis un téléphone.

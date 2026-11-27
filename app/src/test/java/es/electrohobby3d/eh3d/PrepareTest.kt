@@ -32,6 +32,19 @@ class PrepareTest {
         assertEquals(4, parsePreview(job).holes.size)
     }
 
+    @Test fun theDrillFormatGoesOnlyWithADrillingFileAndOnlyWhenOneIsChosen() {
+        assertEquals("mils", JSONObject(Prepare.fileBody(Side.Drill, "j", "n", "", emptyList(), "mils")).getString("drill_format"))
+        assertFalse(JSONObject(Prepare.fileBody(Side.Drill, "j", "n", "", emptyList())).has("drill_format"))
+        assertFalse(JSONObject(Prepare.fileBody(Side.Drill, "j", "n", "", emptyList(), "anything")).has("drill_format"))
+        assertFalse(JSONObject(Prepare.fileBody(Side.Route, "j", "p", "", emptyList(), "mils")).has("drill_format"))
+    }
+
+    @Test fun aRefusalForTheNumberFormatIsToldApartFromAFileThatCannotBeRead() {
+        assertTrue(Prepare.needsDrillFormat("bad_ncd", "EH3D-FORMATS-014: line 3: the format is not declared (drill_format)"))
+        assertFalse(Prepare.needsDrillFormat("bad_ncd", "line 3 is not a hole"))
+        assertFalse(Prepare.needsDrillFormat("bad_request", "EH3D-FORMATS-014"))
+    }
+
     @Test fun switchedOffToolsAreLeftOut() {
         val order = listOf(2, 1, 3)
         assertEquals(listOf(1), Prepare.skipTools(order, setOf(1), null))

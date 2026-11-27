@@ -31,7 +31,7 @@
 |---|---|
 | Versione | `0.1.9` |
 | Maturità | Impalcatura |
-| Test | 490 test unitari sulla JVM |
+| Test | 492 test unitari sulla JVM |
 | Stack tecnologico | Kotlin, Jetpack Compose |
 | Su hardware reale | Non ancora: l'app non è stata eseguita su un telefono, contro un server reale né con una macchina; la prima cosa da provare è accedere all'EH3D-SERVER dell'officina. |
 
@@ -68,7 +68,7 @@ Ogni riga è una parte di questo repository e il semaforo dice a che punto è og
 * Avviare un lavoro dalla sua pagina chiede un'altra conferma (controllare che la macchina sia pronta e libera), come da Prepara, così un tocco per errore non mette in moto la macchina.
 * Prima di avviare un lavoro, un riepilogo mostra cosa fa, quanto dura, fin dove arriva ogni asse (la prova a secco del piano esatto fatto dal server) e cosa sembra sbagliato, con Avvia e Annulla; un'impostazione lo disattiva (attivo per impostazione predefinita). Scritto, mai eseguito con un server reale.
 * La connessione è dichiarata con onestà: connesso, dati che invecchiano (con la loro età), nessuna connessione dopo due errori di fila, o un indirizzo che risponde a un altro servizio, con un pulsante per riprovare; premendo FERMA senza connessione l'app avverte che il comando potrebbe non arrivare e di usare l'arresto fisico della macchina, e dopo un arresto dice se la macchina lo ha confermato. Scritto, mai eseguito con un server reale.
-* Scegliere foratura, fresatura, entrambe o un programma G-code e il file del telefono; gli utensili del file con il loro conteggio (e il diametro quando il file lo dichiara), disattivare utensili, iniziare da uno; mettere in pausa, riprendere, annullare e riprendere un lavoro fermato (di qualsiasi tipo) da dove si è fermato, con il file conservato dal server; leggere l'interruttore delle righe `$` di GRBL della macchina. Il server non ha un elenco di file, quindi il file viene inviato dal telefono. Scritto, mai eseguito contro un server o una macchina reali.
+* Scegliere foratura, fresatura, entrambe o un programma G-code e il file del telefono; gli utensili del file con il loro conteggio (e il diametro quando il file lo dichiara), disattivare utensili, iniziare da uno; mettere in pausa, riprendere, annullare e riprendere un lavoro fermato (di qualsiasi tipo) da dove si è fermato, con il file conservato dal server; leggere l'interruttore delle righe `$` di GRBL della macchina. Il server non ha un elenco di file, quindi il file viene inviato dal telefono. Scritto, mai eseguito contro un server o una macchina reali. Un file di foratura che non dichiara come sono scritti i numeri non viene indovinato: scegliere il formato nella sua scheda (conservato sul telefono); il rifiuto dice cosa scegliere.
 * La scheda, i fori (un anello finché non sono forati), i percorsi (tenui finché non sono tagliati) e la testa, in 2D e in una vista isometrica che ruota con il dito; la posizione della testa è una stima dai passi fatti. Provato come geometria, mai visto su un telefono.
 * La telecamera della testa di foratura (EH3D-NODE-BUNGARD-AUX) in MJPEG tramite il server, i suoi giri, la temperatura e l'uscita di protezione, e una misura del tavolo con il laser. Scritto, mai eseguito con un nodo reale.
 * Guarda l'ultima release di questo progetto su GitHub, scarica l'APK, verifica pacchetto, versione e firma e lo consegna all'installer di Android; non installa mai da sola. Scritto e provato; mai eseguito contro GitHub da un telefono.
