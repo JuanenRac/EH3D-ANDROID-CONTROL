@@ -4,6 +4,7 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Before the tool goes down into the work:** when a job that goes on after a stop waits with `pause.plunge`, the app says that the head is over the point and that confirming takes the tool down, in the eight languages. Needs the server that asks it; not tried on a machine.
 - **The settings of the server have the new `grbl_spindle_stop_on_pause`** (off: a pause of a GRBL machine also stops the spindle and the coolant), with its label and help from the contract of the server. Not tried on a machine.
 - **The second question before the spindle or the laser goes on:** when a job that goes on after a stop waits with `pause.power_on`, the app says that confirming switches the spindle or the laser on again, in the eight languages. It needs a server with that question.
 - **Confirm and Resume answer the question on the screen (safety):** they send back its identifier (`pause.question` of the job), and a server that asks something else by then refuses the answer (`409 question_changed`) instead of taking it as the answer to a question nobody has read. The two new refusals have their text in the eight languages and the settings have the new `answer_needs_question` of the server (106 keys). A server of an earlier version is answered as before.

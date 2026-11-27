@@ -264,6 +264,7 @@
  "Trabajo en pausa: pulse Reanudar para que siga.": "Lavoro in pausa: premete Riprendi perché prosegua.",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "Il lavoro riprende dopo un arresto: controlli la macchina, lo zero pezzo e l’utensile, e si tenga lontano. Premendo Riprendi, la macchina torna da sola al punto in cui si era fermata e avvia il mandrino se il programma lo aveva acceso.",
  "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "Conferma prima che il mandrino o il laser vengano riaccesi: guarda la testa e il pezzo, e tieniti lontano. Premendo Riprendi si accende e il lavoro continua.",
+ "Antes de que la herramienta baje a la pieza, confírmelo: el cabezal está sobre el punto; compruebe que el husillo gira, mire la pieza y apártese. Al pulsar Reanudar, baja y el trabajo continúa.": "Conferma prima che l'utensile scenda nel pezzo: la testa è sopra il punto; controlla che il mandrino giri, guarda il pezzo e tieniti lontano. Premendo Riprendi, scende e il lavoro continua.",
  "Reanudar": "Riprendi",
  "Pausar": "Pausa",
  "Preparar trabajo": "Prepara lavoro",

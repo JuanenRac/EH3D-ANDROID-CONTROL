@@ -264,6 +264,7 @@
  "Trabajo en pausa: pulse Reanudar para que siga.": "ジョブは一時停止中です。続けるには「再開」を押してください。",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "停止後にジョブを続行します：マシン、ワークのゼロ点、工具を確認し、離れてください。再開を押すと、マシンは自動で停止位置に戻り、プログラムがスピンドルを回していた場合はスピンドルを始動します。",
  "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "主軸やレーザーを再び入れる前に確認してください：ヘッドとワークを確認し、離れてください。「再開」を押すと入り、ジョブが続きます。",
+ "Antes de que la herramienta baje a la pieza, confírmelo: el cabezal está sobre el punto; compruebe que el husillo gira, mire la pieza y apártese. Al pulsar Reanudar, baja y el trabajo continúa.": "工具をワークへ下ろす前に確認してください：ヘッドはその位置の上にあります。主軸が回っていることとワークを確認し、離れてください。再開を押すと下降し、ジョブが続きます。",
  "Reanudar": "再開",
  "Pausar": "一時停止",
  "Preparar trabajo": "ジョブを準備",

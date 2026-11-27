@@ -264,6 +264,7 @@
  "Trabajo en pausa: pulse Reanudar para que siga.": "Job paused: press Resume to let it go on.",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "The job goes on after a stop: check the machine, the work zero and the tool, and keep clear. When you press Resume, the machine goes back on its own to where it stopped and starts the spindle if the program had it on.",
  "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "Confirm before the spindle or the laser is switched on again: look at the head and the work, and keep clear. When you press Resume, it is switched on and the job continues.",
+ "Antes de que la herramienta baje a la pieza, confírmelo: el cabezal está sobre el punto; compruebe que el husillo gira, mire la pieza y apártese. Al pulsar Reanudar, baja y el trabajo continúa.": "Confirm before the tool goes down into the work: the head is over the point; check that the spindle turns, look at the work and keep clear. When you press Resume, it goes down and the job continues.",
  "Reanudar": "Resume",
  "Pausar": "Pause",
  "Preparar trabajo": "Prepare job",

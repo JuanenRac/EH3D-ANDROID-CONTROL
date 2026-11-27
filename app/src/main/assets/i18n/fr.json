@@ -264,6 +264,7 @@
  "Trabajo en pausa: pulse Reanudar para que siga.": "Travail en pause : appuyez sur Reprendre pour qu'il continue.",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "Le travail reprend après un arrêt : vérifiez la machine, le zéro pièce et l’outil, et restez à distance. En appuyant sur Reprendre, la machine revient seule là où elle s’était arrêtée et démarre la broche si le programme l’avait mise en marche.",
  "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "Confirmez avant que la broche ou le laser ne soit rallumé : regardez la tête et la pièce, et restez à distance. En appuyant sur Reprendre, il s'allume et le travail continue.",
+ "Antes de que la herramienta baje a la pieza, confírmelo: el cabezal está sobre el punto; compruebe que el husillo gira, mire la pieza y apártese. Al pulsar Reanudar, baja y el trabajo continúa.": "Confirmez avant que l'outil ne descende dans la pièce : la tête est au-dessus du point ; vérifiez que la broche tourne, regardez la pièce et restez à distance. Après Reprendre, il descend et le travail continue.",
  "Reanudar": "Reprendre",
  "Pausar": "Mettre en pause",
  "Preparar trabajo": "Préparer le travail",
