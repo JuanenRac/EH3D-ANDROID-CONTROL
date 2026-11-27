@@ -21,8 +21,9 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleRelease
           ./gradlew --no-daemon -q :app:dependencies --configuration releaseRuntimeClasspath > app/build/runtime-deps.txt
+          mkdir out && cp app/build/runtime-deps.txt out/
           python3 -I tools/third_party_notices.py app/build/runtime-deps.txt
-          mkdir out
+
           cp docs/THIRD_PARTY_NOTICES out/
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
