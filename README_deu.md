@@ -193,7 +193,8 @@ EH3D-ANDROID-CONTROL/
 ├── SECURITY.md SUPPORT.md                       Schwachstelle melden, fragen
 ├── CONTRIBUTING.md                              wie man beiträgt
 ├── CODE_OF_CONDUCT.md                           der Verhaltenskodex
-└── LICENSE                                      die Lizenz
+├── LICENSE                                      die Lizenz
+└── LICENSE-EXCEPTION.md                         die zusätzliche Erlaubnis für die Google-Bibliotheken
 ```
 
 </details>

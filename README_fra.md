@@ -193,7 +193,8 @@ EH3D-ANDROID-CONTROL/
 ├── SECURITY.md SUPPORT.md                       signaler une vulnérabilité, demander
 ├── CONTRIBUTING.md                              comment contribuer
 ├── CODE_OF_CONDUCT.md                           le code de conduite
-└── LICENSE                                      la licence
+├── LICENSE                                      la licence
+└── LICENSE-EXCEPTION.md                         la permission supplémentaire pour les bibliothèques Google
 ```
 
 </details>

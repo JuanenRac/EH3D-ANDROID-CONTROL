@@ -121,17 +121,52 @@ def clean(text: str) -> str:
     return "\n".join(line.rstrip() for line in text.replace("﻿", "").replace("\r\n", "\n").replace("\r", "\n").split("\n")).strip("\n")
 
 
+# Libraries under other terms, accepted one family at a time and never by licence name alone.
+SDK_TERMS = "Android Software Development Kit License"
+SDK_GROUPS = ("com.google.android.gms", "com.google.firebase")
+SDK_NOTE = ("Proprietary libraries of Google, used unchanged under the terms of https://developer.android.com/studio/terms.html. The licence of this app carries an\n"
+            "additional permission to combine it with them (LICENSE-EXCEPTION.md).")
+BSD_LIBRARIES = ("androidx.datastore:datastore-preferences-external-protobuf",)
+BSD_TEXT = """Copyright 2008 Google Inc.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or
+      other materials provided with the distribution.
+    * Neither the name of Google Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific
+      prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."""
+
+
+def accepted(group: str, name: str, licences: list[str]) -> str | None:
+    """The licence a library is listed under, or None when it must be looked at first."""
+    if licences in (["Apache-2.0"], ["MIT"]):
+        return licences[0]
+    if group in SDK_GROUPS and licences == [SDK_TERMS]:
+        return SDK_TERMS
+    if name in BSD_LIBRARIES and licences == ["BSD-3-Clause"]:
+        return "BSD-3-Clause"
+    return None
+
+
 def render(libraries: list[tuple[str, str, str]]) -> str:
     rows, holders, notices = [], {}, {}
     used: set[str] = set()
     for group, artifact, version in libraries:
         name = f"{group}:{artifact}"
         licences, who = pom_facts(group, artifact, version)
-        if licences not in (["Apache-2.0"], ["MIT"]):
+        licence = accepted(group, name, licences)
+        if licence is None:
             raise SystemExit(f"{name} {version}: the licence {licences} has no text here; look at it before it is shipped")
-        used.add(licences[0])
-        rows.append(f"{name} | {version} | {licences[0]}")
-        holders.setdefault((who, licences[0]), []).append(name)
+        used.add(licence)
+        rows.append(f"{name} | {version} | {licence}")
+        holders.setdefault((who, licence), []).append(name)
         for text in notice_files(group, artifact, version):
             notices.setdefault(text, []).append(name)
     if "MIT" in used:
@@ -151,6 +186,10 @@ def render(libraries: list[tuple[str, str, str]]) -> str:
         lines += ["", "NOTICE files of the libraries", "-----------------------------"]
         for text, names in notices.items():
             lines += ["", f"--- {', '.join(dict.fromkeys(names))} ---", "", text]
+    if SDK_TERMS in used:
+        lines += ["", SDK_TERMS, "-" * len(SDK_TERMS), "", SDK_NOTE]
+    if "BSD-3-Clause" in used:
+        lines += ["", "BSD 3-Clause License (protobuf)", "-------------------------------", "", BSD_TEXT]
     lines += ["", "Apache License, Version 2.0", "---------------------------", "", apache]
     return "\n".join(lines) + "\n"
 

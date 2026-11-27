@@ -193,7 +193,8 @@ EH3D-ANDROID-CONTROL/
 ├── SECURITY.md SUPPORT.md                       脆弱性の報告・質問
 ├── CONTRIBUTING.md                              貢献方法
 ├── CODE_OF_CONDUCT.md                           行動規範
-└── LICENSE                                      ライセンス
+├── LICENSE                                      ライセンス
+└── LICENSE-EXCEPTION.md                         Google ライブラリ向けの追加許諾
 ```
 
 </details>

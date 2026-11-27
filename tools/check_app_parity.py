@@ -25,6 +25,13 @@ ASSET_FILES = ("settings-contract.json", "settings-texts.json")
 # the phrases that only the iPhone app has, with the reason (the system makes the difference)
 IOS_ONLY = {"El certificado del servidor no es el que se guardó la primera vez: no se conecta.": "the certificate of a secure server is pinned on the iPhone only"}
 
+# the phrases that only the Android app has: the iPhone app has no notices through Apple yet (it needs a key of a paid developer account)
+_PUSH = "notices with the app closed are on Android only until there is a key of Apple"
+ANDROID_ONLY = {phrase: _PUSH for phrase in (
+    "Un trabajo espera al operario.", "Un trabajo ha fallado.", "Un trabajo ha terminado.", "Avisos aunque la app esté cerrada (Firebase)",
+    "Apagado por defecto. El servidor envía a través de Google solo qué ha pasado, sin nombres; hay que activarlo también en el servidor.",
+)}
+
 
 def load_folder(folder: Path) -> dict:
     """File name -> the JSON it holds, for the .json files of a folder."""
@@ -48,7 +55,7 @@ def compare_tables(android: dict, ios: dict, ios_only: dict = IOS_ONLY) -> list:
         if not isinstance(mine, dict) or not isinstance(other, dict):
             problems.append(f"i18n: {name} is not a table of phrases")
             continue
-        problems += [f"i18n: {name}: a phrase of the Android app is not in the iPhone app: {k}" for k in sorted(set(mine) - set(other))]
+        problems += [f"i18n: {name}: a phrase of the Android app is not in the iPhone app: {k}" for k in sorted(set(mine) - set(other) - set(ANDROID_ONLY))]
         problems += [f"i18n: {name}: a phrase only the iPhone app has and is not allowed: {k}" for k in sorted(set(other) - set(mine) - set(ios_only))]
         problems += [f"i18n: {name}: the translation of a phrase differs: {k}" for k in sorted(set(mine) & set(other)) if mine[k] != other[k]]
     return problems

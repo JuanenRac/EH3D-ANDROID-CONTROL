@@ -193,7 +193,8 @@ EH3D-ANDROID-CONTROL/
 ├── SECURITY.md SUPPORT.md                       报告漏洞、提问
 ├── CONTRIBUTING.md                              如何贡献
 ├── CODE_OF_CONDUCT.md                           行为准则
-└── LICENSE                                      许可证
+├── LICENSE                                      许可证
+└── LICENSE-EXCEPTION.md                         对 Google 库的附加许可
 ```
 
 </details>

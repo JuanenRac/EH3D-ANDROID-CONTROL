@@ -27,6 +27,7 @@ The iPhone app (EH3D-IOS-CONTROL) is a port of this one: whatever one app learns
 | Updates | Downloads the APK and hands it to the installer | Tells that a version exists and links to it |
 | Certificate of a secure server | Not pinned; the phrase is not in its tables | Pinned the first time it is seen; one extra phrase in the 7 tables says so |
 | The stream of the head camera | Also stops while the app is out of sight and can decode at a smaller size for the grid | Read with `URLSession` and stops with its screen |
+| Notices through the system's push service | Firebase, off by default, in a build with the owner's project; five phrases only this app has | Not there: it needs a key of a paid Apple developer account |
 
 ## Not there in either app yet
 
