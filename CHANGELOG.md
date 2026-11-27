@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The second question before the spindle or the laser goes on:** when a job that goes on after a stop waits with `pause.power_on`, the app says that confirming switches the spindle or the laser on again, in the eight languages. It needs a server with that question.
+
 - **Confirm and Resume answer the question on the screen (safety):** they send back its identifier (`pause.question` of the job), and a server that asks something else by then refuses the answer (`409 question_changed`) instead of taking it as the answer to a question nobody has read. The two new refusals have their text in the eight languages and the settings have the new `answer_needs_question` of the server (106 keys). A server of an earlier version is answered as before.
 
 ## [0.1.9] - Orders are sent once, buttons rest without a connection and the new stop and resume of the server

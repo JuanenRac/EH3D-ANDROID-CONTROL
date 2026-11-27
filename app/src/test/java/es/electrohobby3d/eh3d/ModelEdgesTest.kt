@@ -192,6 +192,8 @@ class ModelEdgesTest {
         assertEquals("spindle_start", pause.kind)
         assertNull(pause.tool)
         assertNull(pause.question)
+        assertEquals(false, pause.powerOn)
+        assertEquals(true, parseJobs("""[{"id":"a","pause":{"kind":"resume","power_on":true}}]""")[0].pause!!.powerOn)
         assertEquals("q0a1b2c3", parseJobs("""[{"id":"a","pause":{"kind":"hold","question":"q0a1b2c3"}}]""")[0].pause!!.question)
         assertEquals(3, parseJobs("""[{"id":"a","pause":{"kind":"tool_change","tool":3}}]""")[0].pause!!.tool)
     }

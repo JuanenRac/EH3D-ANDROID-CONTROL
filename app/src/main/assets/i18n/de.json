@@ -263,6 +263,7 @@
  "G-code": "G-Code",
  "Trabajo en pausa: pulse Reanudar para que siga.": "Auftrag pausiert: Tippen Sie auf Fortsetzen, damit er weiterläuft.",
  "El trabajo sigue tras una parada: compruebe la máquina, el cero de trabajo y la herramienta, y apártese. Al pulsar Reanudar, la máquina vuelve sola al punto donde se paró y arranca el husillo si el programa lo tenía encendido.": "Der Auftrag geht nach einem Halt weiter: Prüfen Sie Maschine, Werkstücknullpunkt und Werkzeug und halten Sie Abstand. Nach „Fortsetzen“ fährt die Maschine selbst zur Haltestelle zurück und startet die Spindel, wenn das Programm sie eingeschaltet hatte.",
+ "Antes de volver a encender el husillo o el láser, confírmelo: mire el cabezal y la pieza, y apártese. Al pulsar Reanudar, se enciende y el trabajo continúa.": "Bestätigen Sie, bevor Spindel oder Laser wieder eingeschaltet werden: Prüfen Sie Kopf und Werkstück und halten Sie Abstand. Mit Fortsetzen wird eingeschaltet und der Auftrag läuft weiter.",
  "Reanudar": "Fortsetzen",
  "Pausar": "Pausieren",
  "Preparar trabajo": "Auftrag vorbereiten",

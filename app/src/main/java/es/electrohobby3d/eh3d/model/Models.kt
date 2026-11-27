@@ -14,9 +14,9 @@ fun JSONObject.dbl(name: String): Double? = if (has(name) && !isNull(name)) optD
 private fun JSONObject.int(name: String, default: Int = 0): Int = if (has(name) && !isNull(name)) optInt(name, default) else default
 
 /** What a job waits for: put the tool of this number in (`tool_change`), confirm that the spindle runs (`spindle_start`), or, for a G-code job, `hold` (the operator paused it) and `resume` (it goes on after a stop and waits before its first move). */
-data class Pause(val kind: String, val tool: Int?, val question: String? = null)
+data class Pause(val kind: String, val tool: Int?, val question: String? = null, val powerOn: Boolean = false)
 
-private fun pauseOf(json: JSONObject?): Pause? = json?.let { Pause(it.str("kind"), if (it.has("tool") && !it.isNull("tool")) it.optInt("tool") else null, it.str("question").takeIf { q -> q.isNotEmpty() }) }
+private fun pauseOf(json: JSONObject?): Pause? = json?.let { Pause(it.str("kind"), if (it.has("tool") && !it.isNull("tool")) it.optInt("tool") else null, it.str("question").takeIf { q -> q.isNotEmpty() }, it.optBoolean("power_on", false)) }
 
 /** The reason of the server when it does not go on with a stopped job by itself (`422 bad_request` of `resume-from`), or null for any other refusal. */
 fun resumeRefusal(status: Int, code: String, detail: String?): String? =
