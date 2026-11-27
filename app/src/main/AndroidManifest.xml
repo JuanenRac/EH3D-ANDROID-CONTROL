@@ -7,6 +7,7 @@
     <!-- Required only to hand a verified update APK (downloaded from this project's own GitHub Releases) to Android's system package installer. The app never installs a package silently. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <application
+        android:name=".Eh3dApp"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Notices through Firebase: no token is made until the person switches them on, and no analytics. -->
+        <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="false" />
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+        <service android:name=".PushService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <!-- Shares an APK held in the app cache with Android's package installer through a temporary content:// URI. -->
         <provider
             android:name="androidx.core.content.FileProvider"

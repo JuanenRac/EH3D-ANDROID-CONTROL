@@ -250,3 +250,5 @@ README 提供英语、西班牙语、法语、意大利语、德语、汉语、�
 ## 📜 许可证
 
 软件：GPL-3.0-or-later。见 [LICENSE](LICENSE)。套件的硬件设计使用 CERN OHL-S。
+
+本应用对通知所用的 Google 库附带额外许可：见 [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md)。

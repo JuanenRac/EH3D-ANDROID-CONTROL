@@ -250,3 +250,5 @@ O README existe em inglês, espanhol, francês, italiano, alemão, chinês, japo
 ## 📜 LICENÇA
 
 Software: GPL-3.0-or-later. Ver [LICENSE](LICENSE). Os projetos de hardware da suite usam a CERN OHL-S.
+
+A aplicação tem uma permissão adicional para as bibliotecas da Google dos avisos: ver [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md).

@@ -250,3 +250,5 @@ README は英語、スペイン語、フランス語、イタリア語、ドイ�
 ## 📜 ライセンス
 
 ソフトウェア：GPL-3.0-or-later。[LICENSE](LICENSE) を参照。スイートのハードウェア設計には CERN OHL-S を使います。
+
+アプリには通知用の Google ライブラリに対する追加の許諾があります。[LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md) を参照してください。

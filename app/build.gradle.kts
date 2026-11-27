@@ -1,8 +1,22 @@
 plugins { id("com.android.application"); id("org.jetbrains.kotlin.plugin.compose") }
 
+// The owner's own Firebase project, when its file is there (never in the repository): without it the app is built the same and offers no notices through Google.
+val firebase: Map<String, String> = file("google-services.json").takeIf { it.exists() }?.let { source ->
+    val root = groovy.json.JsonSlurper().parse(source) as Map<*, *>
+    val project = root["project_info"] as Map<*, *>
+    val client = (root["client"] as List<*>).map { it as Map<*, *> }.first { ((it["client_info"] as Map<*, *>)["android_client_info"] as Map<*, *>)["package_name"] == "es.electrohobby3d.eh3d" }
+    mapOf(
+        "FIREBASE_APP_ID" to (client["client_info"] as Map<*, *>)["mobilesdk_app_id"].toString(),
+        "FIREBASE_API_KEY" to ((client["api_key"] as List<*>).first() as Map<*, *>)["current_key"].toString(),
+        "FIREBASE_PROJECT_ID" to project["project_id"].toString(),
+        "FIREBASE_SENDER_ID" to project["project_number"].toString(),
+    )
+} ?: emptyMap()
+
 android { namespace = "es.electrohobby3d.eh3d"; compileSdk = 37
     defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 20; versionName = "0.2.0" }
     buildFeatures { compose = true; buildConfig = true }
+    defaultConfig { listOf("FIREBASE_APP_ID", "FIREBASE_API_KEY", "FIREBASE_PROJECT_ID", "FIREBASE_SENDER_ID").forEach { buildConfigField("String", it, "\"${firebase[it].orEmpty()}\"") } }
     // The eight languages of the app and no other: without this the APK also carries the texts of the libraries in every language they have, and the phone offers those.
     // The default (English) texts are always kept. tools/check_languages.py holds this list, the resource folders and the languages of the built APK.
     androidResources { localeFilters += listOf("en", "es", "de", "fr", "it", "ja", "zh-rCN", "pt-rPT") }
@@ -39,6 +53,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.12.0")
+    implementation("com.google.firebase:firebase-messaging:26.0.2")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")

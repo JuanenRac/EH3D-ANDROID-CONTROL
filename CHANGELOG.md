@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Notices with the app closed (off by default):** in a build that carries the owner's Firebase project, a switch registers the phone with the server, which sends through Google only which of three things happened (a job waits, failed or ended); the app writes the notice in its language. Needs a server with `push_enabled`. The licence carries an additional permission for the Google libraries (`LICENSE-EXCEPTION.md`). Not tried on a phone.
+
 - **The contract of the settings of the server is the current one:** `answer_needs_question` is now on by default there (an answer to a job names its question, as this program already sends it). No other change.
 
 - **Third-party notices:** the APK carries the asset `THIRD_PARTY_NOTICES` with the libraries it is built with, their licences and the Apache License (`docs/THIRD_PARTY_NOTICES`, made by `tools/third_party_notices.py` from the dependency graph of Gradle). The CI fails when a library of the graph is not listed.

@@ -16,3 +16,6 @@ __pycache__/
 
 # the signed APK is attached to the release, not kept in the repository
 /dist/
+
+# the owner's Firebase project: never in the repository
+app/google-services.json

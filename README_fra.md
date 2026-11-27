@@ -250,3 +250,5 @@ Le README existe en anglais, espagnol, français, italien, allemand, chinois, ja
 ## 📜 LICENCE
 
 Logiciel : GPL-3.0-or-later. Voir [LICENSE](LICENSE). Les conceptions matérielles de la suite utilisent la CERN OHL-S.
+
+L'application porte une permission supplémentaire pour les bibliothèques Google des avis : voir [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md).

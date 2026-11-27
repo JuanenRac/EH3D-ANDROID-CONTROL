@@ -312,6 +312,10 @@ open class Eh3dApi(
     suspend fun logout() { runCatching { call("/auth/logout", "POST", "{}") } }
 
     suspend fun fleet(): Fleet = parseFleet(call("/fleet"))
+
+    /** Registers this phone for the notices the server sends through Firebase, or takes it away. */
+    suspend fun registerPhone(token: String) { call("/push/devices", "POST", org.json.JSONObject().put("token", token).toString()) }
+    suspend fun forgetPhone(token: String) { call("/push/devices", "DELETE", org.json.JSONObject().put("token", token).toString()) }
     suspend fun jobs(machine: String? = null): List<JobSummary> = parseJobs(call("/jobs" + (machine?.let { "?machine=${q(it)}" } ?: "")))
     suspend fun job(id: String): Job = parseJob(call("/jobs/${q(id)}"))
     suspend fun start(id: String) { call("/jobs/${q(id)}/start", "POST", "{}") }
