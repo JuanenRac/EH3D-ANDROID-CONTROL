@@ -1,4 +1,6 @@
 {
+ "El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.": "The server does not accept the program: a line cannot be sent to the machine or cannot be judged for certain. Correct that line in the program.",
+ "El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.": "The server did not answer: the order may have arrived and the machine may be moving. Look at the machine before you repeat it.",
  "La dirección del servidor no es válida (use una dirección de la red local o https://).": "The server address is not valid (use an address of the local network or https://).",
  "Espera al operario: confirme el paso en la máquina.": "Waiting for the operator: confirm the step at the machine.",
  "El trabajo ha terminado o se ha detenido.": "The job has finished or has stopped.",
@@ -251,7 +253,6 @@
  "El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.": "The first job is running. The second one stays ready: start it from the Jobs tab when the first is done.",
  "Lo que ya se creó queda listo en la pestaña Trabajos.": "What was already created stays ready in the Jobs tab.",
  "El archivo es demasiado grande.": "The file is too big.",
- "Hay una línea que no es G-code válido: %s": "A line is not valid G-code: %s",
  "El archivo de taladrado no se entiende.": "The drilling file is not understood.",
  "Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s": "A tool of the file is not in the machine's tool table: %s",
  "Herramienta no válida: %s": "Invalid tool: %s",
@@ -345,7 +346,6 @@
  "Un nodo necesita su dirección (host:puerto).": "A node needs its address (host:port).",
  "La configuración tiene una clave que no existe o un valor fuera de rango.": "The configuration has a key that does not exist or a value out of range.",
  "Los días deben ser un número de 1 a 3650.": "The days must be a number from 1 to 3650.",
- "El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador ($, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.": "The program has a line that is not G-code: the settings and real-time commands of the controller ($, !, ~, ?), control characters and lines of over 200 characters are refused.",
  "El id debe ser letras minúsculas, dígitos y guiones, hasta 32 caracteres.": "The id must be lowercase letters, digits and hyphens, up to 32 characters.",
  "Al anillo de LEDs se le pidió algo que el nodo no usa (un nivel, un tono o sectores que no conoce).": "The ring of LEDs was asked for something the node does not use (a level, a tone or sectors it does not know).",
  "El servidor no aceptó lo enviado.": "The server did not accept what was sent.",

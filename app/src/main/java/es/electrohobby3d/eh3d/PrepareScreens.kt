@@ -92,7 +92,7 @@ fun PreparePage(model: Eh3dViewModel, machineId: String) {
         if (p.work == Work.Route || p.work == Work.Both) item { SideCard(model, machineId, Side.Route, p.route) }
         if (p.work == Work.Gcode) item { GcodeCard(model, machineId, p) }
         item {
-            Button({ askStart = true }, enabled = model.canOperate && prepareReady(p), modifier = Modifier.fillMaxWidth()) { Text(if (p.busy) tr("Preparando…") else tr("Empezar")) }
+            Button({ askStart = true }, enabled = model.canOrder && prepareReady(p), modifier = Modifier.fillMaxWidth()) { Text(if (p.busy) tr("Preparando…") else tr("Empezar")) }
             Text(tr("Un trabajo nunca arranca solo: se pone en marcha cuando usted lo confirma."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
     }

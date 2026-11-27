@@ -130,8 +130,8 @@ fun MachinePage(model: Eh3dViewModel, id: String) {
                     Card(accent = Forge.Orange) {
                         Title(tr("La máquina espera"))
                         Text(pauseText(p), color = Forge.Text)
-                        if (active.kind == "gcode") Button({ model.resume(active.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
-                        else Button({ model.confirm(active.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
+                        if (active.kind == "gcode") Button({ model.resume(active.id) }, enabled = model.canOrder) { Text(tr("Reanudar")) }
+                        else Button({ model.confirm(active.id) }, enabled = model.canOrder) { Text(tr("Confirmar")) }
                     }
                 }
             }
@@ -289,12 +289,12 @@ fun JobPage(model: Eh3dViewModel, id: String) {
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (s.state == "ready") Button({ askStart = true }, enabled = model.canOperate) { Text(tr("Empezar")) }
+                    if (s.state == "ready") Button({ askStart = true }, enabled = model.canOrder) { Text(tr("Empezar")) }
                     if (JobStates.active(s.state)) Button({ askStop = true }, enabled = model.canOperate, colors = ButtonDefaults.buttonColors(containerColor = Forge.Danger, contentColor = Color.White)) { Text(tr("PARAR")) }
                     if (s.kind == "gcode" && s.state == "running") OutlinedButton({ model.pause(s.id) }, enabled = model.canOperate) { Text(tr("Pausar")) }
-                    if (s.state == "waiting_operator" && s.kind == "gcode") Button({ model.resume(s.id) }, enabled = model.canOperate) { Text(tr("Reanudar")) }
-                    else if (s.state == "waiting_operator") Button({ model.confirm(s.id) }, enabled = model.canOperate) { Text(tr("Confirmar")) }
-                    if (JobStates.canGoOn(s.state)) OutlinedButton({ model.goOn(s) }, enabled = model.canOperate) { Text(tr("Seguir desde donde se detuvo")) }
+                    if (s.state == "waiting_operator" && s.kind == "gcode") Button({ model.resume(s.id) }, enabled = model.canOrder) { Text(tr("Reanudar")) }
+                    else if (s.state == "waiting_operator") Button({ model.confirm(s.id) }, enabled = model.canOrder) { Text(tr("Confirmar")) }
+                    if (JobStates.canGoOn(s.state)) OutlinedButton({ model.goOn(s) }, enabled = model.canOrder) { Text(tr("Seguir desde donde se detuvo")) }
                     if (!JobStates.active(s.state)) OutlinedButton({ askDelete = true }, enabled = model.canOperate) { Text(tr("Borrar")) }
                 }
                 s.pause?.let { Text(pauseText(it), color = Forge.Orange) }

@@ -24,7 +24,11 @@ import es.electrohobby3d.eh3d.model.SettingsReaders
 import es.electrohobby3d.eh3d.model.SettingsTexts
 import es.electrohobby3d.eh3d.model.readSettings
 import es.electrohobby3d.eh3d.model.saveSetting
+import es.electrohobby3d.eh3d.model.OrderGate
 import es.electrohobby3d.eh3d.model.PnpNode
+import es.electrohobby3d.eh3d.model.mayHaveArrived
+import es.electrohobby3d.eh3d.model.mayOrder
+import es.electrohobby3d.eh3d.model.withDetail
 import es.electrohobby3d.eh3d.model.PolicySwitch
 import es.electrohobby3d.eh3d.model.PrinterListing
 import es.electrohobby3d.eh3d.model.PrinterView
@@ -184,6 +188,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     val page: Page get() = stack.last()
     val canOperate: Boolean get() = Roles.canOperate(login?.role.orEmpty())
     val canAdmin: Boolean get() = Roles.canAdmin(login?.role.orEmpty())
+    /** Whether the buttons that set a machine going are on: an operator and a link that is answering now. */
+    val canOrder: Boolean get() = mayOrder(canOperate, linkState)
     val streamUrl: (String) -> String get() = { api.streamUrl(it) }
     /** Gives the camera address a ticket just before it is opened. */
     val resolveStream: suspend (String) -> String get() = { api.withTicket(it) }
@@ -520,8 +526,25 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun start(id: String) = act { api.start(id) }
-    fun confirm(id: String) = act { api.confirm(id) }
+    private val orders = OrderGate(::clock)
+
+    /** An order that sets a machine going: sent once, and one with no answer says that it may have arrived. */
+    private fun order(key: String, work: suspend () -> Unit) {
+        if (!orders.take(key)) return
+        viewModelScope.launch {
+            var taken = false
+            try { work(); taken = true; refresh() }
+            catch (error: ApiException) { if (error.unauthorized) signOutQuietly() else { message = orderError(error); refresh() } }
+            finally { orders.done(key, taken) }
+        }
+    }
+
+    private fun orderError(error: ApiException): String = if (mayHaveArrived(error.status, error.neverSent)) unanswered() else errorText(error)
+
+    private fun unanswered(): String = tr("El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.")
+
+    fun start(id: String) = order("start $id") { api.start(id) }
+    fun confirm(id: String) = order("answer $id") { api.confirm(id) }
     fun cancel(id: String) = stopping(job?.summary?.takeIf { it.id == id }?.machine) { api.cancel(id) }
     fun delete(id: String) = act { api.delete(id); if (page is Page.JobPage) back() }
 
@@ -551,22 +574,26 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun pause(id: String) = act { api.pause(id) }
-    fun resume(id: String) = act { api.resume(id) }
+    fun resume(id: String) = order("answer $id") { api.resume(id) }
 
     /** Goes on from a job that failed or was cancelled: the server made a new job from the request it kept (no file is asked for again), and it waits ready for a person to start it. */
     fun goOn(summary: JobSummary) {
+        val key = "go-on ${summary.id}"
+        if (!orders.take(key)) return
         resumeRefused = null
         viewModelScope.launch {
+            var taken = false
             try {
                 val next = api.resumeFrom(summary.id)
+                taken = true
                 message = tr("Se creó un trabajo nuevo a partir de este. Empiécelo cuando la máquina esté lista.")
                 refresh()
                 open(Page.JobPage(next.summary.id))
             } catch (error: ApiException) {
                 val reason = resumeRefusal(error.status, error.code, error.message)
                 if (reason != null) resumeRefused = summary.id to reason
-                if (error.unauthorized) signOutQuietly() else message = reason?.let { trf("El servidor no continúa este trabajo por sí solo: %s. Deje la máquina en condiciones, prepare de nuevo el trabajo e indique por dónde empezar.", it) } ?: errorText(error)
-            }
+                if (error.unauthorized) signOutQuietly() else message = reason?.let { trf("El servidor no continúa este trabajo por sí solo: %s. Deje la máquina en condiciones, prepare de nuevo el trabajo e indique por dónde empezar.", it) } ?: orderError(error)
+            } finally { orders.done(key, taken) }
         }
     }
 
@@ -577,6 +604,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     /** Opens the page that prepares a job on a machine, with the first work its connection takes. */
     fun openPrepare(machineId: String) {
         val connection = fleet.machine(machineId)?.connection.orEmpty()
+        previewing?.cancel()
         open(Page.Prepare(machineId))
         prepare = PrepareUi(work = Prepare.works(connection).firstOrNull() ?: Work.Drill)
     }
@@ -585,6 +613,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     fun openResume(summary: JobSummary) {
         val source = gcodeSources[summary.id]
         val text = source?.second.orEmpty()
+        previewing?.cancel()
         open(Page.Prepare(summary.machine))
         prepare = PrepareUi(work = Work.Gcode, gcodeName = source?.first.orEmpty(), gcode = text, skip = Prepare.resumeSkip(summary.line, if (text.isEmpty()) summary.line else Prepare.lineCount(text)))
         if (text.isNotEmpty()) previewGcode(summary.machine)
@@ -657,10 +686,10 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         val st = prepare.side(side)
         try {
             val view = api.preview(machineId, Prepare.fileBody(side, Prepare.jobName(st.fileName), st.text, st.tableText, emptyList()))
-            prepare = prepare.with(side, prepare.side(side).copy(view = view, error = ""))
+            if (Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = view, error = ""))
         } catch (error: ApiException) {
             if (error.unauthorized) signOutQuietly()
-            prepare = prepare.with(side, prepare.side(side).copy(view = null, error = prepareError(error)))
+            if (Prepare.samePlanInput(st, prepare.side(side))) prepare = prepare.with(side, prepare.side(side).copy(view = null, error = prepareError(error)))
         }
     }
 
@@ -680,6 +709,8 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun previewGcode(machineId: String) {
         previewing?.cancel()
+        // the plan on screen is of what was there before: Start stays off until the new one arrives
+        prepare = prepare.copy(gcodeView = null, gcodeError = "")
         previewing = viewModelScope.launch {
             val p = prepare
             try {
@@ -699,6 +730,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             prepare = prepare.copy(busy = true)
             var made = 0
+            var starting = false
             try {
                 val jobs = mutableListOf<Job>()
                 if (p.work == Work.Gcode) {
@@ -715,19 +747,21 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
                         made++
                     }
                 }
+                starting = true
                 api.start(jobs.first().summary.id)
                 message = if (jobs.size > 1) tr("El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.") else null
                 if (page is Page.Prepare) back()
                 refresh()
             } catch (error: ApiException) {
-                if (error.unauthorized) signOutQuietly() else message = prepareError(error) + if (made > 0) " " + tr("Lo que ya se creó queda listo en la pestaña Trabajos.") else ""
+                if (error.unauthorized) signOutQuietly()
+                else if (starting && mayHaveArrived(error.status, error.neverSent)) message = unanswered()
+                else message = prepareError(error) + if (made > 0) " " + tr("Lo que ya se creó queda listo en la pestaña Trabajos.") else ""
             } finally { prepare = prepare.copy(busy = false) }
         }
     }
 
     private fun prepareError(error: ApiException): String = when (error.code) {
         "too_big" -> tr("El archivo es demasiado grande.")
-        "bad_gcode" -> trf("Hay una línea que no es G-code válido: %s", error.message ?: "")
         "bad_ncd" -> tr("El archivo de taladrado no se entiende.")
         "unknown_tool" -> trf("Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s", error.message ?: "")
         "bad_tool" -> trf("Herramienta no válida: %s", error.message ?: "")
@@ -786,6 +820,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         error.code == "not_stopped" -> tr("Solo se puede seguir desde un trabajo cancelado o fallido.")
         error.code == "no_work" -> tr("No queda nada por hacer: todas las herramientas están desactivadas o el trabajo ya está hecho.")
         error.code == "head_unreachable" -> tr("El nodo del cabezal no responde.")
+        error.code == "bad_gcode" -> withDetail(ErrorTexts.phrase(error.code).orEmpty(), error.code, error.message)
         error.code == "bad_policy" || error.code == "weak_confirm_required" || error.code == "forbidden_scope" -> policyErrorText(error)
         ErrorTexts.phrase(error.code) != null -> ErrorTexts.phrase(error.code).orEmpty()
         ServerErrors.text(error.code, Tr.language) != null -> ServerErrors.text(error.code, Tr.language).orEmpty()

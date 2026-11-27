@@ -1,4 +1,6 @@
 {
+ "El servidor no acepta el programa: una línea no se puede enviar a la máquina o no se puede juzgar con certeza. Corrija esa línea en el programa.": "サーバーはこのプログラムを受け付けません。機械に送れない行、または確実に判定できない行があります。プログラムのその行を直してください。",
+ "El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.": "サーバーから応答がありません。指示は届いていて、機械が動いている可能性があります。繰り返す前に機械を確認してください。",
  "La dirección del servidor no es válida (use una dirección de la red local o https://).": "サーバーのアドレスが正しくありません（ローカルネットワークのアドレスか https:// を使ってください）。",
  "Espera al operario: confirme el paso en la máquina.": "オペレーターを待っています。機械で手順を確認してください。",
  "El trabajo ha terminado o se ha detenido.": "ジョブが終了したか停止しました。",
@@ -251,7 +253,6 @@
  "El primer trabajo está en marcha. El segundo queda listo: arránquelo desde la pestaña Trabajos cuando termine.": "最初のジョブを実行中です。2つ目は待機状態のままです。最初のジョブが終わったら「ジョブ」タブから開始してください。",
  "Lo que ya se creó queda listo en la pestaña Trabajos.": "すでに作成されたものは「ジョブ」タブに待機状態で残ります。",
  "El archivo es demasiado grande.": "ファイルが大きすぎます。",
- "Hay una línea que no es G-code válido: %s": "有効なGコードではない行があります：%s",
  "El archivo de taladrado no se entiende.": "穴あけファイルを解釈できません。",
  "Una herramienta del archivo no está en la tabla de herramientas de la máquina: %s": "ファイルの工具がマシンの工具テーブルにありません：%s",
  "Herramienta no válida: %s": "無効な工具：%s",
@@ -345,7 +346,6 @@
  "Un nodo necesita su dirección (host:puerto).": "ノードにはアドレス（ホスト:ポート）が必要です。",
  "La configuración tiene una clave que no existe o un valor fuera de rango.": "設定に存在しないキーか範囲外の値があります。",
  "Los días deben ser un número de 1 a 3650.": "日数は 1 から 3650 の数値にしてください。",
- "El programa tiene una línea que no es G-code: los ajustes y órdenes en tiempo real del controlador ($, !, ~, ?), los caracteres de control y las líneas de más de 200 caracteres se rechazan.": "プログラムに G コードではない行があります。コントローラーの設定とリアルタイムコマンド（$、!、~、?）、制御文字、200 文字を超える行は拒否されます。",
  "El id debe ser letras minúsculas, dígitos y guiones, hasta 32 caracteres.": "ID は小文字の英数字とハイフンで 32 文字までです。",
  "Al anillo de LEDs se le pidió algo que el nodo no usa (un nivel, un tono o sectores que no conoce).": "LED リングに、ノードが使わない指定（未知の明るさ・色調・セクター）が要求されました。",
  "El servidor no aceptó lo enviado.": "サーバーは送信内容を受け付けませんでした。",
