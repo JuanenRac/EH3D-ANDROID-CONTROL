@@ -31,7 +31,7 @@
 |---|---|
 | Versión | `0.1.9` |
 | Madurez | Andamiaje |
-| Pruebas | 490 pruebas unitarias en la JVM |
+| Pruebas | 492 pruebas unitarias en la JVM |
 | Pila tecnológica | Kotlin, Jetpack Compose |
 | En hardware real | Todavía no: la app no se ha ejecutado en un teléfono, contra un servidor real ni con una máquina; lo primero que hay que probar es entrar en el EH3D-SERVER del taller. |
 
@@ -68,7 +68,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 * Empezar un trabajo desde su página pide una confirmación más (compruebe que la máquina está preparada y despejada), igual que desde Preparar, para que un toque por error no ponga la máquina en marcha.
 * Antes de empezar un trabajo, un resumen muestra qué hace, cuánto tarda, hasta dónde llega cada eje (la simulación en seco del plan exacto que hizo el servidor) y qué parece mal, con Empezar y Cancelar; un ajuste lo apaga (activado por defecto). Escrito, nunca probado con un servidor real.
 * La conexión se cuenta con honestidad: conectado, datos que envejecen (con su edad), sin conexión tras dos fallos seguidos, o una dirección que responde otro servicio, con un botón para reintentar; al pulsar PARAR sin conexión avisa de que la orden puede no llegar y de que se use la parada física de la máquina, y tras una parada la app dice si la máquina la confirmó. Escrito, nunca probado con un servidor real.
-* Elegir taladrado, fresado, ambos o un programa de G-code y el archivo del teléfono; las herramientas del archivo con su recuento (y diámetro si el archivo lo declara), apagar herramientas, empezar por una; pausar, reanudar, cancelar y seguir un trabajo detenido (de cualquier tipo) desde donde se detuvo, con el archivo guardado por el servidor; leer el interruptor de las líneas `$` de GRBL de la máquina. El servidor no tiene lista de archivos, así que el archivo se envía desde el teléfono. Escrito, nunca ejecutado contra un servidor ni una máquina reales.
+* Elegir taladrado, fresado, ambos o un programa de G-code y el archivo del teléfono; las herramientas del archivo con su recuento (y diámetro si el archivo lo declara), apagar herramientas, empezar por una; pausar, reanudar, cancelar y seguir un trabajo detenido (de cualquier tipo) desde donde se detuvo, con el archivo guardado por el servidor; leer el interruptor de las líneas `$` de GRBL de la máquina. El servidor no tiene lista de archivos, así que el archivo se envía desde el teléfono. Escrito, nunca ejecutado contra un servidor ni una máquina reales. Un taladrado que no declara cómo están escritos sus números no se adivina: elija su formato en su tarjeta (se guarda en el teléfono); el rechazo dice qué elegir.
 * La placa, los agujeros (un anillo hasta taladrarlos), las trayectorias (tenues hasta cortarlas) y el cabezal, en 2D y en una vista isométrica que gira con el dedo; la posición del cabezal es una estimación a partir de los pasos hechos. Probado como geometría, nunca visto en un teléfono.
 * La cámara del cabezal de taladrado (EH3D-NODE-BUNGARD-AUX) en MJPEG a través del servidor, sus vueltas, temperatura y salida de protección, y una medida de la mesa con el láser. Escrito, nunca ejecutado con un nodo real.
 * Mira la última release de este proyecto en GitHub, descarga el APK, comprueba el paquete, la versión y la firma y se lo entrega al instalador de Android; nunca instala por sí sola. Escrito y probado; nunca ejecutado contra GitHub desde un teléfono.
