@@ -100,6 +100,13 @@ jobs:
           tools="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)"
           "${tools}aapt2" dump badging app/build/outputs/apk/release/app-release-unsigned.apk > badging.txt
           python3 tools/check_languages.py badging.txt
+      - name: Every library of the APK is in the third-party notices, and the APK carries them
+        run: |
+          set -euo pipefail
+          python3 -I tools/test_third_party_notices.py
+          ./gradlew -q --no-daemon :app:dependencies --configuration releaseRuntimeClasspath > app/build/runtime-deps.txt
+          python3 -I tools/third_party_notices.py app/build/runtime-deps.txt --check
+          unzip -p app/build/outputs/apk/release/app-release-unsigned.apk assets/THIRD_PARTY_NOTICES | cmp - docs/THIRD_PARTY_NOTICES
       - name: Keep the debug APK
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

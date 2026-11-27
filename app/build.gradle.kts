@@ -18,6 +18,16 @@ afterEvaluate {
     val appVersion = android.defaultConfig.versionName
     check(manifestVersion == appVersion) { "eh3d.project.json says $manifestVersion but versionName is $appVersion: change them together" }
 }
+// The notices of the libraries travel inside the APK, as the asset THIRD_PARTY_NOTICES (tools/third_party_notices.py makes the file).
+abstract class NoticesAsset : DefaultTask() {
+    @get:InputFile @get:PathSensitive(PathSensitivity.NONE) abstract val notices: RegularFileProperty
+    @get:OutputDirectory abstract val folder: DirectoryProperty
+    @TaskAction fun copy() { notices.get().asFile.copyTo(folder.get().file("THIRD_PARTY_NOTICES").asFile, overwrite = true) }
+}
+androidComponents.onVariants { variant ->
+    val noticesAsset = tasks.register<NoticesAsset>("${variant.name}NoticesAsset") { notices.set(rootProject.layout.projectDirectory.file("docs/THIRD_PARTY_NOTICES")) }
+    variant.sources.assets?.addGeneratedSourceDirectory(noticesAsset, NoticesAsset::folder)
+}
 dependencies {
     implementation(platform("androidx.compose:compose-bom:2026.09.00"))
     implementation("androidx.activity:activity-compose:1.12.0")

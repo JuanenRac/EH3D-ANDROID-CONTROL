@@ -170,6 +170,7 @@ jobs:
           tools="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)"
           "${tools}zipalign" -f -p 4 "$built" "out/EH3D-ANDROID-CONTROL-release-unsigned.apk"
           "${tools}zipalign" -c -p 4 "out/EH3D-ANDROID-CONTROL-release-unsigned.apk"
+          unzip -p "out/EH3D-ANDROID-CONTROL-release-unsigned.apk" assets/THIRD_PARTY_NOTICES | cmp - docs/THIRD_PARTY_NOTICES
           "${tools}aapt2" dump badging "out/EH3D-ANDROID-CONTROL-release-unsigned.apk" > badging-full.txt
           head -n 1 badging-full.txt | tee badging.txt
           grep -q "name='es.electrohobby3d.eh3d'" badging.txt || { echo "::error::unexpected application id"; exit 1; }
