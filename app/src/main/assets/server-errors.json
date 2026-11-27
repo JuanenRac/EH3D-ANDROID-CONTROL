@@ -1179,6 +1179,26 @@
 "项目或存储已没有剩余空间。",
 "プロジェクトまたはストアに空きがありません。"
 ],
+"question_changed":[
+"The job no longer asks that question: nothing was answered. Read what it asks now.",
+"El trabajo ya no hace esa pregunta: no se ha contestado nada. Lea lo que pregunta ahora.",
+"Il lavoro non fa più quella domanda: non è stata data nessuna risposta. Leggi che cosa chiede ora.",
+"Der Auftrag stellt diese Frage nicht mehr: Es wurde nichts beantwortet. Lesen Sie, was er jetzt fragt.",
+"Le travail ne pose plus cette question : rien n'a été répondu. Lisez ce qu'il demande maintenant.",
+"O trabalho já não faz essa pergunta: nada foi respondido. Leia o que pergunta agora.",
+"该作业已不再提出这个问题，没有作出任何回答。请查看它现在询问的内容。",
+"ジョブはもうその質問をしていません。何も回答されていません。いま何を尋ねているか確認してください。"
+],
+"question_required":[
+"The server asks every answer to say which question it answers: read the job again, or update this program.",
+"El servidor exige que cada respuesta diga qué pregunta contesta: vuelva a leer el trabajo o actualice este programa.",
+"Il server richiede che ogni risposta indichi a quale domanda risponde: rileggi il lavoro o aggiorna questo programma.",
+"Der Server verlangt, dass jede Antwort die Frage nennt: Lesen Sie den Auftrag erneut oder aktualisieren Sie dieses Programm.",
+"Le serveur exige que chaque réponse indique la question visée : relisez le travail ou mettez ce programme à jour.",
+"O servidor exige que cada resposta diga a que pergunta responde: volte a ler o trabalho ou atualize este programa.",
+"服务器要求每个回答都指明所回答的问题：请重新读取作业，或更新本程序。",
+"サーバーは回答ごとにどの質問への回答かを求めています。ジョブを読み直すか、このプログラムを更新してください。"
+],
 "queue_full":[
 "The server has as many tasks waiting or running as it accepts: try again later.",
 "El servidor ya tiene todas las tareas en espera o en marcha que acepta: inténtalo más tarde.",

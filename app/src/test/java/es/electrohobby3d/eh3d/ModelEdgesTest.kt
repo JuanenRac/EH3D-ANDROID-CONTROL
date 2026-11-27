@@ -191,6 +191,8 @@ class ModelEdgesTest {
         val pause = parseJobs("""[{"id":"a","pause":{"kind":"spindle_start"}}]""")[0].pause!!
         assertEquals("spindle_start", pause.kind)
         assertNull(pause.tool)
+        assertNull(pause.question)
+        assertEquals("q0a1b2c3", parseJobs("""[{"id":"a","pause":{"kind":"hold","question":"q0a1b2c3"}}]""")[0].pause!!.question)
         assertEquals(3, parseJobs("""[{"id":"a","pause":{"kind":"tool_change","tool":3}}]""")[0].pause!!.tool)
     }
 

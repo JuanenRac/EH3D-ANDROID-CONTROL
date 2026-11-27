@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.8` |
 | Maturité | Échafaudage |
-| Tests | 489 tests unitaires sur la JVM |
+| Tests | 490 tests unitaires sur la JVM |
 | Pile technique | Kotlin, Jetpack Compose |
 | Sur du matériel réel | Pas encore : l'application n'a pas été exécutée sur un téléphone, contre un vrai serveur ni avec une machine ; la première chose à essayer est de se connecter au EH3D-SERVER de l'atelier. |
 

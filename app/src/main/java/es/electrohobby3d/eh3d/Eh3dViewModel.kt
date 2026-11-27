@@ -545,7 +545,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     private fun unanswered(): String = tr("El servidor no respondió: la orden puede haber llegado y la máquina puede estar moviéndose. Mire la máquina antes de repetirla.")
 
     fun start(id: String) = order("start $id") { api.start(id) }
-    fun confirm(id: String) = order("answer $id") { api.confirm(id) }
+    fun confirm(id: String, question: String? = null) = order("answer $id") { api.confirm(id, question) }
     fun cancel(id: String) = stopping(job?.summary?.takeIf { it.id == id }?.machine) { api.cancel(id) }
     fun delete(id: String) = act { api.delete(id); if (page is Page.JobPage) back() }
 
@@ -575,7 +575,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun pause(id: String) = act { api.pause(id) }
-    fun resume(id: String) = order("answer $id") { api.resume(id) }
+    fun resume(id: String, question: String? = null) = order("answer $id") { api.resume(id, question) }
 
     /** Goes on from a job that failed or was cancelled: the server made a new job from the request it kept (no file is asked for again), and it waits ready for a person to start it. */
     fun goOn(summary: JobSummary) {

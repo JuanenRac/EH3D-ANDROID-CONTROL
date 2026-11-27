@@ -31,7 +31,7 @@
 |---|---|
 | Version | `0.1.8` |
 | Reifegrad | Gerüst |
-| Tests | 489 Unit-Tests auf der JVM |
+| Tests | 490 Unit-Tests auf der JVM |
 | Technologie-Stack | Kotlin, Jetpack Compose |
 | Auf echter Hardware | Noch nicht: Die App wurde nicht auf einem Telefon, gegen einen echten Server oder mit einer Maschine ausgeführt; als Erstes ist die Anmeldung am EH3D-SERVER der Werkstatt zu versuchen. |
 

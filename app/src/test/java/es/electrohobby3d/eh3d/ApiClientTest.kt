@@ -178,6 +178,13 @@ class ApiClientTest {
         assertEquals("{}", seen[0].body)
     }
 
+    @Test fun `an answer carries the question on the screen, and nothing when there is none`() = withServer(ok("""{"ok":true}""")) { origin, seen ->
+        val api = Eh3dApi(origin, "t")
+        runBlocking { api.confirm("j", "q0a1b2c3"); api.resume("j", "q4d5e6f7"); api.confirm("j") }
+        assertEquals(listOf("q0a1b2c3", "q4d5e6f7"), seen.take(2).map { org.json.JSONObject(it.body).getString("question") })
+        assertEquals("{}", seen[2].body)
+    }
+
     @Test fun `going on from a stopped job reads the new job it makes`() = withServer(ok("""{"id":"j2","resumed_from":"j1","state":"ready"}""")) { origin, seen ->
         val job = runBlocking { Eh3dApi(origin).resumeFrom("j1") }
         assertEquals("j2", job.summary.id)
