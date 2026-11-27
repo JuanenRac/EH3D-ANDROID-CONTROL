@@ -2,4 +2,4 @@
 // document. Written by tools/sync_settings_contract.py --write and checked by --check and by the tests; do not edit by hand. GPL-3.0-or-later.
 package es.electrohobby3d.eh3d.model
 
-const val CONTRACT_COPY_HASH = "f617f911c69f4f2983c7ba89886bccf7ec82b33e591b6981f8a3d592fdfe05ba"
+const val CONTRACT_COPY_HASH = "4dd2ca84f249674d17bbbf73a6e3855f68c34fdc69aac013c65117745e72e1ba"
