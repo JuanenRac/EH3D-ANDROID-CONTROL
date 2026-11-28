@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The orders of the jobs of the plugins rest without a connection:** Authorise, Start and releasing the latch of a machine can only be touched while the server answers, like the other orders. The emergency stop and Cancel stay available.
+
 ## [0.2.2] - Notices with the app closed and while a job runs, off by default (not tried on a phone)
 
 - **Notices at once without Google (off by default):** while a job runs, a foreground service asks your own server every few seconds and tells a machine that waits for the operator or a job that ended; it starts when the app sees a job running and stops by itself. Not tried on a phone.
