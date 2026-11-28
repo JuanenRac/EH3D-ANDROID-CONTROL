@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.2.2] - Notices with the app closed and while a job runs, off by default (not tried on a phone)
+
 - **Notices at once without Google (off by default):** while a job runs, a foreground service asks your own server every few seconds and tells a machine that waits for the operator or a job that ended; it starts when the app sees a job running and stops by itself. Not tried on a phone.
 
 - **The contract of the settings of the server is the current one:** it has `push_enabled` (notices on a phone, off by default) and `push_service_account_file`. No other change.

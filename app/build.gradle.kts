@@ -14,7 +14,7 @@ val firebase: Map<String, String> = file("google-services.json").takeIf { it.exi
 } ?: emptyMap()
 
 android { namespace = "es.electrohobby3d.eh3d"; compileSdk = 37
-    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 21; versionName = "0.2.1" }
+    defaultConfig { applicationId = "es.electrohobby3d.eh3d"; minSdk = 26; targetSdk = 37; versionCode = 22; versionName = "0.2.2" }
     buildFeatures { compose = true; buildConfig = true }
     defaultConfig { listOf("FIREBASE_APP_ID", "FIREBASE_API_KEY", "FIREBASE_PROJECT_ID", "FIREBASE_SENDER_ID").forEach { buildConfigField("String", it, "\"${firebase[it].orEmpty()}\"") } }
     // The eight languages of the app and no other: without this the APK also carries the texts of the libraries in every language they have, and the phone offers those.
