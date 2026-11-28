@@ -98,7 +98,7 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
             Button({ model.emergencyStopWork(w) }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = Forge.Danger, contentColor = Color.White)) { Text(tr("PARADA DE EMERGENCIA")) }
         }
         if (MachineSafety.canRelease(model.canAdmin, w)) {
-            OutlinedButton({ pending = Pending(Ask.Release) }, modifier = Modifier.fillMaxWidth()) { Text(tr("Soltar el enclavamiento")) }
+            OutlinedButton({ pending = Pending(Ask.Release) }, enabled = model.canOrder, modifier = Modifier.fillMaxWidth()) { Text(tr("Soltar el enclavamiento")) }
         } else if (w.interlocks.isNotEmpty() && !model.canAdmin) {
             Text(tr("Solo un administrador puede soltar el enclavamiento de una máquina."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
         }
@@ -116,8 +116,8 @@ fun WorkMachineCard(w: WorkMachine, model: Eh3dViewModel) {
                             AuthBadge(MachineSafety.authOf(job))
                         }
                     }
-                    if (MachineSafety.canAuthorize(model.canOperate, job)) TextButton({ pending = Pending(Ask.Authorize, job) }) { Text(tr("Autorizar")) }
-                    if (!w.latched && MachineSafety.canStartJob(model.canOperate, job)) TextButton({ pending = Pending(Ask.Start, job) }) { Text(tr("Empezar")) }
+                    if (MachineSafety.canAuthorize(model.canOperate, job)) TextButton({ pending = Pending(Ask.Authorize, job) }, enabled = model.canOrder) { Text(tr("Autorizar")) }
+                    if (!w.latched && MachineSafety.canStartJob(model.canOperate, job)) TextButton({ pending = Pending(Ask.Start, job) }, enabled = model.canOrder) { Text(tr("Empezar")) }
                     if (MachineSafety.canCancelJob(model.canOperate, job)) TextButton({ pending = Pending(Ask.Cancel, job) }) { Text(tr("Cancelar")) }
                 }
             }
