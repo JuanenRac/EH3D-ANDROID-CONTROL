@@ -32,6 +32,12 @@ ANDROID_ONLY = {phrase: _PUSH for phrase in (
     "Apagado por defecto. El servidor envía a través de Google solo qué ha pasado, sin nombres; hay que activarlo también en el servidor.",
 )}
 
+_LISTEN = "the listening while a job runs is a foreground service of Android; the iPhone does not let an app go on asking in the background"
+ANDROID_ONLY.update({phrase: _LISTEN for phrase in (
+    "Escucha del trabajo", "Escuchando mientras hay un trabajo en marcha.", "Avisar al instante mientras hay un trabajo (sin Google)",
+    "Apagado por defecto. Mientras haya un trabajo, la app pregunta a su servidor cada pocos segundos aunque no esté a la vista; se apaga sola al terminar.",
+)})
+
 
 def load_folder(folder: Path) -> dict:
     """File name -> the JSON it holds, for the .json files of a folder."""

@@ -46,6 +46,7 @@ import es.electrohobby3d.eh3d.model.StopNote
 import es.electrohobby3d.eh3d.model.stopsToResend
 import es.electrohobby3d.eh3d.model.classifyFailure
 import es.electrohobby3d.eh3d.model.followStops
+import es.electrohobby3d.eh3d.model.anyJobGoingOn
 import es.electrohobby3d.eh3d.model.fleetNotices
 import es.electrohobby3d.eh3d.model.fleetStates
 import es.electrohobby3d.eh3d.model.resumeRefusal
@@ -293,7 +294,7 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signOut(everywhere: Boolean = false) {
         poller?.cancel()
-        FleetWatch.cancel(getApplication())
+        FleetWatch.cancel(getApplication()); LiveListen.stop(getApplication())
         stopSearch()
         // the call that ends the session goes with the token that is being closed, not with the empty one set just below; a sign-out waits for nothing, so it is not tried again
         val closing = Eh3dApi(origin, api.token, ConnectionSettings(connection.timeoutS, 0))
@@ -336,6 +337,14 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         if (!push || !Push.available()) return
         val server = api
         Push.withToken { token -> viewModelScope.launch { runCatching { server.registerPhone(token) } } }
+    }
+
+    var listen by mutableStateOf(preferences.getBoolean(LiveListen.SWITCH, false)); private set
+
+    fun chooseListen(on: Boolean) {
+        listen = on
+        preferences.edit().putBoolean(LiveListen.SWITCH, on).apply()
+        if (!on) LiveListen.stop(getApplication())
     }
 
     fun chooseMdns(on: Boolean) { saveConnection(connection.withMdns(on)); if (!on) { stopSearch(); candidates = emptyList() } }
@@ -533,11 +542,12 @@ class Eh3dViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun signOutQuietly() { FleetWatch.cancel(getApplication()); api.token = ""; login = null; printers = PrinterListing.HIDDEN; phase = Phase.SignedOut; poller?.cancel() }
+    private fun signOutQuietly() { FleetWatch.cancel(getApplication()); LiveListen.stop(getApplication()); api.token = ""; login = null; printers = PrinterListing.HIDDEN; phase = Phase.SignedOut; poller?.cancel() }
 
     /** A machine that stops, finishes or waits for the operator is told in a notice, once. */
     private fun raise(now: Fleet) {
-        for (n in fleetNotices(lastStates, now)) Notifier.showNotice(getApplication(), n)
+        if (!LiveListen.running) for (n in fleetNotices(lastStates, now)) Notifier.showNotice(getApplication(), n)
+        if (anyJobGoingOn(now)) LiveListen.start(getApplication())
         lastStates = fleetStates(now)
     }
 

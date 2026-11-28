@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Alerts of a machine that stops or waits for the operator. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Listening to the own server while a job runs, only when switched on. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- Required only to hand a verified update APK (downloaded from this project's own GitHub Releases) to Android's system package installer. The app never installs a package silently. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <application
@@ -30,6 +33,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".LiveListenService" android:exported="false" android:foregroundServiceType="dataSync" />
         <!-- Shares an APK held in the app cache with Android's package installer through a temporary content:// URI. -->
         <provider
             android:name="androidx.core.content.FileProvider"
