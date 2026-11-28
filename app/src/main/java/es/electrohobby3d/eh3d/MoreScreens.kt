@@ -100,6 +100,11 @@ fun MorePage(model: Eh3dViewModel) {
                 OutlinedButton({ model.chooseRetries(model.connection.retries - 1) }) { Text("-") }
                 OutlinedButton({ model.chooseRetries(model.connection.retries + 1) }) { Text("+") }
             }
+            Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(tr("Avisar al instante mientras hay un trabajo (sin Google)"), Modifier.weight(1f), color = Forge.Text)
+                Switch(model.listen, { model.chooseListen(it) })
+            }
+            Text(tr("Apagado por defecto. Mientras haya un trabajo, la app pregunta a su servidor cada pocos segundos aunque no esté a la vista; se apaga sola al terminar."), color = Forge.Dim, style = MaterialTheme.typography.bodySmall)
             if (Push.available()) {
                 Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(tr("Avisos aunque la app esté cerrada (Firebase)"), Modifier.weight(1f), color = Forge.Text)
